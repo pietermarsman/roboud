@@ -1,9 +1,12 @@
 package edu.radboud.AI.roboud;
 
         import android.app.Activity;
+        import android.content.Intent;
+        import android.graphics.Bitmap;
         import android.os.Bundle;
         import android.os.Handler;
         import android.os.Message;
+        import android.widget.ImageView;
         import android.widget.ScrollView;
         import android.widget.TextView;
         import com.wowwee.robome.RoboMe;
@@ -15,13 +18,39 @@ package edu.radboud.AI.roboud;
 public class Roboud extends Activity {
 
     private RoboMeRobot robot;
+    private Handler handler;
+    private TextView logView;
+    private ScrollView logScrollView;
+    private ImageView imageView;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        robot = new RoboMeRobot(this);
+        setContentView(R.layout.main);
+
+        logView = (TextView) findViewById(R.id.output);
+        logScrollView = (ScrollView) findViewById(R.id.outputScrollView);
+        imageView = (ImageView) findViewById(R.id.imageView);
+
+        // handler to display received event
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                // display the received event
+                if (msg.what == 0x99 )
+                    logView.append(msg.obj + "\n");
+                if (msg.what == 0x98 )
+                    imageView.setImageBitmap((Bitmap) msg.obj);
+                logScrollView.smoothScrollTo(0, logView.getHeight());
+            }
+        };
+
+        robot = new RoboMeRobot(this, handler);
+
+        // show version
+        logView.append("Version " + robot.getLibVersion() + "\n");
     }
 
     /** Start listening to events from the gun when the app starts or resumes from background */
