@@ -9,24 +9,20 @@
     <shared>
       <config />
     </shared>
-    <layouts>
-      <layout url="file://$PROJECT_DIR$/res/layout/camera_preview.xml">
-        <config>
-          <device>Nexus 4</device>
-          <theme>@android:style/Theme.Holo</theme>
-        </config>
-      </layout>
-    </layouts>
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2b22d53-a500-496e-9206-ae76be935dd4" name="Default" comment="Added listening to other sensors">
+    <list default="true" id="c2b22d53-a500-496e-9206-ae76be935dd4" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidLocation.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudController.java" />
+      <change type="DELETED" beforePath="C:\Users\Gebruiker\Documents\roboud\res\layout\camera_preview.xml" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\AI\roboud\RoboMeRobot.java" afterPath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudModel.java" />
+      <change type="MOVED" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\AI\roboud\Roboud.java" afterPath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidCamera.java" afterPath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidCamera.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboMeRobot.java" afterPath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboMeRobot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/Roboud.java" afterPath="$PROJECT_DIR$/src/edu/radboud/AI/roboud/Roboud.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/main.xml" afterPath="$PROJECT_DIR$/res/layout/main.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Roboud.iws" />
@@ -91,20 +87,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Roboud.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/Roboud.java">
+      <file leaf-file-name="RoboudView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="39" selection-start="2021" selection-end="2021" vertical-scroll-proportion="0.0" vertical-offset="567" max-vertical-offset="1309">
+            <state line="52" column="65" selection-start="1729" selection-end="1729" vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="1292">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RoboMeRobot.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboMeRobot.java">
+      <file leaf-file-name="RoboudController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="53" selection-start="1724" selection-end="1724" vertical-scroll-proportion="0.0" vertical-offset="457" max-vertical-offset="2788">
-              <folding />
+            <state line="37" column="30" selection-start="1042" selection-end="1042" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="3111">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -112,17 +110,31 @@
       <file leaf-file-name="AndroidCamera.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidCamera.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="49" selection-start="1408" selection-end="1408" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1581">
-              <folding />
+            <state line="49" column="74" selection-start="1523" selection-end="1523" vertical-scroll-proportion="0.0" vertical-offset="546" max-vertical-offset="2193">
+              <folding>
+                <element signature="e#1394#1624#0" expanded="true" />
+                <element signature="e#1617#1618#0" expanded="true" />
+                <element signature="e#2090#2250#0" expanded="true" />
+                <element signature="e#2239#2240#0" expanded="true" />
+                <element signature="e#3695#3696#0" expanded="true" />
+                <element signature="e#3721#3722#0" expanded="true" />
+                <element signature="e#3760#3761#0" expanded="true" />
+                <element signature="e#3788#3789#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <file leaf-file-name="RoboudModel.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="18" selection-start="1261" selection-end="1261" vertical-scroll-proportion="0.644186" vertical-offset="250" max-vertical-offset="680">
-              <folding />
+            <state line="15" column="0" selection-start="371" selection-end="371" vertical-scroll-proportion="0.21216848" vertical-offset="0" max-vertical-offset="1751">
+              <folding>
+                <element signature="method#RoboudModel#0;class#RoboudModel#0" expanded="false" />
+                <element signature="method#toString#0;class#RoboudModel#0" expanded="false" />
+                <element signature="method#receiveCommand#0;class#RoboudModel#0" expanded="false" />
+                <element signature="method#sendCommand#0;class#RoboudModel#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -148,11 +160,16 @@
         <option value="$PROJECT_DIR$/res/layout/main2.xml" />
         <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/MainActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/camera_preview.xml" />
-        <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/Roboud.java" />
-        <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidCamera.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboMeRobot.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboMeModel.java" />
+        <option value="$PROJECT_DIR$/res/layout/main.xml" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudView.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidLocation.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidCamera.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudController.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudModel.java" />
       </list>
     </option>
   </component>
@@ -298,8 +315,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -557,11 +574,16 @@
       <created>1399993426918</created>
       <updated>1399993426918</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added listening to other sensors">
+      <created>1400499898739</created>
+      <updated>1400499898739</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="786" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -570,23 +592,23 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.63235295" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.62352943" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25078124" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28382352" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -614,24 +636,108 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/Roboud.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="73" selection-start="1488" selection-end="1488" vertical-scroll-proportion="0.0" vertical-offset="799" max-vertical-offset="1479">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="40" selection-start="1757" selection-end="1757" vertical-scroll-proportion="0.0" vertical-offset="1105" max-vertical-offset="2669">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="661" selection-end="661" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1836">
+          <folding>
+            <element signature="method#RoboudModel#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#toString#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#receiveCommand#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#sendCommand#0;class#RoboudModel#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="39" selection-start="2021" selection-end="2021" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1632">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="53" selection-start="1724" selection-end="1724" vertical-scroll-proportion="0.0" vertical-offset="969" max-vertical-offset="2975">
+          <folding>
+            <element signature="method#RoboudModel#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#toString#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#receiveCommand#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#sendCommand#0;class#RoboudModel#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidCamera.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="49" selection-start="1408" selection-end="1408" vertical-scroll-proportion="0.0" vertical-offset="799" max-vertical-offset="1938">
+          <folding>
+            <element signature="e#1394#1624#0" expanded="true" />
+            <element signature="e#1617#1618#0" expanded="true" />
+            <element signature="e#2090#2250#0" expanded="true" />
+            <element signature="e#2239#2240#0" expanded="true" />
+            <element signature="e#3695#3696#0" expanded="true" />
+            <element signature="e#3721#3722#0" expanded="true" />
+            <element signature="e#3760#3761#0" expanded="true" />
+            <element signature="e#3788#3789#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="18" selection-start="1261" selection-end="1261" vertical-scroll-proportion="0.0" vertical-offset="250" max-vertical-offset="680">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="63" column="64" selection-start="2084" selection-end="2084" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboMeRobot.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="42" column="7" selection-start="1153" selection-end="1319" vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="2499">
-          <folding />
+          <folding>
+            <element signature="method#RoboudModel#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#toString#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#receiveCommand#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#sendCommand#0;class#RoboudModel#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidCamera.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="91" column="15" selection-start="2697" selection-end="2697" vertical-scroll-proportion="0.0" vertical-offset="1505" max-vertical-offset="2227">
-          <folding />
+          <folding>
+            <element signature="e#1394#1624#0" expanded="true" />
+            <element signature="e#1617#1618#0" expanded="true" />
+            <element signature="e#2090#2250#0" expanded="true" />
+            <element signature="e#2239#2240#0" expanded="true" />
+            <element signature="e#3695#3696#0" expanded="true" />
+            <element signature="e#3721#3722#0" expanded="true" />
+            <element signature="e#3760#3761#0" expanded="true" />
+            <element signature="e#3788#3789#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -647,7 +753,7 @@
         <state line="95" column="8" selection-start="2667" selection-end="2667" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3043" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/Roboud.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="52" column="66" selection-start="1741" selection-end="1741" vertical-scroll-proportion="0.0" vertical-offset="884" max-vertical-offset="1292">
           <folding />
@@ -666,17 +772,22 @@
         <state line="105" column="5" selection-start="3077" selection-end="3077" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3043" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/Roboud.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="0" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0" vertical-offset="71" max-vertical-offset="799">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboMeRobot.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="101" column="2" selection-start="2340" selection-end="2340" vertical-scroll-proportion="0.0" vertical-offset="1423" max-vertical-offset="1989">
-          <folding />
+          <folding>
+            <element signature="method#RoboudModel#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#toString#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#receiveCommand#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#sendCommand#0;class#RoboudModel#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -722,11 +833,6 @@
         <state line="6" column="13" selection-start="173" selection-end="173" vertical-scroll-proportion="0.20987654" vertical-offset="0" max-vertical-offset="578" />
       </provider>
     </entry>
-    <entry file="jar://C:/lib/RoboMe-Android-SDK/RoboMe-Android-SDK/RoboMeLib.jar!/com/wowwee/robome/RoboMe.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="25" selection-start="1423" selection-end="1423" vertical-scroll-proportion="0.35459185" vertical-offset="456" max-vertical-offset="1122" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gen/edu/radboud/AI/roboud/R.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="1" selection-start="177" selection-end="177" vertical-scroll-proportion="0.1559633" vertical-offset="0" max-vertical-offset="654" />
@@ -746,19 +852,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/camera_preview.xml">
-      <provider editor-type-id="text-editor">
-        <state line="27" column="113" selection-start="1160" selection-end="1160" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="595">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://C:/lib/RoboMe-Android-SDK/SampleProject/src/com/wowwee/robomesample/RoboMeSampleActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="95" column="8" selection-start="2667" selection-end="2667" vertical-scroll-proportion="0.0" vertical-offset="1649" max-vertical-offset="2822" />
+      </provider>
+    </entry>
+    <entry file="jar://C:/lib/RoboMe-Android-SDK/RoboMe-Android-SDK/RoboMeLib.jar!/com/wowwee/robome/RoboMe.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="19" selection-start="746" selection-end="746" vertical-scroll-proportion="0.46915585" vertical-offset="0" max-vertical-offset="1122" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
@@ -771,31 +872,65 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidCamera.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="49" selection-start="1408" selection-end="1408" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1581">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/Roboud.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="39" selection-start="2021" selection-end="2021" vertical-scroll-proportion="0.0" vertical-offset="567" max-vertical-offset="1309">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboMeRobot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="53" selection-start="1724" selection-end="1724" vertical-scroll-proportion="0.0" vertical-offset="457" max-vertical-offset="2788">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="18" selection-start="1261" selection-end="1261" vertical-scroll-proportion="0.644186" vertical-offset="250" max-vertical-offset="680">
+        <state line="25" column="45" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.0" vertical-offset="9" max-vertical-offset="680">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="65" selection-start="1729" selection-end="1729" vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="1292">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidLocation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="332" selection-end="332" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1887">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1651#1652#0" expanded="true" />
+            <element signature="e#1682#1683#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/AndroidCamera.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="74" selection-start="1523" selection-end="1523" vertical-scroll-proportion="0.0" vertical-offset="546" max-vertical-offset="2193">
+          <folding>
+            <element signature="e#1394#1624#0" expanded="true" />
+            <element signature="e#1617#1618#0" expanded="true" />
+            <element signature="e#2090#2250#0" expanded="true" />
+            <element signature="e#2239#2240#0" expanded="true" />
+            <element signature="e#3695#3696#0" expanded="true" />
+            <element signature="e#3721#3722#0" expanded="true" />
+            <element signature="e#3760#3761#0" expanded="true" />
+            <element signature="e#3788#3789#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="30" selection-start="1042" selection-end="1042" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="3111">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboudModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="371" selection-end="371" vertical-scroll-proportion="0.21216848" vertical-offset="0" max-vertical-offset="1751">
+          <folding>
+            <element signature="method#RoboudModel#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#toString#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#receiveCommand#0;class#RoboudModel#0" expanded="false" />
+            <element signature="method#sendCommand#0;class#RoboudModel#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

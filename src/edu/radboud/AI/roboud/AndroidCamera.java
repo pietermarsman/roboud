@@ -1,36 +1,36 @@
 package edu.radboud.AI.roboud;
 
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
-import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 
-public class AndroidCamera implements SurfaceHolder.Callback {
-
-    //a variable to store a reference to the Surface View at the main.xml file
-    private SurfaceView sv;
+public class AndroidCamera extends Observable implements SurfaceHolder.Callback {
 
     //a bitmap to display the captured image
     private Bitmap bmp;
+    private Camera.Face[] faces;
 
-    //Camera variables
+    //a variable to store a reference to the Surface View at the main.xml file
+    private SurfaceView sv;
     //a surface holder
     private SurfaceHolder sHolder;
+
     //a variable to control the camera
     private Camera mCamera;
     //the camera parameters
     private Parameters parameters;
+
+    private int refreshRate;
+
+    private Timer timer;
 
     //sets what code should be executed after the picture is taken
     Camera.PictureCallback mCall = new Camera.PictureCallback()
@@ -40,19 +40,43 @@ public class AndroidCamera implements SurfaceHolder.Callback {
         {
             //decode the data obtained by the camera into a Bitmap
             bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+            setChanged();
+            notifyObservers();
+        }
+    };
+
+    Camera.FaceDetectionListener faceDetectionListener = new Camera.FaceDetectionListener() {
+        @Override
+        public void onFaceDetection(Camera.Face[] _faces, Camera camera) {
+            faces = _faces;
+            setChanged();
+            notifyObservers();
         }
     };
 
     private boolean ready;
 
-    public AndroidCamera(SurfaceView _surfaceView) {
-        sv = _surfaceView;
+    public AndroidCamera(SurfaceView _surfaceView, int _refreshRate) {
+        this.refreshRate = _refreshRate;
+        this.sv = _surfaceView;
+
+        bmp = null;
+        faces = null;
 
         //Get a surface
         sHolder = sv.getHolder();
 
         //add the callback interface methods defined below as the Surface View callbacks
         sHolder.addCallback(this);
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                preparePicture();
+                takePicture();
+            }
+        }, refreshRate, refreshRate);
     }
 
     @Override
@@ -66,9 +90,9 @@ public class AndroidCamera implements SurfaceHolder.Callback {
         // The Surface has been created, acquire the camera and tell it where
         // to draw the preview.
         mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+        mCamera.setFaceDetectionListener(faceDetectionListener);
         try {
             mCamera.setPreviewDisplay(sHolder);
-
         } catch (IOException exception) {
             mCamera.release();
             mCamera = null;
@@ -81,6 +105,7 @@ public class AndroidCamera implements SurfaceHolder.Callback {
         ready = false;
         //stop the preview
         mCamera.stopPreview();
+        mCamera.stopFaceDetection();
         //release the camera
         mCamera.release();
         //unbind the camera from this object
@@ -92,7 +117,7 @@ public class AndroidCamera implements SurfaceHolder.Callback {
             mCamera.takePicture(null, null, mCall);
     }
 
-    public void showPreview() {
+    public void preparePicture() {
         if (ready) {
             //get camera parameters
             parameters = mCamera.getParameters();
@@ -100,10 +125,15 @@ public class AndroidCamera implements SurfaceHolder.Callback {
             //set camera parameters
             mCamera.setParameters(parameters);
             mCamera.startPreview();
+            mCamera.startFaceDetection();
         }
     }
 
     public Bitmap getImage() {
         return bmp;
+    }
+
+    public Camera.Face[] getFaces() {
+        return faces;
     }
 }
