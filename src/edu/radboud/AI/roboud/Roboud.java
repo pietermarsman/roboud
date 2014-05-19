@@ -7,6 +7,7 @@ package edu.radboud.AI.roboud;
         import android.os.Handler;
         import android.os.Message;
         import android.view.SurfaceView;
+        import android.view.View;
         import android.widget.Button;
         import android.widget.ImageView;
         import android.widget.ScrollView;
@@ -15,6 +16,7 @@ package edu.radboud.AI.roboud;
         import com.wowwee.robome.RoboMeCommands;
 
         import java.util.Timer;
+        import java.util.TimerTask;
 
 /**
  * Created by Gebruiker on 13-5-14.
@@ -27,7 +29,8 @@ public class Roboud extends Activity {
     private ScrollView logScrollView;
     private ImageView imageView;
 
-    AndroidCamera cam;
+    private AndroidCamera cam;
+    private Timer timer;
 
     /** Called when the activity is first created. */
     @Override
@@ -56,12 +59,11 @@ public class Roboud extends Activity {
             }
         };
 
-        robot = new RoboMeRobot(this, handler);
+        cam = new AndroidCamera(surfaceView);
+        robot = new RoboMeRobot(this, cam, handler);
 
         // show version
         logView.append("Version " + robot.getLibVersion() + "\n");
-
-        cam = new AndroidCamera(imageView, surfaceView, button);
     }
 
     /** Start listening to events from the gun when the app starts or resumes from background */

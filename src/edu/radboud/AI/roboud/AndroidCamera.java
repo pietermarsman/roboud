@@ -16,14 +16,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class AndroidCamera implements SurfaceHolder.Callback, View.OnClickListener, View.OnTouchListener {
+public class AndroidCamera implements SurfaceHolder.Callback {
 
-    //a variable to store a reference to the Image View at the main.xml file
-    private ImageView iv_image;
     //a variable to store a reference to the Surface View at the main.xml file
     private SurfaceView sv;
-
-    private Button button;
 
     //a bitmap to display the captured image
     private Bitmap bmp;
@@ -44,19 +40,13 @@ public class AndroidCamera implements SurfaceHolder.Callback, View.OnClickListen
         {
             //decode the data obtained by the camera into a Bitmap
             bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-            //set the iv_image
-            iv_image.setImageBitmap(bmp);
         }
     };
+
     private boolean ready;
 
-    public AndroidCamera(ImageView _imageView, SurfaceView _surfaceView, Button _button) {
-        iv_image = _imageView;
+    public AndroidCamera(SurfaceView _surfaceView) {
         sv = _surfaceView;
-        button = _button;
-
-        button.setOnClickListener(this);
-        button.setOnTouchListener(this);
 
         //Get a surface
         sHolder = sv.getHolder();
@@ -75,7 +65,7 @@ public class AndroidCamera implements SurfaceHolder.Callback, View.OnClickListen
         ready = true;
         // The Surface has been created, acquire the camera and tell it where
         // to draw the preview.
-        mCamera = Camera.open();
+        mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
         try {
             mCamera.setPreviewDisplay(sHolder);
 
@@ -97,11 +87,6 @@ public class AndroidCamera implements SurfaceHolder.Callback, View.OnClickListen
         mCamera = null;
     }
 
-    @Override
-    public void onClick(View v) {
-        takePicture();
-    }
-
     public void takePicture() {
         if (ready)
             mCamera.takePicture(null, null, mCall);
@@ -118,9 +103,7 @@ public class AndroidCamera implements SurfaceHolder.Callback, View.OnClickListen
         }
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        showPreview();
-        return false;
+    public Bitmap getImage() {
+        return bmp;
     }
 }

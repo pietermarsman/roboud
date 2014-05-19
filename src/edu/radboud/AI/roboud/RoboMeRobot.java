@@ -3,7 +3,7 @@ package edu.radboud.AI.roboud;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hardware.Camera;
+import android.hardware.*;
 import android.os.Handler;
 import android.os.Message;
 import com.wowwee.robome.RoboMe;
@@ -16,26 +16,47 @@ import java.util.List;
 /**
  * Created by Gebruiker on 13-5-14.
  */
-public class RoboMeRobot implements RoboMe.RoboMeListener {
+public class RoboMeRobot implements RoboMe.RoboMeListener, SensorEventListener {
 
 
     private Camera mCamera;
 
     private final Handler handler;
+
     private RoboMe robome;
+    private AndroidCamera cam;
+
     private List<IncomingRobotCommand> incomingCommands;
     private List<RobotCommand> outgoingCommands;
 
-    private Bitmap frontImage;
+    private SensorManager mSensorManager;
+    private Sensor mLight;
 
-    public RoboMeRobot(Context context, Handler handler) {
+    public RoboMeRobot(Context context, AndroidCamera _cam, Handler handler) {
         robome = new RoboMe(context, this);
         this.handler = handler;
+        this.cam = _cam;
 
         incomingCommands = new LinkedList<IncomingRobotCommand>();
         outgoingCommands = new LinkedList<RobotCommand>();
 
         robome.setDebugEnabled(true);
+
+        mSensorManager = (SensorManager) context.getSystemService(context.SENSOR_SERVICE);
+        mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_ALL);
+    }
+
+    public void start() {
+        robome.setVolume(12);
+        robome.startListening();
+        mSensorManager.registerListener((SensorEventListener) this, mLight, SensorManager.SENSOR_DELAY_NORMAL);
+        showText("Start listening to RoboMe");
+    }
+
+    public void stop() {
+        robome.stopListening();
+        mSensorManager.unregisterListener((SensorListener) this);
+        showText("Stop listening to RoboMe");
     }
 
     /**
@@ -94,17 +115,6 @@ public class RoboMeRobot implements RoboMe.RoboMeListener {
         showText("Volume changed to " + v);
     }
 
-    public void start() {
-        robome.setVolume(12);
-        robome.startListening();
-        showText("Start listening to RoboMe");
-    }
-
-    public void stop() {
-        robome.stopListening();
-        showText("Stop listening to RoboMe");
-    }
-
     public boolean isHeadsetPluggedIn() {
         return robome.isHeadsetPluggedIn();
     }
@@ -132,6 +142,24 @@ public class RoboMeRobot implements RoboMe.RoboMeListener {
     //      === END RoboMe part ===
 
     //      === START Android phone part ===
+
+    public Bitmap getImage() {
+        return cam.getImage();
+    }
+
+    public void takePicture() {
+        cam.showPreview();
+        cam.takePicture();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        showText(event.toString());
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
 
     // Lightsensor event
 

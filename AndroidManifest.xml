@@ -20,7 +20,7 @@
             android:name="android.permission.RECORD_AUDIO"/>
 
     <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.camera.front"/>
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".Roboud">
@@ -28,8 +28,6 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".AndroidCamera">
         </activity>
     </application>
 
