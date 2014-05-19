@@ -5,23 +5,32 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:weightSum="1">
 
-    <LinearLayout
-            android:orientation="vertical"
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <ScrollView
+            android:layout_height="117dp"
+            android:id="@+id/outputScrollView" android:fillViewport="false">
+        <TextView
                 android:layout_width="match_parent"
-                android:layout_height="117dp"
-                android:id="@+id/outputScrollView" android:fillViewport="false">
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Feedback:"
-                    android:id="@+id/output"/>
-        </ScrollView>
-    </LinearLayout>
+                android:layout_height="match_parent"
+                android:text="Feedback:"
+                android:id="@+id/output"/>
+    </ScrollView>
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="228dp"
             android:id="@+id/imageView" android:layout_gravity="center_horizontal"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:weightSum="1">
+        <SurfaceView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/surfaceView" android:layout_weight="0.95"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/button"/>
+    </LinearLayout>
 </LinearLayout>

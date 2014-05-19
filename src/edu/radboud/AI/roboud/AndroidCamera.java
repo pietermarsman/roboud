@@ -9,13 +9,15 @@ import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class AndroidCamera extends Activity implements SurfaceHolder.Callback, View.OnClickListener {
+public class AndroidCamera implements SurfaceHolder.Callback, View.OnClickListener, View.OnTouchListener {
+
     //a variable to store a reference to the Image View at the main.xml file
     private ImageView iv_image;
     //a variable to store a reference to the Surface View at the main.xml file
@@ -46,54 +48,36 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback, V
             iv_image.setImageBitmap(bmp);
         }
     };
+    private boolean ready;
 
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.camera_preview);
+    public AndroidCamera(ImageView _imageView, SurfaceView _surfaceView, Button _button) {
+        iv_image = _imageView;
+        sv = _surfaceView;
+        button = _button;
 
-        //get the Image View at the main.xml file
-        iv_image = (ImageView) findViewById(R.id.imageView);
-
-        //get the Surface View at the main.xml file
-        sv = (SurfaceView) findViewById(R.id.surfaceView);
-
-        button = (Button) findViewById(R.id.button);
         button.setOnClickListener(this);
+        button.setOnTouchListener(this);
 
         //Get a surface
         sHolder = sv.getHolder();
 
         //add the callback interface methods defined below as the Surface View callbacks
         sHolder.addCallback(this);
-
-        //tells Android that this surface will have its data constantly replaced
-        sHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
     {
-        //get camera parameters
-        parameters = mCamera.getParameters();
-
-        //set camera parameters
-        mCamera.setParameters(parameters);
-        mCamera.startPreview();
-
-        mCamera.takePicture(null, null, mCall);
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder)
-    {
+    public void surfaceCreated(SurfaceHolder holder) {
+        ready = true;
         // The Surface has been created, acquire the camera and tell it where
         // to draw the preview.
         mCamera = Camera.open();
         try {
-            mCamera.setPreviewDisplay(holder);
+            mCamera.setPreviewDisplay(sHolder);
 
         } catch (IOException exception) {
             mCamera.release();
@@ -104,6 +88,7 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback, V
     @Override
     public void surfaceDestroyed(SurfaceHolder holder)
     {
+        ready = false;
         //stop the preview
         mCamera.stopPreview();
         //release the camera
@@ -114,6 +99,28 @@ public class AndroidCamera extends Activity implements SurfaceHolder.Callback, V
 
     @Override
     public void onClick(View v) {
-        surfaceChanged(null, 0, 0, 0);
+        takePicture();
+    }
+
+    public void takePicture() {
+        if (ready)
+            mCamera.takePicture(null, null, mCall);
+    }
+
+    public void showPreview() {
+        if (ready) {
+            //get camera parameters
+            parameters = mCamera.getParameters();
+
+            //set camera parameters
+            mCamera.setParameters(parameters);
+            mCamera.startPreview();
+        }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        showPreview();
+        return false;
     }
 }
