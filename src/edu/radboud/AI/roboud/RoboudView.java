@@ -11,10 +11,13 @@ package edu.radboud.AI.roboud;
         import android.widget.ScrollView;
         import android.widget.TextView;
 
+        import java.util.Observable;
+        import java.util.Observer;
+
 /**
  * Created by Gebruiker on 13-5-14.
  */
-public class RoboudView extends Activity {
+public class RoboudView extends Activity implements Observer {
 
     private TextView logView;
     private ScrollView logScrollView;
@@ -31,7 +34,6 @@ public class RoboudView extends Activity {
             // display the received event
             if (msg.what == 0x99 )
                 logView.setText((String) msg.obj);
-//                logView.append(msg.obj + "\n");
             if (msg.what == 0x98 )
                 imageView.setImageBitmap((Bitmap) msg.obj);
             logScrollView.smoothScrollTo(0, logView.getHeight());
@@ -53,6 +55,7 @@ public class RoboudView extends Activity {
         AndroidCamera cam = new AndroidCamera(surfaceView, 1000);
         controller = new RoboudController(this, cam, handler);
         model = controller.getModel();
+        model.addObserver(this);
 
         // show version
         logView.append("Version " + model.getLibVersion() + "\n");
@@ -79,5 +82,10 @@ public class RoboudView extends Activity {
         msg.what = 0x99;
         msg.obj = text;
         handler.sendMessage(msg);
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        showText(model.toString());
     }
 }

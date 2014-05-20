@@ -24,6 +24,7 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
 
     private AndroidCamera cam;
     private AndroidLocation loc;
+    private AndroidMicrophone mic;
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
 
@@ -35,6 +36,7 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
         model = new RoboudModel(robome.getLibVersion());
 
         loc = new AndroidLocation(context);
+        mic = new AndroidMicrophone(this);
         loc.addObserver(this);
         cam.addObserver(this);
 
@@ -78,6 +80,7 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
         model.setListening(true);
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
+        mic.startRecording();
         showText("Start listening to RoboMe");
     }
 
@@ -85,6 +88,7 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
         robome.stopListening();
         model.setListening(false);
         mSensorManager.unregisterListener(this);
+        mic.stopRecording();
         showText("Stop listening to RoboMe");
     }
 
@@ -155,7 +159,6 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
             case Sensor.TYPE_LIGHT: model.setLight(event.values[0]); break;
             default: showText("Sensor type not recognized");
         }
-        showText(model.toString());
     }
 
     @Override

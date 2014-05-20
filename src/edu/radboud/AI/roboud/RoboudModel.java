@@ -9,11 +9,12 @@ import com.wowwee.robome.RoboMeCommands.RobotCommand;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by Gebruiker on 13-5-14.
  */
-public class RoboudModel {
+public class RoboudModel extends Observable {
 
     private boolean robomeConnected, robomeHeadsetPluggedIn, listening;
     private float volume;
@@ -28,6 +29,8 @@ public class RoboudModel {
 
     private List<IncomingRobotCommand> incomingCommands;
     private List<RobotCommand> outgoingCommands;
+
+    private long lastModification;
 
     public RoboudModel(String _libVersion) {
         this.libVersion = _libVersion;
@@ -45,6 +48,7 @@ public class RoboudModel {
         proximity = -1;
         light = -1;
         loc = null;
+        audioRecord = null;
 
         incomingCommands = new LinkedList<IncomingRobotCommand>();
         outgoingCommands = new LinkedList<RobotCommand>();
@@ -78,9 +82,24 @@ public class RoboudModel {
             sb.append("Location: ").append(loc.getLatitude()).append(" \t").append(loc.getLongitude()).append("\n");
         else
             sb.append("Location: ").append("null");
+        if (audioRecord != null)
+            sb.append("Audio record: ").append(audioRecord.getAudioFormat()).append(" \t")
+                    .append(audioRecord.getSampleRate()).append("x").append(audioRecord.getChannelCount());
+        else
+            sb.append("Audio record: ").append("null").append("\n");
         sb.append("Incoming command count: ").append(incomingCommands.size()).append("\n");
         sb.append("Outgoing command count: ").append(outgoingCommands.size()).append("\n");
         return sb.toString();
+    }
+
+    public void changed() {
+        setChanged();
+        notifyObservers();
+        lastModification = System.currentTimeMillis();
+    }
+
+    public long getLastModification() {
+        return lastModification;
     }
 
     //      === START RoboMe part ===
@@ -91,6 +110,7 @@ public class RoboudModel {
 
     public void setRobomeConnected(boolean robomeConnected) {
         this.robomeConnected = robomeConnected;
+        changed();
     }
 
     public boolean isRobomeConnected() {
@@ -103,10 +123,12 @@ public class RoboudModel {
 
     public void setRobomeHeadsetPluggedIn(boolean robomeHeadsetPluggedIn) {
         this.robomeHeadsetPluggedIn = robomeHeadsetPluggedIn;
+        changed();
     }
 
     public void setVolume(float volume) {
         this.volume = volume;
+        changed();
     }
 
     public float getVolume() {
@@ -119,14 +141,17 @@ public class RoboudModel {
 
     public void setListening(boolean listening) {
         this.listening = listening;
+        changed();
     }
 
     public void receiveCommand(IncomingRobotCommand incomingRobotCommand) {
         incomingCommands.add(incomingRobotCommand);
+        changed();
     }
 
     public void sendCommand(RobotCommand outgoingCommand) {
         outgoingCommands.add(outgoingCommand);
+        changed();
     }
 
     //      === END RoboMe part ===
@@ -136,6 +161,7 @@ public class RoboudModel {
 
     public void setImage(Bitmap image) {
         this.image = image;
+        changed();
     }
 
     public Bitmap getImage() {
@@ -148,6 +174,7 @@ public class RoboudModel {
 
     public void setRotation(float[] rotation) {
         this.rotation = rotation;
+        changed();
     }
 
     public float[] getLinearAcceleration() {
@@ -156,6 +183,7 @@ public class RoboudModel {
 
     public void setLinearAcceleration(float[] linearAcceleration) {
         this.linearAcceleration = linearAcceleration;
+        changed();
     }
 
     public float[] getGravity() {
@@ -164,6 +192,7 @@ public class RoboudModel {
 
     public void setGravity(float[] gravity) {
         this.gravity = gravity;
+        changed();
     }
 
     public float[] getGyro() {
@@ -172,6 +201,7 @@ public class RoboudModel {
 
     public void setGyro(float[] gyro) {
         this.gyro = gyro;
+        changed();
     }
 
     public float[] getMagneticField() {
@@ -180,6 +210,7 @@ public class RoboudModel {
 
     public void setMagneticField(float[] magneticField) {
         this.magneticField = magneticField;
+        changed();
     }
 
     public float getProximity() {
@@ -188,6 +219,7 @@ public class RoboudModel {
 
     public void setProximity(float proximity) {
         this.proximity = proximity;
+        changed();
     }
 
     public float getLight() {
@@ -196,10 +228,12 @@ public class RoboudModel {
 
     public void setLight(float light) {
         this.light = light;
+        changed();
     }
 
     public void setLocation(Location location) {
         this.loc = location;
+        changed();
     }
 
     public Location getLocation() {
@@ -208,6 +242,7 @@ public class RoboudModel {
 
     public void setFaces(int faces) {
         this.faces = faces;
+        changed();
     }
 
     public int getFaces() {
@@ -216,6 +251,7 @@ public class RoboudModel {
 
     public void setAudioRecord(AudioRecord audioRecord) {
         this.audioRecord = audioRecord;
+        changed();
     }
 
     public AudioRecord getAudioRecord() {
