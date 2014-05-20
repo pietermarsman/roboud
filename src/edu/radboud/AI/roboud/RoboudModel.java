@@ -2,6 +2,7 @@ package edu.radboud.AI.roboud;
 
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.media.AudioRecord;
 import com.wowwee.robome.RoboMeCommands.IncomingRobotCommand;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
 
@@ -23,6 +24,7 @@ public class RoboudModel {
     private float[] rotation, linearAcceleration, gravity, gyro, magneticField;
     private float proximity, light;
     private Location loc;
+    private AudioRecord audioRecord;
 
     private List<IncomingRobotCommand> incomingCommands;
     private List<RobotCommand> outgoingCommands;
@@ -210,6 +212,14 @@ public class RoboudModel {
 
     public int getFaces() {
         return faces;
+    }
+
+    public void setAudioRecord(AudioRecord audioRecord) {
+        this.audioRecord = audioRecord;
+    }
+
+    public AudioRecord getAudioRecord() {
+        return audioRecord;
     }
 
     //      == END Android phone part ===

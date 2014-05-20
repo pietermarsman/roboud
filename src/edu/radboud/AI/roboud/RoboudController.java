@@ -3,6 +3,7 @@ package edu.radboud.AI.roboud;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.hardware.*;
+import android.media.AudioRecord;
 import android.os.Handler;
 import android.os.Message;
 import com.wowwee.robome.RoboMe;
@@ -15,7 +16,7 @@ import java.util.Observer;
 /**
  * Created by Gebruiker on 19-5-14.
  */
-public class RoboudController implements RoboMe.RoboMeListener, SensorEventListener, Observer {
+public class RoboudController implements RoboMe.RoboMeListener, SensorEventListener, Observer, AudioRecord.OnRecordPositionUpdateListener {
 
     Handler handler;
     RoboudModel model;
@@ -173,6 +174,15 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
             model.setLocation(loc.getLocation());
         else
             showText("Unknown class observed");
+    }
+
+    @Override
+    public void onMarkerReached(AudioRecord recorder) {
+    }
+
+    @Override
+    public void onPeriodicNotification(AudioRecord recorder) {
+        model.setAudioRecord(recorder);
     }
 
     // === END ANDROID device part ===
