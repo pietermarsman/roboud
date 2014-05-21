@@ -1,74 +1,86 @@
 package edu.radboud.AI.roboud;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.os.Bundle;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Gebruiker on 20-5-14.
  * Based on: http://stackoverflow.com/questions/8499042/android-audiorecord-example
  */
-public class AndroidMicrophone {
+public class AndroidMicrophone extends Activity implements View.OnClickListener {
 
-    private static final int RECORDER_SAMPLERATE = 44100;
-    private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
-    private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
-    private int BufferElements2Rec;
-    private int BytesPerElement;
+    String TAG = "AndroidMicrophone";
 
-    private AudioRecord audioRecord;
+    private TextView logView;
 
-    private RoboudController controller;
+//    private Activity context;
+//    private RoboudController controller;
 
-    public AndroidMicrophone(RoboudController _controller) {
-        this.controller = _controller;
+    public void onCreate(Bundle savedInstanceState) {
+//        this.context = _context;
+//        this.controller = _controller;
 
-        BufferElements2Rec = 1024; // want to play 2048 (2K) since 2 bytes we use only 1024
-        BytesPerElement = 2; // 2 bytes in 16bit format
+
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.main);
+        logView = (TextView) findViewById(R.id.output);
+
+
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(this);
+
+        // Disable button if no recognition service is present
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(
+                RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
     }
 
-    public void startRecording() {
-        audioRecord = findAudioRecord();
-//        audioRecord.startRecording();
-//        audioRecord.setPositionNotificationPeriod((int) (RECORDER_SAMPLERATE * 0.1)); // Every 0.1 second
-//        audioRecord.setRecordPositionUpdateListener(controller);
+    private static final int REQUEST_CODE = 1234;
+
+    public void startListening() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                "AndroidBite Voice Recognition...");
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
-    public void stopRecording() {
-        if (audioRecord != null) {
-            audioRecord.stop();
-            audioRecord.release();
-            audioRecord = null;
+    public void stopListening() {
+
+    }
+
+    @Override
+     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            ArrayList<String> matches = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            logView.setText(matches.get(0));
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public AudioRecord getAudioRecord() {
-        return audioRecord;
-    }
-
-    public AudioRecord findAudioRecord() {
-        int[] mSampleRates = new int[] { 8000, 11025, 22050, 44100 };
-        for (int rate : mSampleRates) {
-            for (short audioFormat : new short[] { AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT,
-                    AudioFormat.ENCODING_DEFAULT}) {
-                for (short channelConfig : new short[] { AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO,
-                        AudioFormat.CHANNEL_IN_DEFAULT}) {
-                    try {
-                        int bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig, audioFormat);
-
-                        if (bufferSize != AudioRecord.ERROR_BAD_VALUE) {
-                            // check if we can instantiate and have a success
-                            AudioRecord recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, rate,
-                                    channelConfig, audioFormat, bufferSize);
-
-                            if (recorder.getState() == AudioRecord.STATE_INITIALIZED)
-                                return recorder;
-                        }
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }
-        return null;
+    @Override
+    public void onClick(View v) {
+        startListening();
     }
 }

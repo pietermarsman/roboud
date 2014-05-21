@@ -1,14 +1,20 @@
 package edu.radboud.AI.roboud;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.hardware.*;
 import android.media.AudioRecord;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.view.View;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -16,7 +22,7 @@ import java.util.Observer;
 /**
  * Created by Gebruiker on 19-5-14.
  */
-public class RoboudController implements RoboMe.RoboMeListener, SensorEventListener, Observer, AudioRecord.OnRecordPositionUpdateListener {
+public class RoboudController implements RoboMe.RoboMeListener, SensorEventListener, Observer, AudioRecord.OnRecordPositionUpdateListener, View.OnClickListener {
 
     Handler handler;
     RoboudModel model;
@@ -24,11 +30,10 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
 
     private AndroidCamera cam;
     private AndroidLocation loc;
-    private AndroidMicrophone mic;
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
 
-    public RoboudController(Context context, AndroidCamera _cam, Handler handler) {
+    public RoboudController(Activity context, AndroidCamera _cam, Handler handler) {
         this.handler = handler;
         this.cam = _cam;
 
@@ -36,7 +41,7 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
         model = new RoboudModel(robome.getLibVersion());
 
         loc = new AndroidLocation(context);
-        mic = new AndroidMicrophone(this);
+//        mic = new AndroidMicrophone(context, this);
         loc.addObserver(this);
         cam.addObserver(this);
 
@@ -80,7 +85,6 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
         model.setListening(true);
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
-        mic.startRecording();
         showText("Start listening to RoboMe");
     }
 
@@ -88,7 +92,6 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
         robome.stopListening();
         model.setListening(false);
         mSensorManager.unregisterListener(this);
-        mic.stopRecording();
         showText("Stop listening to RoboMe");
     }
 
@@ -186,6 +189,11 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
     @Override
     public void onPeriodicNotification(AudioRecord recorder) {
         model.setAudioRecord(recorder);
+    }
+
+    @Override
+    public void onClick(View v) {
+        // Do something with button
     }
 
     // === END ANDROID device part ===

@@ -93,9 +93,9 @@ public class RoboudModel extends Observable {
     }
 
     public void changed() {
+        lastModification = System.currentTimeMillis();
         setChanged();
         notifyObservers();
-        lastModification = System.currentTimeMillis();
     }
 
     public long getLastModification() {
