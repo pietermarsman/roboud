@@ -1,28 +1,22 @@
 package edu.radboud.AI.roboud;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.hardware.*;
 import android.media.AudioRecord;
 import android.os.Handler;
 import android.os.Message;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
+import android.view.SurfaceView;
 import android.view.View;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * Created by Gebruiker on 19-5-14.
  */
-public class RoboudController implements RoboMe.RoboMeListener, SensorEventListener, Observer, AudioRecord.OnRecordPositionUpdateListener, View.OnClickListener {
+public class RoboudController implements RoboMe.RoboMeListener, SensorEventListener, Observer, View.OnClickListener {
 
     Handler handler;
     RoboudModel model;
@@ -30,18 +24,19 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
 
     private AndroidCamera cam;
     private AndroidLocation loc;
+    private final AndroidMicrophone mic;
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
 
-    public RoboudController(Activity context, AndroidCamera _cam, Handler handler) {
+    public RoboudController(Activity context, SurfaceView surfaceView, Handler handler) {
         this.handler = handler;
-        this.cam = _cam;
 
         robome = new RoboMe(context, this);
         model = new RoboudModel(robome.getLibVersion());
 
+        cam = new AndroidCamera(surfaceView, 1000);
         loc = new AndroidLocation(context);
-//        mic = new AndroidMicrophone(context, this);
+        mic = new AndroidMicrophone(context, this);
         loc.addObserver(this);
         cam.addObserver(this);
 
@@ -72,14 +67,7 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
         handler.sendMessage(msg);
     }
 
-    public void showImage(Bitmap image) {
-        Message msg = new Message();
-        msg.what = 0x98;
-        msg.obj = image;
-        handler.sendMessage(msg);
-    }
-
-    public void start() {
+    public void startListeners() {
         robome.setVolume(12);
         robome.startListening();
         model.setListening(true);
@@ -88,7 +76,7 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
         showText("Start listening to RoboMe");
     }
 
-    public void stop() {
+    public void stopListeners() {
         robome.stopListening();
         model.setListening(false);
         mSensorManager.unregisterListener(this);
@@ -183,17 +171,15 @@ public class RoboudController implements RoboMe.RoboMeListener, SensorEventListe
     }
 
     @Override
-    public void onMarkerReached(AudioRecord recorder) {
-    }
-
-    @Override
-    public void onPeriodicNotification(AudioRecord recorder) {
-        model.setAudioRecord(recorder);
-    }
-
-    @Override
     public void onClick(View v) {
-        // Do something with button
+        mic.startListening();
+    }
+
+    public void speechReceived(int requestCode, int resultCode, Intent data) {
+        List<String> voiceResult = mic.processData(requestCode, resultCode, data);
+        if (voiceResult != null) {
+            model.setVoiceResults(voiceResult);
+        }
     }
 
     // === END ANDROID device part ===

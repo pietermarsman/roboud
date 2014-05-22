@@ -6,7 +6,7 @@ import android.media.AudioRecord;
 import com.wowwee.robome.RoboMeCommands.IncomingRobotCommand;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -25,10 +25,10 @@ public class RoboudModel extends Observable {
     private float[] rotation, linearAcceleration, gravity, gyro, magneticField;
     private float proximity, light;
     private Location loc;
-    private AudioRecord audioRecord;
 
     private List<IncomingRobotCommand> incomingCommands;
     private List<RobotCommand> outgoingCommands;
+    private List<String> voiceResults;
 
     private long lastModification;
 
@@ -48,7 +48,7 @@ public class RoboudModel extends Observable {
         proximity = -1;
         light = -1;
         loc = null;
-        audioRecord = null;
+        voiceResults = new ArrayList<String>();
 
         incomingCommands = new LinkedList<IncomingRobotCommand>();
         outgoingCommands = new LinkedList<RobotCommand>();
@@ -81,12 +81,11 @@ public class RoboudModel extends Observable {
         if (loc != null)
             sb.append("Location: ").append(loc.getLatitude()).append(" \t").append(loc.getLongitude()).append("\n");
         else
-            sb.append("Location: ").append("null");
-        if (audioRecord != null)
-            sb.append("Audio record: ").append(audioRecord.getAudioFormat()).append(" \t")
-                    .append(audioRecord.getSampleRate()).append("x").append(audioRecord.getChannelCount());
-        else
-            sb.append("Audio record: ").append("null").append("\n");
+            sb.append("Location: ").append("null").append("\n");
+        sb.append("Voice result: ");
+        for (String voiceResult : voiceResults)
+            sb.append(voiceResult).append(", ");
+        sb.append("\n");
         sb.append("Incoming command count: ").append(incomingCommands.size()).append("\n");
         sb.append("Outgoing command count: ").append(outgoingCommands.size()).append("\n");
         return sb.toString();
@@ -249,13 +248,13 @@ public class RoboudModel extends Observable {
         return faces;
     }
 
-    public void setAudioRecord(AudioRecord audioRecord) {
-        this.audioRecord = audioRecord;
+    public void setVoiceResults(List<String> voiceResults) {
+        this.voiceResults = voiceResults;
         changed();
     }
 
-    public AudioRecord getAudioRecord() {
-        return audioRecord;
+    public List<String> getVoiceResults() {
+        return voiceResults;
     }
 
     //      == END Android phone part ===

@@ -2,18 +2,17 @@ package edu.radboud.AI.roboud;
 
         import android.app.Activity;
         import android.content.Intent;
-        import android.graphics.Bitmap;
+        import android.content.pm.PackageManager;
+        import android.content.pm.ResolveInfo;
         import android.os.Bundle;
         import android.os.Handler;
         import android.os.Message;
         import android.speech.RecognizerIntent;
         import android.view.SurfaceView;
-        import android.widget.Button;
-        import android.widget.ImageView;
-        import android.widget.ScrollView;
-        import android.widget.TextView;
+        import android.widget.*;
 
         import java.util.ArrayList;
+        import java.util.List;
         import java.util.Observable;
         import java.util.Observer;
 
@@ -24,7 +23,6 @@ public class RoboudView extends Activity implements Observer {
 
     private TextView logView;
     private ScrollView logScrollView;
-    private ImageView imageView;
     private SurfaceView surfaceView;
     private Button button;
 
@@ -37,8 +35,6 @@ public class RoboudView extends Activity implements Observer {
             // display the received event
             if (msg.what == 0x99 )
                 logView.setText((String) msg.obj);
-            if (msg.what == 0x98 )
-                imageView.setImageBitmap((Bitmap) msg.obj);
             logScrollView.smoothScrollTo(0, logView.getHeight());
         }
     };
@@ -47,7 +43,6 @@ public class RoboudView extends Activity implements Observer {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.main);
 
         logView = (TextView) findViewById(R.id.output);
@@ -55,8 +50,8 @@ public class RoboudView extends Activity implements Observer {
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         button = (Button) findViewById(R.id.button);
 
-        AndroidCamera cam = new AndroidCamera(surfaceView, 1000);
-        controller = new RoboudController(this, cam, handler);
+        controller = new RoboudController(this, surfaceView, handler);
+
         button.setOnClickListener(controller);
         model = controller.getModel();
         model.addObserver(this);
@@ -69,27 +64,27 @@ public class RoboudView extends Activity implements Observer {
     @Override
     public void onResume(){
         super.onResume();
-        controller.start();
+        controller.startListeners();
     }
 
     /** Stop listening to events from the gun when the app goes into the background */
     @Override
     public void onStop(){
         super.onStop();
-
-        // stop listening to events from the headset
-        controller.stop();
-    }
-
-    public void showText(String text) {
-        Message msg = new Message();
-        msg.what = 0x99;
-        msg.obj = text;
-        handler.sendMessage(msg);
+        controller.stopListeners();
     }
 
     @Override
     public void update(Observable observable, Object data) {
-//        showText(model.toString());
+        controller.showText(model.toString());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Send speech data to the controller
+        if (requestCode == AndroidMicrophone.REQUEST_CODE) {
+            controller.speechReceived(requestCode, resultCode, data);
+        }
     }
 }
