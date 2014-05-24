@@ -1,4 +1,4 @@
-package edu.radboud.AI.roboud;
+package edu.radboud.ai.roboud.senses;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -14,10 +14,6 @@ import android.view.SurfaceView;
 
 public class AndroidCamera extends Observable implements SurfaceHolder.Callback {
 
-    //a bitmap to display the captured image
-    private Bitmap bmp;
-    private Camera.Face[] faces;
-
     //a variable to store a reference to the Surface View at the main.xml file
     private SurfaceView sv;
     //a surface holder
@@ -29,7 +25,6 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
     private Parameters parameters;
 
     private int refreshRate;
-
     private Timer timer;
 
     //sets what code should be executed after the picture is taken
@@ -39,18 +34,18 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
         public void onPictureTaken(byte[] data, Camera camera)
         {
             //decode the data obtained by the camera into a Bitmap
-            bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+            Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
             setChanged();
-            notifyObservers();
+            notifyObservers(bmp);
         }
     };
 
     Camera.FaceDetectionListener faceDetectionListener = new Camera.FaceDetectionListener() {
         @Override
         public void onFaceDetection(Camera.Face[] _faces, Camera camera) {
-            faces = _faces;
+            Camera.Face[] faces = _faces;
             setChanged();
-            notifyObservers();
+            notifyObservers(faces);
         }
     };
 
@@ -59,9 +54,6 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
     public AndroidCamera(SurfaceView _surfaceView, int _refreshRate) {
         this.refreshRate = _refreshRate;
         this.sv = _surfaceView;
-
-        bmp = null;
-        faces = null;
 
         //Get a surface
         sHolder = sv.getHolder();
@@ -73,7 +65,6 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                preparePicture();
                 takePicture();
             }
         }, refreshRate, refreshRate);
@@ -113,11 +104,6 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
     }
 
     public void takePicture() {
-        if (ready)
-            mCamera.takePicture(null, null, mCall);
-    }
-
-    public void preparePicture() {
         if (ready) {
             //get camera parameters
             parameters = mCamera.getParameters();
@@ -126,14 +112,7 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
             mCamera.setParameters(parameters);
             mCamera.startPreview();
             mCamera.startFaceDetection();
+            mCamera.takePicture(null, null, mCall);
         }
-    }
-
-    public Bitmap getImage() {
-        return bmp;
-    }
-
-    public Camera.Face[] getFaces() {
-        return faces;
     }
 }

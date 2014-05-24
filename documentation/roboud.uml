@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>edu.radboud.ai.roboud</OriginalElement>
+  <nodes>
+    <node x="442.75" y="240.0">edu.radboud.ai.roboud.AndroidCamera</node>
+    <node x="0.0" y="420.0">edu.radboud.ai.roboud.AssignmentBehaviour</node>
+    <node x="817.2178571428572" y="500.0">edu.radboud.ai.roboud.BarScenario</node>
+    <node x="1477.75" y="420.0">edu.radboud.ai.roboud.MakeNewApointmentAction</node>
+    <node x="685.2178571428572" y="500.0">edu.radboud.ai.roboud.HomeScenario</node>
+    <node x="336.25" y="80.0">edu.radboud.ai.roboud.Event</node>
+    <node x="819.75" y="420.0">edu.radboud.ai.roboud.PostTweet</node>
+    <node x="648.25" y="330.0">edu.radboud.ai.roboud.Scenario</node>
+    <node x="528.2178571428572" y="500.0">edu.radboud.ai.roboud.ConfererceScenario</node>
+    <node x="317.25" y="160.0">edu.radboud.ai.roboud.EventHistory</node>
+    <node x="507.0" y="420.0">edu.radboud.ai.roboud.RoboudMind</node>
+    <node x="273.9992857142857" y="330.0">edu.radboud.ai.roboud.Behaviour</node>
+    <node x="580.75" y="240.0">edu.radboud.ai.roboud.AndroidMicrophone</node>
+    <node x="1054.75" y="420.0">edu.radboud.ai.roboud.AskQuestionAction</node>
+    <node x="676.75" y="420.0">edu.radboud.ai.roboud.AbstractScenario</node>
+    <node x="494.5" y="330.0">edu.radboud.ai.roboud.RoboudController</node>
+    <node x="1308.75" y="420.0">edu.radboud.ai.roboud.WaitForAnswerAction</node>
+    <node x="742.75" y="240.0">edu.radboud.ai.roboud.AndroidLocation</node>
+    <node x="928.75" y="420.0">edu.radboud.ai.roboud.LookForFaces</node>
+    <node x="312.75" y="240.0">edu.radboud.ai.roboud.RoboudModel</node>
+    <node x="1091.2178571428572" y="330.0">edu.radboud.ai.roboud.Action</node>
+    <node x="170.0" y="420.0">edu.radboud.ai.roboud.CompleModelBehaviour</node>
+    <node x="353.0" y="420.0">edu.radboud.ai.roboud.ChitChatBehaviour</node>
+    <node x="323.25" y="0.0">edu.radboud.ai.roboud.EventType</node>
+    <node x="1210.75" y="420.0">edu.radboud.ai.roboud.MoveTo</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="edu.radboud.ai.roboud.RoboudMind" target="edu.radboud.ai.roboud.RoboudController">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.WaitForAnswerAction" target="edu.radboud.ai.roboud.Action">
+      <point x="0.0" y="-15.0" />
+      <point x="1383.25" y="390.0" />
+      <point x="1145.432142857143" y="390.0" />
+      <point x="19.71428571428578" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.RoboudController" target="edu.radboud.ai.roboud.RoboudModel">
+      <point x="-32.25" y="-15.0" />
+      <point x="526.75" y="300.0" />
+      <point x="395.25" y="300.0" />
+      <point x="27.5" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.BarScenario" target="edu.radboud.ai.roboud.AbstractScenario">
+      <point x="0.0" y="-15.0" />
+      <point x="865.2178571428572" y="475.0" />
+      <point x="779.25" y="475.0" />
+      <point x="41.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.RoboudMind" target="edu.radboud.ai.roboud.Scenario">
+      <point x="34.66666666666663" y="-15.0" />
+      <point x="593.6666666666666" y="400.0" />
+      <point x="668.0" y="400.0" />
+      <point x="-19.75" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.ConfererceScenario" target="edu.radboud.ai.roboud.AbstractScenario">
+      <point x="0.0" y="-15.0" />
+      <point x="596.7178571428572" y="475.0" />
+      <point x="697.25" y="475.0" />
+      <point x="-41.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.HomeScenario" target="edu.radboud.ai.roboud.AbstractScenario">
+      <point x="0.0" y="-15.0" />
+      <point x="741.2178571428572" y="475.0" />
+      <point x="738.25" y="475.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.MakeNewApointmentAction" target="edu.radboud.ai.roboud.Action">
+      <point x="0.0" y="-15.0" />
+      <point x="1570.75" y="380.0" />
+      <point x="1155.2892857142858" y="380.0" />
+      <point x="29.57142857142867" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.CompleModelBehaviour" target="edu.radboud.ai.roboud.Behaviour">
+      <point x="0.0" y="-15.0" />
+      <point x="251.5" y="400.0" />
+      <point x="306.6242857142857" y="400.0" />
+      <point x="-10.875" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.LookForFaces" target="edu.radboud.ai.roboud.Action">
+      <point x="0.0" y="-15.0" />
+      <point x="981.75" y="400.0" />
+      <point x="1115.8607142857143" y="400.0" />
+      <point x="-9.85714285714289" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.AskQuestionAction" target="edu.radboud.ai.roboud.Action">
+      <point x="0.0" y="-15.0" />
+      <point x="1122.75" y="400.0" />
+      <point x="1125.7178571428572" y="400.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.EventHistory" target="edu.radboud.ai.roboud.Event">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.RoboudController" target="edu.radboud.ai.roboud.AndroidLocation">
+      <point x="53.75" y="-15.0" />
+      <point x="612.75" y="310.0" />
+      <point x="804.25" y="310.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.Event" target="edu.radboud.ai.roboud.EventType">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.RoboudController" target="edu.radboud.ai.roboud.AndroidMicrophone">
+      <point x="32.25" y="-15.0" />
+      <point x="591.25" y="300.0" />
+      <point x="687.25" y="300.0" />
+      <point x="35.5" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.AbstractScenario" target="edu.radboud.ai.roboud.Scenario">
+      <point x="-30.75" y="-15.0" />
+      <point x="19.75" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.AssignmentBehaviour" target="edu.radboud.ai.roboud.Behaviour">
+      <point x="0.0" y="-15.0" />
+      <point x="75.0" y="390.0" />
+      <point x="284.8742857142857" y="390.0" />
+      <point x="-32.625" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.RoboudController" target="edu.radboud.ai.roboud.AndroidCamera">
+      <point x="-10.75" y="-15.0" />
+      <point x="548.25" y="290.0" />
+      <point x="501.75" y="290.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.RoboudMind" target="edu.radboud.ai.roboud.Behaviour">
+      <point x="-34.66666666666663" y="-15.0" />
+      <point x="524.3333333333334" y="390.0" />
+      <point x="350.1242857142857" y="390.0" />
+      <point x="32.625" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.MoveTo" target="edu.radboud.ai.roboud.Action">
+      <point x="0.0" y="-15.0" />
+      <point x="1249.75" y="400.0" />
+      <point x="1135.575" y="400.0" />
+      <point x="9.85714285714289" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.AbstractScenario" target="edu.radboud.ai.roboud.Action">
+      <point x="30.75" y="-15.0" />
+      <point x="769.0" y="380.0" />
+      <point x="1096.1464285714285" y="380.0" />
+      <point x="-29.57142857142867" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.RoboudModel" target="edu.radboud.ai.roboud.EventHistory">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.ChitChatBehaviour" target="edu.radboud.ai.roboud.Behaviour">
+      <point x="0.0" y="-15.0" />
+      <point x="420.0" y="400.0" />
+      <point x="328.3742857142857" y="400.0" />
+      <point x="10.875" y="15.0" />
+    </edge>
+    <edge source="edu.radboud.ai.roboud.PostTweet" target="edu.radboud.ai.roboud.Action">
+      <point x="0.0" y="-15.0" />
+      <point x="864.25" y="390.0" />
+      <point x="1106.0035714285714" y="390.0" />
+      <point x="-19.71428571428578" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6211401425178147" x="832.0" y="265.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,4 +1,4 @@
-package edu.radboud.AI.roboud;
+package edu.radboud.ai.roboud.senses;
 
 import android.content.Context;
 import android.location.Location;
@@ -13,40 +13,34 @@ import java.util.Observable;
  */
 public class AndroidLocation extends Observable {
 
-    private static final int TWO_MINUTES = 1000 * 60 * 2;
-    private static final String locationProvider = LocationManager.NETWORK_PROVIDER;
+    public static final int MAX_REFRESH_RATE = 1000 * 60 * 2;
+    public static final String LOCATION_PROVIDER = LocationManager.NETWORK_PROVIDER;
     private LocationManager locationManager;
-    private LocationListener locationListener;
     private Location location;
+
+    private LocationListener locationListener = new LocationListener() {
+        public void onLocationChanged(Location _location) {
+            if (isBetterLocation(_location, location)) {
+                location = _location;
+                setChanged();
+                notifyObservers(location);
+            }
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+        public void onProviderEnabled(String provider) {}
+
+        public void onProviderDisabled(String provider) {}
+    };
 
     public AndroidLocation(Context context) {
 
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        location = locationManager.getLastKnownLocation(locationProvider);
-
-        // Define a listener that responds to location updates
-        locationListener = new LocationListener() {
-            public void onLocationChanged(Location _location) {
-                if (isBetterLocation(_location, location)) {
-                    location = _location;
-                    setChanged();
-                    notifyObservers();
-                }
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-            public void onProviderEnabled(String provider) {}
-
-            public void onProviderDisabled(String provider) {}
-        };
+        location = locationManager.getLastKnownLocation(LOCATION_PROVIDER);
 
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(locationProvider, 0, 0, locationListener);
-    }
-
-    public Location getLocation() {
-        return location;
+        locationManager.requestLocationUpdates(LOCATION_PROVIDER, 0, 0, locationListener);
     }
 
     /** Determines whether one Location reading is better than the current Location fix
@@ -61,8 +55,8 @@ public class AndroidLocation extends Observable {
 
         // Check whether the new location fix is newer or older
         long timeDelta = location.getTime() - currentBestLocation.getTime();
-        boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
-        boolean isSignificantlyOlder = timeDelta < -TWO_MINUTES;
+        boolean isSignificantlyNewer = timeDelta > MAX_REFRESH_RATE;
+        boolean isSignificantlyOlder = timeDelta < -MAX_REFRESH_RATE;
         boolean isNewer = timeDelta > 0;
 
         // If it's been more than two minutes since the current location, use the new location

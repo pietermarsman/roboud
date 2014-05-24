@@ -1,10 +1,10 @@
-package edu.radboud.AI.roboud;
+package edu.radboud.ai.roboud;
 
 import android.graphics.Bitmap;
 import android.location.Location;
-import android.media.AudioRecord;
 import com.wowwee.robome.RoboMeCommands.IncomingRobotCommand;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
+import edu.radboud.ai.roboud.event.EventHistory;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,6 +31,7 @@ public class RoboudModel extends Observable {
     private List<String> voiceResults;
 
     private long lastModification;
+    private EventHistory eventHistory;
 
     public RoboudModel(String _libVersion) {
         this.libVersion = _libVersion;
