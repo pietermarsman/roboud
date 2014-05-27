@@ -1,0 +1,15 @@
+Checken of alle requirements voldaan zijn bij het opstarten (zoals gedownloade speech)
+Conference is hoofdscenario
+Belangrijkste behaviour is AssignmentBehaviour
+Eerst implementeren we IntroduceBehaviour
+	- Impelenteren (Pieter)
+Structuren geven relaties tussen verschillenden acties (OR en AND, SWITCH/CASE)
+	- Structuren implementeren (Pieter)
+Actions implementeren
+	 - AskQuestionAction (Mike) 
+	 - Tweet (Guido)
+Actuators (Mike)
+	- Speak
+	- Motor
+	- LED ligth
+	
