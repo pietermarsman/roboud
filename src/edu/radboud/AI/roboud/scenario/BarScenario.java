@@ -4,4 +4,9 @@ package edu.radboud.ai.roboud.scenario;
  * Created by Pieter Marsman on 24-5-2014.
  */
 public class BarScenario extends AbstractScenario {
+
+    public BarScenario() {
+        interactingWithIndividual = false;
+        canDrive = false;
+    }
 }
