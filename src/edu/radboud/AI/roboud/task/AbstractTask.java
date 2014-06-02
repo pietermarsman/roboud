@@ -1,6 +1,5 @@
 package edu.radboud.ai.roboud.task;
 
-import edu.radboud.ai.roboud.Task;
 import edu.radboud.ai.roboud.action.Action;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
@@ -22,7 +21,7 @@ public class AbstractTask implements Task {
     }
 
     @Override
-    public void isFinished() {
+    public boolean isFinished() {
 
     }
 }

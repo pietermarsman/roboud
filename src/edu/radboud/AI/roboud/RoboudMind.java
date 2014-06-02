@@ -1,6 +1,6 @@
 package edu.radboud.ai.roboud;
 
-import edu.radboud.ai.roboud.behaviour.Behaviour;
+import edu.radboud.ai.roboud.action.behaviour.Behaviour;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
 /**

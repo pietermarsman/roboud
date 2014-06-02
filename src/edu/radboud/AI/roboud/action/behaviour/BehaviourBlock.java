@@ -1,4 +1,4 @@
-package edu.radboud.ai.roboud.behaviour;
+package edu.radboud.ai.roboud.action.behaviour;
 
 import edu.radboud.ai.roboud.scenario.Scenario;
 
@@ -8,5 +8,5 @@ import edu.radboud.ai.roboud.scenario.Scenario;
 public interface BehaviourBlock {
 
     public void doActions(Scenario scenario);
-    public void isFinished();
+    public boolean isFinished();
 }

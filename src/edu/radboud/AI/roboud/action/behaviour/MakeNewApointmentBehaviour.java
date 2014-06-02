@@ -1,4 +1,4 @@
-package edu.radboud.ai.roboud.behaviour;
+package edu.radboud.ai.roboud.action.behaviour;
 
 import java.util.List;
 

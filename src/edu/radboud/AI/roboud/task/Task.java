@@ -1,6 +1,6 @@
-package edu.radboud.ai.roboud;
+package edu.radboud.ai.roboud.task;
 
-import edu.radboud.ai.roboud.behaviour.BehaviourBlock;
+import edu.radboud.ai.roboud.action.behaviour.BehaviourBlock;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
 /**

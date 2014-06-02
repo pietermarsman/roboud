@@ -30,19 +30,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2b22d53-a500-496e-9206-ae76be935dd4" name="Default" comment="Added listening to android microphone">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/Task.java" />
-      <change type="DELETED" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\behaviour\BehaviourBlockCombinator.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\scenario\AbstractScenario.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/scenario/AbstractScenario.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\action\Action.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/Action.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/SpeakTask.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/SpeechRepertoire.java" />
+      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\task\AbstractTask.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/AbstractTask.java" />
       <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\task\AskQuestionTask.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/AskQuestionTask.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\scenario\BarScenario.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/scenario/BarScenario.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/BehaviourBlock.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/BehaviourBlock.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\task\LookForFacesTask.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/LookForFacesTask.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\task\MakeNewApointmentTask.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/MakeNewApointmentTask.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\task\MoveToTask.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/MoveToTask.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\task\PostTweetTask.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/PostTweetTask.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\RoboudMind.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/RoboudMind.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\task\WaitForAnswerAction.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/WaitForAnswerAction.java" />
+      <change type="MODIFICATION" beforePath="C:\Users\Gebruiker\Documents\roboud\src\edu\radboud\ai\roboud\action\SpeakAction.java" afterPath="$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/SpeakAction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Roboud.iws" />
@@ -97,8 +89,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
+    <ui_properties converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -109,174 +101,21 @@
       <file leaf-file-name="RoboudController.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/RoboudController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="3910">
+            <state vertical-scroll-proportion="0.0" vertical-offset="799" max-vertical-offset="3859">
               <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
-              <folding>
-                <element signature="e#1182#1474#0" expanded="true" />
-                <element signature="e#1467#1468#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JAVA/edu.radboud.ai.roboud" pinned="false" current="true" current-in-tab="true">
-        <entry file="uml://JAVA/edu.radboud.ai.roboud">
-          <provider selected="true" editor-type-id="UmlEditorProvider">
-            <state>
-              <ID>JAVA</ID>
-              <OriginalElement>edu.radboud.ai.roboud</OriginalElement>
-              <nodes>
-                <node x="351.75" y="160.0">edu.radboud.ai.roboud.task.AbstractTask</node>
-                <node x="344.0" y="560.0">edu.radboud.ai.roboud.senses</node>
-                <node x="473.75" y="160.0">edu.radboud.ai.roboud.action.MotorAction</node>
-                <node x="760.25" y="80.0">edu.radboud.ai.roboud.action.Action</node>
-                <node x="328.0" y="485.0">edu.radboud.ai.roboud.behaviour.MakeNewApointmentBehaviour</node>
-                <node x="364.5" y="405.0">edu.radboud.ai.roboud.behaviour.AbstractBehaviour</node>
-                <node x="0.0" y="635.0">edu.radboud.ai.roboud.event</node>
-                <node x="735.0" y="485.0">edu.radboud.ai.roboud.behaviour.ChitChatBehaviour</node>
-                <node x="145.0" y="250.0">edu.radboud.ai.roboud.task.MoveToTask</node>
-                <node x="170.0" y="485.0">edu.radboud.ai.roboud.behaviour.IntroduceBehaviour</node>
-                <node x="873.75" y="160.0">edu.radboud.ai.roboud.action.SpeakAction</node>
-                <node x="745.0" y="250.0">edu.radboud.ai.roboud.task.WaitForAnswerAction</node>
-                <node x="550.0" y="250.0">edu.radboud.ai.roboud.task.MakeNewApointmentTask</node>
-                <node x="155.0" y="635.0">edu.radboud.ai.roboud.RoboudMind</node>
-                <node x="417.0" y="250.0">edu.radboud.ai.roboud.task.PostTweetTask</node>
-                <node x="552.0" y="485.0">edu.radboud.ai.roboud.behaviour.CompleModelBehaviour</node>
-                <node x="0.0" y="560.0">edu.radboud.ai.roboud.RoboudController</node>
-                <node x="595.75" y="160.0">edu.radboud.ai.roboud.action.ShowTextAction</node>
-                <node x="174.0" y="560.0">edu.radboud.ai.roboud.scenario</node>
-                <node x="735.75" y="160.0">edu.radboud.ai.roboud.action.CombineAction</node>
-                <node x="386.5" y="325.0">edu.radboud.ai.roboud.behaviour.Behaviour</node>
-                <node x="504.0" y="560.0">edu.radboud.ai.roboud.RoboudModel</node>
-                <node x="993.75" y="160.0">edu.radboud.ai.roboud.action.LedAction</node>
-                <node x="540.75" y="0.0">edu.radboud.ai.roboud.behaviour.BehaviourBlock</node>
-                <node x="267.0" y="250.0">edu.radboud.ai.roboud.task.LookForFacesTask</node>
-                <node x="0.0" y="250.0">edu.radboud.ai.roboud.task.AskQuestionTask</node>
-                <node x="0.0" y="485.0">edu.radboud.ai.roboud.behaviour.AssignmentBehaviour</node>
-                <node x="373.75" y="80.0">edu.radboud.ai.roboud.Task</node>
-              </nodes>
-              <notes />
-              <edges>
-                <edge source="edu.radboud.ai.roboud.behaviour.IntroduceBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-                  <point x="0.0" y="-15.0" />
-                  <point x="239.0" y="465.0" />
-                  <point x="403.8" y="465.0" />
-                  <point x="-26.19999999999999" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.task.LookForFacesTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-                  <point x="0.0" y="-15.0" />
-                  <point x="332.0" y="230.0" />
-                  <point x="394.25" y="230.0" />
-                  <point x="-8.5" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.behaviour.MakeNewApointmentBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-                  <point x="0.0" y="-15.0" />
-                  <point x="0.0" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.task.MakeNewApointmentTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-                  <point x="0.0" y="-15.0" />
-                  <point x="637.5" y="220.0" />
-                  <point x="428.25" y="220.0" />
-                  <point x="25.5" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.task.AskQuestionTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-                  <point x="0.0" y="-15.0" />
-                  <point x="62.5" y="210.0" />
-                  <point x="360.25" y="210.0" />
-                  <point x="-42.5" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.action.MotorAction" target="edu.radboud.ai.roboud.action.Action">
-                  <point x="0.0" y="-15.0" />
-                  <point x="524.75" y="130.0" />
-                  <point x="767.15" y="130.0" />
-                  <point x="-27.600000000000023" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.action.ShowTextAction" target="edu.radboud.ai.roboud.action.Action">
-                  <point x="0.0" y="-15.0" />
-                  <point x="655.75" y="140.0" />
-                  <point x="780.95" y="140.0" />
-                  <point x="-13.799999999999955" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.task.PostTweetTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-                  <point x="0.0" y="-15.0" />
-                  <point x="473.5" y="230.0" />
-                  <point x="411.25" y="230.0" />
-                  <point x="8.5" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.task.AbstractTask" target="edu.radboud.ai.roboud.Task">
-                  <point x="0.0" y="-15.0" />
-                  <point x="0.0" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.action.CombineAction" target="edu.radboud.ai.roboud.action.Action">
-                  <point x="0.0" y="-15.0" />
-                  <point x="0.0" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.action.LedAction" target="edu.radboud.ai.roboud.action.Action">
-                  <point x="0.0" y="-15.0" />
-                  <point x="1037.75" y="130.0" />
-                  <point x="822.35" y="130.0" />
-                  <point x="27.600000000000023" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.task.WaitForAnswerAction" target="edu.radboud.ai.roboud.task.AbstractTask">
-                  <point x="0.0" y="-15.0" />
-                  <point x="819.5" y="210.0" />
-                  <point x="445.25" y="210.0" />
-                  <point x="42.5" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.behaviour.AbstractBehaviour" target="edu.radboud.ai.roboud.behaviour.Behaviour">
-                  <point x="0.0" y="-15.0" />
-                  <point x="0.0" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.behaviour.CompleModelBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-                  <point x="0.0" y="-15.0" />
-                  <point x="633.5" y="465.0" />
-                  <point x="456.2" y="465.0" />
-                  <point x="26.19999999999999" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.action.Action" target="edu.radboud.ai.roboud.behaviour.BehaviourBlock">
-                  <point x="0.0" y="-15.0" />
-                  <point x="794.75" y="55.0" />
-                  <point x="627.75" y="55.0" />
-                  <point x="29.0" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.task.MoveToTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-                  <point x="0.0" y="-15.0" />
-                  <point x="196.0" y="220.0" />
-                  <point x="377.25" y="220.0" />
-                  <point x="-25.5" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.action.SpeakAction" target="edu.radboud.ai.roboud.action.Action">
-                  <point x="0.0" y="-15.0" />
-                  <point x="923.75" y="140.0" />
-                  <point x="808.55" y="140.0" />
-                  <point x="13.799999999999955" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.Task" target="edu.radboud.ai.roboud.behaviour.BehaviourBlock">
-                  <point x="0.0" y="-15.0" />
-                  <point x="402.75" y="55.0" />
-                  <point x="569.75" y="55.0" />
-                  <point x="-29.0" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.behaviour.AssignmentBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-                  <point x="0.0" y="-15.0" />
-                  <point x="75.0" y="455.0" />
-                  <point x="377.6" y="455.0" />
-                  <point x="-52.39999999999998" y="15.0" />
-                </edge>
-                <edge source="edu.radboud.ai.roboud.behaviour.ChitChatBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-                  <point x="0.0" y="-15.0" />
-                  <point x="802.0" y="455.0" />
-                  <point x="482.4" y="455.0" />
-                  <point x="52.39999999999998" y="15.0" />
-                </edge>
-              </edges>
-              <settings layout="Hierarchic Group" zoom="0.867513611615245" x="541.0" y="332.5" />
-              <SelectedNodes>
-                <node>edu.radboud.ai.roboud.task.AbstractTask</node>
-              </SelectedNodes>
-              <Categories />
-              <SCOPE>All</SCOPE>
-              <VISIBILITY>private</VISIBILITY>
+      <file leaf-file-name="IntroduceBehaviour.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/IntroduceBehaviour.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.46019107" vertical-offset="0" max-vertical-offset="628">
+              <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -297,11 +136,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/RoboMe.java" />
-        <option value="$PROJECT_DIR$/res/layout/main.xml.xsl" />
-        <option value="$PROJECT_DIR$/gen/edu/radboud/AI/roboud/AndroidCamera.java" />
-        <option value="$PROJECT_DIR$/res/values/ids.xml" />
-        <option value="$PROJECT_DIR$/res/layout/main2.xml" />
         <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/MainActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/camera_preview.xml" />
         <option value="$PROJECT_DIR$/src/edu/radboud/AI/roboud/Roboud.java" />
@@ -327,7 +161,6 @@
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/RoboudController.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/LookForFacesAction.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/LookForFacesAction.java" />
-        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/SpeakAction.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/Actuator/ShowTextActuator.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/Actuator/SpeakActuator.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/BehaviourBlock.java" />
@@ -336,18 +169,24 @@
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/scenario/AbstractScenario.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/scenario/BarScenario.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/Behaviour.java" />
-        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/AbstractBehaviour.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/CompleModelBehaviour.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/MakeNewApointmentBehaviour.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/AssignmentBehaviour.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/ChitChatBehaviour.java" />
-        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/IntroduceBehaviour.java" />
-        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/AskQuestionTask.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/BehaviourBlock.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/RoboudMind.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/Action.java" />
-        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/AbstractTask.java" />
         <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/BehaviourBlock.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/AbstractBehaviour.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/SpeakAction.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/DefaultQuestion.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/SpeechRepertoir.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/AbstractTask.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/AskQuestionTask.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/SpeakTask.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/SpeechRepertoire.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/IntroduceBehaviour.java" />
+        <option value="$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/IntroduceBehaviour.java" />
       </list>
     </option>
   </component>
@@ -398,6 +237,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -434,53 +274,8 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Roboud" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="roboud" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="roboud" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="behaviour" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Roboud" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="roboud" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="roboud" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="action" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -595,6 +390,19 @@
       <option name="trusted" value="true" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="XSLT" factoryName="XSLT">
       <option name="myOutputFile" />
       <option name="myOpenOutputFile" value="false" />
@@ -609,19 +417,6 @@
       <OutputType value="CONSOLE" save-to-file="false" />
       <FileType name="XML" />
       <JdkChoice value="FROM_MODULE" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -658,6 +453,26 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
     <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
       <option name="BCName" value="" />
       <option name="IOSSimulatorSdkPath" value="" />
@@ -691,26 +506,6 @@
       <option name="screenWidth" value="0" />
       <option name="url" value="http://" />
       <option name="usbDebugPort" value="7936" />
-      <method />
-    </configuration>
-    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
-      <module name="" />
-      <option name="ACTIVITY_CLASS" value="" />
-      <option name="MODE" value="default_activity" />
-      <option name="DEPLOY" value="true" />
-      <option name="ARTIFACT_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="false" name="roboud" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -777,7 +572,8 @@
       <workItem from="1400890236372" duration="598000" />
       <workItem from="1401200294368" duration="5504000" />
       <workItem from="1401696573583" duration="198000" />
-      <workItem from="1401697080278" duration="4787000" />
+      <workItem from="1401697080278" duration="5952000" />
+      <workItem from="1401706385816" duration="2252000" />
     </task>
     <task id="LOCAL-00001" summary="Added listening to other sensors">
       <created>1400499898739</created>
@@ -787,7 +583,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22999000" />
+    <option name="totallyTimeSpent" value="26416000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -818,7 +614,6 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32153392" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -830,13 +625,14 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22653721" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22977346" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12352941" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Analyze Dataflow from" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32955465" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Analyze Dataflow to" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5632353" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32061067" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -864,7 +660,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/SpeechRepertoire.java</url>
+          <line>22</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="4" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -872,90 +676,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/Program Files/adt-bundle-windows-x86_64/sdk/sources/android-19/android/app/Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="9489" max-vertical-offset="90780">
-          <caret line="654" column="28" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/edu.radboud.AI.uml">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>edu.radboud.AI.uml</OriginalElement>
-          <nodes />
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="640.0" y="312.0" />
-          <SelectedNodes />
-          <Categories />
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>public</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/lib/RoboMe-Android-SDK/RoboMe-Android-SDK/RoboMeLib.jar!/com/wowwee/robome/RoboMe.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1904" vertical-offset="0" max-vertical-offset="1122">
-          <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/edu.radboud.AI.roboud.AndroidMicrophone">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>edu.radboud.AI.roboud.AndroidMicrophone</OriginalElement>
-          <nodes>
-            <node x="4.0" y="257.0">edu.radboud.AI.roboud.AndroidMicrophone</node>
-            <node x="0.0" y="0.0">java.util.Observable</node>
-          </nodes>
-          <notes />
-          <edges>
-            <edge source="edu.radboud.AI.roboud.AndroidMicrophone" target="java.util.Observable">
-              <point x="0.0" y="-82.5" />
-              <point x="0.0" y="103.5" />
-            </edge>
-          </edges>
-          <settings layout="Hierarchic Group" zoom="1.0" x="-152.0" y="140.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Constructors</Category>
-            <Category>Fields</Category>
-            <Category>Methods</Category>
-            <Category>Inner Classes</Category>
-            <Category>Properties</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>public</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/edu.radboud.AI.roboud.RoboudView">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>edu.radboud.AI.roboud.RoboudView</OriginalElement>
-          <nodes>
-            <node x="" y="">edu.radboud.AI.roboud.RoboudView</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="277.0" y="236.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Constructors</Category>
-            <Category>Fields</Category>
-            <Category>Methods</Category>
-            <Category>Inner Classes</Category>
-            <Category>Properties</Category>
-          </Categories>
-          <SCOPE>Project Files</SCOPE>
-          <VISIBILITY>public</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/senses/AndroidCamera.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70615387" vertical-offset="0" max-vertical-offset="1785">
@@ -1018,8 +738,8 @@
             <node x="" y="">edu.radboud.ai.roboud.event.EventHistory</node>
             <node x="" y="">edu.radboud.ai.roboud.scenario.ConfererceScenario</node>
             <node x="" y="">edu.radboud.ai.roboud.RoboudMind</node>
-            <node x="" y="">edu.radboud.ai.roboud.behaviour.AssignmentBehaviour</node>
             <node x="" y="">edu.radboud.AI.roboud.Manifest</node>
+            <node x="" y="">edu.radboud.ai.roboud.behaviour.AssignmentBehaviour</node>
           </nodes>
           <notes />
           <edges />
@@ -1116,9 +836,9 @@
             <node x="" y="">edu.radboud.ai.roboud.RoboudController</node>
             <node x="" y="">android.content.ContextWrapper</node>
             <node x="" y="">android.content.ComponentCallbacks2</node>
-            <node x="" y="">android.view.View.OnCreateContextMenuListener</node>
-            <node x="" y="">android.app.Activity</node>
             <node x="" y="">android.content.Context</node>
+            <node x="" y="">android.app.Activity</node>
+            <node x="" y="">android.view.View.OnCreateContextMenuListener</node>
             <node x="" y="">android.hardware.SensorEventListener</node>
             <node x="" y="">android.view.Window.Callback</node>
           </nodes>
@@ -1213,11 +933,11 @@
               <point x="172.0" y="135.0" />
               <point x="-41.0" y="15.0" />
             </edge>
-            <edge source="edu.radboud.ai.roboud.scenario.AbstractScenario" target="edu.radboud.ai.roboud.scenario.Scenario">
+            <edge source="edu.radboud.ai.roboud.scenario.HomeScenario" target="edu.radboud.ai.roboud.scenario.AbstractScenario">
               <point x="0.0" y="-15.0" />
               <point x="0.0" y="15.0" />
             </edge>
-            <edge source="edu.radboud.ai.roboud.scenario.HomeScenario" target="edu.radboud.ai.roboud.scenario.AbstractScenario">
+            <edge source="edu.radboud.ai.roboud.scenario.AbstractScenario" target="edu.radboud.ai.roboud.scenario.Scenario">
               <point x="0.0" y="-15.0" />
               <point x="0.0" y="15.0" />
             </edge>
@@ -1242,8 +962,8 @@
           <ID>JAVA</ID>
           <OriginalElement>edu.radboud.ai.roboud.Actuator.ShowTextAction</OriginalElement>
           <nodes>
-            <node x="" y="">edu.radboud.ai.roboud.action.Action</node>
             <node x="" y="">edu.radboud.ai.roboud.Actuator.ShowTextAction</node>
+            <node x="" y="">edu.radboud.ai.roboud.action.Action</node>
           </nodes>
           <notes />
           <edges />
@@ -1262,21 +982,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/SpeakAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18979266" vertical-offset="0" max-vertical-offset="627">
-          <caret line="8" column="82" selection-start-line="8" selection-start-column="82" selection-end-line="8" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
     <entry file="uml://JAVA/edu.radboud.ai.roboud.Actuator">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
           <ID>JAVA</ID>
           <OriginalElement>edu.radboud.ai.roboud.Actuator</OriginalElement>
           <nodes>
-            <node x="" y="">edu.radboud.ai.roboud.Actuator.SpeakActuator</node>
             <node x="" y="">edu.radboud.ai.roboud.Actuator.ShowTextActuator</node>
+            <node x="" y="">edu.radboud.ai.roboud.Actuator.SpeakActuator</node>
             <node x="" y="">edu.radboud.ai.roboud.Actuator.MotorActuator</node>
             <node x="" y="">edu.radboud.ai.roboud.Actuator.LedActuator</node>
             <node x="" y="">edu.radboud.ai.roboud.Actuator.Actuator</node>
@@ -1297,8 +1010,8 @@
           <ID>JAVA</ID>
           <OriginalElement>edu.radboud.ai.roboud.action</OriginalElement>
           <nodes>
-            <node x="0.0" y="155.0">edu.radboud.ai.roboud.Actuator.ShowTextActuator</node>
             <node x="0.0" y="0.0">edu.radboud.ai.roboud.Actuator.SpeakActuator</node>
+            <node x="0.0" y="155.0">edu.radboud.ai.roboud.Actuator.ShowTextActuator</node>
             <node x="490.75" y="80.0">edu.radboud.ai.roboud.action.MoveToAction</node>
             <node x="18.75" y="80.0">edu.radboud.ai.roboud.action.AskQuestionActuator</node>
             <node x="185.75" y="80.0">edu.radboud.ai.roboud.action.LookForFacesAction</node>
@@ -1348,7 +1061,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3789809" vertical-offset="0" max-vertical-offset="628">
           <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1356,7 +1068,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.24363057" vertical-offset="0" max-vertical-offset="628">
           <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1371,7 +1082,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="65.5" y="55.0" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="66.0" y="55.0" />
           <SelectedNodes />
           <Categories />
           <SCOPE>All</SCOPE>
@@ -1379,27 +1090,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/Behaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21656051" vertical-offset="0" max-vertical-offset="628">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/MakeNewApointmentBehaviour.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/MakeNewApointmentBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32484075" vertical-offset="0" max-vertical-offset="628">
           <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#243#244#0" expanded="true" />
-            <element signature="e#270#271#0" expanded="true" />
+            <element signature="e#250#251#0" expanded="true" />
+            <element signature="e#277#278#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/CompleModelBehaviour.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/CompleModelBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18949045" vertical-offset="0" max-vertical-offset="628">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
@@ -1407,34 +1110,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/AssignmentBehaviour.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/AssignmentBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27070063" vertical-offset="0" max-vertical-offset="628">
           <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="20" />
           <folding>
-            <element signature="e#236#237#0" expanded="true" />
-            <element signature="e#263#264#0" expanded="true" />
+            <element signature="e#243#244#0" expanded="true" />
+            <element signature="e#270#271#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/ChitChatBehaviour.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/ChitChatBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2977707" vertical-offset="0" max-vertical-offset="628">
           <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="20" />
           <folding>
-            <element signature="e#235#236#0" expanded="true" />
-            <element signature="e#262#263#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/AbstractBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35191083" vertical-offset="0" max-vertical-offset="628">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="14" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#242#243#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1463,19 +1156,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/AskQuestionTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18949045" vertical-offset="0" max-vertical-offset="628">
-          <caret line="7" column="51" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/LookForFacesTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13535032" vertical-offset="0" max-vertical-offset="628">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1483,7 +1167,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13535032" vertical-offset="0" max-vertical-offset="628">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1491,7 +1174,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13535032" vertical-offset="0" max-vertical-offset="628">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1499,15 +1181,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13535032" vertical-offset="0" max-vertical-offset="628">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/IntroduceBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21656051" vertical-offset="0" max-vertical-offset="628">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1544,11 +1217,68 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="434.5" y="172.5" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="435.0" y="173.0" />
           <SelectedNodes />
           <Categories />
           <SCOPE>All</SCOPE>
           <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/Behaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18949045" vertical-offset="0" max-vertical-offset="628">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18949045" vertical-offset="0" max-vertical-offset="628">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/AbstractBehaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2977707" vertical-offset="0" max-vertical-offset="628">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/MotorAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14049587" vertical-offset="0" max-vertical-offset="605">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/CombineAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19669421" vertical-offset="0" max-vertical-offset="605">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/LedAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13535032" vertical-offset="0" max-vertical-offset="628">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/SpeakAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46019107" vertical-offset="0" max-vertical-offset="629">
+          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#308#309#0" expanded="true" />
+            <element signature="e#340#341#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1560,37 +1290,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/Task.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/BehaviourBlock.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18949045" vertical-offset="0" max-vertical-offset="628">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.19669421" vertical-offset="0" max-vertical-offset="605">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/behaviour/BehaviourBlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18949045" vertical-offset="0" max-vertical-offset="628">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/RoboudController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="3910">
-          <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
-          <folding>
-            <element signature="e#1182#1474#0" expanded="true" />
-            <element signature="e#1467#1468#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/AbstractTask.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6496815" vertical-offset="0" max-vertical-offset="628">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/AskQuestionTask.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2977707" vertical-offset="0" max-vertical-offset="628">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1601,157 +1320,82 @@
           <ID>JAVA</ID>
           <OriginalElement>edu.radboud.ai.roboud</OriginalElement>
           <nodes>
-            <node x="351.75" y="160.0">edu.radboud.ai.roboud.task.AbstractTask</node>
-            <node x="344.0" y="560.0">edu.radboud.ai.roboud.senses</node>
-            <node x="473.75" y="160.0">edu.radboud.ai.roboud.action.MotorAction</node>
-            <node x="760.25" y="80.0">edu.radboud.ai.roboud.action.Action</node>
-            <node x="328.0" y="485.0">edu.radboud.ai.roboud.behaviour.MakeNewApointmentBehaviour</node>
-            <node x="364.5" y="405.0">edu.radboud.ai.roboud.behaviour.AbstractBehaviour</node>
-            <node x="0.0" y="635.0">edu.radboud.ai.roboud.event</node>
-            <node x="735.0" y="485.0">edu.radboud.ai.roboud.behaviour.ChitChatBehaviour</node>
-            <node x="145.0" y="250.0">edu.radboud.ai.roboud.task.MoveToTask</node>
-            <node x="170.0" y="485.0">edu.radboud.ai.roboud.behaviour.IntroduceBehaviour</node>
-            <node x="873.75" y="160.0">edu.radboud.ai.roboud.action.SpeakAction</node>
-            <node x="745.0" y="250.0">edu.radboud.ai.roboud.task.WaitForAnswerAction</node>
-            <node x="550.0" y="250.0">edu.radboud.ai.roboud.task.MakeNewApointmentTask</node>
-            <node x="155.0" y="635.0">edu.radboud.ai.roboud.RoboudMind</node>
-            <node x="417.0" y="250.0">edu.radboud.ai.roboud.task.PostTweetTask</node>
-            <node x="552.0" y="485.0">edu.radboud.ai.roboud.behaviour.CompleModelBehaviour</node>
-            <node x="0.0" y="560.0">edu.radboud.ai.roboud.RoboudController</node>
-            <node x="595.75" y="160.0">edu.radboud.ai.roboud.action.ShowTextAction</node>
-            <node x="174.0" y="560.0">edu.radboud.ai.roboud.scenario</node>
-            <node x="735.75" y="160.0">edu.radboud.ai.roboud.action.CombineAction</node>
-            <node x="386.5" y="325.0">edu.radboud.ai.roboud.behaviour.Behaviour</node>
-            <node x="504.0" y="560.0">edu.radboud.ai.roboud.RoboudModel</node>
-            <node x="993.75" y="160.0">edu.radboud.ai.roboud.action.LedAction</node>
-            <node x="540.75" y="0.0">edu.radboud.ai.roboud.behaviour.BehaviourBlock</node>
-            <node x="267.0" y="250.0">edu.radboud.ai.roboud.task.LookForFacesTask</node>
-            <node x="0.0" y="250.0">edu.radboud.ai.roboud.task.AskQuestionTask</node>
-            <node x="0.0" y="485.0">edu.radboud.ai.roboud.behaviour.AssignmentBehaviour</node>
-            <node x="373.75" y="80.0">edu.radboud.ai.roboud.Task</node>
+            <node x="" y="">edu.radboud.ai.roboud.task.AbstractTask</node>
+            <node x="" y="">edu.radboud.ai.roboud.senses</node>
+            <node x="" y="">edu.radboud.ai.roboud.action.MotorAction</node>
+            <node x="" y="">edu.radboud.ai.roboud.action.Action</node>
+            <node x="" y="">edu.radboud.ai.roboud.behaviour.MakeNewApointmentBehaviour</node>
+            <node x="" y="">edu.radboud.ai.roboud.behaviour.AbstractBehaviour</node>
+            <node x="" y="">edu.radboud.ai.roboud.event</node>
+            <node x="" y="">edu.radboud.ai.roboud.behaviour.ChitChatBehaviour</node>
+            <node x="" y="">edu.radboud.ai.roboud.task.MoveToTask</node>
+            <node x="" y="">edu.radboud.ai.roboud.SpeakTask</node>
+            <node x="" y="">edu.radboud.ai.roboud.behaviour.IntroduceBehaviour</node>
+            <node x="" y="">edu.radboud.ai.roboud.action.SpeakAction</node>
+            <node x="" y="">edu.radboud.ai.roboud.task.WaitForAnswerAction</node>
+            <node x="" y="">edu.radboud.ai.roboud.task.MakeNewApointmentTask</node>
+            <node x="" y="">edu.radboud.ai.roboud.RoboudMind</node>
+            <node x="" y="">edu.radboud.ai.roboud.task.PostTweetTask</node>
+            <node x="" y="">edu.radboud.ai.roboud.behaviour.CompleModelBehaviour</node>
+            <node x="" y="">edu.radboud.ai.roboud.RoboudController</node>
+            <node x="" y="">edu.radboud.ai.roboud.action.ShowTextAction</node>
+            <node x="" y="">edu.radboud.ai.roboud.scenario</node>
+            <node x="" y="">edu.radboud.ai.roboud.action.CombineAction</node>
+            <node x="" y="">edu.radboud.ai.roboud.behaviour.Behaviour</node>
+            <node x="" y="">edu.radboud.ai.roboud.RoboudModel</node>
+            <node x="" y="">edu.radboud.ai.roboud.action.LedAction</node>
+            <node x="" y="">edu.radboud.ai.roboud.behaviour.BehaviourBlock</node>
+            <node x="" y="">edu.radboud.ai.roboud.task.LookForFacesTask</node>
+            <node x="" y="">edu.radboud.ai.roboud.task.AskQuestionTask</node>
+            <node x="" y="">edu.radboud.ai.roboud.behaviour.AssignmentBehaviour</node>
+            <node x="" y="">edu.radboud.ai.roboud.Task</node>
           </nodes>
           <notes />
-          <edges>
-            <edge source="edu.radboud.ai.roboud.behaviour.IntroduceBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-              <point x="0.0" y="-15.0" />
-              <point x="239.0" y="465.0" />
-              <point x="403.8" y="465.0" />
-              <point x="-26.19999999999999" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.task.LookForFacesTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-              <point x="0.0" y="-15.0" />
-              <point x="332.0" y="230.0" />
-              <point x="394.25" y="230.0" />
-              <point x="-8.5" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.behaviour.MakeNewApointmentBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-              <point x="0.0" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.task.MakeNewApointmentTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-              <point x="0.0" y="-15.0" />
-              <point x="637.5" y="220.0" />
-              <point x="428.25" y="220.0" />
-              <point x="25.5" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.task.AskQuestionTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-              <point x="0.0" y="-15.0" />
-              <point x="62.5" y="210.0" />
-              <point x="360.25" y="210.0" />
-              <point x="-42.5" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.action.MotorAction" target="edu.radboud.ai.roboud.action.Action">
-              <point x="0.0" y="-15.0" />
-              <point x="524.75" y="130.0" />
-              <point x="767.15" y="130.0" />
-              <point x="-27.600000000000023" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.action.ShowTextAction" target="edu.radboud.ai.roboud.action.Action">
-              <point x="0.0" y="-15.0" />
-              <point x="655.75" y="140.0" />
-              <point x="780.95" y="140.0" />
-              <point x="-13.799999999999955" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.task.PostTweetTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-              <point x="0.0" y="-15.0" />
-              <point x="473.5" y="230.0" />
-              <point x="411.25" y="230.0" />
-              <point x="8.5" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.task.AbstractTask" target="edu.radboud.ai.roboud.Task">
-              <point x="0.0" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.action.CombineAction" target="edu.radboud.ai.roboud.action.Action">
-              <point x="0.0" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.action.LedAction" target="edu.radboud.ai.roboud.action.Action">
-              <point x="0.0" y="-15.0" />
-              <point x="1037.75" y="130.0" />
-              <point x="822.35" y="130.0" />
-              <point x="27.600000000000023" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.task.WaitForAnswerAction" target="edu.radboud.ai.roboud.task.AbstractTask">
-              <point x="0.0" y="-15.0" />
-              <point x="819.5" y="210.0" />
-              <point x="445.25" y="210.0" />
-              <point x="42.5" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.behaviour.AbstractBehaviour" target="edu.radboud.ai.roboud.behaviour.Behaviour">
-              <point x="0.0" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.behaviour.CompleModelBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-              <point x="0.0" y="-15.0" />
-              <point x="633.5" y="465.0" />
-              <point x="456.2" y="465.0" />
-              <point x="26.19999999999999" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.action.Action" target="edu.radboud.ai.roboud.behaviour.BehaviourBlock">
-              <point x="0.0" y="-15.0" />
-              <point x="794.75" y="55.0" />
-              <point x="627.75" y="55.0" />
-              <point x="29.0" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.task.MoveToTask" target="edu.radboud.ai.roboud.task.AbstractTask">
-              <point x="0.0" y="-15.0" />
-              <point x="196.0" y="220.0" />
-              <point x="377.25" y="220.0" />
-              <point x="-25.5" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.action.SpeakAction" target="edu.radboud.ai.roboud.action.Action">
-              <point x="0.0" y="-15.0" />
-              <point x="923.75" y="140.0" />
-              <point x="808.55" y="140.0" />
-              <point x="13.799999999999955" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.Task" target="edu.radboud.ai.roboud.behaviour.BehaviourBlock">
-              <point x="0.0" y="-15.0" />
-              <point x="402.75" y="55.0" />
-              <point x="569.75" y="55.0" />
-              <point x="-29.0" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.behaviour.AssignmentBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-              <point x="0.0" y="-15.0" />
-              <point x="75.0" y="455.0" />
-              <point x="377.6" y="455.0" />
-              <point x="-52.39999999999998" y="15.0" />
-            </edge>
-            <edge source="edu.radboud.ai.roboud.behaviour.ChitChatBehaviour" target="edu.radboud.ai.roboud.behaviour.AbstractBehaviour">
-              <point x="0.0" y="-15.0" />
-              <point x="802.0" y="455.0" />
-              <point x="482.4" y="455.0" />
-              <point x="52.39999999999998" y="15.0" />
-            </edge>
-          </edges>
-          <settings layout="Hierarchic Group" zoom="0.867513611615245" x="541.0" y="332.5" />
-          <SelectedNodes>
-            <node>edu.radboud.ai.roboud.task.AbstractTask</node>
-          </SelectedNodes>
+          <edges />
+          <settings layout="Hierarchic Group" zoom="0.8013468013468014" x="584.0" y="332.5" />
+          <SelectedNodes />
           <Categories />
           <SCOPE>All</SCOPE>
           <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/SpeakTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3789809" vertical-offset="0" max-vertical-offset="628">
+          <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
+          <folding>
+            <element signature="e#263#264#0" expanded="true" />
+            <element signature="e#320#321#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/task/SpeechRepertoire.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5955414" vertical-offset="0" max-vertical-offset="646">
+          <caret line="22" column="69" selection-start-line="22" selection-start-column="69" selection-end-line="22" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/RoboudController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="3910">
+          <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/radboud/ai/roboud/action/behaviour/IntroduceBehaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46019107" vertical-offset="0" max-vertical-offset="628">
+          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
