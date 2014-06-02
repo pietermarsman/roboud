@@ -3,10 +3,12 @@ package edu.radboud.ai.roboud.action;
 import android.speech.tts.TextToSpeech;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
+import java.util.Observer;
+
 /**
  * Created by Pieter Marsman on 27-5-2014.
  */
-public class SpeakAction implements TextToSpeech.OnInitListener, Action {
+public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitListener {
 
     String text;
 
@@ -16,16 +18,11 @@ public class SpeakAction implements TextToSpeech.OnInitListener, Action {
 
     @Override
     public void onInit(int status) {
-
+        // Probably nothing to do here
     }
 
     @Override
-    public void doActions(Scenario scenario) {
-
-    }
-
-    @Override
-    public boolean isFinished() {
-
+    public void doActions(Scenario scenario, Observer abstractBehaviour) {
+        // TODO
     }
 }

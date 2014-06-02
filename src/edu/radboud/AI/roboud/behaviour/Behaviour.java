@@ -1,4 +1,6 @@
-package edu.radboud.ai.roboud.action.behaviour;
+package edu.radboud.ai.roboud.behaviour;
+
+import edu.radboud.ai.roboud.scenario.Scenario;
 
 import java.util.List;
 
@@ -9,4 +11,5 @@ public interface Behaviour {
 
     List<BehaviourBlock> getBlocks();
 
+    public void executeBehaviour(Scenario scenario);
 }
