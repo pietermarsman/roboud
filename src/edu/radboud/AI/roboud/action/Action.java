@@ -1,7 +1,11 @@
 package edu.radboud.ai.roboud.action;
 
+import edu.radboud.ai.roboud.BehaviourBlock;
+
 /**
- * Created by Pieter Marsman on 24-5-2014.
+ * Created by Pieter Marsman on 27-5-2014.
  */
-public interface Action {
+public interface Action extends BehaviourBlock {
+
+    public void isFinished();
 }
