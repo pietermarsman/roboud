@@ -14,6 +14,14 @@ import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
+import com.wowwee.robome.RoboMeCommands.RobotCommand;
+import edu.radboud.ai.roboud.action.LedColor;
+import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.action.AbstractAction;
+import edu.radboud.ai.roboud.action.LedColor;
+import edu.radboud.ai.roboud.scenario.Scenario;
+import java.util.Observer;
+import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
 /**
  * Created by Pieter Marsman on 27-5-2014.
