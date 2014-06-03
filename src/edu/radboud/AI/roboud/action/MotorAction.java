@@ -9,7 +9,12 @@ import edu.radboud.ai.roboud.RoboudController;
 
 import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.RoboudController;
-
+import com.wowwee.robome.RoboMeCommands;
+import edu.radboud.ai.roboud.action.RobotDirection;
+import edu.radboud.ai.roboud.action.RobotSpeed;
+import edu.radboud.ai.roboud.action.AbstractAction;
+import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.RoboudController;
 
 import java.util.Observer;
 
@@ -32,9 +37,9 @@ public class MotorAction extends AbstractAction {
         RobotSpeed speed = RobotSpeed.NORMAL;
 
         //Not finished
-        switch(dir){
+        switch (dir) {
             case FORWARD:
-                switch(speed){
+                switch (speed) {
                     case FASTEST:
                         controller.sendCommand(kRobot_MoveForwardSpeed1);
                         break;
