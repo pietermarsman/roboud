@@ -19,6 +19,7 @@ public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitLi
     @Override
     public void onInit(int status) {
         // Probably nothing to do here
+        // Test
     }
 
     @Override
