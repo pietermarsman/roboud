@@ -1,38 +1,46 @@
 package edu.radboud.ai.roboud.action;
 
-import com.wowwee.robome.RoboMeCommands.*;
+import com.wowwee.robome.RoboMeCommands.RobotCommand;
+import edu.radboud.AI.roboud.action.LedColor;
+import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.action.AbstractAction;
+import edu.radboud.ai.roboud.action.LedColor;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
 import java.util.Observer;
 
-/**
- * Created by Pieter Marsman on 27-5-2014.
- */
+import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
-public enum LedColor {BLUE, CYAN, GREEN, ORANGE, RED, WHITE, YELLOW};
-
-public class LedAction extends edu.radboud.AI.roboud.action.AbstractAction {
+public class LedAction extends AbstractAction {
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour, LedColor color) {
+    public void doActions(Scenario scenario, Observer abstractBehaviour, RoboudController roboudController) {
         addObserver(abstractBehaviour);
-        RobotCommand.kRobot_ShowMoodOff;
-        RobotCommand.kRobot_HeartBeatOff;
+        roboudController.sendCommand(kRobot_ShowMoodOff);
+        roboudController.sendCommand(kRobot_HeartBeatOff);
+        //Some how get color
+        LedColor color = LedColor.BLUE;
         switch(color){
-
             case BLUE:
+                roboudController.sendCommand(kRobot_RGBHeartBlue);
                 break;
             case CYAN:
+                roboudController.sendCommand(kRobot_RGBHeartCyan);
                 break;
             case GREEN:
+                roboudController.sendCommand(kRobot_RGBHeartGreen);
                 break;
             case ORANGE:
+                roboudController.sendCommand(kRobot_RGBHeartOrange);
                 break;
             case RED:
+                roboudController.sendCommand(kRobot_RGBHeartRed);
                 break;
             case WHITE:
+                roboudController.sendCommand(kRobot_RGBHeartWhite);
                 break;
             case YELLOW:
+                roboudController.sendCommand(kRobot_RGBHeartYellow);
                 break;
         }
         setChanged();
