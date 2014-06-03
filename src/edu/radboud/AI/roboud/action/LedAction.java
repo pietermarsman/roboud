@@ -31,7 +31,7 @@ public class LedAction extends AbstractAction {
         controller.sendCommand(kRobot_HeartBeatOff);
         //Some how get color
         LedColor color = LedColor.BLUE;
-        switch(color){
+        switch (color) {
             case BLUE:
                 controller.sendCommand(kRobot_RGBHeartBlue);
                 break;
@@ -52,9 +52,8 @@ public class LedAction extends AbstractAction {
                 break;
             case YELLOW:
                 controller.sendCommand(kRobot_RGBHeartYellow);
-                break;
+                setChanged();
+                notifyObservers();
         }
-        setChanged();
-        notifyObservers();
     }
 }

@@ -1,7 +1,11 @@
 <component name="libraryTable">
   <library name="RoboMeLib">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$PROJECT_DIR$/libs/RoboMeLib.jar!/" />
+=======
+      <root url="jar://$USER_HOME$/Documents/Apps/RoboMe-Android-SDK-master/RoboMe-Android-SDK/RoboMeLib.jar!/" />
+>>>>>>> advances in implementation of LED action #21
     </CLASSES>
     <JAVADOC />
     <SOURCES />
