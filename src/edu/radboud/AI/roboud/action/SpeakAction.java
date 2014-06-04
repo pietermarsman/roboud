@@ -1,9 +1,8 @@
 package edu.radboud.ai.roboud.action;
 
 import android.speech.tts.TextToSpeech;
+import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
-
-import java.util.Observer;
 
 /**
  * Created by Pieter Marsman on 27-5-2014.
@@ -12,7 +11,8 @@ public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitLi
 
     String text;
 
-    public SpeakAction(String text) {
+    public SpeakAction(RoboudController controller, String text) {
+        super(controller);
         this.text = text;
     }
 
@@ -23,7 +23,7 @@ public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitLi
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
+    public void executeAction(Scenario scenario) {
         // TODO
     }
 }

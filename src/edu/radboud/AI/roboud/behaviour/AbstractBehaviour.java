@@ -1,7 +1,9 @@
 package edu.radboud.ai.roboud.behaviour;
 
+import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,15 +14,23 @@ import java.util.Observer;
 public abstract class AbstractBehaviour extends Observable implements Behaviour, Observer {
 
     protected List<BehaviourBlock> blocks;
-    private int executionIndex = 0;
+    protected RoboudController controller;
+    private int executionIndex;
     private Scenario scenario;
 
     public List<BehaviourBlock> getBlocks() {
         return blocks;
     }
 
+    public AbstractBehaviour(RoboudController controller) {
+        this.controller = controller;
+        blocks = new LinkedList<BehaviourBlock>();
+        executionIndex = -1;
+    }
+
     /**
      * Execute the BehaviourBlock one by one, starting a new block if the previous block has ended
+     *
      * @param scenario
      */
     public void executeBehaviour(Scenario scenario) {
@@ -36,8 +46,8 @@ public abstract class AbstractBehaviour extends Observable implements Behaviour,
 
     private void executeStep() {
         if (executionIndex < blocks.size()) {
-            blocks.get(executionIndex).doActions(scenario, this);
             executionIndex++;
+            blocks.get(executionIndex).doActions(scenario, this);
         } else {
             setChanged();
             notifyObservers();

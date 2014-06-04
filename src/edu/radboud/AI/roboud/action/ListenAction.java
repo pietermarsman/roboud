@@ -16,13 +16,13 @@ public class ListenAction extends AbstractAction implements Observer {
     private RoboudController controller;
     private String result;
 
-    public ListenAction(RoboudController controller, Observer observer) {
+    public ListenAction(RoboudController controller) {
+        super(controller);
         this.controller = controller;
-        this.addObserver(observer);
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
+    public void executeAction(Scenario scenario) {
         controller.listenToSpeech(this);
     }
 

@@ -1,6 +1,6 @@
 package edu.radboud.ai.roboud.action;
 
-import edu.radboud.ai.roboud.action.Action;
+import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
 import java.util.Observable;
@@ -11,4 +11,17 @@ import java.util.Observer;
  */
 public abstract class AbstractAction extends Observable implements Action {
 
+    protected RoboudController controller;
+
+    public AbstractAction(RoboudController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void doActions(Scenario scenario, Observer abstractBehaviour) {
+        this.addObserver(abstractBehaviour);
+        this.executeAction(scenario);
+        setChanged();
+        notifyObservers();
+    }
 }

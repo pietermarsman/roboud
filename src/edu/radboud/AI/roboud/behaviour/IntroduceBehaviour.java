@@ -1,11 +1,9 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.task.SpeakTask;
 import edu.radboud.ai.roboud.task.AskQuestionTask;
+import edu.radboud.ai.roboud.task.SpeakTask;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
-
-import java.util.Observable;
 
 /**
  * Created by Pieter Marsman on 2-6-2014.
@@ -13,6 +11,7 @@ import java.util.Observable;
 public class IntroduceBehaviour extends AbstractBehaviour {
 
     public IntroduceBehaviour(RoboudController controller) {
+        super(controller);
         blocks.add(new SpeakTask(SpeechRepertoire.textGreetingStart));
         blocks.add(new AskQuestionTask(controller, SpeechRepertoire.questionName));
         blocks.add(new SpeakTask(SpeechRepertoire.textIntroduceMyself));
