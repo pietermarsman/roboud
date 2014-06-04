@@ -8,7 +8,7 @@
 </head>
 <body>
 <tag:notloggedin>
-    <a href="signin"><img src="./images/Sign-in-with-Twitter-darker.png"/></a>
+    <a href="signin"><img src="images/Sign-in-with-Twitter-darker.png"/></a>
 </tag:notloggedin>
 <tag:loggedin>
     <h1>Welcome ${twitter.screenName} (${twitter.id})</h1>
