@@ -15,7 +15,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
@@ -199,7 +198,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     // === START Android device  part ===
 
-
     @Override
     public void onSensorChanged(SensorEvent event) {
         switch(event.sensor.getType()) {
@@ -254,6 +252,4 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void listenToSpeech(Observer observer) {
         mic.startListening(observer);
     }
-
-    // === END ANDROID device part ===
 }
