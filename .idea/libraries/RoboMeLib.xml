@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="RoboMeLib">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Documents/Apps/RoboMe-Android-SDK-master/RoboMe-Android-SDK/RoboMeLib.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/RoboMeLib.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
