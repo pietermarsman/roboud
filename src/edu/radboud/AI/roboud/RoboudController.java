@@ -15,13 +15,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Pieter Marsman on 13-5-14.
@@ -68,7 +70,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         super.onActivityResult(requestCode, resultCode, data);
         // Send speech data to the controller
         if (requestCode == AndroidMicrophone.REQUEST_CODE) {
-            mic.processData(this, requestCode, resultCode, data);
+            mic.processData(requestCode, resultCode, data);
         }
     }
 
@@ -85,11 +87,17 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.main);
+        logView = (TextView) findViewById(R.id.output);
+        logScrollView = (ScrollView) findViewById(R.id.outputScrollView);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+        button = (Button) findViewById(R.id.button);
+
         robome = new RoboMe(this, this);
 
         AndroidCamera cam = new AndroidCamera(surfaceView, 1000);
         AndroidLocation loc = new AndroidLocation(this);
-        mic = new AndroidMicrophone();
+        mic = new AndroidMicrophone(this);
         loc.addObserver(this);
         cam.addObserver(this);
         mic.addObserver(this);
@@ -231,8 +239,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
         // Model update
         else if (observable instanceof RoboudModel) {
-//            if (data instanceof Event)
-
             showText(model.toString());
         }
         // Unknown update
@@ -242,12 +248,11 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void onClick(View v) {
-        listenToSpeech(null);
+        listenToSpeech(this);
     }
 
-    public void listenToSpeech(Observer listener) {
-        events.addObserver(listener);
-        mic.startListening(this);
+    public void listenToSpeech(Observer observer) {
+        mic.startListening(observer);
     }
 
     // === END ANDROID device part ===
