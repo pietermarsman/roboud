@@ -38,7 +38,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     AndroidMicrophone mic;
     RoboudModel model;
     RoboudMind mind;
-    EventHistory events;
     RoboMe robome;
 
     private SensorManager mSensorManager;
@@ -84,7 +83,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
                 robome.getVolume(), robome.getLibVersion());
-        events = new EventHistory();
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensors = new HashMap<Integer, Sensor>();
