@@ -1,6 +1,7 @@
 package edu.radboud.ai.roboud;
 
 import edu.radboud.ai.roboud.behaviour.Behaviour;
+import edu.radboud.ai.roboud.behaviour.TestBehaviour;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
 import java.util.Observable;
@@ -21,6 +22,7 @@ public class RoboudMind implements Observer, Runnable {
         this.controller = controller;
         this.currentBehaviour = null;
         this.currentScenario = whatIsCurrentScenario();
+        running = true;
     }
 
     private Scenario whatIsCurrentScenario() {
@@ -37,7 +39,7 @@ public class RoboudMind implements Observer, Runnable {
 
     public Behaviour nextBehaviour() {
         // TODO
-        return null;
+        return new TestBehaviour(controller);
     }
 
     public void stopRunning() {
@@ -46,6 +48,13 @@ public class RoboudMind implements Observer, Runnable {
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        controller.showText("Starting mind");
+
         while(running) {
             if (currentBehaviour == null) {
                 currentBehaviour = nextBehaviour();

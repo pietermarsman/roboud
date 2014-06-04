@@ -16,8 +16,8 @@ public class AskQuestionTask extends AbstractTask implements Observer {
     String answer;
 
     public AskQuestionTask(RoboudController controller, String question) {
-        actions.add(new SpeakAction(question));
-        actions.add(new ListenAction(controller, this));
+        actions.add(new SpeakAction(controller, question));
+        actions.add(new ListenAction(controller));
     }
 
     public AskQuestionTask(RoboudController controller, String[] questions) {

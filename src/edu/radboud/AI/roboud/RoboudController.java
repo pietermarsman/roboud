@@ -104,8 +104,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         model = new RoboudModel(robome.getLibVersion(), loc, cam, mic);
         events = new EventHistory();
-        mind = new RoboudMind(this);
-        new Thread(mind).start();
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensors = new HashMap<Integer, Sensor>();
@@ -119,6 +117,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         button.setOnClickListener(this);
         model.addObserver(this);
+
+        mind = new RoboudMind(this);
+        new Thread(mind).start();
     }
 
     /** Start listening to events from the gun when the app starts or resumes from background */
@@ -239,7 +240,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
         // Model update
         else if (observable instanceof RoboudModel) {
-            showText(model.toString());
+//            showText(model.toString());
         }
         // Unknown update
         else

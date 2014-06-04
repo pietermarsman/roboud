@@ -1,16 +1,16 @@
 package edu.radboud.ai.roboud.senses;
 
-import java.io.IOException;
-import java.util.Observable;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.io.IOException;
+import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AndroidCamera extends Observable implements SurfaceHolder.Callback {
 
