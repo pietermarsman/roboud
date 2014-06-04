@@ -54,26 +54,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
     };
 
-    public void startListeningToRoboMe() {
-        robome.setVolume(12);
-        robome.startListening();
-        model.setListening(true);
-    }
-
-    public void stopListeningToRoboMe() {
-        robome.stopListening();
-        model.setListening(false);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Send speech data to the controller
-        if (requestCode == AndroidMicrophone.REQUEST_CODE) {
-            mic.processData(requestCode, resultCode, data);
-        }
-    }
-
 
     public RoboudModel getModel() {
         return model;
@@ -102,7 +82,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         cam.addObserver(this);
         mic.addObserver(this);
 
-        model = new RoboudModel(robome.getLibVersion(), loc, cam, mic);
+        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
+                robome.getVolume(), robome.getLibVersion());
         events = new EventHistory();
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -140,6 +121,15 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         showText("Stop listening to RoboMe");
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Send speech data to the controller
+        if (requestCode == AndroidMicrophone.REQUEST_CODE) {
+            mic.processData(requestCode, resultCode, data);
+        }
+    }
+
     /**
      * Sends message to our handler to display the text in the output
      */
@@ -151,6 +141,17 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     //  === START RoboMe part ===
+
+    public void startListeningToRoboMe() {
+        robome.setVolume(12);
+        robome.startListening();
+        model.setListening(true);
+    }
+
+    public void stopListeningToRoboMe() {
+        robome.stopListening();
+        model.setListening(false);
+    }
 
     @Override
     public void commandReceived(RoboMeCommands.IncomingRobotCommand incomingRobotCommand) {
