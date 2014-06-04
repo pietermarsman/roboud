@@ -4,12 +4,6 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import com.wowwee.robome.RoboMeCommands.IncomingRobotCommand;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
-import edu.radboud.ai.roboud.event.Event;
-import edu.radboud.ai.roboud.event.EventHistory;
-import edu.radboud.ai.roboud.event.EventType;
-import edu.radboud.ai.roboud.senses.AndroidCamera;
-import edu.radboud.ai.roboud.senses.AndroidLocation;
-import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,10 +14,6 @@ import java.util.Observable;
  * Created by Gebruiker on 13-5-14.
  */
 public class RoboudModel extends Observable {
-
-    private AndroidLocation gps;
-    private AndroidCamera cam;
-    private AndroidMicrophone mic;
 
     private boolean robomeConnected, robomeHeadsetPluggedIn, listening;
     private float volume;
@@ -41,16 +31,14 @@ public class RoboudModel extends Observable {
 
     private long lastModification;
 
-    public RoboudModel(String _libVersion, AndroidLocation loc, AndroidCamera cam, AndroidMicrophone mic) {
-        this.libVersion = _libVersion;
-        this.gps = loc;
-        this.cam = cam;
-        this.mic = mic;
+    public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
+                       String _libVersion) {
 
-        robomeConnected = false;
-        robomeHeadsetPluggedIn = false;
-        listening = false;
-        volume = -1;
+        this.robomeConnected = robomeConnected;
+        this.robomeHeadsetPluggedIn = robomeHeadsetPluggedIn;
+        this.listening = listening;
+        this.volume = volume;
+        this.libVersion = _libVersion;
         image = null;
         faces = 0;
         rotation = new float[3];
@@ -60,11 +48,13 @@ public class RoboudModel extends Observable {
         magneticField = new float[6];
         proximity = -1;
         light = -1;
-        this.loc = null;
-        voiceResults = new ArrayList<String>();
-
+        loc = null;
         incomingCommands = new LinkedList<IncomingRobotCommand>();
         outgoingCommands = new LinkedList<RobotCommand>();
+        voiceResults = new ArrayList<String>();
+
+        // lastModification is set by:
+        changed();
     }
 
     public String toString() {
