@@ -10,7 +10,7 @@ import java.util.Observable;
  */
 public class EventHistory extends Observable {
 
-    private List<Event> events;
+    private LinkedList<Event> events;
 
     public EventHistory() {
         events = new LinkedList<Event>();
@@ -24,5 +24,16 @@ public class EventHistory extends Observable {
         events.add(e);
         this.setChanged();
         this.notifyObservers(e);
+    }
+
+    public List<Event> getLastEventsOfType(EventType eventType, int lastN) {
+        List<Event> lastEvents = new LinkedList<Event>();
+        for (Event e : events)
+            if (e.getEventType() == eventType) {
+                lastEvents.add(e);
+                if (lastEvents.size() >= lastN)
+                    break;
+            }
+        return lastEvents;
     }
 }

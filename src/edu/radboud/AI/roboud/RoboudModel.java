@@ -260,4 +260,8 @@ public class RoboudModel extends Observable {
     public List<String> getVoiceResults() {
         return voiceResults;
     }
+
+    public List<Event> getEvents(EventType eventType, int lastN) {
+        return events.getLastEventsOfType(eventType, lastN);
+    }
 }
