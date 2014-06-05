@@ -18,6 +18,7 @@ import com.wowwee.robome.RoboMeCommands;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
+import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,12 +36,17 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     private Button button;
 
     AndroidMicrophone mic;
+    AndroidCamera cam;
+    AndroidLocation loc;
     RoboudModel model;
     RoboudMind mind;
+    Thread mindThread;
     RoboMe robome;
 
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
+
+    private ActivityResultProcessor returnActivityDataTo;
 
     private Handler handler = new Handler() {
         @Override
@@ -65,6 +71,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        returnActivityDataTo = null;
+
         setContentView(R.layout.main);
         logView = (TextView) findViewById(R.id.output);
         logScrollView = (ScrollView) findViewById(R.id.outputScrollView);
@@ -73,9 +81,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         robome = new RoboMe(this, this);
 
-        AndroidCamera cam = new AndroidCamera(surfaceView, 1000);
-        AndroidLocation loc = new AndroidLocation(this);
+        cam = new AndroidCamera(surfaceView, 1000);
+        loc = new AndroidLocation(this);
         mic = new AndroidMicrophone(this);
+
         loc.addObserver(this);
         cam.addObserver(this);
         mic.addObserver(this);
@@ -96,35 +105,36 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         button.setOnClickListener(this);
         model.addObserver(this);
 
-        mind = new RoboudMind(this);
-        new Thread(mind).start();
-    }
-
-    /** Start listening to events from the gun when the app starts or resumes from background */
-    @Override
-    public void onResume(){
-        super.onResume();
-        startListeningToRoboMe();
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
         showText("Start listening to RoboMe");
+
+        startListeningToRoboMe();
+
+        mind = new RoboudMind(this);
+        mindThread = new Thread(mind);
+        mindThread.start();
+
+        // TODO start and stop activity in a proper way
+        // TODO support multithreading when switching activity
     }
 
     @Override
     public void onStop(){
         super.onStop();
+        mindThread.interrupt();
         stopListeningToRoboMe();
         mSensorManager.unregisterListener(this);
+        model.deleteObservers();
         showText("Stop listening to RoboMe");
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Send speech data to the controller
-        if (requestCode == AndroidMicrophone.REQUEST_CODE) {
-            mic.processData(requestCode, resultCode, data);
-        }
+        returnActivityDataTo.processData(requestCode, resultCode, data);
+        returnActivityDataTo = null;
+        // TODO mic data
     }
 
     /**
@@ -216,6 +226,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
+    // === START Controller methods ===
+
     @Override
     public void update(Observable observable, Object data) {
         // Camera update
@@ -247,6 +259,11 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onClick(View v) {
         listenToSpeech(this);
+    }
+
+    public void startNewActivityForResult(Intent i, int requestCode, ActivityResultProcessor returnActivityDataTo) {
+        this.returnActivityDataTo = returnActivityDataTo;
+        startActivityForResult(i, requestCode);
     }
 
     public void listenToSpeech(Observer observer) {

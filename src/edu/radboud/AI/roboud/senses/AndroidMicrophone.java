@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.speech.RecognizerIntent;
 import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,9 @@ import java.util.Observer;
 /**
  * Created by Gebruiker on 22-5-14.
  */
-public class AndroidMicrophone extends Observable {
+public class AndroidMicrophone extends Observable implements ActivityResultProcessor {
 
-    public static final int REQUEST_CODE = 1234;
+    public static final int REQUEST_CODE = 10;
     private RoboudController controller;
 
     public AndroidMicrophone(RoboudController controller) {
@@ -35,6 +36,7 @@ public class AndroidMicrophone extends Observable {
         controller.startActivityForResult(intent, REQUEST_CODE);
     }
 
+    @Override
     public void processData(int requestCode, int resultCode, Intent data) {
         controller.startListeningToRoboMe();
         if (resultCode == Activity.RESULT_OK) {

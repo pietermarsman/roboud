@@ -18,5 +18,6 @@ public class ShowTextAction extends AbstractAction {
     @Override
     public void executeAction(Scenario scenario) {
         controller.showText(text);
+        actionDone();
     }
 }

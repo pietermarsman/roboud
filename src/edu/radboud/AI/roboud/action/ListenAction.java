@@ -32,8 +32,7 @@ public class ListenAction extends AbstractAction implements Observer {
             Event e = (Event) data;
             if (e.getEventType() == EventType.NEW_SPEECH_DATA) {
                 result = controller.getModel().getVoiceResults().get(0);
-                this.setChanged();
-                this.notifyObservers(result);
+                actionDone();
             }
         }
     }

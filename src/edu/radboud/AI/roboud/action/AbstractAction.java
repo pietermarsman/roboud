@@ -21,6 +21,13 @@ public abstract class AbstractAction extends Observable implements Action {
     public void doActions(Scenario scenario, Observer abstractBehaviour) {
         this.addObserver(abstractBehaviour);
         this.executeAction(scenario);
+    }
+
+    /**
+     * Should be called when an action is done. Makes sure that the Behavior/CombineAction is notified that this Action
+     * is done.
+     */
+    public void actionDone() {
         setChanged();
         notifyObservers();
     }

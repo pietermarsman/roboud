@@ -3,6 +3,7 @@ package edu.radboud.ai.roboud.action;
 import android.speech.tts.TextToSpeech;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.task.SpeechRepertoire;
 
 /**
  * Created by Pieter Marsman on 27-5-2014.
@@ -16,6 +17,10 @@ public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitLi
         this.text = text;
     }
 
+    public SpeakAction(RoboudController controller, String[] texts) {
+        this(controller, SpeechRepertoire.randomChoice(texts));
+    }
+
     @Override
     public void onInit(int status) {
         // Probably nothing to do here
@@ -25,5 +30,6 @@ public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitLi
     @Override
     public void executeAction(Scenario scenario) {
         // TODO
+        actionDone();
     }
 }
