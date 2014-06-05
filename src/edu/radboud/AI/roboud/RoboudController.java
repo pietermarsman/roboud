@@ -70,26 +70,17 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        returnActivityDataTo = null;
-
+        // UI
         setContentView(R.layout.main);
         logView = (TextView) findViewById(R.id.output);
         logScrollView = (ScrollView) findViewById(R.id.outputScrollView);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         button = (Button) findViewById(R.id.button);
 
-        robome = new RoboMe(this, this);
-
+        // Senses
         cam = new AndroidCamera(surfaceView, 1000);
         loc = new AndroidLocation(this);
         mic = new AndroidMicrophone(this);
-
-        loc.addObserver(this);
-        cam.addObserver(this);
-        mic.addObserver(this);
-
-        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
-                robome.getVolume(), robome.getLibVersion());
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensors = new HashMap<Integer, Sensor>();
@@ -101,30 +92,96 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         sensors.put(Sensor.TYPE_PROXIMITY, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
         sensors.put(Sensor.TYPE_LIGHT, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
 
-        button.setOnClickListener(this);
-        model.addObserver(this);
+        // RoboMe
+        robome = new RoboMe(this, this);
 
-        for (Sensor s : sensors.values())
-            mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
-        showText("Start listening to RoboMe");
-
-        startListeningToRoboMe();
-
+        // Classes
+        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
+                robome.getVolume(), robome.getLibVersion());
         mind = new RoboudMind(this);
-        mind.startRunning();
+
+        // Variables
+        returnActivityDataTo = null;
 
         // TODO start and stop activity in a proper way
         // TODO support multithreading when switching activity
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        // The activity is about to become visible.
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // The activity has become visible (it is now "resumed").
+        // UI
+        button.setOnClickListener(this);
+
+        // Senses
+        loc.addObserver(this);
+        cam.addObserver(this);
+        mic.addObserver(this);
+        for (Sensor s : sensors.values())
+            mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
+
+        // RoboMe
+        startListeningToRoboMe();
+
+        // Classes
+        model.addObserver(this);
+        mind.startRunning();
+
+        // Variables
+        // Nothing to do
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Another activity is taking focus (this activity is about to be "paused").
+        // UI
+        // Nothing to do
+
+        // Senses
+        loc.deleteObservers();
+        cam.deleteObservers();
+        mic.deleteObservers();
+        mSensorManager.unregisterListener(this);
+
+        // RoboMe
+        stopListeningToRoboMe();
+
+        // Classes
+        // Nothing to do
+
+        // Variables
+        // Nothing to do
+    }
+
+    @Override
     public void onStop(){
         super.onStop();
-        mind.stopRunning();
-        stopListeningToRoboMe();
-        mSensorManager.unregisterListener(this);
+        // UI
+        // Nothing to do
+
+        // Senses
+        // Nothing to do
+
+        // RoboMe
+        // Nothing to do
+
+        // Classes
         model.deleteObservers();
-        showText("Stop listening to RoboMe");
+        mind.stopRunning();
+
+        // Variables
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // The activity is about to be destroyed.
     }
 
     @Override
