@@ -40,7 +40,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     AndroidLocation loc;
     RoboudModel model;
     RoboudMind mind;
-    Thread mindThread;
     RoboMe robome;
 
     private SensorManager mSensorManager;
@@ -112,8 +111,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         startListeningToRoboMe();
 
         mind = new RoboudMind(this);
-        mindThread = new Thread(mind);
-        mindThread.start();
+        mind.startRunning();
 
         // TODO start and stop activity in a proper way
         // TODO support multithreading when switching activity
@@ -122,7 +120,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onStop(){
         super.onStop();
-        mindThread.interrupt();
+        mind.stopRunning();
         stopListeningToRoboMe();
         mSensorManager.unregisterListener(this);
         model.deleteObservers();

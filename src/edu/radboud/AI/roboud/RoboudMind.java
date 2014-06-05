@@ -12,6 +12,8 @@ import java.util.Observer;
  */
 public class RoboudMind implements Observer, Runnable {
 
+    private Thread mindThread;
+
     private Scenario currentScenario;
     private Behaviour currentBehaviour;
 
@@ -44,6 +46,12 @@ public class RoboudMind implements Observer, Runnable {
 
     public void stopRunning() {
         running = false;
+        mindThread.interrupt();
+    }
+
+    public void startRunning() {
+        running = true;
+        mindThread = new Thread(this);
     }
 
     @Override
@@ -54,6 +62,10 @@ public class RoboudMind implements Observer, Runnable {
             e.printStackTrace();
         }
         controller.showText("Starting mind");
+
+        // If there was a previous behavior, go on with it
+        if (currentBehaviour != null)
+            currentBehaviour.executeBehaviour(currentScenario);
 
         while(running) {
             if (currentBehaviour == null) {
