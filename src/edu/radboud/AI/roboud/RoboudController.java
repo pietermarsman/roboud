@@ -52,7 +52,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         public void handleMessage(Message msg) {
             // display the received event
             if (msg.what == 0x99 )
-                logView.setText((String) msg.obj);
+                logView.setText(logView.getText() + "\n" + (String) msg.obj);
             logScrollView.smoothScrollTo(0, logView.getHeight());
         }
     };
@@ -313,7 +313,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void onClick(View v) {
-        listenToSpeech(this);
+        mic.startListening(this);
     }
 
     public void startNewActivityForResult(Intent i, int requestCode, ActivityResultProcessor returnActivityDataTo) {

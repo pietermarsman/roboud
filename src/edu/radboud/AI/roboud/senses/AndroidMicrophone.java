@@ -33,7 +33,7 @@ public class AndroidMicrophone extends Observable implements ActivityResultProce
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
                 "AndroidBite Voice Recognition...");
-        controller.startActivityForResult(intent, REQUEST_CODE);
+        controller.startNewActivityForResult(intent, REQUEST_CODE, this);
     }
 
     @Override

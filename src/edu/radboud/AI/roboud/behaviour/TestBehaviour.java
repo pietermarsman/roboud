@@ -20,6 +20,6 @@ public class TestBehaviour extends AbstractBehaviour {
         options.add("Optie C");
         ChoiceAction ca = new ChoiceAction(controller, options);
         blocks.add(ca);
-        blocks.add(new ShowTextAction(controller, ca.getResultString()));
+        blocks.add(new ShowTextAction(controller, "Result: " + ca.getResultString()));
     }
 }
