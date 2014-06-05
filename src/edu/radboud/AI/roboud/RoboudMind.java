@@ -52,6 +52,7 @@ public class RoboudMind implements Observer, Runnable {
     public void startRunning() {
         running = true;
         mindThread = new Thread(this);
+        mindThread.start();
     }
 
     @Override
@@ -63,6 +64,7 @@ public class RoboudMind implements Observer, Runnable {
         }
         controller.showText("Starting mind");
 
+        // TODO continue running on the exact same spot
         // If there was a previous behavior, go on with it
         if (currentBehaviour != null)
             currentBehaviour.executeBehaviour(currentScenario);
