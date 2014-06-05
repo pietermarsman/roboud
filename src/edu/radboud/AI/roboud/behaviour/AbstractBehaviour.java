@@ -45,7 +45,7 @@ public abstract class AbstractBehaviour extends Observable implements Behaviour,
     }
 
     private void executeStep() {
-        if (executionIndex < blocks.size()) {
+        if (executionIndex + 1 < blocks.size()) {
             executionIndex++;
             blocks.get(executionIndex).doActions(scenario, this);
         } else {

@@ -15,5 +15,6 @@ public class CombineAction extends AbstractAction {
     @Override
     public void executeAction(Scenario scenario) {
         // TODO
+        actionDone();
     }
 }
