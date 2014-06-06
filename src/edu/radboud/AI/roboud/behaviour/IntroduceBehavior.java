@@ -8,9 +8,9 @@ import edu.radboud.ai.roboud.task.SpeechRepertoire;
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
-public class IntroduceBehaviour extends AbstractBehaviour {
+public class IntroduceBehavior extends AbstractBehavior {
 
-    public IntroduceBehaviour(RoboudController controller) {
+    public IntroduceBehavior(RoboudController controller) {
         super(controller);
         blocks.add(new SpeakAction(controller, SpeechRepertoire.textGreetingStart));
         blocks.add(new AskQuestionTask(controller, SpeechRepertoire.questionName));

@@ -10,9 +10,9 @@ import java.util.List;
 /**
  * Created by Pieter Marsman on 4-6-2014.
  */
-public class TestBehaviour extends AbstractBehaviour {
+public class TestBehavior extends AbstractBehavior {
 
-    public TestBehaviour(RoboudController controller) {
+    public TestBehavior(RoboudController controller) {
         super(controller);
         List<String> options = new LinkedList<String>();
         options.add("Optie A");

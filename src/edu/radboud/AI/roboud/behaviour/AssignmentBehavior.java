@@ -7,9 +7,9 @@ import java.util.List;
 /**
  * Created by Pieter Marsman on 24-5-2014.
  */
-public class CompleModelBehaviour extends AbstractBehaviour {
+public class AssignmentBehavior extends AbstractBehavior {
 
-    public CompleModelBehaviour(RoboudController controller) {
+    public AssignmentBehavior(RoboudController controller) {
         super(controller);
     }
 
