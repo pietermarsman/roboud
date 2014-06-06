@@ -17,6 +17,7 @@ public class ChoiceActionActivity extends ListActivity implements AdapterView.On
     public static final String RETURN_NAME = "Selected Item";
 
     ListView list;
+    String[] options;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class ChoiceActionActivity extends ListActivity implements AdapterView.On
         list = getListView();
 
         Intent sender = getIntent();
-        String[] options = sender.getExtras().getStringArray(ChoiceAction.DATA_NAME);
+        options = sender.getExtras().getStringArray(ChoiceAction.DATA_NAME);
 
         list.setAdapter(new ArrayAdapter<String>(this,R.layout.list_item, options));
         list.setOnItemClickListener(this);
@@ -34,7 +35,7 @@ public class ChoiceActionActivity extends ListActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String selectedItem = (String) list.getSelectedItem();
+        String selectedItem = options[position];
         Intent returnIntent = new Intent();
         returnIntent.putExtra(RETURN_NAME, selectedItem);
         setResult(RESULT_OK, returnIntent);

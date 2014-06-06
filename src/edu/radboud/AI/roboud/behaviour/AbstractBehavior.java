@@ -24,7 +24,8 @@ public abstract class AbstractBehavior extends Observable implements Behaviour, 
         return blocks;
     }
 
-    public AbstractBehavior(RoboudController controller) {
+    public AbstractBehavior(RoboudController controller, Observer observer) {
+        this.addObserver(observer);
         this.controller = controller;
         blocks = new LinkedList<BehaviourBlock>();
         executionIndex = -1;
@@ -47,11 +48,12 @@ public abstract class AbstractBehavior extends Observable implements Behaviour, 
     }
 
     private void executeStep() {
-        Log.i(TAG, "Execute step " + executionIndex);
         if (executionIndex + 1 < blocks.size()) {
             executionIndex++;
+            Log.i(TAG, "Execute step " + executionIndex);
             blocks.get(executionIndex).doActions(scenario, this);
         } else {
+            Log.i(TAG, "No further steps to execute");
             setChanged();
             notifyObservers();
         }
