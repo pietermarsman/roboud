@@ -1,5 +1,6 @@
 package edu.radboud.ai.roboud.behaviour;
 
+import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
@@ -11,8 +12,9 @@ import java.util.Observer;
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
-public abstract class AbstractBehaviour extends Observable implements Behaviour, Observer {
+public abstract class AbstractBehavior extends Observable implements Behaviour, Observer {
 
+    public static final String TAG = "AbstractBehavior";
     protected List<BehaviourBlock> blocks;
     protected RoboudController controller;
     private int executionIndex;
@@ -22,7 +24,7 @@ public abstract class AbstractBehaviour extends Observable implements Behaviour,
         return blocks;
     }
 
-    public AbstractBehaviour(RoboudController controller) {
+    public AbstractBehavior(RoboudController controller) {
         this.controller = controller;
         blocks = new LinkedList<BehaviourBlock>();
         executionIndex = -1;
@@ -45,6 +47,7 @@ public abstract class AbstractBehaviour extends Observable implements Behaviour,
     }
 
     private void executeStep() {
+        Log.i(TAG, "Execute step " + executionIndex);
         if (executionIndex + 1 < blocks.size()) {
             executionIndex++;
             blocks.get(executionIndex).doActions(scenario, this);

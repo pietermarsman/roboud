@@ -5,11 +5,11 @@ import edu.radboud.ai.roboud.RoboudController;
 import java.util.List;
 
 /**
- * Created by Pieter Marsman on 24-5-2014.
+ * Created by Pieter Marsman on 27-5-2014.
  */
-public class AssignmentBehaviour extends AbstractBehaviour {
+public class MakeNewApointmentBehavior extends AbstractBehavior {
 
-    public AssignmentBehaviour(RoboudController controller) {
+    public MakeNewApointmentBehavior(RoboudController controller) {
         super(controller);
     }
 
