@@ -12,8 +12,10 @@ import java.util.List;
  */
 public class ChoiceAction extends AbstractAction implements ActivityResultProcessor {
 
+    public static final String TAG = "ChoiceAction";
     public static final int REQUEST_CODE = 11;
     public static final String DATA_NAME = "Options";
+
     private List<String> options;
 
     private String resultString;

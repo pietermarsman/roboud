@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,8 @@ import java.util.Observer;
  * Created by Pieter Marsman on 13-5-14.
  */
 public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
+
+    public static final String TAG = "RoboudController";
 
     private TextView logView;
     private ScrollView logScrollView;
@@ -69,6 +72,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showText("onCreate(" + savedInstanceState + ")");
 
         // UI
         setContentView(R.layout.main);
@@ -102,21 +106,21 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Variables
         returnActivityDataTo = null;
-
-        // TODO start and stop activity in a proper way
-        // TODO support multithreading when switching activity
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         // The activity is about to become visible.
+        showText("onStart()");
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         // The activity has become visible (it is now "resumed").
         // UI
+        showText("onResume()");
         button.setOnClickListener(this);
 
         // Senses
@@ -136,6 +140,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Variables
         // Nothing to do
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -144,6 +149,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Nothing to do
 
         // Senses
+        showText("onPause()");
         loc.deleteObservers();
         cam.deleteObservers();
         mic.deleteObservers();
@@ -172,6 +178,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Nothing to do
 
         // Classes
+        showText("onStop()");
         model.deleteObservers();
         mind.stopRunning();
 
@@ -187,9 +194,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "Activity result for code " + requestCode);
         returnActivityDataTo.processData(requestCode, resultCode, data);
         returnActivityDataTo = null;
-        // TODO mic data
     }
 
     /**
@@ -205,14 +212,22 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     //  === START RoboMe part ===
 
     public void startListeningToRoboMe() {
-        robome.setVolume(12);
-        robome.startListening();
-        model.setListening(true);
+        if (robome != null) {
+            robome.setVolume(12);
+            robome.startListening();
+            model.setListening(true);
+        } else {
+            Log.w(TAG, "Trying to start listening to RoboMe but `robome' variable is not initialized yet");
+        }
     }
 
     public void stopListeningToRoboMe() {
-        robome.stopListening();
-        model.setListening(false);
+        if (robome != null) {
+            robome.stopListening();
+            model.setListening(false);
+        } else {
+            Log.w(TAG, "Trying to stop listening to RoboMe but `robome' variable is not initialized yet");
+        }
     }
 
     @Override

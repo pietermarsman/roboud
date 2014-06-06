@@ -5,13 +5,15 @@ import edu.radboud.ai.roboud.action.SpeakAction;
 import edu.radboud.ai.roboud.task.AskQuestionTask;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
 
+import java.util.Observer;
+
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
 public class IntroduceBehavior extends AbstractBehavior {
 
-    public IntroduceBehavior(RoboudController controller) {
-        super(controller);
+    public IntroduceBehavior(RoboudController controller, Observer observer) {
+        super(controller, observer);
         blocks.add(new SpeakAction(controller, SpeechRepertoire.textGreetingStart));
         blocks.add(new AskQuestionTask(controller, SpeechRepertoire.questionName));
         blocks.add(new SpeakAction(controller, SpeechRepertoire.textIntroduceMyself));
