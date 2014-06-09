@@ -5,8 +5,6 @@ import edu.radboud.ai.roboud.scenario.Scenario;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
 import edu.radboud.ai.roboud.action.LedColor;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.AbstractAction;
-import edu.radboud.ai.roboud.action.LedColor;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import java.util.Observer;
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
@@ -24,6 +22,7 @@ public class LedAction extends AbstractAction {
     public void executeAction(Scenario scenario) {
         // TODO
         actionDone();
+    }
 
     @Override
     public void doActions(Scenario scenario, Observer abstractBehaviour, RoboudController roboudController) {
