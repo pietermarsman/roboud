@@ -29,4 +29,7 @@ proguard/
 .idea/tasks.xml
 .idea/libraries/RoboMeLib.xml
 .idea/misc.xml
+.idea/libraries/*
 *.iws
+
+src/edu/radboud/AI/roboud/behaviour/TestBehavior.java
