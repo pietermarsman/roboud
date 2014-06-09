@@ -31,5 +31,3 @@ proguard/
 .idea/misc.xml
 .idea/libraries/*
 *.iws
-
-src/edu/radboud/AI/roboud/behaviour/TestBehavior.java
