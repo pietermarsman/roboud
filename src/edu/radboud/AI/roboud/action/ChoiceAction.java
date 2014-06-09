@@ -36,8 +36,12 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
 
     @Override
     public void processData(int requestCode, int resultCode, Intent data) {
-        resultString = data.getStringExtra(ChoiceActionActivity.RETURN_NAME);
-        actionDone();
+        if (data != null) {
+            resultString = data.getStringExtra(ChoiceActionActivity.RETURN_NAME);
+            actionDone();
+        } else {
+            // TODO what todo if the activity stopped without letting the user choose
+        }
     }
 
     public String getResultString() {
