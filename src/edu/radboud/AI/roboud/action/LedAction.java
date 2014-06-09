@@ -1,14 +1,19 @@
 package edu.radboud.ai.roboud.action;
 
 
+import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.scenario.Scenario;
+import com.wowwee.robome.RoboMeCommands.RobotCommand;
+import edu.radboud.ai.roboud.action.LedColor;
+import edu.radboud.ai.roboud.RoboudController;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
 import edu.radboud.ai.roboud.action.LedColor;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.AbstractAction;
 import edu.radboud.ai.roboud.action.LedColor;
 import edu.radboud.ai.roboud.scenario.Scenario;
-
 import java.util.Observer;
+import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
@@ -37,7 +42,7 @@ public class LedAction extends AbstractAction {
         controller.sendCommand(kRobot_HeartBeatOff);
         //Some how get color
         LedColor color = LedColor.BLUE;
-        switch (color) {
+        switch(color){
             case BLUE:
                 controller.sendCommand(kRobot_RGBHeartBlue);
                 break;
@@ -61,5 +66,7 @@ public class LedAction extends AbstractAction {
                 setChanged();
                 notifyObservers();
         }
+        setChanged();
+        notifyObservers();
     }
 }

@@ -1,11 +1,19 @@
 package edu.radboud.ai.roboud.action;
 
+
 import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.AI.roboud.action.RobotDirection;
-import edu.radboud.AI.roboud.action.RobotSpeed;
+import edu.radboud.ai.roboud.action.RobotDirection;
+import edu.radboud.ai.roboud.action.RobotSpeed;
 import edu.radboud.ai.roboud.action.AbstractAction;
 
 import edu.radboud.ai.roboud.RoboudController;
+
+
+import edu.radboud.ai.roboud.RoboudController;
+import com.wowwee.robome.RoboMeCommands;
+import edu.radboud.ai.roboud.action.RobotDirection;
+import edu.radboud.ai.roboud.action.RobotSpeed;
+import edu.radboud.ai.roboud.action.AbstractAction;
 
 import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.RoboudController;
@@ -15,7 +23,6 @@ import edu.radboud.ai.roboud.action.RobotSpeed;
 import edu.radboud.ai.roboud.action.AbstractAction;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.RoboudController;
-
 import java.util.Observer;
 
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
@@ -30,16 +37,16 @@ public class MotorAction extends AbstractAction {
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
-        addObserver(abstractBehaviour);
+    public void doActions(Scenario scenario, Observer abstractBehavior) {
+        addObserver(abstractBehavior);
         //Some how get direction and speed
         RobotDirection dir = RobotDirection.FORWARD;
         RobotSpeed speed = RobotSpeed.NORMAL;
 
         //Not finished
-        switch (dir) {
+        switch(dir){
             case FORWARD:
-                switch (speed) {
+                switch(speed){
                     case FASTEST:
                         controller.sendCommand(kRobot_MoveForwardSpeed1);
                         break;
