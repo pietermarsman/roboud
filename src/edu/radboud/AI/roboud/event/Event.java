@@ -6,19 +6,25 @@ package edu.radboud.ai.roboud.event;
 public class Event {
 
     private EventType eventType;
+    private Object data;
     private String eventDescription;
     private long eventTime;
-    private int priority;
+    private int level;
 
-    public Event(EventType eventType, long eventTime, String eventDescription, int priority) {
+    public Event(EventType eventType, Object data, long eventTime, String eventDescription, int level) {
         this.eventType = eventType;
+        this.data = data;
         this.eventDescription = eventDescription;
         this.eventTime = eventTime;
-        this.priority = priority;
+        this.level = level;
+    }
+
+    public Event(EventType eventType, Object data) {
+        this(eventType, data, System.currentTimeMillis(), "", 0);
     }
 
     public Event(EventType eventType) {
-        this(eventType, System.currentTimeMillis(), "", 0);
+        this(eventType, null);
     }
 
     public EventType getEventType() {
@@ -33,7 +39,7 @@ public class Event {
         return eventTime;
     }
 
-    public int getPriority() {
-        return priority;
+    public int getLevel() {
+        return level;
     }
 }

@@ -16,13 +16,13 @@ public class ListenAction extends AbstractAction implements Observer {
     private RoboudController controller;
     private String result;
 
-    public ListenAction(RoboudController controller, Observer observer) {
+    public ListenAction(RoboudController controller) {
+        super(controller);
         this.controller = controller;
-        this.addObserver(observer);
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
+    public void executeAction(Scenario scenario) {
         controller.listenToSpeech(this);
     }
 
@@ -32,8 +32,7 @@ public class ListenAction extends AbstractAction implements Observer {
             Event e = (Event) data;
             if (e.getEventType() == EventType.NEW_SPEECH_DATA) {
                 result = controller.getModel().getVoiceResults().get(0);
-                this.setChanged();
-                this.notifyObservers(result);
+                actionDone();
             }
         }
     }

@@ -1,10 +1,5 @@
 package edu.radboud.ai.roboud.senses;
 
-import java.io.IOException;
-import java.util.Observable;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
@@ -12,7 +7,14 @@ import android.hardware.Camera.Parameters;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.io.IOException;
+import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class AndroidCamera extends Observable implements SurfaceHolder.Callback {
+
+    public static final String TAG = "AndroidCamera";
 
     //a variable to store a reference to the Surface View at the main.xml file
     private SurfaceView sv;
@@ -77,7 +79,6 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        ready = true;
         // The Surface has been created, acquire the camera and tell it where
         // to draw the preview.
         mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
@@ -88,6 +89,7 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
             mCamera.release();
             mCamera = null;
         }
+        ready = true;
     }
 
     @Override

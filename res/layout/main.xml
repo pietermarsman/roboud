@@ -20,9 +20,9 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" android:weightSum="1">
         <SurfaceView
-                android:layout_width="fill_parent"
+                android:layout_width="240dp"
                 android:layout_height="fill_parent"
-                android:id="@+id/surfaceView" android:layout_weight="0.95"/>
+                android:id="@+id/surfaceView" android:layout_weight="0.88"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"

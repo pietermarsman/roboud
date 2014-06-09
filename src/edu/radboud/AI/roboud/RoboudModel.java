@@ -12,7 +12,6 @@ import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
@@ -20,10 +19,6 @@ import java.util.Observable;
  * Created by Gebruiker on 13-5-14.
  */
 public class RoboudModel extends Observable {
-
-    private AndroidLocation gps;
-    private AndroidCamera cam;
-    private AndroidMicrophone mic;
 
     private boolean robomeConnected, robomeHeadsetPluggedIn, listening;
     private float volume;
@@ -35,22 +30,19 @@ public class RoboudModel extends Observable {
     private float proximity, light;
     private Location loc;
 
-    private List<IncomingRobotCommand> incomingCommands;
-    private List<RobotCommand> outgoingCommands;
     private List<String> voiceResults;
+    EventHistory events;
 
     private long lastModification;
 
-    public RoboudModel(String _libVersion, AndroidLocation loc, AndroidCamera cam, AndroidMicrophone mic) {
-        this.libVersion = _libVersion;
-        this.gps = loc;
-        this.cam = cam;
-        this.mic = mic;
+    public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
+                       String _libVersion) {
 
-        robomeConnected = false;
-        robomeHeadsetPluggedIn = false;
-        listening = false;
-        volume = -1;
+        this.robomeConnected = robomeConnected;
+        this.robomeHeadsetPluggedIn = robomeHeadsetPluggedIn;
+        this.listening = listening;
+        this.volume = volume;
+        this.libVersion = _libVersion;
         image = null;
         faces = 0;
         rotation = new float[3];
@@ -60,11 +52,12 @@ public class RoboudModel extends Observable {
         magneticField = new float[6];
         proximity = -1;
         light = -1;
-        this.loc = null;
+        loc = null;
         voiceResults = new ArrayList<String>();
+        events = new EventHistory();
 
-        incomingCommands = new LinkedList<IncomingRobotCommand>();
-        outgoingCommands = new LinkedList<RobotCommand>();
+        // lastModification is set by:
+        changed();
     }
 
     public String toString() {
@@ -99,8 +92,6 @@ public class RoboudModel extends Observable {
         for (String voiceResult : voiceResults)
             sb.append(voiceResult).append(", ");
         sb.append("\n");
-        sb.append("Incoming command count: ").append(incomingCommands.size()).append("\n");
-        sb.append("Outgoing command count: ").append(outgoingCommands.size()).append("\n");
         return sb.toString();
     }
 
@@ -122,6 +113,7 @@ public class RoboudModel extends Observable {
 
     public void setRobomeConnected(boolean robomeConnected) {
         this.robomeConnected = robomeConnected;
+        events.newEvent(new Event(EventType.ROBOME_CONNECTION, robomeConnected));
         changed();
     }
 
@@ -135,11 +127,13 @@ public class RoboudModel extends Observable {
 
     public void setRobomeHeadsetPluggedIn(boolean robomeHeadsetPluggedIn) {
         this.robomeHeadsetPluggedIn = robomeHeadsetPluggedIn;
+        events.newEvent(new Event(EventType.HEADPHONE_CONNECTION, robomeHeadsetPluggedIn));
         changed();
     }
 
     public void setVolume(float volume) {
         this.volume = volume;
+        events.newEvent(new Event(EventType.VOLUME, volume));
         changed();
     }
 
@@ -153,20 +147,19 @@ public class RoboudModel extends Observable {
 
     public void setListening(boolean listening) {
         this.listening = listening;
+        events.newEvent(new Event(EventType.ROBOME_LISTENING, listening));
         changed();
     }
 
     public void receiveCommand(IncomingRobotCommand incomingRobotCommand) {
-        incomingCommands.add(incomingRobotCommand);
+        events.newEvent(new Event(EventType.INCOMMING_COMMAND, incomingRobotCommand));
         changed();
     }
 
     public void sendCommand(RobotCommand outgoingCommand) {
-        outgoingCommands.add(outgoingCommand);
+        events.newEvent(new Event(EventType.OUTGOING_COMMAND, outgoingCommand));
         changed();
     }
-
-    //      === END RoboMe part ===
 
     //      === START Android phone part ===
 
@@ -263,6 +256,7 @@ public class RoboudModel extends Observable {
 
     public void setVoiceResults(List<String> voiceResults) {
         this.voiceResults = voiceResults;
+        events.newEvent(new Event(EventType.NEW_SPEECH_DATA, voiceResults));
         changed();
     }
 
@@ -270,5 +264,7 @@ public class RoboudModel extends Observable {
         return voiceResults;
     }
 
-    //      == END Android phone part ===
+    public List<Event> getEvents(EventType eventType, int lastN) {
+        return events.getLastEventsOfType(eventType, lastN);
+    }
 }

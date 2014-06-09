@@ -8,25 +8,31 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.wowwee.robome.RoboMe;
-import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.ai.roboud.event.Event;
-import edu.radboud.ai.roboud.event.EventHistory;
+
+import com.wowwee.robome;
+
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
+import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Pieter Marsman on 13-5-14.
  */
 public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
+
+    public static final String TAG = "RoboudController";
 
     private TextView logView;
     private ScrollView logScrollView;
@@ -34,43 +40,26 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     private Button button;
 
     AndroidMicrophone mic;
+    AndroidCamera cam;
+    AndroidLocation loc;
     RoboudModel model;
     RoboudMind mind;
-    EventHistory events;
     RoboMe robome;
 
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
+
+    private ActivityResultProcessor returnActivityDataTo;
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             // display the received event
             if (msg.what == 0x99 )
-                logView.setText((String) msg.obj);
+                logView.setText(logView.getText() + "\n" + (String) msg.obj);
             logScrollView.smoothScrollTo(0, logView.getHeight());
         }
     };
-
-    public void startListeningToRoboMe() {
-        robome.setVolume(12);
-        robome.startListening();
-        model.setListening(true);
-    }
-
-    public void stopListeningToRoboMe() {
-        robome.stopListening();
-        model.setListening(false);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Send speech data to the controller
-        if (requestCode == AndroidMicrophone.REQUEST_CODE) {
-            mic.processData(this, requestCode, resultCode, data);
-        }
-    }
 
 
     public RoboudModel getModel() {
@@ -84,20 +73,19 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showText("onCreate(" + savedInstanceState + ")");
 
-        robome = new RoboMe(this, this);
+        // UI
+        setContentView(R.layout.main);
+        logView = (TextView) findViewById(R.id.output);
+        logScrollView = (ScrollView) findViewById(R.id.outputScrollView);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+        button = (Button) findViewById(R.id.button);
 
-        AndroidCamera cam = new AndroidCamera(surfaceView, 1000);
-        AndroidLocation loc = new AndroidLocation(this);
-        mic = new AndroidMicrophone();
-        loc.addObserver(this);
-        cam.addObserver(this);
-        mic.addObserver(this);
-
-        model = new RoboudModel(robome.getLibVersion(), loc, cam, mic);
-        events = new EventHistory();
-        mind = new RoboudMind(this);
-        new Thread(mind).start();
+        // Senses
+        cam = new AndroidCamera(surfaceView, 1000);
+        loc = new AndroidLocation(this);
+        mic = new AndroidMicrophone(this);
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensors = new HashMap<Integer, Sensor>();
@@ -109,26 +97,107 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         sensors.put(Sensor.TYPE_PROXIMITY, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
         sensors.put(Sensor.TYPE_LIGHT, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
 
-        button.setOnClickListener(this);
-        model.addObserver(this);
+        // RoboMe
+        robome = new RoboMe(this, this);
+
+        // Classes
+        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
+                robome.getVolume(), robome.getLibVersion());
+        mind = new RoboudMind(this);
+
+        // Variables
+        returnActivityDataTo = null;
     }
 
-    /** Start listening to events from the gun when the app starts or resumes from background */
     @Override
-    public void onResume(){
+    protected void onStart() {
+        super.onStart();
+        // The activity is about to become visible.
+        showText("onStart()");
+    }
+
+    @Override
+    protected void onResume() {
         super.onResume();
-        startListeningToRoboMe();
+        // The activity has become visible (it is now "resumed").
+        // UI
+        showText("onResume()");
+        button.setOnClickListener(this);
+
+        // Senses
+        loc.addObserver(this);
+        cam.addObserver(this);
+        mic.addObserver(this);
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
-        showText("Start listening to RoboMe");
+
+        // RoboMe
+        startListeningToRoboMe();
+
+        // Classes
+        model.addObserver(this);
+        mind.startRunning();
+
+        // Variables
+        // Nothing to do
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Another activity is taking focus (this activity is about to be "paused").
+        // UI
+        // Nothing to do
+
+        // Senses
+        showText("onPause()");
+        loc.deleteObservers();
+        cam.deleteObservers();
+        mic.deleteObservers();
+        mSensorManager.unregisterListener(this);
+
+        // RoboMe
+        stopListeningToRoboMe();
+
+        // Classes
+        // Nothing to do
+
+        // Variables
+        // Nothing to do
     }
 
     @Override
     public void onStop(){
         super.onStop();
-        stopListeningToRoboMe();
-        mSensorManager.unregisterListener(this);
-        showText("Stop listening to RoboMe");
+        // UI
+        // Nothing to do
+
+        // Senses
+        // Nothing to do
+
+        // RoboMe
+        // Nothing to do
+
+        // Classes
+        showText("onStop()");
+        model.deleteObservers();
+        mind.stopRunning();
+
+        // Variables
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // The activity is about to be destroyed.
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "Activity result for code " + requestCode);
+        returnActivityDataTo.processData(requestCode, resultCode, data);
+        returnActivityDataTo = null;
     }
 
     /**
@@ -142,6 +211,25 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     //  === START RoboMe part ===
+
+    public void startListeningToRoboMe() {
+        if (robome != null) {
+            robome.setVolume(12);
+            robome.startListening();
+            model.setListening(true);
+        } else {
+            Log.w(TAG, "Trying to start listening to RoboMe but `robome' variable is not initialized yet");
+        }
+    }
+
+    public void stopListeningToRoboMe() {
+        if (robome != null) {
+            robome.stopListening();
+            model.setListening(false);
+        } else {
+            Log.w(TAG, "Trying to stop listening to RoboMe but `robome' variable is not initialized yet");
+        }
+    }
 
     @Override
     public void commandReceived(RoboMeCommands.IncomingRobotCommand incomingRobotCommand) {
@@ -191,7 +279,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     // === START Android device  part ===
 
-
     @Override
     public void onSensorChanged(SensorEvent event) {
         switch(event.sensor.getType()) {
@@ -209,6 +296,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
+
+    // === START Controller methods ===
 
     @Override
     public void update(Observable observable, Object data) {
@@ -231,9 +320,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
         // Model update
         else if (observable instanceof RoboudModel) {
-//            if (data instanceof Event)
-
-            showText(model.toString());
+//            showText(model.toString());
         }
         // Unknown update
         else
@@ -242,13 +329,15 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void onClick(View v) {
-        listenToSpeech(null);
-    }
-
-    public void listenToSpeech(Observer listener) {
-        events.addObserver(listener);
         mic.startListening(this);
     }
 
-    // === END ANDROID device part ===
+    public void startNewActivityForResult(Intent i, int requestCode, ActivityResultProcessor returnActivityDataTo) {
+        this.returnActivityDataTo = returnActivityDataTo;
+        startActivityForResult(i, requestCode);
+    }
+
+    public void listenToSpeech(Observer observer) {
+        mic.startListening(observer);
+    }
 }

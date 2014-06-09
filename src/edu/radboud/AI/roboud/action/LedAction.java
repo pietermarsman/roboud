@@ -1,9 +1,8 @@
 package edu.radboud.ai.roboud.action;
 
 import com.wowwee.robome.RoboMeCommands.*;
+import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
-
-import java.util.Observer;
 
 /**
  * Created by Pieter Marsman on 27-5-2014.
@@ -12,6 +11,10 @@ import java.util.Observer;
 public enum class LedColor {};
 
 public class LedAction extends edu.radboud.AI.roboud.action.AbstractAction {
+
+    public LedAction(RoboudController controller) {
+        super(controller);
+    }
 
     @Override
     public void doActions(Scenario scenario, Observer abstractBehaviour) {

@@ -16,6 +16,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="RoboMeLib" level="project" />
+    <orderEntry type="library" name="Twitter" level="project" />
   </component>
 </module>
 
