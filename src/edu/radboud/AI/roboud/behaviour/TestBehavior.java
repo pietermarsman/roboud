@@ -19,5 +19,6 @@ public class TestBehavior extends AbstractBehavior {
         options.add("Optie B");
         options.add("Optie C");
         ChoiceAction ca = new ChoiceAction(controller, options);
+        blocks.add(ca);
     }
 }
