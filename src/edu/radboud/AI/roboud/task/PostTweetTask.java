@@ -17,19 +17,22 @@ import java.io.InputStreamReader;
  * Created by Pieter Marsman on 24-5-2014.
  */
 public class PostTweetTask extends AbstractTask {
-
-    public PostTweetTask() throws TwitterException, IOException {
-        // TODO
-
+    String text;
+    public PostTweetTask(String text) throws TwitterException, IOException {
+        if(text == null)
+            this.text = "This is a default text to post on Twitter";
+        else
+            this.text = text;
+        postTweet();
     }
 
     @Override
     public boolean isSuitable(Scenario scenario) {
         // TODO
-        return false;
+        return true;
     }
 
-    public void postTweet(String text)
+    public void postTweet()
     {
         try {
             Twitter twitter = new TwitterFactory().getInstance();

@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
+import edu.radboud.AI.roboud.R;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
@@ -86,6 +87,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
         robome = new RoboMe(this, this);
 
