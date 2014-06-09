@@ -33,6 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".action.ChoiceActionActivity"/>
+        <activity android:name=".action.ConfirmationActionActivity"/>
     </application>
 
 </manifest>

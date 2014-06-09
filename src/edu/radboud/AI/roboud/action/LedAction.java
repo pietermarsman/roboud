@@ -1,6 +1,5 @@
 package edu.radboud.ai.roboud.action;
 
-import com.wowwee.robome.RoboMeCommands;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
