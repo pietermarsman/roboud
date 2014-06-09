@@ -14,8 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.wowwee.robome.RoboMe;
-import com.wowwee.robome.RoboMeCommands;
+
+import com.wowwee.robome;
+
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;

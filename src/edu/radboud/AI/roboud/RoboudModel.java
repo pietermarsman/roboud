@@ -7,6 +7,9 @@ import com.wowwee.robome.RoboMeCommands.RobotCommand;
 import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
+import edu.radboud.ai.roboud.senses.AndroidCamera;
+import edu.radboud.ai.roboud.senses.AndroidLocation;
+import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 
 import java.util.ArrayList;
 import java.util.List;
