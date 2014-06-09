@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
@@ -21,15 +22,12 @@ import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * Created by Pieter Marsman on 13-5-14.
  */
-public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
+public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener, TextToSpeech.OnInitListener {
 
     public static final String TAG = "RoboudController";
     private AndroidMicrophone mic;
@@ -44,6 +42,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     private Button button;
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
+    private TextToSpeech myTTS;
 
     private ActivityResultProcessor returnActivityDataTo;
 
@@ -105,6 +104,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Variables
         returnActivityDataTo = null;
+
+        // TextToSpeak
+        Log.i(TAG, "myTTS is created");
+        myTTS = new TextToSpeech(this, this);
     }
 
     @Override
@@ -352,5 +355,25 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     public void listenToSpeech(Observer observer) {
         mic.startListening(observer);
+    }
+
+    @Override
+    public void onInit(int initStatus) {
+        // check for successful instantiation
+        Log.i(TAG,"TTS onInit is loaded");
+        if (initStatus == TextToSpeech.SUCCESS) {
+            Log.i(TAG, "TTS onInit initStatus == succes");
+            if (myTTS.isLanguageAvailable(Locale.US) == TextToSpeech.LANG_AVAILABLE){
+                myTTS.setLanguage(Locale.US);
+                Log.i(TAG, "Local.US is available and set for TTS");
+            }
+        } else if (initStatus == TextToSpeech.ERROR) {
+            Log.w(TAG, "TTS: failed to initialize ");
+        }
+    }
+
+    public void speakYo(String text){
+        Log.i(TAG, "speakYo is called with " + text);
+        myTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 }
