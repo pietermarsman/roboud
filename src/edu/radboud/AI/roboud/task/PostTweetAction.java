@@ -1,5 +1,7 @@
 package edu.radboud.ai.roboud.task;
 
+import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.action.AbstractAction;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -11,29 +13,24 @@ import twitter4j.auth.RequestToken;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Observer;
 
 
 /**
  * Created by Pieter Marsman on 24-5-2014.
  */
-public class PostTweetTask extends AbstractTask {
+public class PostTweetAction extends AbstractAction {
     String text;
-    public PostTweetTask(String text) throws TwitterException, IOException {
+    public PostTweetAction(RoboudController controller1, String text) throws TwitterException, IOException {
+        super(controller1);
         if(text == null)
             this.text = "This is a default text to post on Twitter";
         else
             this.text = text;
-        postTweet();
     }
 
     @Override
-    public boolean isSuitable(Scenario scenario) {
-        // TODO
-        return true;
-    }
-
-    public void postTweet()
-    {
+    public void doActions(Scenario scenario, Observer abstractBehaviour) {
         try {
             Twitter twitter = new TwitterFactory().getInstance();
             try {
