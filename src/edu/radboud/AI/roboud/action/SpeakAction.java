@@ -12,8 +12,9 @@ public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitLi
     private TextToSpeech myTts;
     String text;
 
-    public SpeakAction() {
+    public SpeakAction(String text) {
         myTts = new TextToSpeech(null, this); //will null work? (used to be this)
+        this.text = text;
     }
 
     @Override
