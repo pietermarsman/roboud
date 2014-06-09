@@ -27,12 +27,6 @@ public class MotorAction extends AbstractAction {
     }
 
     @Override
-    public void executeAction(Scenario scenario) {
-        // TODO
-        actionDone();
-    }
-
-    @Override
     public void doActions(Scenario scenario, Observer abstractBehaviour) {
         addObserver(abstractBehaviour);
         //Some how get direction and speed
@@ -61,10 +55,61 @@ public class MotorAction extends AbstractAction {
                 }
                 break;
             case RIGHT:
+                switch(speed){
+                    case FASTEST:
+                        controller.sendCommand(kRobot_TurnRightSpeed1);
+                        break;
+                    case FAST:
+                        controller.sendCommand(kRobot_TurnRightSpeed2);
+                        break;
+                    case NORMAL:
+                        controller.sendCommand(kRobot_TurnRightSpeed3);
+                        break;
+                    case SLOW:
+                        controller.sendCommand(kRobot_TurnRightSpeed4);
+                        break;
+                    case SLOWEST:
+                        controller.sendCommand(kRobot_TurnRightSpeed5);
+                        break;
+                }
                 break;
             case BACKWARD:
+                switch(speed){
+                    case FASTEST:
+                        controller.sendCommand(kRobot_MoveBackwardSpeed1);
+                        break;
+                    case FAST:
+                        controller.sendCommand(kRobot_MoveBackwardSpeed2);
+                        break;
+                    case NORMAL:
+                        controller.sendCommand(kRobot_MoveBackwardSpeed3);
+                        break;
+                    case SLOW:
+                        controller.sendCommand(kRobot_MoveBackwardSpeed4);
+                        break;
+                    case SLOWEST:
+                        controller.sendCommand(kRobot_MoveBackwardSpeed5);
+                        break;
+                }
                 break;
             case LEFT:
+                switch(speed){
+                    case FASTEST:
+                        controller.sendCommand(kRobot_TurnLeftSpeed1);
+                        break;
+                    case FAST:
+                        controller.sendCommand(kRobot_TurnLeftSpeed2);
+                        break;
+                    case NORMAL:
+                        controller.sendCommand(kRobot_TurnLeftSpeed3);
+                        break;
+                    case SLOW:
+                        controller.sendCommand(kRobot_TurnLeftSpeed4);
+                        break;
+                    case SLOWEST:
+                        controller.sendCommand(kRobot_TurnLeftSpeed5);
+                        break;
+                }
                 break;
         }
         setChanged();

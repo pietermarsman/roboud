@@ -23,12 +23,6 @@ public class LedAction extends AbstractAction {
     }
 
     @Override
-    public void executeAction(Scenario scenario) {
-        // TODO
-        actionDone();
-    }
-
-    @Override
     public void doActions(Scenario scenario, Observer abstractBehaviour) {
         addObserver(abstractBehaviour);
         controller.sendCommand(kRobot_ShowMoodOff);

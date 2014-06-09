@@ -16,8 +16,8 @@ public class ChoiceActionActivity extends ListActivity implements AdapterView.On
 
     public static final String RETURN_NAME = "Selected Item";
 
-    ListView list;
-    String[] options;
+    private ListView list;
+    private String[] options;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
