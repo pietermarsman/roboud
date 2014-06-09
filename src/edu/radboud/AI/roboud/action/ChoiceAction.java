@@ -7,6 +7,7 @@ import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
 import java.util.List;
+import java.util.Observer;
 
 /**
  * Created by Pieter Marsman on 4-6-2014.
@@ -27,7 +28,8 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
     }
 
     @Override
-    public void executeAction(Scenario scenario) {
+    public void doActions(Scenario scenario, Observer abstractBehavior) {
+        addObserver(abstractBehavior);
         Intent i = new Intent(controller, ChoiceActionActivity.class);
         String[] optionsArray = new String[options.size()];
         optionsArray = options.toArray(optionsArray);
@@ -39,7 +41,8 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
     public void processData(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             resultString = data.getStringExtra(ChoiceActionActivity.RETURN_NAME);
-            actionDone();
+            setChanged();
+            notifyObservers();
         } else {
             // TODO what todo if the activity stopped without letting the user choose
         }

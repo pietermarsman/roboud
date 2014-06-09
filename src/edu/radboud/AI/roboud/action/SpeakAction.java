@@ -11,8 +11,9 @@ import java.util.Observer;
  * Created by Pieter Marsman on 27-5-2014.
  */
 public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitListener {
+
     private TextToSpeech myTts;
-    String text;
+    private String text;
 
     public SpeakAction(RoboudController controller, String text) {
         super(controller);
@@ -38,12 +39,11 @@ public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitLi
     }
 
     @Override
-    public void executeAction(Scenario scenario) {
-        // TODO
-        actionDone();
+    public void doActions(Scenario scenario, Observer abstractBehavior) {
+        addObserver(abstractBehavior);
+        myTts.speak(text,TextToSpeech.QUEUE_FLUSH, null);
+        setChanged();
+        notifyObservers();
     }
 
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
-        myTts.speak(text,TextToSpeech.QUEUE_FLUSH, null);
-    }
 }
