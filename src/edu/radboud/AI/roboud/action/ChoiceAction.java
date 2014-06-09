@@ -1,5 +1,6 @@
 package edu.radboud.ai.roboud.action;
 
+import android.app.Activity;
 import android.content.Intent;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
@@ -36,7 +37,7 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
 
     @Override
     public void processData(int requestCode, int resultCode, Intent data) {
-        if (data != null) {
+        if (resultCode == Activity.RESULT_OK) {
             resultString = data.getStringExtra(ChoiceActionActivity.RETURN_NAME);
             actionDone();
         } else {
