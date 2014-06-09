@@ -22,10 +22,9 @@ public class TestBehavior extends AbstractBehavior {
 
     public TestBehavior(RoboudController controller, Observer observer) {
         super(controller, observer);
-        SpeakAction speakAction = new SpeakAction(controller, "Hello");
-        Log.i(TAG, "created new speakAction");
+        SpeakAction speakAction = new SpeakAction(controller, "Hello Yo mama is so fat see is");
         blocks.add(speakAction);
-        Log.i(TAG, "added speakAction to blocks");
+
 
         /*ShowTextAction showTextAction = new ShowTextAction(controller, "Hello");
         ListenAction listenAction = new ListenAction(controller);
