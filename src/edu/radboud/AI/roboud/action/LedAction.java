@@ -2,7 +2,7 @@ package edu.radboud.ai.roboud.action;
 
 
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
-import edu.radboud.AI.roboud.action.LedColor;
+import edu.radboud.ai.roboud.action.LedColor;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.AbstractAction;
 import edu.radboud.ai.roboud.action.LedColor;
@@ -17,8 +17,6 @@ import edu.radboud.ai.roboud.scenario.Scenario;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
 import edu.radboud.ai.roboud.action.LedColor;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.AbstractAction;
-import edu.radboud.ai.roboud.action.LedColor;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import java.util.Observer;
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;

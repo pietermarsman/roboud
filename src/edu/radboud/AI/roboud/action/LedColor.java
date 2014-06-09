@@ -1,4 +1,4 @@
-package edu.radboud.AI.roboud.action;
+package edu.radboud.ai.roboud.action;
 
 /**
  * Created by Pieter Marsman on 27-5-2014.
