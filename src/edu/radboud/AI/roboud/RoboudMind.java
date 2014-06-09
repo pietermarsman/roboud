@@ -76,7 +76,7 @@ public class RoboudMind implements Observer, Runnable {
         if (currentBehaviour != null)
             currentBehaviour.executeBehaviour(whatIsCurrentScenario());
 
-        while(running) {
+        while (running) {
             if (currentBehaviour == null) {
                 currentBehaviour = nextBehaviour();
                 currentBehaviour.executeBehaviour(whatIsCurrentScenario());

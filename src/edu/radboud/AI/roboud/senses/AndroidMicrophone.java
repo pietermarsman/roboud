@@ -40,7 +40,7 @@ public class AndroidMicrophone extends Observable implements ActivityResultProce
     public void processData(int requestCode, int resultCode, Intent data) {
         controller.startListeningToRoboMe();
         if (resultCode == Activity.RESULT_OK) {
-             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             setChanged();
             notifyObservers(results);
         }
@@ -48,7 +48,7 @@ public class AndroidMicrophone extends Observable implements ActivityResultProce
 
     /**
      * Disable button if no recognition service is present
-      */
+     */
     public boolean checkIfSpeechRecognitionIsAvailable(Activity activity) {
         PackageManager pm = activity.getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(

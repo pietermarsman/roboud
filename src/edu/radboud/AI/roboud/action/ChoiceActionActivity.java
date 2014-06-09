@@ -29,7 +29,7 @@ public class ChoiceActionActivity extends ListActivity implements AdapterView.On
         Intent sender = getIntent();
         options = sender.getExtras().getStringArray(ChoiceAction.DATA_NAME);
 
-        list.setAdapter(new ArrayAdapter<String>(this,R.layout.list_item, options));
+        list.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, options));
         list.setOnItemClickListener(this);
     }
 

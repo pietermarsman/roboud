@@ -15,33 +15,16 @@ import java.util.TimerTask;
 public class AndroidCamera extends Observable implements SurfaceHolder.Callback {
 
     public static final String TAG = "AndroidCamera";
-
-    //a variable to store a reference to the Surface View at the main.xml file
-    private SurfaceView sv;
-    //a surface holder
-    private SurfaceHolder sHolder;
-
-    //a variable to control the camera
-    private Camera mCamera;
-    //the camera parameters
-    private Parameters parameters;
-
-    private int refreshRate;
-    private Timer timer;
-
     //sets what code should be executed after the picture is taken
-    Camera.PictureCallback mCall = new Camera.PictureCallback()
-    {
+    Camera.PictureCallback mCall = new Camera.PictureCallback() {
         @Override
-        public void onPictureTaken(byte[] data, Camera camera)
-        {
+        public void onPictureTaken(byte[] data, Camera camera) {
             //decode the data obtained by the camera into a Bitmap
             Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
             setChanged();
             notifyObservers(bmp);
         }
     };
-
     Camera.FaceDetectionListener faceDetectionListener = new Camera.FaceDetectionListener() {
         @Override
         public void onFaceDetection(Camera.Face[] _faces, Camera camera) {
@@ -50,7 +33,16 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
             notifyObservers(faces);
         }
     };
-
+    //a variable to store a reference to the Surface View at the main.xml file
+    private SurfaceView sv;
+    //a surface holder
+    private SurfaceHolder sHolder;
+    //a variable to control the camera
+    private Camera mCamera;
+    //the camera parameters
+    private Parameters parameters;
+    private int refreshRate;
+    private Timer timer;
     private boolean ready;
 
     public AndroidCamera(SurfaceView _surfaceView, int _refreshRate) {
@@ -73,8 +65,7 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3)
-    {
+    public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
     }
 
     @Override
@@ -93,8 +84,7 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder)
-    {
+    public void surfaceDestroyed(SurfaceHolder holder) {
         ready = false;
         //stopListeners the preview
         mCamera.stopPreview();

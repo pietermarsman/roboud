@@ -7,9 +7,6 @@ import com.wowwee.robome.RoboMeCommands.RobotCommand;
 import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
-import edu.radboud.ai.roboud.senses.AndroidCamera;
-import edu.radboud.ai.roboud.senses.AndroidLocation;
-import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +17,16 @@ import java.util.Observable;
  */
 public class RoboudModel extends Observable {
 
+    EventHistory events;
     private boolean robomeConnected, robomeHeadsetPluggedIn, listening;
     private float volume;
     private String libVersion;
-
     private Bitmap image;
     private int faces;
     private float[] rotation, linearAcceleration, gravity, gyro, magneticField;
     private float proximity, light;
     private Location loc;
-
     private List<String> voiceResults;
-    EventHistory events;
-
     private long lastModification;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
@@ -111,14 +105,14 @@ public class RoboudModel extends Observable {
         return libVersion;
     }
 
+    public boolean isRobomeConnected() {
+        return robomeConnected;
+    }
+
     public void setRobomeConnected(boolean robomeConnected) {
         this.robomeConnected = robomeConnected;
         events.newEvent(new Event(EventType.ROBOME_CONNECTION, robomeConnected));
         changed();
-    }
-
-    public boolean isRobomeConnected() {
-        return robomeConnected;
     }
 
     public boolean isRobomeHeadsetPluggedIn() {
@@ -131,14 +125,14 @@ public class RoboudModel extends Observable {
         changed();
     }
 
+    public float getVolume() {
+        return volume;
+    }
+
     public void setVolume(float volume) {
         this.volume = volume;
         events.newEvent(new Event(EventType.VOLUME, volume));
         changed();
-    }
-
-    public float getVolume() {
-        return volume;
     }
 
     public boolean isListening() {
@@ -163,14 +157,13 @@ public class RoboudModel extends Observable {
 
     //      === START Android phone part ===
 
+    public Bitmap getImage() {
+        return image;
+    }
 
     public void setImage(Bitmap image) {
         this.image = image;
         changed();
-    }
-
-    public Bitmap getImage() {
-        return image;
     }
 
     public float[] getRotation() {
@@ -236,17 +229,12 @@ public class RoboudModel extends Observable {
         changed();
     }
 
-    public void setLocation(Location location) {
-        this.loc = location;
-        changed();
-    }
-
     public Location getLocation() {
         return loc;
     }
 
-    public void setFaces(int faces) {
-        this.faces = faces;
+    public void setLocation(Location location) {
+        this.loc = location;
         changed();
     }
 
@@ -254,14 +242,19 @@ public class RoboudModel extends Observable {
         return faces;
     }
 
-    public void setVoiceResults(List<String> voiceResults) {
-        this.voiceResults = voiceResults;
-        events.newEvent(new Event(EventType.NEW_SPEECH_DATA, voiceResults));
+    public void setFaces(int faces) {
+        this.faces = faces;
         changed();
     }
 
     public List<String> getVoiceResults() {
         return voiceResults;
+    }
+
+    public void setVoiceResults(List<String> voiceResults) {
+        this.voiceResults = voiceResults;
+        events.newEvent(new Event(EventType.NEW_SPEECH_DATA, voiceResults));
+        changed();
     }
 
     public List<Event> getEvents(EventType eventType, int lastN) {

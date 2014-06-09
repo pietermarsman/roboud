@@ -1,28 +1,9 @@
 package edu.radboud.ai.roboud.action;
 
 
-import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.ai.roboud.action.RobotDirection;
-import edu.radboud.ai.roboud.action.RobotSpeed;
-import edu.radboud.ai.roboud.action.AbstractAction;
-
 import edu.radboud.ai.roboud.RoboudController;
-
-
-import edu.radboud.ai.roboud.RoboudController;
-import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.ai.roboud.action.RobotDirection;
-import edu.radboud.ai.roboud.action.RobotSpeed;
-import edu.radboud.ai.roboud.action.AbstractAction;
-
 import edu.radboud.ai.roboud.scenario.Scenario;
-import edu.radboud.ai.roboud.RoboudController;
-import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.ai.roboud.action.RobotDirection;
-import edu.radboud.ai.roboud.action.RobotSpeed;
-import edu.radboud.ai.roboud.action.AbstractAction;
-import edu.radboud.ai.roboud.scenario.Scenario;
-import edu.radboud.ai.roboud.RoboudController;
+
 import java.util.Observer;
 
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
@@ -44,9 +25,9 @@ public class MotorAction extends AbstractAction {
         RobotSpeed speed = RobotSpeed.NORMAL;
 
         //Not finished
-        switch(dir){
+        switch (dir) {
             case FORWARD:
-                switch(speed){
+                switch (speed) {
                     case FASTEST:
                         controller.sendCommand(kRobot_MoveForwardSpeed1);
                         break;
@@ -65,7 +46,7 @@ public class MotorAction extends AbstractAction {
                 }
                 break;
             case RIGHT:
-                switch(speed){
+                switch (speed) {
                     case FASTEST:
                         controller.sendCommand(kRobot_TurnRightSpeed1);
                         break;
@@ -84,7 +65,7 @@ public class MotorAction extends AbstractAction {
                 }
                 break;
             case BACKWARD:
-                switch(speed){
+                switch (speed) {
                     case FASTEST:
                         controller.sendCommand(kRobot_MoveBackwardSpeed1);
                         break;
@@ -103,7 +84,7 @@ public class MotorAction extends AbstractAction {
                 }
                 break;
             case LEFT:
-                switch(speed){
+                switch (speed) {
                     case FASTEST:
                         controller.sendCommand(kRobot_TurnLeftSpeed1);
                         break;

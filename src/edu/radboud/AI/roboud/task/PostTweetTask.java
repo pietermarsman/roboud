@@ -18,8 +18,9 @@ import java.io.InputStreamReader;
  */
 public class PostTweetTask extends AbstractTask {
     String text;
+
     public PostTweetTask(String text) throws TwitterException, IOException {
-        if(text == null)
+        if (text == null)
             this.text = "This is a default text to post on Twitter";
         else
             this.text = text;
@@ -32,8 +33,7 @@ public class PostTweetTask extends AbstractTask {
         return true;
     }
 
-    public void postTweet()
-    {
+    public void postTweet() {
         try {
             Twitter twitter = new TwitterFactory().getInstance();
             try {

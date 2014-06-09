@@ -20,15 +20,15 @@ public abstract class AbstractBehavior extends Observable implements Behaviour, 
     private int executionIndex;
     private Scenario scenario;
 
-    public List<BehaviourBlock> getBlocks() {
-        return blocks;
-    }
-
     public AbstractBehavior(RoboudController controller, Observer observer) {
         this.addObserver(observer);
         this.controller = controller;
         blocks = new LinkedList<BehaviourBlock>();
         executionIndex = -1;
+    }
+
+    public List<BehaviourBlock> getBlocks() {
+        return blocks;
     }
 
     /**

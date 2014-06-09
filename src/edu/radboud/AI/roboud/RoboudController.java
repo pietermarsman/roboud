@@ -14,9 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.wowwee.robome;
-
+import com.wowwee.robome.RoboMe;
+import com.wowwee.robome.RoboMeCommands;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
@@ -33,19 +32,16 @@ import java.util.Observer;
 public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
 
     public static final String TAG = "RoboudController";
-
+    private AndroidMicrophone mic;
+    private AndroidCamera cam;
+    private AndroidLocation loc;
+    private RoboudModel model;
+    private RoboudMind mind;
+    private RoboMe robome;
     private TextView logView;
     private ScrollView logScrollView;
     private SurfaceView surfaceView;
     private Button button;
-
-    AndroidMicrophone mic;
-    AndroidCamera cam;
-    AndroidLocation loc;
-    RoboudModel model;
-    RoboudMind mind;
-    RoboMe robome;
-
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
 
@@ -55,7 +51,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         @Override
         public void handleMessage(Message msg) {
             // display the received event
-            if (msg.what == 0x99 )
+            if (msg.what == 0x99)
                 logView.setText(logView.getText() + "\n" + (String) msg.obj);
             logScrollView.smoothScrollTo(0, logView.getHeight());
         }
@@ -69,7 +65,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     //  === START Android Activity part ===
 
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +165,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         // UI
         // Nothing to do
@@ -281,15 +279,30 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        switch(event.sensor.getType()) {
-            case Sensor.TYPE_ROTATION_VECTOR: model.setRotation(event.values); break;
-            case Sensor.TYPE_LINEAR_ACCELERATION: model.setLinearAcceleration(event.values); break;
-            case Sensor.TYPE_GRAVITY: model.setGravity(event.values); break;
-            case Sensor.TYPE_GYROSCOPE: model.setGyro(event.values); break;
-            case Sensor.TYPE_MAGNETIC_FIELD: model.setMagneticField(event.values); break;
-            case Sensor.TYPE_PROXIMITY: model.setProximity(event.values[0]); break;
-            case Sensor.TYPE_LIGHT: model.setLight(event.values[0]); break;
-            default: showText("Sensor type not recognized");
+        switch (event.sensor.getType()) {
+            case Sensor.TYPE_ROTATION_VECTOR:
+                model.setRotation(event.values);
+                break;
+            case Sensor.TYPE_LINEAR_ACCELERATION:
+                model.setLinearAcceleration(event.values);
+                break;
+            case Sensor.TYPE_GRAVITY:
+                model.setGravity(event.values);
+                break;
+            case Sensor.TYPE_GYROSCOPE:
+                model.setGyro(event.values);
+                break;
+            case Sensor.TYPE_MAGNETIC_FIELD:
+                model.setMagneticField(event.values);
+                break;
+            case Sensor.TYPE_PROXIMITY:
+                model.setProximity(event.values[0]);
+                break;
+            case Sensor.TYPE_LIGHT:
+                model.setLight(event.values[0]);
+                break;
+            default:
+                showText("Sensor type not recognized");
         }
     }
 
@@ -305,7 +318,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         if (observable instanceof AndroidCamera) {
             if (data instanceof Bitmap)
                 model.setImage((Bitmap) data);
-            if(data instanceof Camera.Face[])
+            if (data instanceof Camera.Face[])
                 model.setFaces(((Camera.Face[]) data).length);
         }
         // Location update

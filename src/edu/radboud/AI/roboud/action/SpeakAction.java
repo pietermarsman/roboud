@@ -32,16 +32,15 @@ public class SpeakAction extends AbstractAction implements TextToSpeech.OnInitLi
     }
 
     // I prefer this method, since a string can be passed
-    public void speak(Scenario scenario, Observer abstractBehaviour, String text)
-    {
+    public void speak(Scenario scenario, Observer abstractBehaviour, String text) {
         this.text = text;
-        doActions(scenario,abstractBehaviour);
+        doActions(scenario, abstractBehaviour);
     }
 
     @Override
     public void doActions(Scenario scenario, Observer abstractBehavior) {
         addObserver(abstractBehavior);
-        myTts.speak(text,TextToSpeech.QUEUE_FLUSH, null);
+        myTts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         setChanged();
         notifyObservers();
     }
