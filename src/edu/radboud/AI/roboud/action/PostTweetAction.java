@@ -1,7 +1,6 @@
-package edu.radboud.ai.roboud.task;
+package edu.radboud.ai.roboud.action;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.AbstractAction;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -37,16 +36,16 @@ public class PostTweetAction extends AbstractAction {
                 // get request token.
                 // this will throw IllegalStateException if access token is already available
                 RequestToken requestToken = twitter.getOAuthRequestToken();
-                System.out.println("Got request token.");
-                System.out.println("Request token: " + requestToken.getToken());
-                System.out.println("Request token secret: " + requestToken.getTokenSecret());
+                controller.showText("Got request token.");
+                controller.showText("Request token: " + requestToken.getToken());
+                controller.showText("Request token secret: " + requestToken.getTokenSecret());
                 AccessToken accessToken = null;
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                 while (null == accessToken) {
-                    System.out.println("Open the following URL and grant access to your account:");
-                    System.out.println(requestToken.getAuthorizationURL());
-                    System.out.print("Enter the PIN(if available) and hit enter after you granted access.[PIN]:");
+                    controller.showText("Open the following URL and grant access to your account:");
+                    controller.showText(requestToken.getAuthorizationURL());
+                    controller.showText("Enter the PIN(if available) and hit enter after you granted access.[PIN]:");
                     String pin = br.readLine();
                     try {
                         if (pin.length() > 0) {
@@ -62,26 +61,26 @@ public class PostTweetAction extends AbstractAction {
                         }
                     }
                 }
-                System.out.println("Got access token.");
-                System.out.println("Access token: " + accessToken.getToken());
-                System.out.println("Access token secret: " + accessToken.getTokenSecret());
+                controller.showText("Got access token.");
+                controller.showText("Access token: " + accessToken.getToken());
+                controller.showText("Access token secret: " + accessToken.getTokenSecret());
             } catch (IllegalStateException ie) {
                 // access token is already available, or consumer key/secret is not set.
                 if (!twitter.getAuthorization().isEnabled()) {
-                    System.out.println("OAuth consumer key/secret is not set.");
+                    controller.showText("OAuth consumer key/secret is not set.");
                     System.exit(-1);
                 }
             }
             Status status = twitter.updateStatus(text);
-            System.out.println("Successfully updated the status to [" + status.getText() + "].");
+            controller.showText("Successfully updated the status to [" + status.getText() + "].");
             System.exit(0);
         } catch (TwitterException te) {
             te.printStackTrace();
-            System.out.println("Failed to get timeline: " + te.getMessage());
+            controller.showText("Failed to get timeline: " + te.getMessage());
             System.exit(-1);
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            System.out.println("Failed to read the system input.");
+            controller.showText("Failed to read the system input.");
             System.exit(-1);
         }
     }

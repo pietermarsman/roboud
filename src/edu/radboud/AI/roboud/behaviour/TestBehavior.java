@@ -1,7 +1,7 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.task.PostTweetAction;
+import edu.radboud.ai.roboud.action.PostTweetAction;
 import twitter4j.TwitterException;
 
 import java.io.IOException;
