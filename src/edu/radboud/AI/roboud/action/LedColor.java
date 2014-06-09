@@ -1,9 +1,9 @@
 package edu.radboud.ai.roboud.action;
 
 /**
- * Created by Pieter Marsman on 27-5-2014.
+ * @author Mike Ligthart
  */
 
 public enum LedColor {
-    BLUE, CYAN, GREEN, ORANGE, RED, WHITE, YELLOW
+    BLUE, CYAN, GREEN, ORANGE, RED, WHITE, YELLOW, OFF
 }
