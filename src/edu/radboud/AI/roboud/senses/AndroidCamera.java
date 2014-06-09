@@ -85,7 +85,6 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        ready = false;
         //stopListeners the preview
         mCamera.stopPreview();
         mCamera.stopFaceDetection();
@@ -93,6 +92,7 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
         mCamera.release();
         //unbind the camera from this object
         mCamera = null;
+        ready = false;
     }
 
     public void takePicture() {

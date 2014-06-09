@@ -8,19 +8,20 @@ import java.util.Observer;
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
 /**
- * Created by Pieter Marsman on 27-5-2014.
+ * @author Mike Ligthart
  */
 public class LedAction extends AbstractAction {
 
-    public LedAction(RoboudController controller) {
+    private LedColor color;
+
+    public LedAction(RoboudController controller, LedColor color) {
         super(controller);
+        this.color = color;
     }
 
     @Override
     public void doActions(Scenario scenario, Observer abstractBehaviour) {
         addObserver(abstractBehaviour);
-        //Some how get color
-        LedColor color = LedColor.BLUE;
         switch (color) {
             case BLUE:
                 controller.sendCommand(kRobot_RGBHeartBlue);
@@ -42,8 +43,9 @@ public class LedAction extends AbstractAction {
                 break;
             case YELLOW:
                 controller.sendCommand(kRobot_RGBHeartYellow);
-                setChanged();
-                notifyObservers();
+                break;
+            default: //OFF
+                break;
         }
         setChanged();
         notifyObservers();

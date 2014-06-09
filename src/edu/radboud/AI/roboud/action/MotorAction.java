@@ -1,6 +1,7 @@
 package edu.radboud.ai.roboud.action;
 
 
+import com.wowwee.robome.RoboMeCommands;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
@@ -9,12 +10,21 @@ import java.util.Observer;
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
 /**
- * Created by Pieter Marsman on 27-5-2014.
+ * @author Mike Ligthart
  */
 public class MotorAction extends AbstractAction {
 
-    public MotorAction(RoboudController controller) {
+    private RobotDirection dir;
+    private RobotSpeed speed;
+
+    public MotorAction(RoboudController controller, RobotDirection dir, RobotSpeed speed) {
         super(controller);
+        this.dir = dir;
+        this.speed = speed;
+    }
+
+    public MotorAction(RoboudController controller, RobotDirection dir){
+        this(controller, dir, RobotSpeed.NORMAL);
     }
 
     @Override
