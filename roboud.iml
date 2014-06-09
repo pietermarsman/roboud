@@ -16,6 +16,19 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="RoboMeLib" level="project" />
+    <orderEntry type="library" name="RoboMeLib (2)" level="project" />
+    <orderEntry type="library" name="twitter4j-async-4.0.1" level="project" />
+    <orderEntry type="library" name="twitter4j-core-4.0.1" level="project" />
+    <orderEntry type="library" name="twitter4j-examples-4.0.1" level="project" />
+    <orderEntry type="library" name="twitter4j-media-support-4.0.1" level="project" />
+    <orderEntry type="library" name="twitter4j-stream-4.0.1" level="project" />
+    <orderEntry type="library" name="twitter4j-appengine-4.0.1 (2)" level="project" />
+    <orderEntry type="library" name="commons-codec-1.9" level="project" />
+    <orderEntry type="library" name="commons-codec-1.9-javadoc" level="project" />
+    <orderEntry type="library" name="commons-codec-1.9-sources" level="project" />
+    <orderEntry type="library" name="commons-codec-1.9-test-sources" level="project" />
+    <orderEntry type="library" name="commons-codec-1.9-tests" level="project" />
+    <orderEntry type="library" name="commons-codec-1.9-javadoc (2)" level="project" />
   </component>
 </module>
 

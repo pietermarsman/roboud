@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="commons-codec-1.9-sources">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/src/edu/radboud/ai/roboud/twitter4j/commons-codec-1.9/commons-codec-1.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

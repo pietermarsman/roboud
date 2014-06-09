@@ -1,11 +1,9 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.task.SpeakTask;
 import edu.radboud.ai.roboud.task.AskQuestionTask;
+import edu.radboud.ai.roboud.task.SpeakTask;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
-
-import java.util.Observable;
 
 /**
  * Created by Pieter Marsman on 2-6-2014.

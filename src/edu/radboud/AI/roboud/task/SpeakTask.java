@@ -1,7 +1,6 @@
 package edu.radboud.ai.roboud.task;
 
 import edu.radboud.ai.roboud.scenario.Scenario;
-import edu.radboud.ai.roboud.task.AbstractTask;
 
 /**
  * Created by Pieter Marsman on 2-6-2014.
