@@ -31,6 +31,12 @@ public class TaskFactory {
 
     public AskQuestionTask getAskQuestionTask(String question) throws UnsupportedOperationException {
         AbstractAction output, input;
+        if (scenario == null){
+            Log.i(TAG, "scenario is null");
+        }
+        else{
+            Log.i(TAG, "scenario is not null");
+        }
         if(scenario.isCanTalk()){
             output = new SpeakAction(controller, question);
         }

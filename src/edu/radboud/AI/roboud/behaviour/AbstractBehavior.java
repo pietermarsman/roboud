@@ -18,7 +18,7 @@ public abstract class AbstractBehavior extends Observable implements Behaviour, 
     protected List<BehaviourBlock> blocks;
     protected RoboudController controller;
     private int executionIndex;
-    private Scenario scenario;
+    protected Scenario scenario;
 
     public AbstractBehavior(RoboudController controller, Observer observer) {
         this.addObserver(observer);

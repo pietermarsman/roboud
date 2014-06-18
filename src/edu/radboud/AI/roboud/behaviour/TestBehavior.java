@@ -25,8 +25,8 @@ public class TestBehavior extends AbstractBehavior {
     public TestBehavior(RoboudController controller, Observer observer) {
         super(controller, observer);
         //SpeakAction speakAction = new SpeakAction(controller, "Hello Yo mama is so fat see is");
-        AbstractTask askquestion = TaskFactory.getInstance().getAskQuestionTask("Hello how are you doing today?");
-        blocks.add(askquestion);
+        AbstractTask askQuestion = TaskFactory.getInstance(scenario).getAskQuestionTask("Hello how are you doing today?");
+        blocks.add(askQuestion);
 
 
         /*ShowTextAction showTextAction = new ShowTextAction(controller, "Hello");
