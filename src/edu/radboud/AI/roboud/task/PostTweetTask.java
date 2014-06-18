@@ -27,12 +27,6 @@ public class PostTweetTask extends AbstractTask {
         postTweet();
     }
 
-    @Override
-    public boolean isSuitable(Scenario scenario) {
-        // TODO
-        return true;
-    }
-
     public void postTweet() {
         try {
             Twitter twitter = new TwitterFactory().getInstance();

@@ -8,6 +8,5 @@ import edu.radboud.ai.roboud.scenario.Scenario;
  */
 public interface Task extends BehaviourBlock {
 
-    boolean isSuitable(Scenario scenario);
 
 }

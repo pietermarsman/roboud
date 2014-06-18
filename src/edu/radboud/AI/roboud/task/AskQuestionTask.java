@@ -1,6 +1,7 @@
 package edu.radboud.ai.roboud.task;
 
 import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.action.Action;
 import edu.radboud.ai.roboud.action.ListenAction;
 import edu.radboud.ai.roboud.action.SpeakAction;
 import edu.radboud.ai.roboud.scenario.Scenario;
@@ -13,21 +14,11 @@ import java.util.Observer;
  */
 public class AskQuestionTask extends AbstractTask implements Observer {
 
-    String answer;
+    private String answer;
 
-    public AskQuestionTask(RoboudController controller, String question) {
-        actions.add(new SpeakAction(controller, question));
-        actions.add(new ListenAction(controller));
-    }
-
-    public AskQuestionTask(RoboudController controller, String[] questions) {
-        this(controller, SpeechRepertoire.randomChoice(questions));
-    }
-
-    @Override
-    public boolean isSuitable(Scenario scenario) {
-        // TODO
-        return true;
+    public AskQuestionTask(Action output, Action input) {
+        actions.add(output);
+        actions.add(input);
     }
 
     @Override
