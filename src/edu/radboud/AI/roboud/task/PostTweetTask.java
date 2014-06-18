@@ -25,6 +25,8 @@ public class PostTweetTask extends AbstractTask {
         else
             this.text = text;
         postTweet();
+        setChanged();
+        notifyObservers();
     }
 
     public void postTweet() {

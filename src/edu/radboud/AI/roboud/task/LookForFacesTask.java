@@ -7,7 +7,12 @@ import edu.radboud.ai.roboud.scenario.Scenario;
  */
 public class LookForFacesTask extends AbstractTask {
 
-    public LookForFacesTask() {
-        // TODO
+
+    public LookForFacesTask(boolean enabled) {
+        if(enabled){
+            // TODO
+        }
+        setChanged();
+        notifyObservers();
     }
 }

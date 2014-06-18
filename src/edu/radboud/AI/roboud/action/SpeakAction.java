@@ -3,7 +3,6 @@ package edu.radboud.ai.roboud.action;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
 
 import java.util.Locale;
@@ -44,11 +43,15 @@ public class SpeakAction extends AbstractAction implements OnInitListener{
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehavior) {
+    public void doActions(Observer abstractBehavior) {
         addObserver(abstractBehavior);
         Log.i(TAG, "Going to speak: " + text);
         myTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         notifyWhenReadyWithSpeaking();
+    }
+
+    public String getText(){
+        return text;
     }
 
     private void notifyWhenReadyWithSpeaking(){

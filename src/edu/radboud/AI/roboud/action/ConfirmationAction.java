@@ -3,7 +3,6 @@ package edu.radboud.ai.roboud.action;
 import android.app.Activity;
 import android.content.Intent;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
 import java.util.Observer;
@@ -37,7 +36,7 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehavior) {
+    public void doActions(Observer abstractBehavior) {
         addObserver(abstractBehavior);
         Intent i = new Intent(controller, ConfirmationActionActivity.class);
         i.putExtra(DATA_NAME, question);

@@ -1,7 +1,6 @@
 package edu.radboud.ai.roboud.action;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
 
 import java.util.Observer;
 
@@ -20,7 +19,7 @@ public class LedAction extends AbstractAction {
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
+    public void doActions(Observer abstractBehaviour) {
         addObserver(abstractBehaviour);
         switch (color) {
             case BLUE:

@@ -19,11 +19,10 @@ public abstract class AbstractTask extends Observable implements Task, Observer 
     /**
      * Execute the Actions that make this task. Start one action once the previous has ended
      *
-     * @param scenario
      * @param abstractBehaviour
      */
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
+    public void doActions(Observer abstractBehaviour) {
         this.scenario = scenario;
         executionIndex = 0;
         executeStep();
@@ -36,7 +35,7 @@ public abstract class AbstractTask extends Observable implements Task, Observer 
     }
 
     private void executeStep() {
-        actions.get(executionIndex).doActions(scenario, this);
+        actions.get(executionIndex).doActions(this);
         executionIndex++;
     }
 }

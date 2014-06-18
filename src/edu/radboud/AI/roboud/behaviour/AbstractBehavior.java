@@ -51,7 +51,7 @@ public abstract class AbstractBehavior extends Observable implements Behaviour, 
         if (executionIndex + 1 < blocks.size()) {
             executionIndex++;
             Log.i(TAG, "Execute step " + executionIndex);
-            blocks.get(executionIndex).doActions(scenario, this);
+            blocks.get(executionIndex).doActions(this);
         } else {
             Log.i(TAG, "No further steps to execute");
             setChanged();

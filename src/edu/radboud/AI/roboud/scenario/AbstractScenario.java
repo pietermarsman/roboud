@@ -5,13 +5,14 @@ package edu.radboud.ai.roboud.scenario;
  */
 public abstract class AbstractScenario implements Scenario {
 
-    protected boolean canTalk, canDrive, interactingWithIndividual, canListen;
+    protected boolean canTalk, canDrive, interactingWithIndividual, canListen, hasInternet;
 
     public AbstractScenario() {
         canTalk = true;
         canListen = true;
         canDrive = true;
         interactingWithIndividual = true;
+        hasInternet = true;
     }
 
     public boolean isCanTalk() {
@@ -29,6 +30,8 @@ public abstract class AbstractScenario implements Scenario {
     public boolean isCanListen(){
         return canListen;
     }
+
+    public boolean isHasInternet() { return hasInternet; }
 
     @Override
     public int hashCode() {
@@ -48,6 +51,8 @@ public abstract class AbstractScenario implements Scenario {
         if (canDrive != that.canDrive) return false;
         if (canTalk != that.canTalk) return false;
         if (interactingWithIndividual != that.interactingWithIndividual) return false;
+        if (canListen != that.isCanListen()) return false;
+        if (hasInternet != that.isHasInternet()) return false;
 
         return true;
     }

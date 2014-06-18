@@ -1,5 +1,6 @@
 package edu.radboud.ai.roboud.task;
 
+import edu.radboud.ai.roboud.action.AbstractAction;
 import edu.radboud.ai.roboud.scenario.Scenario;
 
 /**
@@ -7,7 +8,7 @@ import edu.radboud.ai.roboud.scenario.Scenario;
  */
 public class MakeNewAppointmentTask extends AbstractTask {
 
-    public MakeNewAppointmentTask() {
+    public MakeNewAppointmentTask(AbstractAction output, AbstractAction input) {
         // TODO
     }
 }

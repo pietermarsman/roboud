@@ -1,7 +1,7 @@
 package edu.radboud.ai.roboud.action;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.task.SpeechRepertoire;
 
 import java.util.Observer;
 
@@ -17,11 +17,19 @@ public class ShowTextAction extends AbstractAction {
         this.text = text;
     }
 
+    public ShowTextAction(RoboudController controller, String[] texts) {
+        this(controller, SpeechRepertoire.randomChoice(texts));
+    }
+
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehavior) {
+    public void doActions(Observer abstractBehavior) {
         addObserver(abstractBehavior);
         controller.showText(text);
         setChanged();
         notifyObservers();
+    }
+
+    public String getText(){
+        return text;
     }
 }

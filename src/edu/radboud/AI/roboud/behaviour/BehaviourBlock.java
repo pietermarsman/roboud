@@ -9,6 +9,6 @@ import java.util.Observer;
  */
 public interface BehaviourBlock {
 
-    public void doActions(Scenario scenario, Observer abstractBehaviour);
+    public void doActions(Observer abstractBehaviour);
 
 }

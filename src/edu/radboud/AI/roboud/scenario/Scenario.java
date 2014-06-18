@@ -9,4 +9,5 @@ public interface Scenario {
     public boolean isCanListen();
     public boolean isCanDrive();
     public boolean isInteractingWithIndividual();
+    public boolean isHasInternet();
 }

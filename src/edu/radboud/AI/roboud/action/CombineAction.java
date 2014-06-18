@@ -1,7 +1,6 @@
 package edu.radboud.ai.roboud.action;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -23,10 +22,10 @@ public class CombineAction extends AbstractAction implements Observer {
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
+    public void doActions(Observer abstractBehaviour) {
         // TODO Check if actions can be executed at the same time
-        a.doActions(scenario, this);
-        b.doActions(scenario, this);
+        a.doActions(this);
+        b.doActions(this);
     }
 
     @Override
