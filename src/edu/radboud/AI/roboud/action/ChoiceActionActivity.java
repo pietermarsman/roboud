@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import edu.radboud.ai.roboud.R;
 
 /**
  * Created by Pieter Marsman on 4-6-2014.
@@ -22,14 +20,14 @@ public class ChoiceActionActivity extends ListActivity implements AdapterView.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.choice);
+//        this.setContentView(R.layout.choice);
 
         list = getListView();
 
         Intent sender = getIntent();
         options = sender.getExtras().getStringArray(ChoiceAction.DATA_NAME);
 
-        list.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, options));
+//        list.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, options));
         list.setOnItemClickListener(this);
     }
 
