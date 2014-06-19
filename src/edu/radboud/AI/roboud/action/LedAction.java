@@ -15,6 +15,8 @@ public class LedAction extends AbstractAction {
 
     public LedAction(RoboudController controller, LedColor color) {
         super(controller);
+        controller.sendCommand(kRobot_ResetMood);
+        controller.sendCommand(kRobot_HeartBeatOff);
         this.color = color;
     }
 

@@ -1,17 +1,8 @@
 package edu.radboud.ai.roboud.behaviour;
 
-import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-
-import edu.radboud.ai.roboud.action.ChoiceAction;
-import edu.radboud.ai.roboud.action.SpeakAction;
-
-import edu.radboud.ai.roboud.action.CombineAction;
-import edu.radboud.ai.roboud.action.ListenAction;
-import edu.radboud.ai.roboud.action.ShowTextAction;
-import edu.radboud.ai.roboud.task.AbstractTask;
-import edu.radboud.ai.roboud.task.TaskFactory;
-
+import edu.radboud.ai.roboud.action.LedAction;
+import edu.radboud.ai.roboud.action.LedColor;
 
 import java.util.Observer;
 
@@ -25,8 +16,8 @@ public class TestBehavior extends AbstractBehavior {
     public TestBehavior(RoboudController controller, Observer observer) {
         super(controller, observer);
         //SpeakAction speakAction = new SpeakAction(controller, "Hello Yo mama is so fat see is");
-        AbstractTask askQuestion = TaskFactory.getInstance(scenario).getAskQuestionTask("Hello how are you doing today?");
-        blocks.add(askQuestion);
+        LedAction ledAction = new LedAction(controller, LedColor.random());
+        blocks.add(ledAction);
 
 
         /*ShowTextAction showTextAction = new ShowTextAction(controller, "Hello");

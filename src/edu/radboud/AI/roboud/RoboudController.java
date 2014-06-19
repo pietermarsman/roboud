@@ -72,6 +72,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         super.onCreate(savedInstanceState);
         showText("onCreate(" + savedInstanceState + ")");
 
+        // RoboMe
+        robome = new RoboMe(this, this);
+
         // UI
         setContentView(R.layout.main);
         logView = (TextView) findViewById(R.id.output);
@@ -94,8 +97,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         sensors.put(Sensor.TYPE_PROXIMITY, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
         sensors.put(Sensor.TYPE_LIGHT, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
 
-        // RoboMe
-        robome = new RoboMe(this, this);
 
         // Classes
         model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
