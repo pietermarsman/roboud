@@ -7,9 +7,9 @@ import java.util.List;
 /**
  * Created by Pieter Marsman on 24-5-2014.
  */
-public interface Behaviour {
+public interface Behavior {
 
-    List<BehaviourBlock> getBlocks();
+    public List<BehaviorBlock> getBlocks();
 
-    public void executeBehaviour(Scenario scenario);
+    public void executeBehaviour();
 }

@@ -1,6 +1,7 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.List;
 import java.util.Observer;
@@ -10,12 +11,12 @@ import java.util.Observer;
  */
 public class AssignmentBehavior extends AbstractBehavior {
 
-    public AssignmentBehavior(RoboudController controller, Observer observer) {
-        super(controller, observer);
+    public AssignmentBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
+        super(controller, taskFactory, observer);
     }
 
     @Override
-    public List<BehaviourBlock> getBlocks() {
+    public List<BehaviorBlock> getBlocks() {
         return null;
     }
 }

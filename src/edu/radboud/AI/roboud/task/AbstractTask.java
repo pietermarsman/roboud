@@ -1,8 +1,8 @@
 package edu.radboud.ai.roboud.task;
 
 import edu.radboud.ai.roboud.action.Action;
-import edu.radboud.ai.roboud.scenario.Scenario;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,8 +14,11 @@ public abstract class AbstractTask extends Observable implements Task, Observer 
 
     protected List<Action> actions;
     private int executionIndex;
-    private Scenario scenario;
 
+
+    public AbstractTask(){
+        actions = new LinkedList<Action>();
+    }
     /**
      * Execute the Actions that make this task. Start one action once the previous has ended
      *
@@ -23,18 +26,11 @@ public abstract class AbstractTask extends Observable implements Task, Observer 
      */
     @Override
     public void doActions(Observer abstractBehaviour) {
-        this.scenario = scenario;
         executionIndex = 0;
         executeStep();
     }
 
-    @Override
-    public void update(Observable observable, Object data) {
-        if (observable instanceof Action)
-            executeStep();
-    }
-
-    private void executeStep() {
+    protected void executeStep() {
         actions.get(executionIndex).doActions(this);
         executionIndex++;
     }
