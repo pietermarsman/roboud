@@ -2,7 +2,7 @@ package edu.radboud.ai.roboud.behaviour;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,38 +12,37 @@ import java.util.Observer;
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
-public abstract class AbstractBehavior extends Observable implements Behaviour, Observer {
+public abstract class AbstractBehavior extends Observable implements Behavior, Observer {
 
     public static final String TAG = "AbstractBehavior";
-    protected List<BehaviourBlock> blocks;
+    protected List<BehaviorBlock> blocks;
     protected RoboudController controller;
     private int executionIndex;
-    protected Scenario scenario;
+    protected TaskFactory taskFactory;
 
-    public AbstractBehavior(RoboudController controller, Observer observer) {
+    public AbstractBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
         this.addObserver(observer);
         this.controller = controller;
-        blocks = new LinkedList<BehaviourBlock>();
+        this.taskFactory = taskFactory;
+        blocks = new LinkedList<BehaviorBlock>();
         executionIndex = -1;
     }
 
-    public List<BehaviourBlock> getBlocks() {
+    public List<BehaviorBlock> getBlocks() {
         return blocks;
     }
 
     /**
-     * Execute the BehaviourBlock one by one, starting a new block if the previous block has ended
+     * Execute the BehaviorBlock one by one, starting a new block if the previous block has ended
      *
-     * @param scenario
      */
-    public void executeBehaviour(Scenario scenario) {
-        this.scenario = scenario;
+    public void executeBehaviour() {
         executeStep();
     }
 
     @Override
     public void update(Observable observable, Object data) {
-        if (observable instanceof BehaviourBlock)
+        if (observable instanceof BehaviorBlock)
             executeStep();
     }
 

@@ -56,4 +56,15 @@ public abstract class AbstractScenario implements Scenario {
 
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "AbstractScenario{" +
+                "canTalk=" + canTalk +
+                ", canDrive=" + canDrive +
+                ", interactingWithIndividual=" + interactingWithIndividual +
+                ", canListen=" + canListen +
+                ", hasInternet=" + hasInternet +
+                '}';
+    }
 }

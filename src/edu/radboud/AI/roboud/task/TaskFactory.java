@@ -18,25 +18,19 @@ public class TaskFactory {
     private RoboudController controller;
     private static TaskFactory instance = null;
 
-    private TaskFactory(Scenario scenario){
+    private TaskFactory(Scenario scenario, RoboudController controller){
         this.scenario = scenario;
         this.controller = controller;
     }
 
-    public synchronized static TaskFactory getInstance(Scenario scenario) {
+    public synchronized static TaskFactory getInstance(Scenario scenario, RoboudController controller) {
         if (instance == null || !instance.equals(scenario))
-            instance = new TaskFactory(scenario);
+            instance = new TaskFactory(scenario, controller);
         return instance;
     }
 
     public AskQuestionTask getAskQuestionTask(String question) throws UnsupportedOperationException {
         AbstractAction output, input;
-        if (scenario == null){
-            Log.i(TAG, "scenario is null");
-        }
-        else{
-            Log.i(TAG, "scenario is not null");
-        }
         if(scenario.isCanTalk()){
             output = new SpeakAction(controller, question);
         }
