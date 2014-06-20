@@ -2,7 +2,7 @@ package edu.radboud.ai.roboud.behaviour;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,38 +12,36 @@ import java.util.Observer;
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
-public abstract class AbstractBehavior extends Observable implements Behaviour, Observer {
+public abstract class AbstractBehavior extends Observable implements Behavior, Observer {
 
     public static final String TAG = "AbstractBehavior";
-    protected List<BehaviourBlock> blocks;
+    protected List<BehaviorBlock> blocks;
     protected RoboudController controller;
+    protected TaskFactory taskFactory;
     private int executionIndex;
-    private Scenario scenario;
 
-    public AbstractBehavior(RoboudController controller, Observer observer) {
+    public AbstractBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
         this.addObserver(observer);
         this.controller = controller;
-        blocks = new LinkedList<BehaviourBlock>();
+        this.taskFactory = taskFactory;
+        blocks = new LinkedList<BehaviorBlock>();
         executionIndex = -1;
     }
 
-    public List<BehaviourBlock> getBlocks() {
+    public List<BehaviorBlock> getBlocks() {
         return blocks;
     }
 
     /**
-     * Execute the BehaviourBlock one by one, starting a new block if the previous block has ended
-     *
-     * @param scenario
+     * Execute the BehaviorBlock one by one, starting a new block if the previous block has ended
      */
-    public void executeBehaviour(Scenario scenario) {
-        this.scenario = scenario;
+    public void executeBehaviour() {
         executeStep();
     }
 
     @Override
     public void update(Observable observable, Object data) {
-        if (observable instanceof BehaviourBlock)
+        if (observable instanceof BehaviorBlock)
             executeStep();
     }
 
@@ -51,7 +49,10 @@ public abstract class AbstractBehavior extends Observable implements Behaviour, 
         if (executionIndex + 1 < blocks.size()) {
             executionIndex++;
             Log.i(TAG, "Execute step " + executionIndex);
-            blocks.get(executionIndex).doActions(scenario, this);
+            BehaviorBlock currentBlock = blocks.get(executionIndex);
+            currentBlock.addObserver(this);
+            currentBlock.doActions();
+
         } else {
             Log.i(TAG, "No further steps to execute");
             setChanged();

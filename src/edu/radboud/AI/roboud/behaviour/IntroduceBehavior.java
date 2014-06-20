@@ -2,8 +2,8 @@ package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.SpeakAction;
-import edu.radboud.ai.roboud.task.AskQuestionTask;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
+import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.Observer;
 
@@ -12,13 +12,13 @@ import java.util.Observer;
  */
 public class IntroduceBehavior extends AbstractBehavior {
 
-    public IntroduceBehavior(RoboudController controller, Observer observer) {
-        super(controller, observer);
+    public IntroduceBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
+        super(controller, taskFactory, observer);
         blocks.add(new SpeakAction(controller, SpeechRepertoire.textGreetingStart));
-        blocks.add(new AskQuestionTask(controller, SpeechRepertoire.questionName));
+        blocks.add(taskFactory.getAskQuestionTask(SpeechRepertoire.textIntroduceMyself));
         blocks.add(new SpeakAction(controller, SpeechRepertoire.textIntroduceMyself));
-        blocks.add(new AskQuestionTask(controller, SpeechRepertoire.questionAge));
-        blocks.add(new AskQuestionTask(controller, SpeechRepertoire.questionSex));
+        blocks.add(taskFactory.getAskQuestionTask(SpeechRepertoire.questionAge));
+        blocks.add(taskFactory.getAskQuestionTask(SpeechRepertoire.questionSex));
         blocks.add(new SpeakAction(controller, "Oké, now I know enough about you"));
         blocks.add(new SpeakAction(controller, SpeechRepertoire.textGreetingEnd));
     }

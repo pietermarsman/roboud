@@ -1,41 +1,42 @@
 package edu.radboud.ai.roboud.task;
 
-import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.ListenAction;
-import edu.radboud.ai.roboud.action.SpeakAction;
-import edu.radboud.ai.roboud.scenario.Scenario;
+import android.util.Log;
+import edu.radboud.ai.roboud.action.AbstractAction;
 
 import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Pieter Marsman on 24-5-2014.
  */
-public class AskQuestionTask extends AbstractTask implements Observer {
+public class AskQuestionTask extends AbstractTask {
 
-    String answer;
+    private final static String TAG = "AskQuestionTask";
+    private String question, answer;
 
-    public AskQuestionTask(RoboudController controller, String question) {
-        actions.add(new SpeakAction(controller, question));
-        actions.add(new ListenAction(controller));
-    }
-
-    public AskQuestionTask(RoboudController controller, String[] questions) {
-        this(controller, SpeechRepertoire.randomChoice(questions));
-    }
-
-    @Override
-    public boolean isSuitable(Scenario scenario) {
-        // TODO
-        return true;
+    public AskQuestionTask(String question, AbstractAction output, AbstractAction input) {
+        super();
+        this.question = question;
+        answer = "";
+        actions.add(output);
+        actions.add(input);
     }
 
     @Override
     public void update(Observable observable, Object data) {
         if (data instanceof String) {
             answer = (String) data;
+            Log.i(TAG, "Answer = " + answer);
             setChanged();
             notifyObservers(answer);
         }
+        super.update(observable, data);
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getAnswer() {
+        return answer;
     }
 }

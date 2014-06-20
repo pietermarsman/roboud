@@ -1,8 +1,10 @@
 package edu.radboud.ai.roboud;
 
-import edu.radboud.ai.roboud.behaviour.Behaviour;
-import edu.radboud.ai.roboud.behaviour.TestBehavior;
+import edu.radboud.ai.roboud.behaviour.Behavior;
+import edu.radboud.ai.roboud.behaviour.BehaviorFactory;
 import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.scenario.TestScenario;
+import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -16,35 +18,41 @@ public class RoboudMind implements Observer, Runnable {
 
     private Thread mindThread;
 
-    private Scenario currentScenario;
-    private Behaviour currentBehaviour;
+    private Scenario currentScenario = null;
+    private Behavior currentBehavior;
 
     private RoboudController controller;
     private boolean running;
 
+    private TaskFactory taskFactory;
+    private BehaviorFactory behaviorFactory;
+
     public RoboudMind(RoboudController controller) {
         this.controller = controller;
-        this.currentBehaviour = null;
-        this.currentScenario = whatIsCurrentScenario();
+        currentBehavior = null;
+        currentScenario = whatIsCurrentScenario();
+        behaviorFactory = BehaviorFactory.getInstance(currentScenario, controller);
         running = true;
         mindThread = null;
     }
 
     private Scenario whatIsCurrentScenario() {
-        // TODO
-        return null;
+        if (currentScenario == null)
+            return new TestScenario();
+        else //check whether scenario has changed is not done at the moment
+            return currentScenario;
     }
 
     @Override
     public void update(Observable observable, Object data) {
-        if (observable instanceof Behaviour) {
-            currentBehaviour = null;
+        if (observable instanceof Behavior) {
+            currentBehavior = null;
         }
     }
 
-    public Behaviour nextBehaviour() {
+    public Behavior nextBehaviour() {
         // TODO
-        return new TestBehavior(controller, this);
+        return behaviorFactory.getTestBehavior(this);
     }
 
     public void stopRunning() {
@@ -67,19 +75,19 @@ public class RoboudMind implements Observer, Runnable {
 
     @Override
     public void run() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        if (currentBehaviour != null)
-            currentBehaviour.executeBehaviour(whatIsCurrentScenario());
+        if (currentBehavior != null)
+            currentBehavior.executeBehaviour();
 
         while (running) {
-            if (currentBehaviour == null) {
-                currentBehaviour = nextBehaviour();
-                currentBehaviour.executeBehaviour(whatIsCurrentScenario());
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (currentBehavior == null) {
+                currentBehavior = nextBehaviour();
+                currentBehavior.executeBehaviour();
             }
         }
     }

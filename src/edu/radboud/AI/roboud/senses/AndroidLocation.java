@@ -36,10 +36,12 @@ public class AndroidLocation extends Observable {
         public void onProviderDisabled(String provider) {
         }
     };
+    private boolean available;
 
     public AndroidLocation(Context context) {
 
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        available = locationManager.isProviderEnabled(LOCATION_PROVIDER);
         location = locationManager.getLastKnownLocation(LOCATION_PROVIDER);
 
         // Register the listener with the Location Manager to receive location updates
@@ -102,5 +104,9 @@ public class AndroidLocation extends Observable {
             return provider2 == null;
         }
         return provider1.equals(provider2);
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 }

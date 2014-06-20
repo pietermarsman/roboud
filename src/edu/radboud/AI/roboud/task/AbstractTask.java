@@ -1,8 +1,10 @@
 package edu.radboud.ai.roboud.task;
 
-import edu.radboud.ai.roboud.action.Action;
-import edu.radboud.ai.roboud.scenario.Scenario;
+import android.util.Log;
+import edu.radboud.ai.roboud.action.AbstractAction;
+import edu.radboud.ai.roboud.behaviour.BehaviorBlock;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -10,33 +12,44 @@ import java.util.Observer;
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
-public abstract class AbstractTask extends Observable implements Task, Observer {
+public abstract class AbstractTask extends BehaviorBlock implements Observer {
 
-    protected List<Action> actions;
+    public static final String TAG = "AbstractTask";
+    protected List<AbstractAction> actions;
     private int executionIndex;
-    private Scenario scenario;
+
+
+    public AbstractTask() {
+        actions = new LinkedList<AbstractAction>();
+    }
 
     /**
      * Execute the Actions that make this task. Start one action once the previous has ended
-     *
-     * @param scenario
-     * @param abstractBehaviour
      */
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
-        this.scenario = scenario;
-        executionIndex = 0;
+    public void doActions() {
+        executionIndex = -1;
         executeStep();
     }
 
-    @Override
-    public void update(Observable observable, Object data) {
-        if (observable instanceof Action)
-            executeStep();
+    private void executeStep() {
+        if (executionIndex + 1 < actions.size()) {
+            executionIndex++;
+            BehaviorBlock selectedAction = actions.get(executionIndex);
+            selectedAction.addObserver(this);
+            Log.i(TAG, "Execute action #" + executionIndex + " " + selectedAction.getClass().getSimpleName());
+            selectedAction.doActions();
+        } else {
+            Log.i(TAG, "No further actions to execute");
+            setChanged();
+            notifyObservers();
+        }
     }
 
-    private void executeStep() {
-        actions.get(executionIndex).doActions(scenario, this);
-        executionIndex++;
+    @Override
+    public void update(Observable observable, Object o) {
+        if (observable instanceof AbstractAction) {
+            executeStep();
+        }
     }
 }

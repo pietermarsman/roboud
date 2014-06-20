@@ -1,6 +1,5 @@
 package edu.radboud.ai.roboud.task;
 
-import edu.radboud.ai.roboud.scenario.Scenario;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -20,17 +19,14 @@ public class PostTweetTask extends AbstractTask {
     String text;
 
     public PostTweetTask(String text) throws TwitterException, IOException {
+        super();
         if (text == null)
             this.text = "This is a default text to post on Twitter";
         else
             this.text = text;
         postTweet();
-    }
-
-    @Override
-    public boolean isSuitable(Scenario scenario) {
-        // TODO
-        return true;
+        setChanged();
+        notifyObservers();
     }
 
     public void postTweet() {

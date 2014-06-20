@@ -3,11 +3,9 @@ package edu.radboud.ai.roboud.action;
 import android.app.Activity;
 import android.content.Intent;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
 import java.util.List;
-import java.util.Observer;
 
 /**
  * Created by Pieter Marsman on 4-6-2014.
@@ -28,8 +26,7 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehavior) {
-        addObserver(abstractBehavior);
+    public void doActions() {
         Intent i = new Intent(controller, ChoiceActionActivity.class);
         String[] optionsArray = new String[options.size()];
         optionsArray = options.toArray(optionsArray);

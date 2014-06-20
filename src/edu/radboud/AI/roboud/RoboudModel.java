@@ -8,7 +8,6 @@ import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -26,7 +25,6 @@ public class RoboudModel extends Observable {
     private float[] rotation, linearAcceleration, gravity, gyro, magneticField;
     private float proximity, light;
     private Location loc;
-    private List<String> voiceResults;
     private long lastModification;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
@@ -47,7 +45,6 @@ public class RoboudModel extends Observable {
         proximity = -1;
         light = -1;
         loc = null;
-        voiceResults = new ArrayList<String>();
         events = new EventHistory();
 
         // lastModification is set by:
@@ -82,9 +79,6 @@ public class RoboudModel extends Observable {
             sb.append("Location: ").append(loc.getLatitude()).append(" \t").append(loc.getLongitude()).append("\n");
         else
             sb.append("Location: ").append("null").append("\n");
-        sb.append("Voice result: ");
-        for (String voiceResult : voiceResults)
-            sb.append(voiceResult).append(", ");
         sb.append("\n");
         return sb.toString();
     }
@@ -244,16 +238,6 @@ public class RoboudModel extends Observable {
 
     public void setFaces(int faces) {
         this.faces = faces;
-        changed();
-    }
-
-    public List<String> getVoiceResults() {
-        return voiceResults;
-    }
-
-    public void setVoiceResults(List<String> voiceResults) {
-        this.voiceResults = voiceResults;
-        events.newEvent(new Event(EventType.NEW_SPEECH_DATA, voiceResults));
         changed();
     }
 

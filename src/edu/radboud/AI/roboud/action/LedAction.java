@@ -1,27 +1,29 @@
 package edu.radboud.ai.roboud.action;
 
-import com.wowwee.robome.RoboMeCommands;
+import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
-
-import java.util.Observer;
 
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
 /**
- * Created by Pieter Marsman on 27-5-2014.
+ * @author Mike Ligthart
  */
 public class LedAction extends AbstractAction {
 
-    public LedAction(RoboudController controller) {
+    private final static String TAG = "LedAction";
+    private LedColor color;
+
+    public LedAction(RoboudController controller, LedColor color) {
         super(controller);
+        this.color = color;
+        Log.d(TAG, color.name() + " is created");
     }
 
     @Override
-    public void doActions(Scenario scenario, Observer abstractBehaviour) {
-        addObserver(abstractBehaviour);
-        //Some how get color
-        LedColor color = LedColor.BLUE;
+    public void doActions() {
+        Log.d(TAG, "doActions() is called");
+        controller.sendCommand(kRobot_ResetMood);
+        controller.sendCommand(kRobot_HeartBeatOff);
         switch (color) {
             case BLUE:
                 controller.sendCommand(kRobot_RGBHeartBlue);
@@ -43,10 +45,12 @@ public class LedAction extends AbstractAction {
                 break;
             case YELLOW:
                 controller.sendCommand(kRobot_RGBHeartYellow);
-                setChanged();
-                notifyObservers();
+                break;
+            default: //OFF
+                break;
         }
         setChanged();
+        Log.d(TAG, "observers are notified");
         notifyObservers();
     }
 }

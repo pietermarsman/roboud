@@ -1,10 +1,10 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.ChoiceAction;
+import edu.radboud.ai.roboud.action.SpeakAction;
+import edu.radboud.ai.roboud.task.SpeechRepertoire;
+import edu.radboud.ai.roboud.task.TaskFactory;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Observer;
 
 /**
@@ -12,13 +12,13 @@ import java.util.Observer;
  */
 public class TestBehavior extends AbstractBehavior {
 
-    public TestBehavior(RoboudController controller, Observer observer) {
-        super(controller, observer);
-        List<String> options = new LinkedList<String>();
-        options.add("Optie A");
-        options.add("Optie B");
-        options.add("Optie C");
-        ChoiceAction ca = new ChoiceAction(controller, options);
-        blocks.add(ca);
+    public final static String TAG = "TestBehavior";
+
+    public TestBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
+        super(controller, taskFactory, observer);
+        blocks.add(taskFactory.getDutchFlagLedTask());
+        //blocks.add(new MotorAction(controller, RobotDirection.FORWARD, RobotSpeed.NORMAL));
+        blocks.add(new SpeakAction(controller, SpeechRepertoire.textIntroduceMyself));
+        //blocks.add(new MotorAction(controller, RobotDirection.BACKWARD, RobotSpeed.NORMAL));
     }
 }
