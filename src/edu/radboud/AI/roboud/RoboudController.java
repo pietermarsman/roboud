@@ -193,7 +193,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "Activity result for code " + requestCode);
+        Log.d(TAG, "Activity request for code " + requestCode + ", returning data to "
+                + returnActivityDataTo.getClass().toString());
         returnActivityDataTo.processData(requestCode, resultCode, data);
         returnActivityDataTo = null;
     }
@@ -211,6 +212,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     //  === START RoboMe part ===
 
     public void startListeningToRoboMe() {
+        Log.d(TAG, "Start listening to RoboMe");
         if (robome != null) {
             robome.setVolume(12);
             robome.startListening();
@@ -326,11 +328,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
             if (data instanceof Location)
                 model.setLocation((Location) data);
         }
-        // Microphone update
-        else if (observable instanceof AndroidMicrophone) {
-            if (data instanceof List)
-                model.setVoiceResults((List<String>) data);
-        }
         // Model update
         else if (observable instanceof RoboudModel) {
 //            showText(model.toString());
@@ -346,11 +343,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void startNewActivityForResult(Intent i, int requestCode, ActivityResultProcessor returnActivityDataTo) {
+        Log.d(TAG, "startNewActivityForResult, return data to " + returnActivityDataTo.getClass().toString());
         this.returnActivityDataTo = returnActivityDataTo;
         startActivityForResult(i, requestCode);
     }
 
     public void listenToSpeech(Observer observer) {
-        mic.startListening(observer);
+        mic.startListening();
+        mic.addObserver(observer);
     }
 }

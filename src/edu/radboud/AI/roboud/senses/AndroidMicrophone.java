@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Gebruiker on 22-5-14.
@@ -19,14 +19,14 @@ import java.util.Observer;
 public class AndroidMicrophone extends Observable implements ActivityResultProcessor {
 
     public static final int REQUEST_CODE = 10;
+    private static final String TAG = "edu.radboud.ai.roboud.senses.AndroidMicrophone";
     private RoboudController controller;
 
     public AndroidMicrophone(RoboudController controller) {
         this.controller = controller;
     }
 
-    public void startListening(Observer observer) {
-        this.addObserver(observer);
+    public void startListening() {
         controller.stopListeningToRoboMe();
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
