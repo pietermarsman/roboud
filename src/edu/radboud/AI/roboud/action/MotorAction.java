@@ -1,6 +1,7 @@
 package edu.radboud.ai.roboud.action;
 
 
+import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 
 import java.util.Observer;
@@ -14,6 +15,7 @@ public class MotorAction extends AbstractAction {
 
     private RobotDirection dir;
     private RobotSpeed speed;
+    private static final String TAG = "MotorAction";
 
     public MotorAction(RoboudController controller, RobotDirection dir, RobotSpeed speed) {
         super(controller);
@@ -32,7 +34,7 @@ public class MotorAction extends AbstractAction {
         RobotDirection dir = RobotDirection.FORWARD;
         RobotSpeed speed = RobotSpeed.NORMAL;
 
-        //Not finished
+        Log.v(TAG,"before executing motor actions");
         switch (dir) {
             case FORWARD:
                 switch (speed) {
@@ -111,6 +113,7 @@ public class MotorAction extends AbstractAction {
                 }
                 break;
         }
+        Log.v(TAG,"after executing motor commands");
         setChanged();
         notifyObservers();
     }

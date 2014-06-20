@@ -2,9 +2,10 @@ package edu.radboud.ai.roboud;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.hardware.*;
-import android.location.Location;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,12 +18,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
+
+//import edu.radboud.ai.roboud.senses.AndroidCamera;
 
 /**
  * Created by Pieter Marsman on 13-5-14.
@@ -31,7 +35,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     public static final String TAG = "RoboudController";
     private AndroidMicrophone mic;
-    private AndroidCamera cam;
+//    private AndroidCamera cam;
     private AndroidLocation loc;
     private RoboudModel model;
     private RoboudMind mind;
@@ -83,7 +87,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         button = (Button) findViewById(R.id.button);
 
         // Senses
-        cam = new AndroidCamera(surfaceView, 1000);
+//        cam = new AndroidCamera(surfaceView, 1000);
         loc = new AndroidLocation(this);
         mic = new AndroidMicrophone(this);
 
@@ -124,7 +128,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Senses
         loc.addObserver(this);
-        cam.addObserver(this);
+//        cam.addObserver(this);
         mic.addObserver(this);
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
@@ -150,7 +154,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Senses
         showText("onPause()");
         loc.deleteObservers();
-        cam.deleteObservers();
+//        cam.deleteObservers();
         mic.deleteObservers();
         mSensorManager.unregisterListener(this);
 
@@ -209,7 +213,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     //  === START RoboMe part ===
-
     public void startListeningToRoboMe() {
         if (robome != null) {
             robome.setVolume(12);
@@ -236,6 +239,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void sendCommand(RoboMeCommands.RobotCommand outgoingCommand) {
+        Log.v(TAG,"before sending command");
         model.sendCommand(outgoingCommand);
         robome.sendCommand(outgoingCommand);
         showText(outgoingCommand.toString());
@@ -267,6 +271,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void volumeChanged(float v) {
+        Log.v(TAG, "Volume is " + Float.toString(v) + " and i will set it to 12" );
+        v = 12;
         model.setVolume(v);
         showText("Volume changed to " + v);
     }
@@ -315,29 +321,29 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void update(Observable observable, Object data) {
         // Camera update
-        if (observable instanceof AndroidCamera) {
-            if (data instanceof Bitmap)
-                model.setImage((Bitmap) data);
-            if (data instanceof Camera.Face[])
-                model.setFaces(((Camera.Face[]) data).length);
-        }
-        // Location update
-        else if (observable instanceof AndroidLocation) {
-            if (data instanceof Location)
-                model.setLocation((Location) data);
-        }
-        // Microphone update
-        else if (observable instanceof AndroidMicrophone) {
-            if (data instanceof List)
-                model.setVoiceResults((List<String>) data);
-        }
-        // Model update
-        else if (observable instanceof RoboudModel) {
-//            showText(model.toString());
-        }
-        // Unknown update
-        else
-            showText("Unknown class observed");
+//        if (observable instanceof AndroidCamera) {
+//            if (data instanceof Bitmap)
+//                model.setImage((Bitmap) data);
+//            if (data instanceof Camera.Face[])
+//                model.setFaces(((Camera.Face[]) data).length);
+//        }
+//        // Location update
+//        else if (observable instanceof AndroidLocation) {
+//            if (data instanceof Location)
+//                model.setLocation((Location) data);
+//        }
+//        // Microphone update
+//        else if (observable instanceof AndroidMicrophone) {
+//            if (data instanceof List)
+//                model.setVoiceResults((List<String>) data);
+//        }
+//        // Model update
+//        else if (observable instanceof RoboudModel) {
+////            showText(model.toString());
+//        }
+//        // Unknown update
+//        else
+//            showText("Unknown class observed");
     }
 
     @Override

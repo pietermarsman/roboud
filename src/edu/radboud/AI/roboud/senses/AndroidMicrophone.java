@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
@@ -19,6 +20,7 @@ import java.util.Observer;
 public class AndroidMicrophone extends Observable implements ActivityResultProcessor {
 
     public static final int REQUEST_CODE = 10;
+    private static final String TAG = "edu.radboud.ai.roboud.senses.AndroidMicrophone";
     private RoboudController controller;
 
     public AndroidMicrophone(RoboudController controller) {
@@ -39,7 +41,9 @@ public class AndroidMicrophone extends Observable implements ActivityResultProce
     @Override
     public void processData(int requestCode, int resultCode, Intent data) {
         controller.startListeningToRoboMe();
+        Log.i(TAG, "processData. Result code: " + resultCode);
         if (resultCode == Activity.RESULT_OK) {
+            Log.i(TAG, "processData. Result is OK.");
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             setChanged();
             notifyObservers(results);
