@@ -1,8 +1,7 @@
 package edu.radboud.ai.roboud.action;
 
+import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-
-import java.util.Observer;
 
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
@@ -11,18 +10,20 @@ import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
  */
 public class LedAction extends AbstractAction {
 
+    private final static String TAG = "LedAction";
     private LedColor color;
 
     public LedAction(RoboudController controller, LedColor color) {
         super(controller);
-        controller.sendCommand(kRobot_ResetMood);
-        controller.sendCommand(kRobot_HeartBeatOff);
         this.color = color;
+        Log.d(TAG, color.name() + " is created");
     }
 
     @Override
-    public void doActions(Observer abstractBehaviour) {
-        addObserver(abstractBehaviour);
+    public void doActions() {
+        Log.d(TAG, "doActions() is called");
+        controller.sendCommand(kRobot_ResetMood);
+        controller.sendCommand(kRobot_HeartBeatOff);
         switch (color) {
             case BLUE:
                 controller.sendCommand(kRobot_RGBHeartBlue);
@@ -49,6 +50,7 @@ public class LedAction extends AbstractAction {
                 break;
         }
         setChanged();
+        Log.d(TAG, "observers are notified");
         notifyObservers();
     }
 }

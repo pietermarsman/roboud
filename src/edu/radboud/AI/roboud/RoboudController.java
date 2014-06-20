@@ -22,12 +22,15 @@ import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Pieter Marsman on 13-5-14.
  */
-public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener{
+public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
 
     public static final String TAG = "RoboudController";
     private AndroidMicrophone mic;

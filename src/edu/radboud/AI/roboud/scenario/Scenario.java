@@ -6,8 +6,12 @@ package edu.radboud.ai.roboud.scenario;
 public interface Scenario {
 
     public boolean isCanTalk();
+
     public boolean isCanListen();
+
     public boolean isCanDrive();
+
     public boolean isInteractingWithIndividual();
+
     public boolean isHasInternet();
 }

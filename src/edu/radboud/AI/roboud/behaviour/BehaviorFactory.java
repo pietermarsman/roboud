@@ -13,12 +13,12 @@ public class BehaviorFactory {
 
 
     private final static String TAG = "BehaviorFactory";
+    private static BehaviorFactory instance = null;
     private Scenario scenario;
     private RoboudController controller;
     private TaskFactory taskFactory;
-    private static BehaviorFactory instance = null;
 
-    private BehaviorFactory(Scenario scenario, RoboudController controller){
+    private BehaviorFactory(Scenario scenario, RoboudController controller) {
         this.scenario = scenario;
         this.controller = controller;
         taskFactory = TaskFactory.getInstance(scenario, controller);
@@ -30,7 +30,7 @@ public class BehaviorFactory {
         return instance;
     }
 
-    public TestBehavior getTestBehavior(Observer observer){
+    public TestBehavior getTestBehavior(Observer observer) {
         return new TestBehavior(controller, taskFactory, observer);
     }
 }

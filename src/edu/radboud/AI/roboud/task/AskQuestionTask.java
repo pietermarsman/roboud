@@ -2,7 +2,6 @@ package edu.radboud.ai.roboud.task;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.action.AbstractAction;
-import edu.radboud.ai.roboud.action.Action;
 
 import java.util.Observable;
 
@@ -30,16 +29,14 @@ public class AskQuestionTask extends AbstractTask {
             setChanged();
             notifyObservers(answer);
         }
-        if (observable instanceof Action) {
-            executeStep();
-        }
+        super.update(observable, data);
     }
 
-    public String getQuestion(){
+    public String getQuestion() {
         return question;
     }
 
-    public String getAnswer(){
+    public String getAnswer() {
         return answer;
     }
 }

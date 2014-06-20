@@ -3,8 +3,6 @@ package edu.radboud.ai.roboud.action;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
 
-import java.util.Observer;
-
 /**
  * Created by Pieter Marsman on 27-5-2014.
  */
@@ -22,14 +20,13 @@ public class ShowTextAction extends AbstractAction {
     }
 
     @Override
-    public void doActions(Observer abstractBehavior) {
-        addObserver(abstractBehavior);
+    public void doActions() {
         controller.showText(text);
         setChanged();
         notifyObservers();
     }
 
-    public String getText(){
+    public String getText() {
         return text;
     }
 }

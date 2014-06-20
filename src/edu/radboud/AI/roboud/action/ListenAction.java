@@ -19,8 +19,7 @@ public class ListenAction extends AbstractAction implements Observer {
     }
 
     @Override
-    public void doActions(Observer abstractBehaviour) {
-        addObserver(abstractBehaviour);
+    public void doActions() {
         controller.listenToSpeech(this);
     }
 
@@ -36,7 +35,7 @@ public class ListenAction extends AbstractAction implements Observer {
         }
     }
 
-    public String getResult(){
+    public String getResult() {
         return result;
     }
 }

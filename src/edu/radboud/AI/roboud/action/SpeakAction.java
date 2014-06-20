@@ -6,15 +6,13 @@ import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
 
 import java.util.Locale;
-import java.util.Observer;
 
 import static android.speech.tts.TextToSpeech.OnInitListener;
 
 /**
  * Created by Pieter Marsman on 27-5-2014.
- *
  */
-public class SpeakAction extends AbstractAction implements OnInitListener{
+public class SpeakAction extends AbstractAction implements OnInitListener {
 
     private final static String TAG = "SpeakAction";
     private TextToSpeech myTTS;
@@ -34,7 +32,7 @@ public class SpeakAction extends AbstractAction implements OnInitListener{
     public void onInit(int initStatus) {
         // check for successful instantiation
         if (initStatus == TextToSpeech.SUCCESS) {
-            if (myTTS.isLanguageAvailable(Locale.US) == TextToSpeech.LANG_AVAILABLE){
+            if (myTTS.isLanguageAvailable(Locale.US) == TextToSpeech.LANG_AVAILABLE) {
                 myTTS.setLanguage(Locale.US);
             }
         } else if (initStatus == TextToSpeech.ERROR) {
@@ -43,22 +41,21 @@ public class SpeakAction extends AbstractAction implements OnInitListener{
     }
 
     @Override
-    public void doActions(Observer abstractBehavior) {
-        addObserver(abstractBehavior);
+    public void doActions() {
         Log.i(TAG, "Going to speak: " + text);
         myTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         notifyWhenReadyWithSpeaking();
     }
 
-    public String getText(){
+    public String getText() {
         return text;
     }
 
-    private void notifyWhenReadyWithSpeaking(){
-    //Not the best way to do this probably
+    private void notifyWhenReadyWithSpeaking() {
+        //Not the best way to do this probably
         Runnable checker = new Runnable() {
-            public void run(){
-                while(myTTS.isSpeaking()){
+            public void run() {
+                while (myTTS.isSpeaking()) {
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {

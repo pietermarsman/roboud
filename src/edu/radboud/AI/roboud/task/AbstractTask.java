@@ -1,6 +1,8 @@
 package edu.radboud.ai.roboud.task;
 
-import edu.radboud.ai.roboud.action.Action;
+import android.util.Log;
+import edu.radboud.ai.roboud.action.AbstractAction;
+import edu.radboud.ai.roboud.behaviour.BehaviorBlock;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,28 +12,44 @@ import java.util.Observer;
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
-public abstract class AbstractTask extends Observable implements Task, Observer {
+public abstract class AbstractTask extends BehaviorBlock implements Observer {
 
-    protected List<Action> actions;
+    public static final String TAG = "AbstractTask";
+    protected List<AbstractAction> actions;
     private int executionIndex;
 
 
-    public AbstractTask(){
-        actions = new LinkedList<Action>();
+    public AbstractTask() {
+        actions = new LinkedList<AbstractAction>();
     }
+
     /**
      * Execute the Actions that make this task. Start one action once the previous has ended
-     *
-     * @param abstractBehaviour
      */
     @Override
-    public void doActions(Observer abstractBehaviour) {
-        executionIndex = 0;
+    public void doActions() {
+        executionIndex = -1;
         executeStep();
     }
 
-    protected void executeStep() {
-        actions.get(executionIndex).doActions(this);
-        executionIndex++;
+    private void executeStep() {
+        if (executionIndex + 1 < actions.size()) {
+            executionIndex++;
+            BehaviorBlock selectedAction = actions.get(executionIndex);
+            selectedAction.addObserver(this);
+            Log.i(TAG, "Execute action #" + executionIndex + " " + selectedAction.getClass().getSimpleName());
+            selectedAction.doActions();
+        } else {
+            Log.i(TAG, "No further actions to execute");
+            setChanged();
+            notifyObservers();
+        }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        if (observable instanceof AbstractAction) {
+            executeStep();
+        }
     }
 }

@@ -1,6 +1,5 @@
 package edu.radboud.ai.roboud;
 
-import android.util.Log;
 import edu.radboud.ai.roboud.behaviour.Behavior;
 import edu.radboud.ai.roboud.behaviour.BehaviorFactory;
 import edu.radboud.ai.roboud.scenario.Scenario;
@@ -32,7 +31,6 @@ public class RoboudMind implements Observer, Runnable {
         this.controller = controller;
         currentBehavior = null;
         currentScenario = whatIsCurrentScenario();
-        Log.i(TAG, currentScenario.toString());
         behaviorFactory = BehaviorFactory.getInstance(currentScenario, controller);
         running = true;
         mindThread = null;

@@ -5,8 +5,6 @@ import android.content.Intent;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
-import java.util.Observer;
-
 /**
  * Created by Pieter Marsman on 9-6-2014.
  */
@@ -36,8 +34,7 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
     }
 
     @Override
-    public void doActions(Observer abstractBehavior) {
-        addObserver(abstractBehavior);
+    public void doActions() {
         Intent i = new Intent(controller, ConfirmationActionActivity.class);
         i.putExtra(DATA_NAME, question);
         controller.startNewActivityForResult(i, REQUEST_CODE, this);

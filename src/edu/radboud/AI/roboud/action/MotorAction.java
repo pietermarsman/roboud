@@ -3,8 +3,6 @@ package edu.radboud.ai.roboud.action;
 
 import edu.radboud.ai.roboud.RoboudController;
 
-import java.util.Observer;
-
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
 /**
@@ -21,13 +19,12 @@ public class MotorAction extends AbstractAction {
         this.speed = speed;
     }
 
-    public MotorAction(RoboudController controller, RobotDirection dir){
+    public MotorAction(RoboudController controller, RobotDirection dir) {
         this(controller, dir, RobotSpeed.NORMAL);
     }
 
     @Override
-    public void doActions(Observer abstractBehavior) {
-        addObserver(abstractBehavior);
+    public void doActions() {
         //Some how get direction and speed
         RobotDirection dir = RobotDirection.FORWARD;
         RobotSpeed speed = RobotSpeed.NORMAL;

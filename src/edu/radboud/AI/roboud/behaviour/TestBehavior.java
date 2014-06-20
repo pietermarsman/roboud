@@ -1,8 +1,6 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.LedAction;
-import edu.radboud.ai.roboud.action.LedColor;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.Observer;
@@ -16,15 +14,6 @@ public class TestBehavior extends AbstractBehavior {
 
     public TestBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
         super(controller, taskFactory, observer);
-        //SpeakAction speakAction = new SpeakAction(controller, "Hello Yo mama is so fat see is");
-        LedAction ledAction = new LedAction(controller, LedColor.random());
-        blocks.add(ledAction);
-
-
-        /*ShowTextAction showTextAction = new ShowTextAction(controller, "Hello");
-        ListenAction listenAction = new ListenAction(controller);
-        CombineAction combineAction = new CombineAction(controller, showTextAction, listenAction);
-        blocks.add(combineAction);
-        */
+        blocks.add(taskFactory.getDutchFlagLedTask());
     }
 }

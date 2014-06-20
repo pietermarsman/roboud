@@ -10,10 +10,10 @@ import java.util.Observer;
  */
 public class CombineAction extends AbstractAction implements Observer {
 
-    Action a, b;
+    AbstractAction a, b;
     boolean aReady, bReady;
 
-    public CombineAction(RoboudController controller, Action a, Action b) {
+    public CombineAction(RoboudController controller, AbstractAction a, AbstractAction b) {
         super(controller);
         this.a = a;
         this.b = b;
@@ -22,10 +22,10 @@ public class CombineAction extends AbstractAction implements Observer {
     }
 
     @Override
-    public void doActions(Observer abstractBehaviour) {
+    public void doActions() {
         // TODO Check if actions can be executed at the same time
-        a.doActions(this);
-        b.doActions(this);
+        a.doActions();
+        b.doActions();
     }
 
     @Override
