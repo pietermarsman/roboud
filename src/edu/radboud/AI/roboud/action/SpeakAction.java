@@ -12,9 +12,8 @@ import static android.speech.tts.TextToSpeech.OnInitListener;
 
 /**
  * Created by Pieter Marsman on 27-5-2014.
- *
  */
-public class SpeakAction extends AbstractAction implements OnInitListener{
+public class SpeakAction extends AbstractAction implements OnInitListener {
 
     private final static String TAG = "SpeakAction";
     private TextToSpeech myTTS;
@@ -34,7 +33,7 @@ public class SpeakAction extends AbstractAction implements OnInitListener{
     public void onInit(int initStatus) {
         // check for successful instantiation
         if (initStatus == TextToSpeech.SUCCESS) {
-            if (myTTS.isLanguageAvailable(Locale.US) == TextToSpeech.LANG_AVAILABLE){
+            if (myTTS.isLanguageAvailable(Locale.US) == TextToSpeech.LANG_AVAILABLE) {
                 myTTS.setLanguage(Locale.US);
             }
         } else if (initStatus == TextToSpeech.ERROR) {
@@ -50,15 +49,15 @@ public class SpeakAction extends AbstractAction implements OnInitListener{
         notifyWhenReadyWithSpeaking();
     }
 
-    public String getText(){
+    public String getText() {
         return text;
     }
 
-    private void notifyWhenReadyWithSpeaking(){
-    //Not the best way to do this probably
+    private void notifyWhenReadyWithSpeaking() {
+        //Not the best way to do this probably
         Runnable checker = new Runnable() {
-            public void run(){
-                while(myTTS.isSpeaking()){
+            public void run() {
+                while (myTTS.isSpeaking()) {
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {

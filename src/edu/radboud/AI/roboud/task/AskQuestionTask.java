@@ -35,11 +35,11 @@ public class AskQuestionTask extends AbstractTask {
         }
     }
 
-    public String getQuestion(){
+    public String getQuestion() {
         return question;
     }
 
-    public String getAnswer(){
+    public String getAnswer() {
         return answer;
     }
 }

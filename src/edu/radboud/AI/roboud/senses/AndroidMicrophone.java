@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.speech.RecognizerIntent;
-import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 

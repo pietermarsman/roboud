@@ -1,7 +1,5 @@
 package edu.radboud.ai.roboud.behaviour;
 
-import edu.radboud.ai.roboud.scenario.Scenario;
-
 import java.util.Observer;
 
 /**

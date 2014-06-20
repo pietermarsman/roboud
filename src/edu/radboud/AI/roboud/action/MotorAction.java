@@ -21,7 +21,7 @@ public class MotorAction extends AbstractAction {
         this.speed = speed;
     }
 
-    public MotorAction(RoboudController controller, RobotDirection dir){
+    public MotorAction(RoboudController controller, RobotDirection dir) {
         this(controller, dir, RobotSpeed.NORMAL);
     }
 

@@ -2,7 +2,10 @@ package edu.radboud.ai.roboud.task;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.*;
+import edu.radboud.ai.roboud.action.AbstractAction;
+import edu.radboud.ai.roboud.action.ListenAction;
+import edu.radboud.ai.roboud.action.ShowTextAction;
+import edu.radboud.ai.roboud.action.SpeakAction;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import twitter4j.TwitterException;
 
@@ -14,11 +17,11 @@ import java.io.IOException;
 public class TaskFactory {
 
     private final static String TAG = "TaskFactory";
+    private static TaskFactory instance = null;
     private Scenario scenario;
     private RoboudController controller;
-    private static TaskFactory instance = null;
 
-    private TaskFactory(Scenario scenario, RoboudController controller){
+    private TaskFactory(Scenario scenario, RoboudController controller) {
         this.scenario = scenario;
         this.controller = controller;
     }
@@ -31,17 +34,15 @@ public class TaskFactory {
 
     public AskQuestionTask getAskQuestionTask(String question) throws UnsupportedOperationException {
         AbstractAction output, input;
-        if(scenario.isCanTalk()){
+        if (scenario.isCanTalk()) {
             output = new SpeakAction(controller, question);
-        }
-        else{
+        } else {
             output = new ShowTextAction(controller, question);
         }
 
-        if(scenario.isCanListen()){
+        if (scenario.isCanListen()) {
             input = new ListenAction(controller);
-        }
-        else{
+        } else {
             //TODO create readWritenTextAction
             throw new UnsupportedOperationException("Not implemented yet");
         }
@@ -52,21 +53,19 @@ public class TaskFactory {
     public AskQuestionTask getAskQuestionTask(String[] questions) throws UnsupportedOperationException {
         AbstractAction output, input;
         String question;
-        if(scenario.isCanTalk()){
+        if (scenario.isCanTalk()) {
             output = new SpeakAction(controller, questions);
             SpeakAction temp = (SpeakAction) output;
             question = temp.getText();
-        }
-        else{
+        } else {
             output = new ShowTextAction(controller, questions);
             ShowTextAction temp = (ShowTextAction) output;
             question = temp.getText();
         }
 
-        if(scenario.isCanListen()){
+        if (scenario.isCanListen()) {
             input = new ListenAction(controller);
-        }
-        else{
+        } else {
             //TODO create readWritenTextAction
             throw new UnsupportedOperationException("Not implemented yet");
         }
@@ -74,17 +73,17 @@ public class TaskFactory {
         return new AskQuestionTask(question, output, input);
     }
 
-    public LookForFacesTask getLookForFacesTask(){
+    public LookForFacesTask getLookForFacesTask() {
         return new LookForFacesTask(scenario.isCanDrive());
     }
 
-    public MakeNewAppointmentTask getMakeNewAppointmentTask(){
+    public MakeNewAppointmentTask getMakeNewAppointmentTask() {
         // TODO implement this method
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    public PostTweetTask getPostTweetTask(String text){
-        if (scenario.isHasInternet()){
+    public PostTweetTask getPostTweetTask(String text) {
+        if (scenario.isHasInternet()) {
             try {
                 return new PostTweetTask(text);
             } catch (TwitterException e) {
@@ -92,19 +91,18 @@ public class TaskFactory {
                 //TODO give feedback to user
                 throw new UnsupportedOperationException("Not implemented yet");
             } catch (IOException e) {
-               Log.e(TAG, "Twitter failed to post message", e);
+                Log.e(TAG, "Twitter failed to post message", e);
                 //TODO give feedback to user
                 throw new UnsupportedOperationException("Not implemented yet");
             }
 
-        }
-        else {
+        } else {
             //What to do when no internet;
             throw new UnsupportedOperationException("Not implemented yet");
         }
     }
 
-    public Scenario getScenario(){
+    public Scenario getScenario() {
         return scenario;
     }
 

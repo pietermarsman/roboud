@@ -8,7 +8,6 @@ import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 

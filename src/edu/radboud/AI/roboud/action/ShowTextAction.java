@@ -29,7 +29,7 @@ public class ShowTextAction extends AbstractAction {
         notifyObservers();
     }
 
-    public String getText(){
+    public String getText() {
         return text;
     }
 }

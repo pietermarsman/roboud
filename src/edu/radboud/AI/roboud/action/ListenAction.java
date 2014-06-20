@@ -37,7 +37,7 @@ public class ListenAction extends AbstractAction implements Observer {
         }
     }
 
-    public ArrayList<String> getResult(){
+    public ArrayList<String> getResult() {
         return results;
     }
 }
