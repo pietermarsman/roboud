@@ -24,6 +24,7 @@ public class TestBehavior extends AbstractBehavior {
 //        ShowTextAction showTextAction = new ShowTextAction(controller, new String[]{"String1", "String2", "String3"});
 //        blocks.add(showTextAction);
 
+//        StoreInformation storeInformation = new StoreInformation(null);
 
         RandomWander randomWander = new RandomWander(controller, taskFactory, observer);
         randomWander.wander();

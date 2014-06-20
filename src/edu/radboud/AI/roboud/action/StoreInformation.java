@@ -2,7 +2,7 @@ package edu.radboud.ai.roboud.action;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import edu.radboud.ai.roboud.RoboudController;
+import android.os.Bundle;
 
 /**
  * Created by Guido on 20-06-14.
@@ -11,7 +11,9 @@ public class StoreInformation extends Activity {
     public static final String PREFS_NAME = "saveFileName";
     boolean boolean1;
 
-    public StoreInformation(RoboudController controller) {
+    @Override
+    protected void onCreate(Bundle state)
+    {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0); // (0 = MODE_PRIVATE)
         boolean boolean1 = settings.getBoolean("boolean1", false);
         String StringName1 = settings.getString("StringName1", "defaultValue");
