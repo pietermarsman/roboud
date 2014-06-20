@@ -1,5 +1,7 @@
 package edu.radboud.ai.roboud.action;
 
+import java.util.Random;
+
 /**
  * @author Mike Ligthart
  */
@@ -8,5 +10,11 @@ public enum RobotSpeed {
     FAST,
     NORMAL,
     SLOW,
-    SLOWEST
+    SLOWEST;
+
+    public static RobotSpeed random() {
+        RobotSpeed[] val = RobotSpeed.values();
+        Random r = new Random();
+        return val[r.nextInt(val.length)];
+    }
 }

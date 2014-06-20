@@ -1,9 +1,6 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.MotorAction;
-import edu.radboud.ai.roboud.action.RobotDirection;
-import edu.radboud.ai.roboud.action.RobotSpeed;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.Observer;
@@ -19,8 +16,12 @@ public class TestBehavior extends AbstractBehavior {
         super(controller, taskFactory, observer);
         //SpeakAction speakAction = new SpeakAction(controller, "Hello Yo mama is so fat see is");
 //        AbstractBehavior abstractBehavior = new AbstractBehavior(controller, taskFactory, observer);
-        MotorAction motorAction = new MotorAction(controller, RobotDirection.FORWARD, RobotSpeed.NORMAL);
-        blocks.add(motorAction);
+
+//        MotorAction motorAction = new MotorAction(controller, RobotDirection.FORWARD, RobotSpeed.NORMAL);
+//        blocks.add(motorAction);
+
+        RandomWander randomWander = new RandomWander(controller, taskFactory, observer);
+        randomWander.wander();
 
         //TODO: abstractbehavior moet weer abstract zijn!
 

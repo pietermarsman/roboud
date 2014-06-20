@@ -12,7 +12,7 @@ import java.util.Observer;
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
-public class AbstractBehavior extends Observable implements Behavior, Observer {
+public abstract class AbstractBehavior extends Observable implements Behavior, Observer {
 
     public static final String TAG = "AbstractBehavior";
     protected List<BehaviorBlock> blocks;
