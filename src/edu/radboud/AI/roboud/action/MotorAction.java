@@ -13,9 +13,9 @@ import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
  */
 public class MotorAction extends AbstractAction {
 
+    private static final String TAG = "MotorAction";
     private RobotDirection dir;
     private RobotSpeed speed;
-    private static final String TAG = "MotorAction";
 
     public MotorAction(RoboudController controller, RobotDirection dir, RobotSpeed speed) {
         super(controller);
@@ -23,7 +23,7 @@ public class MotorAction extends AbstractAction {
         this.speed = speed;
     }
 
-    public MotorAction(RoboudController controller, RobotDirection dir){
+    public MotorAction(RoboudController controller, RobotDirection dir) {
         this(controller, dir, RobotSpeed.NORMAL);
     }
 
@@ -34,7 +34,7 @@ public class MotorAction extends AbstractAction {
         RobotDirection dir = RobotDirection.FORWARD;
         RobotSpeed speed = RobotSpeed.NORMAL;
 
-        Log.v(TAG,"before executing motor actions");
+        Log.v(TAG, "before executing motor actions");
         switch (dir) {
             case FORWARD:
                 switch (speed) {
@@ -113,7 +113,7 @@ public class MotorAction extends AbstractAction {
                 }
                 break;
         }
-        Log.v(TAG,"after executing motor commands");
+        Log.v(TAG, "after executing motor commands");
         setChanged();
         notifyObservers();
     }

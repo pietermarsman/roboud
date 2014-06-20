@@ -16,9 +16,10 @@ public abstract class AbstractTask extends Observable implements Task, Observer 
     private int executionIndex;
 
 
-    public AbstractTask(){
+    public AbstractTask() {
         actions = new LinkedList<Action>();
     }
+
     /**
      * Execute the Actions that make this task. Start one action once the previous has ended
      *

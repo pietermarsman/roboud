@@ -31,11 +31,11 @@ import java.util.Observer;
 /**
  * Created by Pieter Marsman on 13-5-14.
  */
-public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener{
+public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
 
     public static final String TAG = "RoboudController";
     private AndroidMicrophone mic;
-//    private AndroidCamera cam;
+    //    private AndroidCamera cam;
     private AndroidLocation loc;
     private RoboudModel model;
     private RoboudMind mind;
@@ -239,7 +239,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void sendCommand(RoboMeCommands.RobotCommand outgoingCommand) {
-        Log.v(TAG,"before sending command");
+        Log.v(TAG, "before sending command");
         model.sendCommand(outgoingCommand);
         robome.sendCommand(outgoingCommand);
         showText(outgoingCommand.toString());
@@ -271,7 +271,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void volumeChanged(float v) {
-        Log.v(TAG, "Volume is " + Float.toString(v) + " and i will set it to 12" );
+        Log.v(TAG, "Volume is " + Float.toString(v) + " and i will set it to 12");
         v = 12;
         model.setVolume(v);
         showText("Volume changed to " + v);

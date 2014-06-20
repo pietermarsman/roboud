@@ -42,7 +42,7 @@ public class ListenAction extends AbstractAction implements Observer {
         }
     }
 
-    public String getResult(){
+    public String getResult() {
         return result;
     }
 }

@@ -5,7 +5,7 @@ package edu.radboud.ai.roboud.scenario;
  */
 public class TestScenario extends AbstractScenario {
 
-    public TestScenario(){
+    public TestScenario() {
         super();
     }
 }

@@ -11,7 +11,7 @@ import java.util.Observer;
 /**
  * Created by Guido Faassen on 20-06-14.
  */
-public class RandomWander extends AbstractBehavior{
+public class RandomWander extends AbstractBehavior {
     RobotDirection direction;
     RobotSpeed speed;
 
@@ -19,9 +19,8 @@ public class RandomWander extends AbstractBehavior{
         super(controller, taskFactory, observer);
     }
 
-    public void wander()
-    {
-        while(true) {
+    public void wander() {
+        while (true) {
             direction = RobotDirection.random();
             speed = RobotSpeed.random();
             MotorAction motorAction = new MotorAction(controller, direction, speed);

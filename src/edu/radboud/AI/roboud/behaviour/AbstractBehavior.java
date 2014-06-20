@@ -17,8 +17,8 @@ public abstract class AbstractBehavior extends Observable implements Behavior, O
     public static final String TAG = "AbstractBehavior";
     protected List<BehaviorBlock> blocks;
     protected RoboudController controller;
-    private int executionIndex;
     protected TaskFactory taskFactory;
+    private int executionIndex;
 
     public AbstractBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
         this.addObserver(observer);
@@ -34,7 +34,6 @@ public abstract class AbstractBehavior extends Observable implements Behavior, O
 
     /**
      * Execute the BehaviorBlock one by one, starting a new block if the previous block has ended
-     *
      */
     public void executeBehaviour() {
         executeStep();

@@ -25,7 +25,6 @@ public class TestBehavior extends AbstractBehavior {
 //        blocks.add(showTextAction);
 
 
-
         RandomWander randomWander = new RandomWander(controller, taskFactory, observer);
         randomWander.wander();
 

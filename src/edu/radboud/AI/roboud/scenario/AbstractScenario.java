@@ -27,11 +27,13 @@ public abstract class AbstractScenario implements Scenario {
         return interactingWithIndividual;
     }
 
-    public boolean isCanListen(){
+    public boolean isCanListen() {
         return canListen;
     }
 
-    public boolean isHasInternet() { return hasInternet; }
+    public boolean isHasInternet() {
+        return hasInternet;
+    }
 
     @Override
     public int hashCode() {

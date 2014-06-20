@@ -12,7 +12,7 @@ public class LookForFacesTask extends AbstractTask {
 
     public LookForFacesTask(boolean enabled) {
         super();
-        if(enabled){
+        if (enabled) {
             // TODO
         }
         setChanged();
