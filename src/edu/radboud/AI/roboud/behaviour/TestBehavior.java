@@ -20,6 +20,12 @@ public class TestBehavior extends AbstractBehavior {
 //        MotorAction motorAction = new MotorAction(controller, RobotDirection.FORWARD, RobotSpeed.NORMAL);
 //        blocks.add(motorAction);
 
+        // TODO: test:
+//        ShowTextAction showTextAction = new ShowTextAction(controller, new String[]{"String1", "String2", "String3"});
+//        blocks.add(showTextAction);
+
+
+
         RandomWander randomWander = new RandomWander(controller, taskFactory, observer);
         randomWander.wander();
 
