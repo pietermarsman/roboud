@@ -17,19 +17,8 @@ public class TestBehavior extends AbstractBehavior {
         //SpeakAction speakAction = new SpeakAction(controller, "Hello Yo mama is so fat see is");
 //        AbstractBehavior abstractBehavior = new AbstractBehavior(controller, taskFactory, observer);
 
-//        MotorAction motorAction = new MotorAction(controller, RobotDirection.FORWARD, RobotSpeed.NORMAL);
-//        blocks.add(motorAction);
-
-        // TODO: test:
-//        ShowTextAction showTextAction = new ShowTextAction(controller, new String[]{"String1", "String2", "String3"});
-//        blocks.add(showTextAction);
-
 //        StoreInformation storeInformation = new StoreInformation(null);
 
-        RandomWander randomWander = new RandomWander(controller, taskFactory, observer);
-        randomWander.wander();
-
-        //TODO: abstractbehavior moet weer abstract zijn!
 
         /*ShowTextAction showTextAction = new ShowTextAction(controller, "Hello");
         ListenAction listenAction = new ListenAction(controller);
@@ -40,5 +29,7 @@ public class TestBehavior extends AbstractBehavior {
 
         // Tested and working:
         // LEDAction
+        // RandomWander
+        // ShowTextAction
     }
 }
