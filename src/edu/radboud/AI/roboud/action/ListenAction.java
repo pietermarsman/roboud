@@ -1,9 +1,10 @@
 package edu.radboud.ai.roboud.action;
 
+import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.event.Event;
-import edu.radboud.ai.roboud.event.EventType;
+import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,7 +13,8 @@ import java.util.Observer;
  */
 public class ListenAction extends AbstractAction implements Observer {
 
-    private String result;
+    private static final String TAG = "ListenAction";
+    private ArrayList<String> results;
 
     public ListenAction(RoboudController controller) {
         super(controller);
@@ -25,17 +27,17 @@ public class ListenAction extends AbstractAction implements Observer {
 
     @Override
     public void update(Observable observable, Object data) {
-        if (data instanceof Event) {
-            Event e = (Event) data;
-            if (e.getEventType() == EventType.NEW_SPEECH_DATA) {
-                result = controller.getModel().getVoiceResults().get(0);
-                setChanged();
-                notifyObservers(result);
-            }
+        Log.d(TAG, "Update received from " + observable.getClass().toString());
+        if (observable instanceof AndroidMicrophone) {
+            results = (ArrayList<String>) data;
+            Log.d(TAG, "Result of ListenAction is: " + results);
+            setChanged();
+            notifyObservers(results);
         }
     }
 
-    public String getResult() {
-        return result;
+
+    public ArrayList<String> getResult() {
+        return results;
     }
 }

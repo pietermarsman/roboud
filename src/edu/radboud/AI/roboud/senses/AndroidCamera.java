@@ -1,9 +1,12 @@
 package edu.radboud.ai.roboud.senses;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -44,8 +47,9 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
     private int refreshRate;
     private Timer timer;
     private boolean ready;
+    private boolean available;
 
-    public AndroidCamera(SurfaceView _surfaceView, int _refreshRate) {
+    public AndroidCamera(Context context, SurfaceView _surfaceView, int _refreshRate) {
         this.refreshRate = _refreshRate;
         this.sv = _surfaceView;
 
@@ -62,6 +66,8 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
                 takePicture();
             }
         }, refreshRate, refreshRate);
+
+        available = checkIfCameraIsAvailable(context);
     }
 
     @Override
@@ -70,33 +76,40 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        // The Surface has been created, acquire the camera and tell it where
-        // to draw the preview.
-        mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
-        mCamera.setFaceDetectionListener(faceDetectionListener);
-        try {
-            mCamera.setPreviewDisplay(sHolder);
-        } catch (IOException exception) {
-            mCamera.release();
-            mCamera = null;
+        if (available) {
+            // The Surface has been created, acquire the camera and tell it where
+            // to draw the preview.
+            mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+            mCamera.setFaceDetectionListener(faceDetectionListener);
+            try {
+                mCamera.setPreviewDisplay(sHolder);
+            } catch (IOException exception) {
+                mCamera.release();
+                mCamera = null;
+            }
+            ready = true;
+        } else {
+            Log.w(TAG, "Camera cannot be created because it is not available");
         }
-        ready = true;
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         ready = false;
-        //stopListeners the preview
-        mCamera.stopPreview();
-        mCamera.stopFaceDetection();
-        //release the camera
-        mCamera.release();
-        //unbind the camera from this object
-        mCamera = null;
+        if (mCamera != null) {
+            //stopListeners the preview
+            mCamera.stopPreview();
+            mCamera.stopFaceDetection();
+            //release the camera
+            mCamera.release();
+            //unbind the camera from this object
+            mCamera = null;
+        }
     }
 
-    public void takePicture() {
-        if (ready) {
+    public boolean takePicture() {
+        boolean canTakePicture = ready && available;
+        if (canTakePicture) {
             //get camera parameters
             parameters = mCamera.getParameters();
 
@@ -106,5 +119,19 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
             mCamera.startFaceDetection();
             mCamera.takePicture(null, null, mCall);
         }
+        return canTakePicture;
+    }
+
+    private boolean checkIfCameraIsAvailable(Context context) {
+        PackageManager pm = context.getPackageManager();
+        boolean frontCam;
+
+        //Must have a targetSdk >= 9 defined in the AndroidManifest
+        frontCam = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT);
+        return frontCam;
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 }
