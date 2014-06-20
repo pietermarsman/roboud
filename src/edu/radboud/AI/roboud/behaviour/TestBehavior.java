@@ -1,7 +1,8 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.ListenAction;
+import edu.radboud.ai.roboud.action.SpeakAction;
+import edu.radboud.ai.roboud.task.SpeechRepertoire;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.Observer;
@@ -16,8 +17,8 @@ public class TestBehavior extends AbstractBehavior {
     public TestBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
         super(controller, taskFactory, observer);
         //SpeakAction speakAction = new SpeakAction(controller, "Hello Yo mama is so fat see is");
-        ListenAction action = new ListenAction(controller);
-        blocks.add(action);
+        SpeakAction speakAction = new SpeakAction(controller, SpeechRepertoire.textIntroduceMyself);
+        blocks.add(speakAction);
 
 
         /*ShowTextAction showTextAction = new ShowTextAction(controller, "Hello");
