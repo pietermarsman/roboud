@@ -1,8 +1,10 @@
-package edu.radboud.ai.roboud.action;
+package edu.radboud.ai.roboud.action.actions;
 
 import android.app.Activity;
 import android.content.Intent;
 import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.action.util.ChoiceActionActivity;
+import edu.radboud.ai.roboud.action.util.ConfirmationActionActivity;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
 /**

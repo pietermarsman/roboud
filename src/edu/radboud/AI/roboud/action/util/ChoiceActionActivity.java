@@ -1,4 +1,4 @@
-package edu.radboud.ai.roboud.action;
+package edu.radboud.ai.roboud.action.util;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import edu.radboud.ai.roboud.action.actions.ChoiceAction;
 
 /**
  * Created by Pieter Marsman on 4-6-2014.

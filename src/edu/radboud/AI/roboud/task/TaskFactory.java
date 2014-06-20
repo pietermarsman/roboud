@@ -2,10 +2,10 @@ package edu.radboud.ai.roboud.task;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.AbstractAction;
-import edu.radboud.ai.roboud.action.ListenAction;
-import edu.radboud.ai.roboud.action.ShowTextAction;
-import edu.radboud.ai.roboud.action.SpeakAction;
+import edu.radboud.ai.roboud.action.actions.AbstractAction;
+import edu.radboud.ai.roboud.action.actions.ListenAction;
+import edu.radboud.ai.roboud.action.actions.ShowTextAction;
+import edu.radboud.ai.roboud.action.actions.SpeakAction;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import twitter4j.TwitterException;
 

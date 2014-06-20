@@ -1,9 +1,9 @@
 package edu.radboud.ai.roboud.task;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.LedAction;
-import edu.radboud.ai.roboud.action.LedColor;
-import edu.radboud.ai.roboud.action.SleepAction;
+import edu.radboud.ai.roboud.action.actions.LedAction;
+import edu.radboud.ai.roboud.action.util.LedColor;
+import edu.radboud.ai.roboud.action.actions.SleepAction;
 
 /**
  * Created by Mike Ligthart on 20-6-2014.

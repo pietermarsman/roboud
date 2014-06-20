@@ -1,7 +1,7 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.SpeakAction;
+import edu.radboud.ai.roboud.action.actions.SpeakAction;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
 import edu.radboud.ai.roboud.task.TaskFactory;
 

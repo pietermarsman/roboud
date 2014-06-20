@@ -1,7 +1,9 @@
-package edu.radboud.ai.roboud.action;
+package edu.radboud.ai.roboud.action.actions;
 
 
 import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.action.util.RobotDirection;
+import edu.radboud.ai.roboud.action.util.RobotSpeed;
 
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 

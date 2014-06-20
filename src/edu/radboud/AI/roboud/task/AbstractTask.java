@@ -1,7 +1,7 @@
 package edu.radboud.ai.roboud.task;
 
 import android.util.Log;
-import edu.radboud.ai.roboud.action.AbstractAction;
+import edu.radboud.ai.roboud.action.actions.AbstractAction;
 import edu.radboud.ai.roboud.behaviour.BehaviorBlock;
 
 import java.util.LinkedList;

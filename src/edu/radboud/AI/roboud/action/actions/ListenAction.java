@@ -1,4 +1,4 @@
-package edu.radboud.ai.roboud.action;
+package edu.radboud.ai.roboud.action.actions;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
