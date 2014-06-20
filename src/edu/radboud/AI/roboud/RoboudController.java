@@ -18,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
+import edu.radboud.ai.roboud.action.StoreInformation;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
@@ -171,6 +172,14 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onStop() {
         super.onStop();
+
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("boolean1", true);
+        bundle.putString("StringName1", "InhoudString1.1");
+
+        StoreInformation storeInformation = new StoreInformation(bundle);
+//        blocks.add(storeInformation);
+
         // UI
         // Nothing to do
 
