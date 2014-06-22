@@ -14,10 +14,14 @@ public class LedAction extends AbstractAction {
     private final static String TAG = "LedAction";
     private LedColor color;
 
+    @Deprecated
     public LedAction(RoboudController controller, LedColor color) {
         super(controller);
         this.color = color;
-        Log.d(TAG, color.name() + " is created");
+    }
+
+    public LedAction(RoboudController controller) {
+        super(controller);
     }
 
     @Override
@@ -25,33 +29,38 @@ public class LedAction extends AbstractAction {
         Log.d(TAG, "doActions() is called");
         controller.sendCommand(kRobot_ResetMood);
         controller.sendCommand(kRobot_HeartBeatOff);
-        switch (color) {
-            case BLUE:
-                controller.sendCommand(kRobot_RGBHeartBlue);
-                break;
-            case CYAN:
-                controller.sendCommand(kRobot_RGBHeartCyan);
-                break;
-            case GREEN:
-                controller.sendCommand(kRobot_RGBHeartGreen);
-                break;
-            case ORANGE:
-                controller.sendCommand(kRobot_RGBHeartOrange);
-                break;
-            case RED:
-                controller.sendCommand(kRobot_RGBHeartRed);
-                break;
-            case WHITE:
-                controller.sendCommand(kRobot_RGBHeartWhite);
-                break;
-            case YELLOW:
-                controller.sendCommand(kRobot_RGBHeartYellow);
-                break;
-            default: //OFF
-                break;
+        if(color != null) {
+            switch (color) {
+                case BLUE:
+                    controller.sendCommand(kRobot_RGBHeartBlue);
+                    break;
+                case CYAN:
+                    controller.sendCommand(kRobot_RGBHeartCyan);
+                    break;
+                case GREEN:
+                    controller.sendCommand(kRobot_RGBHeartGreen);
+                    break;
+                case ORANGE:
+                    controller.sendCommand(kRobot_RGBHeartOrange);
+                    break;
+                case RED:
+                    controller.sendCommand(kRobot_RGBHeartRed);
+                    break;
+                case WHITE:
+                    controller.sendCommand(kRobot_RGBHeartWhite);
+                    break;
+                case YELLOW:
+                    controller.sendCommand(kRobot_RGBHeartYellow);
+                    break;
+                default: //OFF
+                    break;
+            }
         }
         setChanged();
-        Log.d(TAG, "observers are notified");
         notifyObservers();
+    }
+
+    public void setColor(LedColor color) {
+        this.color = color;
     }
 }

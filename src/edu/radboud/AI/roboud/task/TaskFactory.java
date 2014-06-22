@@ -32,49 +32,26 @@ public class TaskFactory {
         return instance;
     }
 
-    public AskQuestionTask getAskQuestionTask(String question) throws UnsupportedOperationException {
-        AbstractAction output, input;
-        if (scenario.isCanTalk()) {
-            output = new SpeakAction(controller, question);
-        } else {
-            output = new ShowTextAction(controller, question);
+    public AskQuestionTask getAskQuestionTask(String question) {
+        if (scenario.isCanTalk() && scenario.isCanListen()) {
+            return new OutloudAskQuestionTask(controller, question);
         }
-
-        if (scenario.isCanListen()) {
-            input = new ListenAction(controller);
-        } else {
-            //TODO create readWritenTextAction
-            throw new UnsupportedOperationException("Not implemented yet");
+        else{
+            return new ScreenAskQuestionTask(controller, question);
         }
-
-        return new AskQuestionTask(question, output, input);
     }
 
-    public AskQuestionTask getAskQuestionTask(String[] questions) throws UnsupportedOperationException {
-        AbstractAction output, input;
-        String question;
-        if (scenario.isCanTalk()) {
-            output = new SpeakAction(controller, questions);
-            SpeakAction temp = (SpeakAction) output;
-            question = temp.getText();
-        } else {
-            output = new ShowTextAction(controller, questions);
-            ShowTextAction temp = (ShowTextAction) output;
-            question = temp.getText();
+    public AskQuestionTask getAskQuestionTask(String[] questions) {
+        if (scenario.isCanTalk() && scenario.isCanListen()) {
+            return new OutloudAskQuestionTask(controller, questions);
         }
-
-        if (scenario.isCanListen()) {
-            input = new ListenAction(controller);
-        } else {
-            //TODO create readWritenTextAction
-            throw new UnsupportedOperationException("Not implemented yet");
+        else{
+            return new ScreenAskQuestionTask(controller, questions);
         }
-
-        return new AskQuestionTask(question, output, input);
     }
 
     public LookForFacesTask getLookForFacesTask() {
-        return new LookForFacesTask(scenario.isCanDrive());
+        return new LookForFacesTask(controller, scenario.isCanDrive());
     }
 
     public MakeNewAppointmentTask getMakeNewAppointmentTask() {
@@ -85,7 +62,7 @@ public class TaskFactory {
     public PostTweetTask getPostTweetTask(String text) {
         if (scenario.isHasInternet()) {
             try {
-                return new PostTweetTask(text);
+                return new PostTweetTask(controller, text);
             } catch (TwitterException e) {
                 Log.e(TAG, "Twitter failed to post message", e);
                 //TODO give feedback to user

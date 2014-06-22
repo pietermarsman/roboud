@@ -16,17 +16,26 @@ public class SpeakAction extends AbstractAction implements Observer {
     private final static String TAG = "SpeakAction";
     private String text;
 
+    @Deprecated
     public SpeakAction(RoboudController controller, String text) {
         super(controller);
         this.text = text;
     }
 
+    @Deprecated
     public SpeakAction(RoboudController controller, String[] texts) {
         this(controller, SpeechRepertoire.randomChoice(texts));
     }
 
+    public SpeakAction(RoboudController controller) {
+        super(controller);
+    }
+
     @Override
-    public void doActions() {
+    public void doActions(){
+        if(text == null){
+            throw new NullPointerException("text cannot be null");
+        }
         Log.i(TAG, "Going to speak: " + text);
         controller.speakText(this, text);
     }
@@ -40,5 +49,13 @@ public class SpeakAction extends AbstractAction implements Observer {
         // Done with speaking
         setChanged();
         notifyObservers();
+    }
+
+    public void setText(String text){
+        this.text = text;
+    }
+
+    public void setText(String[] texts){
+        this.text = SpeechRepertoire.randomChoice(texts);
     }
 }

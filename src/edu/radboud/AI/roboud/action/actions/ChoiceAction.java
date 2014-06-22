@@ -21,13 +21,21 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
 
     private String resultString;
 
+    @Deprecated
     public ChoiceAction(RoboudController controller, List<String> options) {
         super(controller);
         this.options = options;
     }
 
+    public ChoiceAction(RoboudController controller) {
+        super(controller);
+    }
+
     @Override
     public void doActions() {
+        if (options == null){
+            throw new NullPointerException("Options not properly initialized");
+        }
         Intent i = new Intent(controller, ChoiceActionActivity.class);
         String[] optionsArray = new String[options.size()];
         optionsArray = options.toArray(optionsArray);
@@ -48,5 +56,9 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
 
     public String getResultString() {
         return resultString;
+    }
+
+    public void setOptions(List<String> options) {
+        this.options = options;
     }
 }

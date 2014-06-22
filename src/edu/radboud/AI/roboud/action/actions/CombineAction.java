@@ -13,6 +13,7 @@ public class CombineAction extends AbstractAction implements Observer {
     AbstractAction a, b;
     boolean aReady, bReady;
 
+    @Deprecated
     public CombineAction(RoboudController controller, AbstractAction a, AbstractAction b) {
         super(controller);
         this.a = a;
@@ -21,8 +22,15 @@ public class CombineAction extends AbstractAction implements Observer {
         bReady = false;
     }
 
+    public CombineAction(RoboudController controller) {
+        super(controller);
+    }
+
     @Override
     public void doActions() {
+        if (a == null && b == null){
+            throw new NullPointerException("actions cannot be null");
+        }
         // TODO Check if actions can be executed at the same time
         a.doActions();
         b.doActions();
@@ -38,5 +46,10 @@ public class CombineAction extends AbstractAction implements Observer {
             setChanged();
             notifyObservers();
         }
+    }
+
+    public void setActions(AbstractAction a, AbstractAction b) {
+        this.a = a;
+        this.b = b;
     }
 }

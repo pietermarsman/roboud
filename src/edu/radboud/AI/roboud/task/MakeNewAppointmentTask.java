@@ -1,5 +1,6 @@
 package edu.radboud.ai.roboud.task;
 
+import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.AbstractAction;
 
 /**
@@ -7,8 +8,13 @@ import edu.radboud.ai.roboud.action.actions.AbstractAction;
  */
 public class MakeNewAppointmentTask extends AbstractTask {
 
-    public MakeNewAppointmentTask(AbstractAction output, AbstractAction input) {
-        super();
+    public MakeNewAppointmentTask(RoboudController controller, AbstractAction output, AbstractAction input) {
+        super(controller);
         // TODO
+    }
+
+    @Override
+    public void releaseActions() {
+        //TODO
     }
 }
