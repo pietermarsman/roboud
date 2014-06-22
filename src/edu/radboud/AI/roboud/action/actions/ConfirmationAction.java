@@ -1,8 +1,10 @@
-package edu.radboud.ai.roboud.action;
+package edu.radboud.ai.roboud.action.actions;
 
 import android.app.Activity;
 import android.content.Intent;
 import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.action.util.ChoiceActionActivity;
+import edu.radboud.ai.roboud.action.util.ConfirmationActionActivity;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
 /**
@@ -17,9 +19,14 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
     private String question;
     private boolean result;
 
+    @Deprecated
     public ConfirmationAction(RoboudController controller, String question) {
         super(controller);
         this.question = question;
+    }
+
+    public ConfirmationAction(RoboudController controller) {
+        super(controller);
     }
 
     @Override
@@ -35,6 +42,9 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
 
     @Override
     public void doActions() {
+        if (question == null){
+            throw new NullPointerException("Question cannot be null");
+        }
         Intent i = new Intent(controller, ConfirmationActionActivity.class);
         i.putExtra(DATA_NAME, question);
         controller.startNewActivityForResult(i, REQUEST_CODE, this);
@@ -42,5 +52,9 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
 
     public boolean getResult() {
         return result;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
     }
 }

@@ -55,8 +55,11 @@ public abstract class AbstractBehavior extends Observable implements Behavior, O
 
         } else {
             Log.i(TAG, "No further steps to execute");
+            releaseActions();
             setChanged();
             notifyObservers();
         }
     }
+
+    public abstract void releaseActions();
 }

@@ -1,4 +1,4 @@
-package edu.radboud.ai.roboud.action;
+package edu.radboud.ai.roboud.action.actions;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
@@ -12,14 +12,21 @@ public class SleepAction extends AbstractAction {
 
     private long time;
 
+    @Deprecated
     public SleepAction(RoboudController controller, long time) {
         super(controller);
         this.time = time;
-        Log.d(TAG, "SleepAction is created");
+    }
+
+    public SleepAction(RoboudController controller) {
+        super(controller);
     }
 
     @Override
     public void doActions() {
+        if (time == 0){
+            throw new NullPointerException("Time cannot be 0");
+        }
         Log.d(TAG, "Going to sleep");
         try {
             Thread.sleep(time);
@@ -29,5 +36,9 @@ public class SleepAction extends AbstractAction {
         setChanged();
         Log.d(TAG, "Waking up and notifying");
         notifyObservers();
+    }
+
+    public void setTime(long time){
+        this.time = time;
     }
 }

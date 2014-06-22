@@ -1,7 +1,9 @@
-package edu.radboud.ai.roboud.action;
+package edu.radboud.ai.roboud.action.actions;
 
 
 import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.action.util.RobotDirection;
+import edu.radboud.ai.roboud.action.util.RobotSpeed;
 
 import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
@@ -13,23 +15,22 @@ public class MotorAction extends AbstractAction {
     private RobotDirection dir;
     private RobotSpeed speed;
 
+    @Deprecated
     public MotorAction(RoboudController controller, RobotDirection dir, RobotSpeed speed) {
         super(controller);
         this.dir = dir;
         this.speed = speed;
     }
 
-    public MotorAction(RoboudController controller, RobotDirection dir) {
-        this(controller, dir, RobotSpeed.NORMAL);
+    public MotorAction(RoboudController controller) {
+        super(controller);
     }
 
     @Override
     public void doActions() {
-        //Some how get direction and speed
-        RobotDirection dir = RobotDirection.FORWARD;
-        RobotSpeed speed = RobotSpeed.NORMAL;
-
-        //Not finished
+        if (dir == null || speed == null){
+            throw new NullPointerException("Direction and speed cannot be null");
+        }
         switch (dir) {
             case FORWARD:
                 switch (speed) {
@@ -110,5 +111,10 @@ public class MotorAction extends AbstractAction {
         }
         setChanged();
         notifyObservers();
+    }
+
+    public void setDirAndSpeed(RobotDirection dir, RobotSpeed speed){
+        this.dir = dir;
+        this.speed = speed;
     }
 }

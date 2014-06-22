@@ -1,5 +1,6 @@
 package edu.radboud.ai.roboud.task;
 
+import edu.radboud.ai.roboud.RoboudController;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -18,13 +19,15 @@ import java.io.InputStreamReader;
 public class PostTweetTask extends AbstractTask {
     String text;
 
-    public PostTweetTask(String text) throws TwitterException, IOException {
-        super();
+    public PostTweetTask(RoboudController controller, String text) throws TwitterException, IOException {
+        super(controller);
         if (text == null)
             this.text = "This is a default text to post on Twitter";
         else
             this.text = text;
         postTweet();
+
+        //Mike: This looks strange here:
         setChanged();
         notifyObservers();
     }
@@ -83,5 +86,10 @@ public class PostTweetTask extends AbstractTask {
             System.out.println("Failed to read the system input.");
             System.exit(-1);
         }
+    }
+
+    @Override
+    public void releaseActions() {
+
     }
 }

@@ -1,4 +1,4 @@
-package edu.radboud.ai.roboud.action;
+package edu.radboud.ai.roboud.action.util;
 
 /**
  * @author Mike Ligthart

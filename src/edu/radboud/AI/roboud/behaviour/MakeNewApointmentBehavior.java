@@ -19,4 +19,9 @@ public class MakeNewApointmentBehavior extends AbstractBehavior {
     public List<BehaviorBlock> getBlocks() {
         return null;
     }
+
+    @Override
+    public void releaseActions() {
+        //TODO
+    }
 }
