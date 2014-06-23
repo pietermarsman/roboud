@@ -16,12 +16,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.ai.roboud.util.StoreInformation;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.senses.SpeechEngine;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
+import edu.radboud.ai.roboud.util.StoreInformation;
 
 import java.util.HashMap;
 import java.util.Observable;
@@ -75,10 +75,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showText("onCreate(" + savedInstanceState + ")");
+        Log.i(TAG, "onCreate(" + savedInstanceState + ")");
 
         // RoboMe
-        robome = new RoboMe(this, this);
+        robome = new RoboMe(this.getApplicationContext(), this);
 
         // Variables
         returnActivityDataToMap = new HashMap<Integer, ActivityResultProcessor>();
@@ -89,6 +89,11 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         logScrollView = (ScrollView) findViewById(R.id.outputScrollView);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         button = (Button) findViewById(R.id.button);
+
+        // Classes
+        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
+                robome.getVolume(), robome.getLibVersion());
+        mind = new RoboudMind(this);
 
         // Senses
         cam = new AndroidCamera(this, surfaceView, 1000);
@@ -107,17 +112,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         sensors.put(Sensor.TYPE_LIGHT, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
 
 
-        // Classes
-        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
-                robome.getVolume(), robome.getLibVersion());
-        mind = new RoboudMind(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        Log.i(TAG, "onStart()");
         // The activity is about to become visible.
-        showText("onStart()");
         checkRequirements();
     }
 
@@ -139,7 +140,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         super.onResume();
         // The activity has become visible (it is now "resumed").
         // UI
-        showText("onResume()");
+        Log.i(TAG, "onResume()");
         button.setOnClickListener(this);
 
         // Senses
@@ -154,7 +155,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Classes
         model.addObserver(this);
-        mind.startRunning();
 
         // Variables
         // Nothing to do
@@ -162,31 +162,36 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     protected void onPause() {
-        super.onPause();
         // Another activity is taking focus (this activity is about to be "paused").
+        Log.i(TAG, "onPause()");
+
         // UI
         // Nothing to do
 
         // Senses
-        showText("onPause()");
         loc.deleteObservers();
-//        cam.deleteObservers();
+        cam.deleteObservers();
         mic.deleteObservers();
         mSensorManager.unregisterListener(this);
-
-        // RoboMe
-        stopListeningToRoboMe();
 
         // Classes
         // Nothing to do
 
+
+        // RoboMe
+        stopListeningToRoboMe();
+        model.deleteObservers();
+        mind.stopRunning();
+
         // Variables
         // Nothing to do
+
+        super.onPause();
     }
 
     @Override
     public void onStop() {
-        super.onStop();
+        Log.i(TAG, "onStop()");
 
         Bundle bundle = new Bundle();
         bundle.putBoolean("boolean1", true);
@@ -201,21 +206,44 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Senses
         // Nothing to do
 
+        // Classes
+        // Nothing to do
+
         // RoboMe
         // Nothing to do
 
-        // Classes
-        showText("onStop()");
-        model.deleteObservers();
-        mind.stopRunning();
-
         // Variables
+        // Nothing to do
+
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         // The activity is about to be destroyed.
+        Log.i(TAG, "onDestroy()");
+
+        // RoboMe
+        robome = null;
+
+        // UI
+        // Nothing to do
+
+        // Senses
+        cam = null;
+        loc = null;
+        mic = null;
+
+        mSensorManager = null;
+        sensors = null;
+
+        // Classes
+        model = null;
+        mind = null;
+        speechEngine.destroy();
+        speechEngine = null;
+
+        super.onDestroy();
     }
 
     @Override
@@ -249,6 +277,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void stopListeningToRoboMe() {
+        Log.d(TAG, "Stop listening to RoboMe");
         if (robome != null) {
             robome.stopListening();
             model.setListening(false);
@@ -272,26 +301,29 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void roboMeConnected() {
+        Log.i(TAG, "RoboMe connected");
         model.setRobomeConnected(true);
-        showText("RoboMe connected");
+        mind.startRunning();
     }
 
     @Override
     public void roboMeDisconnected() {
+        Log.i(TAG, "RoboMe disconnected");
         model.setRobomeConnected(false);
-        showText("RoboMe disconnected");
+        mind.stopRunning();
     }
 
     @Override
     public void headsetPluggedIn() {
+        Log.i(TAG, "Headset plugged in");
+        startListeningToRoboMe();
         model.setRobomeHeadsetPluggedIn(true);
-        showText("Headset plugged in");
     }
 
     @Override
     public void headsetUnplugged() {
+        Log.i(TAG, "Headset unplugged");
         model.setRobomeHeadsetPluggedIn(false);
-        showText("Headset unplugged");
     }
 
     @Override

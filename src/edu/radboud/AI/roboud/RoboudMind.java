@@ -1,5 +1,6 @@
 package edu.radboud.ai.roboud;
 
+import android.util.Log;
 import edu.radboud.ai.roboud.behaviour.Behavior;
 import edu.radboud.ai.roboud.behaviour.BehaviorFactory;
 import edu.radboud.ai.roboud.scenario.Scenario;
@@ -32,7 +33,7 @@ public class RoboudMind implements Observer, Runnable {
         currentBehavior = null;
         currentScenario = whatIsCurrentScenario();
         behaviorFactory = BehaviorFactory.getInstance(currentScenario, controller);
-        running = true;
+        running = false;
         mindThread = null;
     }
 
@@ -56,26 +57,33 @@ public class RoboudMind implements Observer, Runnable {
     }
 
     public void stopRunning() {
-        running = false;
         dispose();
+        running = false;
     }
 
     public void startRunning() {
-        running = true;
         if (mindThread == null) {
             mindThread = new Thread(this);
             mindThread.start();
+            running = true;
+        } else {
+            Log.w(TAG, "Already running, no need to start it again");
         }
     }
 
+    public boolean isRunning() {
+        return running;
+    }
+
     public void dispose() {
-        mindThread.interrupt();
-        mindThread = null;
+        if (mindThread != null) {
+            mindThread.interrupt();
+            mindThread = null;
+        }
     }
 
     @Override
     public void run() {
-
         if (currentBehavior != null)
             currentBehavior.executeBehaviour();
 

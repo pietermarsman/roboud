@@ -83,11 +83,12 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
             mCamera.setFaceDetectionListener(faceDetectionListener);
             try {
                 mCamera.setPreviewDisplay(sHolder);
+                ready = true;
             } catch (IOException exception) {
                 mCamera.release();
                 mCamera = null;
+                ready = false;
             }
-            ready = true;
         } else {
             Log.w(TAG, "Camera cannot be created because it is not available");
         }
@@ -95,8 +96,8 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        ready = false;
         if (mCamera != null) {
+            ready = false;
             //stopListeners the preview
             mCamera.stopPreview();
             mCamera.stopFaceDetection();
@@ -117,7 +118,11 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
             mCamera.setParameters(parameters);
             mCamera.startPreview();
             mCamera.startFaceDetection();
-            mCamera.takePicture(null, null, mCall);
+            try {
+                mCamera.takePicture(null, null, mCall);
+            } catch (Exception e) {
+                Log.e(TAG, "Not succeeded in taking a picture", e);
+            }
         }
         return canTakePicture;
     }
