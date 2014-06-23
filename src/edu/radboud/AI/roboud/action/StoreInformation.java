@@ -11,7 +11,9 @@ import android.util.Log;
 public class StoreInformation extends Activity {
     public final static String TAG = "StoreInformation";
     public static final String PREFS_NAME = "saveFileName";
-    boolean boolean1;
+    private boolean boolean1;
+    private String StringName1;
+    private int int1;
 
     public StoreInformation(Bundle state) {
         Log.v(TAG,"In constructor");
@@ -22,8 +24,12 @@ public class StoreInformation extends Activity {
     {
         Log.v(TAG, "Oncreate now");
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0); // (0 = MODE_PRIVATE)
-        boolean boolean1 = settings.getBoolean("boolean1", false);
-        String StringName1 = settings.getString("StringName1", "defaultValue");
+        for(int i = 0; i < state.size(); i++)
+        {
+            boolean1 = state.getBoolean("boolean1");
+            StringName1 = state.getString("StringName1");
+            int1 = state.getInt("int1");
+        }
     }
 
     @Override
@@ -31,10 +37,8 @@ public class StoreInformation extends Activity {
         super.onStop();
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("boolean1", true);
-        editor.putString("StringName1", "InhoudString1");
+        editor.putBoolean("boolean1", boolean1);
+        editor.putString("StringName1", StringName1);
         editor.commit();
     }
-
-
 }

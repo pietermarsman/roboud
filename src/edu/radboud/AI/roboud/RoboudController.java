@@ -26,6 +26,7 @@ import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
 //import edu.radboud.ai.roboud.senses.AndroidCamera;
 
@@ -187,10 +188,12 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onStop() {
         super.onStop();
-
         Bundle bundle = new Bundle();
         bundle.putBoolean("boolean1", true);
         bundle.putString("StringName1", "InhoudString1.1");
+        Random r = new Random();
+        bundle.putInt("int1", r.nextInt());
+        Log.v(TAG,"Next random int to store in memory: " + r);
 
         StoreInformation storeInformation = new StoreInformation(bundle);
 //        blocks.add(storeInformation);
