@@ -1,10 +1,10 @@
 package edu.radboud.ai.roboud;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.hardware.*;
-import android.location.Location;
+import android.content.res.AssetManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,32 +12,31 @@ import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
-import com.wowwee.robome.RoboMeCommands;
-import edu.radboud.ai.roboud.util.StoreInformation;
-import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.senses.SpeechEngine;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 
 //import edu.radboud.ai.roboud.senses.AndroidCamera;
 
 /**
  * Created by Pieter Marsman on 13-5-14.
  */
-public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
+public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener {
 
     public static final String TAG = "RoboudController";
     private AndroidMicrophone mic;
-    private AndroidCamera cam;
+    //private AndroidCamera cam;
     private AndroidLocation loc;
     private RoboudModel model;
     private RoboudMind mind;
@@ -49,6 +48,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
     private SpeechEngine speechEngine;
+    private String fileName = "hello_file";
+    private String fileLocation = "assets/storeinfo.txt";
+    private EditText firstField;
+    private EditText secondField;
 
     private HashMap<Integer, ActivityResultProcessor> returnActivityDataToMap;
 
@@ -66,9 +69,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public RoboudModel getModel() {
         return model;
     }
-
     //  === START Android Activity part ===
-
 
     /**
      * Called when the activity is first created.
@@ -76,8 +77,63 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showText("onCreate(" + savedInstanceState + ")");
+        Log.v(TAG,"creating readfile");
+//
+//        BufferedReader buf = null;
+//        try {
+//            buf = new BufferedReader(new FileReader(fileLocation));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (buf != null) {
+//            try {
+//                int byteFromFile = buf.read();
+//                Log.v(TAG,"Read: " + byteFromFile);
+//                while(byteFromFile != -1){
+//                    byteFromFile = buf.read();
+//                    Log.v(TAG, "read: " + byteFromFile);
+//                }
+//                buf.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        // ----
 
+
+
+            AssetManager assetManager = getAssets();
+            String[] files = null;
+            try {
+                files = assetManager.list("image");
+            } catch (IOException e) {
+                Log.e("tag", e.getMessage());
+            }
+
+            Log.v(TAG,Integer.toString(files.length) + " file. File name is "
+                    + files[0]);
+            InputStream inputStream = null;
+            try {
+                inputStream = assetManager.open("readme.txt");
+            } catch (IOException e) {
+                Log.e("no input file found", e.getMessage());
+            }
+
+            String s = readTextFile(inputStream);
+            Log.v(TAG,"Read from file: " + s);
+
+        // ----
+//        FileInputStream fos = null;
+//        try {
+//            fos = openFileInput(FILENAME);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+
+
+
+        showText("onCreate(" + savedInstanceState + ")");
         // RoboMe
         robome = new RoboMe(this, this);
 
@@ -92,7 +148,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         button = (Button) findViewById(R.id.button);
 
         // Senses
-        cam = new AndroidCamera(this, surfaceView, 1000);
+        //cam = new AndroidCamera(this, surfaceView, 1000);
         loc = new AndroidLocation(this);
         mic = new AndroidMicrophone(this);
         speechEngine = new SpeechEngine(this);
@@ -122,11 +178,26 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         checkRequirements();
     }
 
+private String readTextFile(InputStream inputStream) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte buf[] = new byte[1024];
+        int len;
+        try {
+        while ((len = inputStream.read(buf)) != -1) {
+        outputStream.write(buf, 0, len);
+        }
+        outputStream.close();
+        inputStream.close();
+        } catch (IOException e) {
+        }
+        return outputStream.toString();
+        }
+
     private void checkRequirements() {
         if (!mic.isAvailable())
             Log.w(TAG, "Microphone not available");
-        if (!cam.isAvailable())
-            Log.w(TAG, "Camera not available");
+//        if (!cam.isAvailable())
+//            Log.w(TAG, "Camera not available");
         if (!loc.isAvailable())
             Log.w(TAG, "Location not available");
         if (!speechEngine.isAvailable())
@@ -163,7 +234,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     protected void onPause() {
-        super.onPause();
+        Log.v(TAG, "Pausing the app now");
+
         // Another activity is taking focus (this activity is about to be "paused").
         // UI
         // Nothing to do
@@ -183,19 +255,52 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Variables
         // Nothing to do
+        super.onPause();
     }
 
     @Override
     public void onStop() {
-        super.onStop();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("boolean1", true);
-        bundle.putString("StringName1", "InhoudString1.1");
+        Log.v(TAG,"Stopping the app now");
+        String string = "hello world!";
         Random r = new Random();
-        bundle.putInt("int1", r.nextInt());
-        Log.v(TAG,"Next random int to store in memory: " + r);
+        int intToAdd = r.nextInt();
+        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
 
-        StoreInformation storeInformation = new StoreInformation(bundle);
+//        FileOutputStream fos = null;
+//        try {
+//            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        BufferedWriter buf = null;
+        try {
+            buf = new BufferedWriter(new FileWriter(fileLocation));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (buf != null) {
+            try {
+                buf.write(intToAdd);
+                buf.write(string);
+                buf.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+//        Bundle bundle = new Bundle();
+//        bundle.putBoolean("boolean1", true);
+//        bundle.putString("StringName1", "InhoudString1.1");
+//        Random r = new Random();
+//        int intToAdd = r.nextInt();
+//        bundle.putInt("int1", intToAdd);
+//        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
+
+//        StoreInformation storeInformation = new StoreInformation(bundle);
+//        storeInformation.finish();
 //        blocks.add(storeInformation);
 
         // UI
@@ -211,12 +316,46 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         showText("onStop()");
         model.deleteObservers();
         mind.stopRunning();
-
+        super.onStop();
         // Variables
     }
 
     @Override
     protected void onDestroy() {
+        Log.v(TAG,"Destroying the app now");
+
+
+        String string = "hello world!";
+        Random r = new Random();
+        int intToAdd = r.nextInt();
+        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
+
+//        FileOutputStream fos = null;
+//        try {
+//            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        BufferedWriter buf = null;
+        try {
+            buf = new BufferedWriter(new FileWriter("assets/storeinfo.java"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (buf != null) {
+            try {
+                buf.write(intToAdd);
+                buf.write(string);
+                buf.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
         super.onDestroy();
         // The activity is about to be destroyed.
     }
@@ -299,8 +438,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void volumeChanged(float v) {
-        Log.v(TAG, "Volume is " + Float.toString(v) + " and i will set it to 12");
-        v = 12;
         model.setVolume(v);
         showText("Volume changed to " + v);
     }
@@ -349,14 +486,15 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void update(Observable observable, Object data) {
         // Camera update
-        if (observable instanceof AndroidCamera) {
-            if (data instanceof Bitmap)
-                model.setImage((Bitmap) data);
-            if (data instanceof Camera.Face[])
-                model.setFaces(((Camera.Face[]) data).length);
-        }
+//        if (observable instanceof AndroidCamera) {
+//            if (data instanceof Bitmap)
+//                model.setImage((Bitmap) data);
+//            if (data instanceof Camera.Face[])
+//                model.setFaces(((Camera.Face[]) data).length);
+//        }
         // Location update
-        else if (observable instanceof AndroidLocation) {
+        //else
+       if (observable instanceof AndroidLocation) {
             if (data instanceof Location)
                 model.setLocation((Location) data);
         }
