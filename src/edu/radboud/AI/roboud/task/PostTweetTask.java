@@ -92,4 +92,9 @@ public class PostTweetTask extends AbstractTask {
     public void releaseActions() {
 
     }
+
+    @Override
+    protected Object processInformation() {
+        return null;
+    }
 }

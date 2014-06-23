@@ -31,8 +31,13 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
         super(controller);
     }
 
+
     @Override
-    public void doActions() {
+    public void doActions(Object information) {
+        if (information != null && information instanceof List){
+            options = (List<String>) information;
+        }
+
         if (options == null){
             throw new NullPointerException("Options not properly initialized");
         }
@@ -41,6 +46,11 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
         optionsArray = options.toArray(optionsArray);
         i.putExtra(DATA_NAME, optionsArray);
         controller.startNewActivityForResult(i, REQUEST_CODE, this);
+    }
+
+    @Override
+    public Object getInformation() {
+        return resultString;
     }
 
     @Override

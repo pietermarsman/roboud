@@ -1,5 +1,6 @@
 package edu.radboud.ai.roboud.behaviour;
 
+import java.util.HashMap;
 import java.util.Observable;
 
 /**
@@ -7,6 +8,8 @@ import java.util.Observable;
  */
 public abstract class BehaviorBlock extends Observable {
 
-    public abstract void doActions();
+    public abstract void doActions(Object information);
+
+    public abstract Object getInformation();
 
 }

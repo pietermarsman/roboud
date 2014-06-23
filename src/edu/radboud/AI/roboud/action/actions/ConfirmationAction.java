@@ -41,13 +41,21 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
     }
 
     @Override
-    public void doActions() {
+    public void doActions(Object information) {
+        if (information != null && information instanceof String){
+            question = (String) information;
+        }
         if (question == null){
             throw new NullPointerException("Question cannot be null");
         }
         Intent i = new Intent(controller, ConfirmationActionActivity.class);
         i.putExtra(DATA_NAME, question);
         controller.startNewActivityForResult(i, REQUEST_CODE, this);
+    }
+
+    @Override
+    public Object getInformation() {
+        return result;
     }
 
     public boolean getResult() {

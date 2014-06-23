@@ -17,4 +17,9 @@ public class MakeNewAppointmentTask extends AbstractTask {
     public void releaseActions() {
         //TODO
     }
+
+    @Override
+    protected Object processInformation() {
+        return null;
+    }
 }

@@ -21,4 +21,9 @@ public class LookForFacesTask extends AbstractTask {
     public void releaseActions() {
 
     }
+
+    @Override
+    protected Object processInformation() {
+        return null;
+    }
 }

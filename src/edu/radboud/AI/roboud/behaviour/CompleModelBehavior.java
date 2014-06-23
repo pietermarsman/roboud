@@ -24,4 +24,9 @@ public class CompleModelBehavior extends AbstractBehavior {
     public void releaseActions() {
         //TODO
     }
+
+    @Override
+    protected Object processInformation() {
+        return null;
+    }
 }

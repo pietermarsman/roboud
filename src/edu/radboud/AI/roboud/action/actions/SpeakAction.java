@@ -32,12 +32,25 @@ public class SpeakAction extends AbstractAction implements Observer {
     }
 
     @Override
-    public void doActions(){
+    public void doActions(Object information){
+        if (information != null){
+            if (information instanceof String){
+                text = (String) information;
+            }
+            else if (information instanceof String[]){
+                text = SpeechRepertoire.randomChoice((String[]) information);
+            }
+        }
         if(text == null){
             throw new NullPointerException("text cannot be null");
         }
         Log.i(TAG, "Going to speak: " + text);
         controller.speakText(this, text);
+    }
+
+    @Override
+    public Object getInformation() {
+        return null;
     }
 
     public String getText() {

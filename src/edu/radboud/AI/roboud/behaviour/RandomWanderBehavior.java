@@ -36,4 +36,9 @@ public class RandomWanderBehavior extends AbstractBehavior {
     public void releaseActions() {
         MotorActionPool.getInstance(controller).release(motorAction);
     }
+
+    @Override
+    protected Object processInformation() {
+        return null;
+    }
 }

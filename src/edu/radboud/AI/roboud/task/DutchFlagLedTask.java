@@ -38,4 +38,9 @@ public class DutchFlagLedTask extends AbstractTask {
         LedActionPool.getInstance(controller).release(white);
         LedActionPool.getInstance(controller).release(blue);
     }
+
+    @Override
+    protected Object processInformation() {
+        return null;
+    }
 }

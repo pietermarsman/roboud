@@ -2,7 +2,6 @@ package edu.radboud.ai.roboud.action.actions;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -21,11 +20,16 @@ public class ReadTextAction extends AbstractAction implements Observer {
     }
 
     @Override
-    public void doActions() {
+    public void doActions(Object information) {
         Log.w(TAG, "using a not implemented function");
         results.add("This is not implemented yet");
         setChanged();
         notifyObservers(results);
+    }
+
+    @Override
+    public Object getInformation() {
+        return results;
     }
 
     @Override

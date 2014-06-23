@@ -39,6 +39,11 @@ public class TestBehavior extends AbstractBehavior {
         MotorActionPool.getInstance(controller).release(backward);
         SpeakActionPool.getInstance(controller).release(speak);
     }
+
+    @Override
+    protected Object processInformation() {
+        return null;
+    }
 }
 // Tested and working:
 // LEDAction

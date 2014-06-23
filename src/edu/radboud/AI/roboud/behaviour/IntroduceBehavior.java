@@ -38,4 +38,9 @@ public class IntroduceBehavior extends AbstractBehavior {
         SpeakActionPool.getInstance(controller).release(knowEnough);
         SpeakActionPool.getInstance(controller).release(end);
     }
+
+    @Override
+    protected Object processInformation() {
+        return null;
+    }
 }
