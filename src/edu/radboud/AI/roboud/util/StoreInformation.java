@@ -1,4 +1,4 @@
-package edu.radboud.ai.roboud.action;
+package edu.radboud.ai.roboud.util;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
