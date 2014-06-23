@@ -3,7 +3,6 @@ package edu.radboud.ai.roboud.task;
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.AbstractAction;
-import edu.radboud.ai.roboud.action.pools.ActionPool;
 import edu.radboud.ai.roboud.behaviour.BehaviorBlock;
 
 import java.util.LinkedList;
@@ -21,10 +20,10 @@ public abstract class AbstractTask extends BehaviorBlock implements Observer {
     private int executionIndex;
     protected RoboudController controller;
 
-
     public AbstractTask(RoboudController controller) {
         this.controller = controller;
         actions = new LinkedList<AbstractAction>();
+
     }
 
     /**

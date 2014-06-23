@@ -46,7 +46,9 @@ public class AndroidMicrophone extends Observable implements ActivityResultProce
     @Override
     public void processData(int requestCode, int resultCode, Intent data) {
         controller.startListeningToRoboMe();
+        Log.i(TAG, "processData. Result code: " + resultCode);
         if (resultCode == Activity.RESULT_OK) {
+            Log.i(TAG, "processData. Result is OK.");
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             setChanged();
             notifyObservers(results);

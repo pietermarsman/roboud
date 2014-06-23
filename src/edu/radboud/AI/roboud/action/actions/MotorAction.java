@@ -1,6 +1,7 @@
 package edu.radboud.ai.roboud.action.actions;
 
 
+import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.util.RobotDirection;
 import edu.radboud.ai.roboud.action.util.RobotSpeed;
@@ -12,6 +13,7 @@ import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
  */
 public class MotorAction extends AbstractAction {
 
+    private static final String TAG = "MotorAction";
     private RobotDirection dir;
     private RobotSpeed speed;
 
@@ -109,6 +111,7 @@ public class MotorAction extends AbstractAction {
                 }
                 break;
         }
+        Log.v(TAG, "after executing motor commands");
         setChanged();
         notifyObservers();
     }

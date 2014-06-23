@@ -16,6 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
+import edu.radboud.ai.roboud.action.StoreInformation;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
@@ -25,6 +26,8 @@ import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+
+//import edu.radboud.ai.roboud.senses.AndroidCamera;
 
 /**
  * Created by Pieter Marsman on 13-5-14.
@@ -141,7 +144,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Senses
         loc.addObserver(this);
-        cam.addObserver(this);
+//        cam.addObserver(this);
         mic.addObserver(this);
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
@@ -167,7 +170,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Senses
         showText("onPause()");
         loc.deleteObservers();
-        cam.deleteObservers();
+//        cam.deleteObservers();
         mic.deleteObservers();
         mSensorManager.unregisterListener(this);
 
@@ -184,6 +187,14 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onStop() {
         super.onStop();
+
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("boolean1", true);
+        bundle.putString("StringName1", "InhoudString1.1");
+
+        StoreInformation storeInformation = new StoreInformation(bundle);
+//        blocks.add(storeInformation);
+
         // UI
         // Nothing to do
 
@@ -226,7 +237,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     //  === START RoboMe part ===
-
     public void startListeningToRoboMe() {
         Log.d(TAG, "Start listening to RoboMe");
         if (robome != null) {
@@ -254,6 +264,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void sendCommand(RoboMeCommands.RobotCommand outgoingCommand) {
+        Log.v(TAG, "before sending command");
         model.sendCommand(outgoingCommand);
         robome.sendCommand(outgoingCommand);
         showText(outgoingCommand.toString());
@@ -285,6 +296,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void volumeChanged(float v) {
+        Log.v(TAG, "Volume is " + Float.toString(v) + " and i will set it to 12");
+        v = 12;
         model.setVolume(v);
         showText("Volume changed to " + v);
     }

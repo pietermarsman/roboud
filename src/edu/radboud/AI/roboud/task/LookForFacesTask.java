@@ -7,9 +7,9 @@ import edu.radboud.ai.roboud.RoboudController;
  */
 public class LookForFacesTask extends AbstractTask {
 
-
     public LookForFacesTask(RoboudController controller, boolean enabled) {
         super(controller);
+
         if (enabled) {
             // TODO
         }

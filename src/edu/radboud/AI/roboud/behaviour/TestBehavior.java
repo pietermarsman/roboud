@@ -1,8 +1,11 @@
 package edu.radboud.ai.roboud.behaviour;
 
+import android.os.Bundle;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.SpeakAction;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
+import edu.radboud.ai.roboud.action.StoreInformation;
+
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.Observer;
@@ -27,3 +30,7 @@ public class TestBehavior extends AbstractBehavior {
         //Only necessary when actions are being used.
     }
 }
+// Tested and working:
+// LEDAction
+// RandomWander
+// ShowTextAction
