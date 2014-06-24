@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
@@ -43,8 +42,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     private RoboudModel model;
     private RoboudMind mind;
     private RoboMe robome;
-    private TextView logView;
-    private ScrollView logScrollView;
+    private TextView textView;
     private SurfaceView surfaceView;
     private Button button;
     private SensorManager mSensorManager;
@@ -58,8 +56,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         public void handleMessage(Message msg) {
             // display the received event
             if (msg.what == 0x99)
-                logView.setText(logView.getText() + "\n" + (String) msg.obj);
-            logScrollView.smoothScrollTo(0, logView.getHeight());
+                textView.setText((String) msg.obj);
         }
     };
 
@@ -79,18 +76,17 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate(" + savedInstanceState + ")");
 
+        // UI
+        setContentView(R.layout.face);
+        textView = (TextView) findViewById(R.id.textView);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+        button = (Button) findViewById(R.id.button);
+
         // RoboMe
         robome = new RoboMe(this.getApplicationContext(), this);
 
         // Variables
         returnActivityDataToMap = new HashMap<Integer, ActivityResultProcessor>();
-
-        // UI
-        setContentView(R.layout.main);
-        logView = (TextView) findViewById(R.id.output);
-        logScrollView = (ScrollView) findViewById(R.id.outputScrollView);
-        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
-        button = (Button) findViewById(R.id.button);
 
         // Senses
         cam = new AndroidCamera(this, surfaceView, 1000);
@@ -99,10 +95,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         speechEngine = new SpeechEngine(this);
 
         // Classes
-        Scenario scenario = new TestScenario(this, cam.isAvailable(), loc.isAvailable(), mic.isAvailable()
-                && speechEngine.isAvailable());
         model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
-                robome.getVolume(), robome.getLibVersion(), scenario);
+                robome.getVolume(), robome.getLibVersion());
         mind = new RoboudMind(this);
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -143,6 +137,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Classes
         model.addObserver(this);
+        Scenario scenario = new TestScenario(getApplicationContext(), cam.isAvailable(), loc.isAvailable(), mic.isAvailable()
+                && speechEngine.isAvailable());
+        model.setScenario(scenario);
 
         // Variables
         // Nothing to do
@@ -277,14 +274,14 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void commandReceived(RoboMeCommands.IncomingRobotCommand incomingRobotCommand) {
         model.receiveCommand(incomingRobotCommand);
-        showText(incomingRobotCommand.toString());
+        Log.d(TAG, incomingRobotCommand.toString());
     }
 
     public void sendCommand(RoboMeCommands.RobotCommand outgoingCommand) {
         Log.v(TAG, "before sending command");
         model.sendCommand(outgoingCommand);
         robome.sendCommand(outgoingCommand);
-        showText(outgoingCommand.toString());
+        Log.d(TAG, outgoingCommand.toString());
     }
 
     @Override
@@ -319,7 +316,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         Log.v(TAG, "Volume is " + Float.toString(v) + " and i will set it to 12");
         v = 12;
         model.setVolume(v);
-        showText("Volume changed to " + v);
+        Log.d(TAG, "Volume changed to " + v);
     }
 
     public boolean isSendingCommand() {
@@ -353,7 +350,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
                 model.setLight(event.values[0]);
                 break;
             default:
-                showText("Sensor type not recognized");
+                Log.d(TAG, "Sensor type not recognized");
         }
     }
 
@@ -383,7 +380,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
         // Unknown update
         else
-            showText("Unknown class observed");
+            Log.d(TAG, "Unknown class observed");
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.util.Log;
 import edu.radboud.ai.roboud.behaviour.Behavior;
 import edu.radboud.ai.roboud.behaviour.BehaviorFactory;
 import edu.radboud.ai.roboud.scenario.Scenario;
-import edu.radboud.ai.roboud.scenario.TestScenario;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.Observable;
@@ -39,7 +38,7 @@ public class RoboudMind implements Observer, Runnable {
 
     private Scenario whatIsCurrentScenario() {
         if (currentScenario == null)
-            return new TestScenario();
+            return controller.getModel().getScenario();
         else //check whether scenario has changed is not done at the moment
             return currentScenario;
     }

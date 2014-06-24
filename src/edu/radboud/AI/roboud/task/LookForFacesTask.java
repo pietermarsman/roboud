@@ -7,7 +7,7 @@ import edu.radboud.ai.roboud.RoboudController;
  */
 public class LookForFacesTask extends AbstractTask {
 
-    public LookForFacesTask(RoboudController controller) {
+    public LookForFacesTask(RoboudController controller, boolean canDrive) {
         super(controller);
 
         controller.getModel().getFaces();

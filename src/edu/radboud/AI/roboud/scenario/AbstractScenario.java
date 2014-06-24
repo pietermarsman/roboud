@@ -3,12 +3,14 @@ package edu.radboud.ai.roboud.scenario;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 /**
  * Created by Pieter Marsman on 24-5-2014.
  */
 public abstract class AbstractScenario implements Scenario {
 
+    private static final String TAG = "AbstractScenario";
     // Mobile phone
     protected boolean canTalk, canDrive, canListen, canSee, canLocate, canGoOnline;
     // Surrounding
@@ -16,12 +18,12 @@ public abstract class AbstractScenario implements Scenario {
     protected Context context;
 
     public AbstractScenario(Context context) {
+        this.context = context;
         canTalk = true;
         canListen = true;
         canDrive = true;
         interactingWithIndividual = true;
         canGoOnline = isOnline();
-        this.context = context;
     }
 
     public AbstractScenario(Context context, boolean canSee, boolean canLocate, boolean canListen) {
@@ -52,8 +54,8 @@ public abstract class AbstractScenario implements Scenario {
     }
 
     public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        Log.i(TAG, String.valueOf(context == null));
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {
             return true;

@@ -111,11 +111,7 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
     public boolean takePicture() {
         boolean canTakePicture = ready && available;
         if (canTakePicture) {
-            //get camera parameters
-            parameters = mCamera.getParameters();
 
-            //set camera parameters
-            mCamera.setParameters(parameters);
             mCamera.startPreview();
             mCamera.startFaceDetection();
             try {

@@ -30,13 +30,13 @@ public class RoboudModel extends Observable {
     private Scenario scenario;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
-                       String _libVersion, Scenario scenario) {
+                       String _libVersion) {
         this.robomeConnected = robomeConnected;
         this.robomeHeadsetPluggedIn = robomeHeadsetPluggedIn;
         this.listening = listening;
         this.volume = volume;
         this.libVersion = _libVersion;
-        this.scenario = scenario;
+        this.scenario = null;
         image = null;
         faces = 0;
         rotation = new float[3];
