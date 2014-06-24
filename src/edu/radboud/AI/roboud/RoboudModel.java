@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import com.wowwee.robome.RoboMeCommands.IncomingRobotCommand;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
+import edu.radboud.ai.roboud.action.util.FaceExpression;
 import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
@@ -28,6 +29,7 @@ public class RoboudModel extends Observable {
     private Location loc;
     private long lastModification;
     private Scenario scenario;
+    private FaceExpression faceExpression;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
                        String _libVersion) {
@@ -255,5 +257,13 @@ public class RoboudModel extends Observable {
 
     public void setScenario(Scenario scenario) {
         this.scenario = scenario;
+    }
+
+    public void setFaceExpression(FaceExpression faceExpression) {
+        this.faceExpression = faceExpression;
+    }
+
+    public FaceExpression getFaceExpression() {
+        return faceExpression;
     }
 }

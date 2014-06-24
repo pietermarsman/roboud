@@ -33,7 +33,7 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
 
     @Override
     public void doActions() {
-        if (options == null){
+        if (options == null) {
             throw new NullPointerException("Options not properly initialized");
         }
         Intent i = new Intent(controller, ChoiceActionActivity.class);

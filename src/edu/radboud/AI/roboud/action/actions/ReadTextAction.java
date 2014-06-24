@@ -2,7 +2,6 @@ package edu.radboud.ai.roboud.action.actions;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 
 import java.util.ArrayList;
 import java.util.Observable;

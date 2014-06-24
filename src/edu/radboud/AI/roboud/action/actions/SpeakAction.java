@@ -32,8 +32,8 @@ public class SpeakAction extends AbstractAction implements Observer {
     }
 
     @Override
-    public void doActions(){
-        if(text == null){
+    public void doActions() {
+        if (text == null) {
             throw new NullPointerException("text cannot be null");
         }
         Log.i(TAG, "Going to speak: " + text);
@@ -44,6 +44,10 @@ public class SpeakAction extends AbstractAction implements Observer {
         return text;
     }
 
+    public void setText(String[] texts) {
+        this.text = SpeechRepertoire.randomChoice(texts);
+    }
+
     @Override
     public void update(Observable observable, Object data) {
         // Done with speaking
@@ -51,11 +55,7 @@ public class SpeakAction extends AbstractAction implements Observer {
         notifyObservers();
     }
 
-    public void setText(String text){
+    public void setText(String text) {
         this.text = text;
-    }
-
-    public void setText(String[] texts){
-        this.text = SpeechRepertoire.randomChoice(texts);
     }
 }

@@ -24,7 +24,7 @@ public class SleepAction extends AbstractAction {
 
     @Override
     public void doActions() {
-        if (time == 0){
+        if (time == 0) {
             throw new NullPointerException("Time cannot be 0");
         }
         Log.d(TAG, "Going to sleep");
@@ -38,7 +38,7 @@ public class SleepAction extends AbstractAction {
         notifyObservers();
     }
 
-    public void setTime(long time){
+    public void setTime(long time) {
         this.time = time;
     }
 }

@@ -29,7 +29,7 @@ public class LedAction extends AbstractAction {
         Log.d(TAG, "doActions() is called");
         controller.sendCommand(kRobot_ResetMood);
         controller.sendCommand(kRobot_HeartBeatOff);
-        if(color != null) {
+        if (color != null) {
             switch (color) {
                 case BLUE:
                     controller.sendCommand(kRobot_RGBHeartBlue);

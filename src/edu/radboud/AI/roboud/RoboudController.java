@@ -3,6 +3,7 @@ package edu.radboud.ai.roboud;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.hardware.*;
 import android.location.Location;
 import android.os.Bundle;
@@ -12,9 +13,11 @@ import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
+import edu.radboud.ai.roboud.action.util.FaceExpression;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.scenario.TestScenario;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
@@ -36,19 +39,28 @@ import java.util.Observer;
 public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
 
     public static final String TAG = "RoboudController";
-    private AndroidMicrophone mic;
-    private AndroidCamera cam;
-    private AndroidLocation loc;
+    // Classes
     private RoboudModel model;
     private RoboudMind mind;
+
+    // RoboMe
     private RoboMe robome;
+
+    // UI
     private TextView textView;
     private SurfaceView surfaceView;
     private Button button;
+    private ImageView imageView;
+
+    // Senses
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
     private SpeechEngine speechEngine;
+    private AndroidMicrophone mic;
+    private AndroidCamera cam;
+    private AndroidLocation loc;
 
+    // Roboud
     private HashMap<Integer, ActivityResultProcessor> returnActivityDataToMap;
 
     private Handler handler = new Handler() {
@@ -59,11 +71,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
                 textView.setText((String) msg.obj);
         }
     };
-
-
-    public RoboudModel getModel() {
-        return model;
-    }
 
     //  === START Android Activity part ===
 
@@ -81,6 +88,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         textView = (TextView) findViewById(R.id.textView);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         button = (Button) findViewById(R.id.button);
+        imageView = (ImageView) findViewById(R.id.imageView);
 
         // RoboMe
         robome = new RoboMe(this.getApplicationContext(), this);
@@ -402,5 +410,35 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void speakText(Observer observer, String text) {
         speechEngine.addObserver(observer);
         speechEngine.speak(text);
+    }
+
+    public void setFaceExpression(FaceExpression faceExpression) {
+        Drawable drawable;
+        switch (faceExpression) {
+            case SAD:
+                drawable = getResources().getDrawable(R.drawable.face_sad);
+                break;
+            case SMILE_BIG:
+                drawable = getResources().getDrawable(R.drawable.face_smile_big);
+                break;
+            case SMILE_NORMAL:
+                drawable = getResources().getDrawable(R.drawable.face_smile_normal);
+                break;
+            case SMILE_SMALL:
+                drawable = getResources().getDrawable(R.drawable.face_smile_small);
+                break;
+            case SURPRISED:
+                drawable = getResources().getDrawable(R.drawable.face_supprised);
+                break;
+            default:
+                drawable = getResources().getDrawable(R.drawable.face_smile_normal);
+        }
+        imageView.setImageDrawable(drawable);
+        showText(faceExpression.toString());
+        model.setFaceExpression(faceExpression);
+    }
+
+    public RoboudModel getModel() {
+        return model;
     }
 }

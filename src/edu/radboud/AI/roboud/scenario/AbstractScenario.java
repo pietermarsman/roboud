@@ -3,7 +3,6 @@ package edu.radboud.ai.roboud.scenario;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 /**
  * Created by Pieter Marsman on 24-5-2014.
@@ -54,7 +53,6 @@ public abstract class AbstractScenario implements Scenario {
     }
 
     public boolean isOnline() {
-        Log.i(TAG, String.valueOf(context == null));
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {

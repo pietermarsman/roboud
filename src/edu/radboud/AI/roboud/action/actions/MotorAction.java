@@ -30,7 +30,7 @@ public class MotorAction extends AbstractAction {
 
     @Override
     public void doActions() {
-        if (dir == null || speed == null){
+        if (dir == null || speed == null) {
             throw new NullPointerException("Direction and speed cannot be null");
         }
         switch (dir) {
@@ -116,7 +116,7 @@ public class MotorAction extends AbstractAction {
         notifyObservers();
     }
 
-    public void setDirAndSpeed(RobotDirection dir, RobotSpeed speed){
+    public void setDirAndSpeed(RobotDirection dir, RobotSpeed speed) {
         this.dir = dir;
         this.speed = speed;
     }
