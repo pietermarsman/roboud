@@ -16,6 +16,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
+import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.scenario.TestScenario;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
@@ -90,16 +92,18 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         button = (Button) findViewById(R.id.button);
 
-        // Classes
-        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
-                robome.getVolume(), robome.getLibVersion());
-        mind = new RoboudMind(this);
-
         // Senses
         cam = new AndroidCamera(this, surfaceView, 1000);
         loc = new AndroidLocation(this);
         mic = new AndroidMicrophone(this);
         speechEngine = new SpeechEngine(this);
+
+        // Classes
+        Scenario scenario = new TestScenario(this, cam.isAvailable(), loc.isAvailable(), mic.isAvailable()
+                && speechEngine.isAvailable());
+        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
+                robome.getVolume(), robome.getLibVersion(), scenario);
+        mind = new RoboudMind(this);
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensors = new HashMap<Integer, Sensor>();
@@ -110,8 +114,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         sensors.put(Sensor.TYPE_MAGNETIC_FIELD, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
         sensors.put(Sensor.TYPE_PROXIMITY, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
         sensors.put(Sensor.TYPE_LIGHT, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
-
-
     }
 
     @Override
@@ -119,20 +121,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         super.onStart();
         Log.i(TAG, "onStart()");
         // The activity is about to become visible.
-        checkRequirements();
-    }
-
-    private void checkRequirements() {
-        if (!mic.isAvailable())
-            Log.w(TAG, "Microphone not available");
-        if (!cam.isAvailable())
-            Log.w(TAG, "Camera not available");
-        if (!loc.isAvailable())
-            Log.w(TAG, "Location not available");
-        if (!speechEngine.isAvailable())
-            Log.w(TAG, "Speech engine nog available");
-        // TODO add internet
-        // TODO construct scenario with this information
     }
 
     @Override
@@ -145,7 +133,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Senses
         loc.addObserver(this);
-//        cam.addObserver(this);
+        cam.addObserver(this);
         mic.addObserver(this);
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);

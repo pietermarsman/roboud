@@ -57,7 +57,7 @@ public class TaskFactory {
     }
 
     public PostTweetTask getPostTweetTask(String text) {
-        if (scenario.isHasInternet()) {
+        if (scenario.isCanGoOnline()) {
             try {
                 return new PostTweetTask(controller, text);
             } catch (TwitterException e) {
