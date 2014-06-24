@@ -2,7 +2,6 @@ package edu.radboud.ai.roboud.task;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.actions.AbstractAction;
 
 import java.util.Observable;
 

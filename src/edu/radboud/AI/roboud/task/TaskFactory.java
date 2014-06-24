@@ -31,8 +31,7 @@ public class TaskFactory {
     public AskQuestionTask getAskQuestionTask(String question) {
         if (scenario.isCanTalk() && scenario.isCanListen()) {
             return new OutloudAskQuestionTask(controller, question);
-        }
-        else{
+        } else {
             return new ScreenAskQuestionTask(controller, question);
         }
     }
@@ -40,8 +39,7 @@ public class TaskFactory {
     public AskQuestionTask getAskQuestionTask(String[] questions) {
         if (scenario.isCanTalk() && scenario.isCanListen()) {
             return new OutloudAskQuestionTask(controller, questions);
-        }
-        else{
+        } else {
             return new ScreenAskQuestionTask(controller, questions);
         }
     }

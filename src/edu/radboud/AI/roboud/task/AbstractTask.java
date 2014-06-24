@@ -17,8 +17,8 @@ public abstract class AbstractTask extends BehaviorBlock implements Observer {
 
     public static final String TAG = "AbstractTask";
     protected List<AbstractAction> actions;
-    private int executionIndex;
     protected RoboudController controller;
+    private int executionIndex;
 
     public AbstractTask(RoboudController controller) {
         this.controller = controller;
