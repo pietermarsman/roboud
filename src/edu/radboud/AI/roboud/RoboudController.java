@@ -1,10 +1,12 @@
 package edu.radboud.ai.roboud;
 
 import android.app.Activity;
-import android.content.res.AssetManager;
+import android.content.Intent;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,24 +18,25 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
+import com.wowwee.robome.RoboMeCommands;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.senses.SpeechEngine;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
+import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
 //import edu.radboud.ai.roboud.senses.AndroidCamera;
 
 /**
  * Created by Pieter Marsman on 13-5-14.
  */
-public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener {
 
+public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
     public static final String TAG = "RoboudController";
     private AndroidMicrophone mic;
     //private AndroidCamera cam;
@@ -48,10 +51,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
     private SpeechEngine speechEngine;
-    private String fileName = "hello_file";
-    private String fileLocation = "assets/storeinfo.txt";
+    //private String fileName = "hello_file";
+    //private String fileLocation = "D:/Human Robot Interaction/Project/roboud/assets"; //"assets//storeinfo.txt";
     private EditText firstField;
     private EditText secondField;
+    String fileDir = "";
+    String fileName = "hello_file.txt";
+    String FILENAME = "";
 
     private HashMap<Integer, ActivityResultProcessor> returnActivityDataToMap;
 
@@ -77,61 +83,19 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(TAG,"creating readfile");
-//
-//        BufferedReader buf = null;
-//        try {
-//            buf = new BufferedReader(new FileReader(fileLocation));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (buf != null) {
-//            try {
-//                int byteFromFile = buf.read();
-//                Log.v(TAG,"Read: " + byteFromFile);
-//                while(byteFromFile != -1){
-//                    byteFromFile = buf.read();
-//                    Log.v(TAG, "read: " + byteFromFile);
-//                }
-//                buf.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        // ----
+        Log.v(TAG, "onCreate");
 
+        if(fileDir == "") {
+            fileDir = getFilesDir().toString();
+            FILENAME = getApplicationContext().getFilesDir().getPath().toString() + fileName; //fileDir + "/" + fileName;
+        }
 
-
-            AssetManager assetManager = getAssets();
-            String[] files = null;
-            try {
-                files = assetManager.list("image");
-            } catch (IOException e) {
-                Log.e("tag", e.getMessage());
-            }
-
-            Log.v(TAG,Integer.toString(files.length) + " file. File name is "
-                    + files[0]);
-            InputStream inputStream = null;
-            try {
-                inputStream = assetManager.open("readme.txt");
-            } catch (IOException e) {
-                Log.e("no input file found", e.getMessage());
-            }
-
-            String s = readTextFile(inputStream);
-            Log.v(TAG,"Read from file: " + s);
-
-        // ----
-//        FileInputStream fos = null;
-//        try {
-//            fos = openFileInput(FILENAME);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-
-
-
+        try {
+            Log.v(TAG,readFromFile());
+        } catch (Exception e) {
+            Log.v(TAG,"no saved information on phone");
+        }
+        Log.v(TAG,"Done reading file");
 
         showText("onCreate(" + savedInstanceState + ")");
         // RoboMe
@@ -163,34 +127,18 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         sensors.put(Sensor.TYPE_PROXIMITY, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
         sensors.put(Sensor.TYPE_LIGHT, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
 
-
         // Classes
         model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
                 robome.getVolume(), robome.getLibVersion());
         mind = new RoboudMind(this);
-    }
 
+    }
     @Override
     protected void onStart() {
-        super.onStart();
-        // The activity is about to become visible.
-        showText("onStart()");
-        checkRequirements();
-    }
-
-private String readTextFile(InputStream inputStream) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte buf[] = new byte[1024];
-        int len;
-        try {
-        while ((len = inputStream.read(buf)) != -1) {
-        outputStream.write(buf, 0, len);
-        }
-        outputStream.close();
-        inputStream.close();
-        } catch (IOException e) {
-        }
-        return outputStream.toString();
+            super.onStart();
+            // The activity is about to become visible.
+            showText("onStart()");
+            checkRequirements();
         }
 
     private void checkRequirements() {
@@ -212,8 +160,13 @@ private String readTextFile(InputStream inputStream) {
         // The activity has become visible (it is now "resumed").
         // UI
         showText("onResume()");
+        Log.v(TAG,"onResume");
+        try {
+            readFromFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         button.setOnClickListener(this);
-
         // Senses
         loc.addObserver(this);
 //        cam.addObserver(this);
@@ -232,9 +185,75 @@ private String readTextFile(InputStream inputStream) {
         // Nothing to do
     }
 
+    protected synchronized void writeToFile(String toWrite) throws IOException {
+        Log.v(TAG,"write to file");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(FILENAME));
+        Random r = new Random();
+        int intToAdd = r.nextInt();
+        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
+        bw.write(toWrite + " random int: " + intToAdd);
+        bw.close();
+    }
+
+    protected synchronized String readFromFile() throws Exception {
+        Log.v(TAG,"read from file");
+        File henk1;
+        henk1 = getBaseContext().getFileStreamPath(FILENAME);   // This line produces an error, did not find a solution.
+        if(henk1.exists())
+            Log.v(TAG,"file exists");
+        else{
+            Log.v(TAG,"file does not exist");
+               return "-1";
+        }
+
+        FileReader henk;
+        try {
+            henk = new FileReader(FILENAME);
+        } catch (FileNotFoundException e) {
+            Log.v(TAG,"file not found");
+            return "-1";
+        }
+
+        BufferedReader br = new BufferedReader(henk);
+
+        int i;
+        String stringFromFile = "";
+        do {
+            i = br.read();
+            if(i != -1)
+                stringFromFile += (char) i;
+            Log.v(TAG,"Just read: " + (char) i);
+        } while (i != -1);
+        Log.v(TAG,"Just read this " + stringFromFile);
+        br.close();
+        return stringFromFile;
+    }
+
     @Override
     protected void onPause() {
-        Log.v(TAG, "Pausing the app now");
+        Log.v(TAG, "onPause");
+        try {
+            writeToFile("I am now paused, saving some text to file");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // UI
+        // Nothing to do
+
+        // Senses
+        // Nothing to do
+
+        // RoboMe
+        // Nothing to do
+
+        // Classes
+        showText("onStop()");
+        model.deleteObservers();
+        mind.stopRunning();
+
+
+
 
         // Another activity is taking focus (this activity is about to be "paused").
         // UI
@@ -260,35 +279,36 @@ private String readTextFile(InputStream inputStream) {
 
     @Override
     public void onStop() {
-        Log.v(TAG,"Stopping the app now");
-        String string = "hello world!";
-        Random r = new Random();
-        int intToAdd = r.nextInt();
-        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
+        Log.v(TAG,"onStop");
 
-//        FileOutputStream fos = null;
+//        String string = "hello world!";
+//        Random r = new Random();
+//        int intToAdd = r.nextInt();
+//        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
+//
+////        FileOutputStream fos = null;
+////        try {
+////            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+////        } catch (FileNotFoundException e) {
+////            e.printStackTrace();
+////        }
+//        File file = new File(fileLocation, "storeinfo.txt");
+//        BufferedWriter buf = null;
 //        try {
-//            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-//        } catch (FileNotFoundException e) {
+//            buf = new BufferedWriter(new FileWriter(file));
+//        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        BufferedWriter buf = null;
-        try {
-            buf = new BufferedWriter(new FileWriter(fileLocation));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (buf != null) {
-            try {
-                buf.write(intToAdd);
-                buf.write(string);
-                buf.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//
+//        if (buf != null) {
+//            try {
+//                buf.write(intToAdd);
+//                buf.write(string);
+//                buf.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
 
 //        Bundle bundle = new Bundle();
@@ -323,39 +343,6 @@ private String readTextFile(InputStream inputStream) {
     @Override
     protected void onDestroy() {
         Log.v(TAG,"Destroying the app now");
-
-
-        String string = "hello world!";
-        Random r = new Random();
-        int intToAdd = r.nextInt();
-        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
-
-//        FileOutputStream fos = null;
-//        try {
-//            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        BufferedWriter buf = null;
-        try {
-            buf = new BufferedWriter(new FileWriter("assets/storeinfo.java"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (buf != null) {
-            try {
-                buf.write(intToAdd);
-                buf.write(string);
-                buf.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-
         super.onDestroy();
         // The activity is about to be destroyed.
     }
