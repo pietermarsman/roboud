@@ -14,12 +14,11 @@ public class StoreInformation extends Activity {
     boolean boolean1;
 
     public StoreInformation(Bundle state) {
-        Log.v(TAG,"In constructor");
+        Log.v(TAG, "In constructor");
     }
 
     @Override
-    protected void onCreate(Bundle state)
-    {
+    protected void onCreate(Bundle state) {
         Log.v(TAG, "Oncreate now");
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0); // (0 = MODE_PRIVATE)
         boolean boolean1 = settings.getBoolean("boolean1", false);

@@ -1,6 +1,5 @@
 package edu.radboud.ai.roboud.behaviour;
 
-import java.util.HashMap;
 import java.util.Observable;
 
 /**

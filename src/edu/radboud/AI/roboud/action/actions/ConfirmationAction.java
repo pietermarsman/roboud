@@ -42,10 +42,10 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
 
     @Override
     public void doActions(Object information) {
-        if (information != null && information instanceof String){
+        if (information != null && information instanceof String) {
             question = (String) information;
         }
-        if (question == null){
+        if (question == null) {
             throw new NullPointerException("Question cannot be null");
         }
         Intent i = new Intent(controller, ConfirmationActionActivity.class);

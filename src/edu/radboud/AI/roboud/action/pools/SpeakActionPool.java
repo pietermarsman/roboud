@@ -11,7 +11,7 @@ public class SpeakActionPool extends ActionPool<SpeakAction> {
 
     private static SpeakActionPool instance = null;
 
-    private SpeakActionPool(RoboudController controller){
+    private SpeakActionPool(RoboudController controller) {
         super(controller);
     }
 
@@ -21,13 +21,13 @@ public class SpeakActionPool extends ActionPool<SpeakAction> {
         return instance;
     }
 
-    public SpeakAction acquire(String text){
+    public SpeakAction acquire(String text) {
         SpeakAction speakAction = acquire();
         speakAction.setText(text);
         return speakAction;
     }
 
-    public SpeakAction acquire(String[] texts){
+    public SpeakAction acquire(String[] texts) {
         SpeakAction speakAction = acquire();
         speakAction.setText(texts);
         return speakAction;

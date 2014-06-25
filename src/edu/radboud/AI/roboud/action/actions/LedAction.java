@@ -26,7 +26,7 @@ public class LedAction extends AbstractAction {
 
     @Override
     public void doActions(Object information) {
-        if (information != null && information instanceof LedColor){
+        if (information != null && information instanceof LedColor) {
             color = (LedColor) information;
         }
         Log.d(TAG, "doActions() is called");

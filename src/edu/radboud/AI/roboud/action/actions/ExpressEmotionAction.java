@@ -11,15 +11,23 @@ public class ExpressEmotionAction extends AbstractAction {
     private static final String TAG = "ExpressEmotionAction";
     FaceExpression expression;
 
-    public ExpressEmotionAction(RoboudController controller, FaceExpression expression) {
+    public ExpressEmotionAction(RoboudController controller) {
         super(controller);
-        this.expression = expression;
     }
 
     @Override
-    public void doActions() {
+    public void doActions(Object information) {
         controller.setFaceExpression(expression);
         setChanged();
         notifyObservers();
+    }
+
+    @Override
+    public Object getInformation() {
+        return null;
+    }
+
+    public void setExpression(FaceExpression expression) {
+        this.expression = expression;
     }
 }

@@ -16,7 +16,7 @@ public class DutchGoalBehavior extends AbstractBehavior {
     public final static String TAG = "DutchGoalBehavior";
     private ListenAction listenForGoal;
 
-    public DutchGoalBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer){
+    public DutchGoalBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
         super(controller, taskFactory, observer);
         listenForGoal = ListenActionPool.getInstance(controller).acquire();
         blocks.add(taskFactory.getDutchFlagLedTask());
@@ -32,12 +32,12 @@ public class DutchGoalBehavior extends AbstractBehavior {
     @Override
     protected Object processInformation(BehaviorBlock currentBlock) {
         Log.i(TAG, "currentBlock simple name is " + currentBlock.getClass().getSimpleName());
-        if (currentBlock instanceof ListenAction){
+        if (currentBlock instanceof ListenAction) {
             Object info = results.get(listenForGoal);
-            if (info instanceof String){
+            if (info instanceof String) {
                 String resultString = (String) info;
                 Log.i(TAG, resultString);
-                if (resultString.toLowerCase().contains("goal")){
+                if (resultString.toLowerCase().contains("goal")) {
                     return true;
                 }
             }

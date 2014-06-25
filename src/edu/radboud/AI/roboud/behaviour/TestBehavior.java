@@ -2,6 +2,7 @@ package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.ExpressEmotionAction;
+import edu.radboud.ai.roboud.action.pools.ExpressEmotionActionPool;
 import edu.radboud.ai.roboud.action.util.FaceExpression;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
@@ -13,8 +14,9 @@ import java.util.Observer;
 public class TestBehavior extends AbstractBehavior {
 
     public final static String TAG = "TestBehavior";
-//    private MotorAction forward, backward;
+    //    private MotorAction forward, backward;
 //    private SpeakAction speak;
+    private ExpressEmotionAction expression;
 
     public TestBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
         super(controller, taskFactory, observer);
@@ -25,7 +27,8 @@ public class TestBehavior extends AbstractBehavior {
 //        blocks.add(forward);
 //        blocks.add(speak);
 //        blocks.add(backward);
-        blocks.add(new ExpressEmotionAction(controller, FaceExpression.SAD));
+        expression = ExpressEmotionActionPool.getInstance(controller).acquire(FaceExpression.SAD);
+        blocks.add(expression);
     }
 
     @Override
@@ -33,6 +36,7 @@ public class TestBehavior extends AbstractBehavior {
 //        MotorActionPool.getInstance(controller).release(forward);
 //        MotorActionPool.getInstance(controller).release(backward);
 //        SpeakActionPool.getInstance(controller).release(speak);
+        ExpressEmotionActionPool.getInstance(controller).release(expression);
 
     }
 

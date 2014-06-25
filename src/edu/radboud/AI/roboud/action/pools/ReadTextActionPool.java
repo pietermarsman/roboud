@@ -10,7 +10,7 @@ public class ReadTextActionPool extends ActionPool<ReadTextAction> {
 
     private static ReadTextActionPool instance = null;
 
-    private ReadTextActionPool(RoboudController controller){
+    private ReadTextActionPool(RoboudController controller) {
         super(controller);
     }
 

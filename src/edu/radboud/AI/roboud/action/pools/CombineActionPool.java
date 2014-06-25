@@ -11,7 +11,7 @@ public class CombineActionPool extends ActionPool<CombineAction> {
 
     private static CombineActionPool instance = null;
 
-    private CombineActionPool(RoboudController controller){
+    private CombineActionPool(RoboudController controller) {
         super(controller);
     }
 
@@ -21,7 +21,7 @@ public class CombineActionPool extends ActionPool<CombineAction> {
         return instance;
     }
 
-    public CombineAction acquire(AbstractAction a, AbstractAction b){
+    public CombineAction acquire(AbstractAction a, AbstractAction b) {
         CombineAction combineAction = acquire();
         combineAction.setActions(a, b);
         return combineAction;

@@ -34,7 +34,7 @@ public class BehaviorFactory {
         return new TestBehavior(controller, taskFactory, observer);
     }
 
-    public DutchGoalBehavior getDutchGoalBehavior(Observer observer){
+    public DutchGoalBehavior getDutchGoalBehavior(Observer observer) {
         return new DutchGoalBehavior(controller, taskFactory, observer);
     }
 }

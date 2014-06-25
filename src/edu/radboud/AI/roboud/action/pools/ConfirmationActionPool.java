@@ -11,7 +11,7 @@ public class ConfirmationActionPool extends ActionPool<ConfirmationAction> {
 
     private static ConfirmationActionPool instance = null;
 
-    private ConfirmationActionPool(RoboudController controller){
+    private ConfirmationActionPool(RoboudController controller) {
         super(controller);
     }
 
@@ -21,7 +21,7 @@ public class ConfirmationActionPool extends ActionPool<ConfirmationAction> {
         return instance;
     }
 
-    public ConfirmationAction acquire(String question){
+    public ConfirmationAction acquire(String question) {
         ConfirmationAction confirmationAction = acquire();
         confirmationAction.setQuestion(question);
         return confirmationAction;

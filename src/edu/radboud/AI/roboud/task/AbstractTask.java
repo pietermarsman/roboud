@@ -15,8 +15,8 @@ public abstract class AbstractTask extends BehaviorBlock implements Observer {
     public static final String TAG = "AbstractTask";
     protected List<AbstractAction> actions;
     protected RoboudController controller;
-    private int executionIndex;
     protected LinkedHashMap<BehaviorBlock, Object> results;
+    private int executionIndex;
 
     public AbstractTask(RoboudController controller) {
         this.controller = controller;
@@ -26,6 +26,7 @@ public abstract class AbstractTask extends BehaviorBlock implements Observer {
 
     /**
      * Execute the Actions that make this task. Start one action once the previous has ended
+     *
      * @param information
      */
     @Override
@@ -63,7 +64,7 @@ public abstract class AbstractTask extends BehaviorBlock implements Observer {
 
     //This might need to be transferred to specific actions
     @Override
-    public Object getInformation(){
+    public Object getInformation() {
         return null;
     }
 

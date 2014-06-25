@@ -259,11 +259,11 @@ public class RoboudModel extends Observable {
         this.scenario = scenario;
     }
 
-    public void setFaceExpression(FaceExpression faceExpression) {
-        this.faceExpression = faceExpression;
-    }
-
     public FaceExpression getFaceExpression() {
         return faceExpression;
+    }
+
+    public void setFaceExpression(FaceExpression faceExpression) {
+        this.faceExpression = faceExpression;
     }
 }

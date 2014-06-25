@@ -15,8 +15,8 @@ public abstract class AbstractBehavior extends Observable implements Behavior, O
     protected List<BehaviorBlock> blocks;
     protected RoboudController controller;
     protected TaskFactory taskFactory;
-    private int executionIndex;
     protected LinkedHashMap<BehaviorBlock, Object> results;
+    private int executionIndex;
 
     public AbstractBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
         this.addObserver(observer);

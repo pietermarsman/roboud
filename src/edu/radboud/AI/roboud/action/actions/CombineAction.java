@@ -28,7 +28,7 @@ public class CombineAction extends AbstractAction implements Observer {
 
     @Override
     public void doActions(Object information) {
-        if (a == null || b == null){
+        if (a == null || b == null) {
             throw new NullPointerException("actions cannot be null");
         }
         // TODO Check if actions can be executed at the same time

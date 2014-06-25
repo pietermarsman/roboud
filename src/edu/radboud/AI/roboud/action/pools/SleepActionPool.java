@@ -11,7 +11,7 @@ public class SleepActionPool extends ActionPool<SleepAction> {
 
     private static SleepActionPool instance = null;
 
-    private SleepActionPool(RoboudController controller){
+    private SleepActionPool(RoboudController controller) {
         super(controller);
     }
 
@@ -21,7 +21,7 @@ public class SleepActionPool extends ActionPool<SleepAction> {
         return instance;
     }
 
-    public SleepAction acquire(long time){
+    public SleepAction acquire(long time) {
         SleepAction sleepAction = acquire();
         sleepAction.setTime(time);
         return sleepAction;

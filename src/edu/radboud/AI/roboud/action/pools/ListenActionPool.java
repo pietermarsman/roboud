@@ -1,7 +1,6 @@
 package edu.radboud.ai.roboud.action.pools;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.actions.ChoiceAction;
 import edu.radboud.ai.roboud.action.actions.ListenAction;
 
 
@@ -12,7 +11,7 @@ public class ListenActionPool extends ActionPool<ListenAction> {
 
     private static ListenActionPool instance = null;
 
-    private ListenActionPool(RoboudController controller){
+    private ListenActionPool(RoboudController controller) {
         super(controller);
     }
 

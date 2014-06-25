@@ -24,10 +24,10 @@ public class SleepAction extends AbstractAction {
 
     @Override
     public void doActions(Object information) {
-        if (information != null && information instanceof Integer){
+        if (information != null && information instanceof Integer) {
             time = (Integer) information;
         }
-        if (time == 0){
+        if (time == 0) {
             throw new NullPointerException("Time cannot be 0");
         }
         Log.d(TAG, "Going to sleep");
@@ -46,7 +46,7 @@ public class SleepAction extends AbstractAction {
         return null;
     }
 
-    public void setTime(long time){
+    public void setTime(long time) {
         this.time = time;
     }
 }

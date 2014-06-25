@@ -11,7 +11,7 @@ public class ShowTextActionPool extends ActionPool<ShowTextAction> {
 
     private static ShowTextActionPool instance = null;
 
-    private ShowTextActionPool(RoboudController controller){
+    private ShowTextActionPool(RoboudController controller) {
         super(controller);
     }
 
@@ -21,13 +21,13 @@ public class ShowTextActionPool extends ActionPool<ShowTextAction> {
         return instance;
     }
 
-    public ShowTextAction acquire(String text){
+    public ShowTextAction acquire(String text) {
         ShowTextAction showTextAction = acquire();
         showTextAction.setText(text);
         return showTextAction;
     }
 
-    public ShowTextAction acquire(String[] texts){
+    public ShowTextAction acquire(String[] texts) {
         ShowTextAction showTextAction = acquire();
         showTextAction.setText(texts);
         return showTextAction;
