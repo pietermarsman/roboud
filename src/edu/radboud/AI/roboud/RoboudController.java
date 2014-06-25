@@ -23,12 +23,13 @@ import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.senses.SpeechEngine;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
+import edu.radboud.ai.roboud.util.ReadFromFile;
+import edu.radboud.ai.roboud.util.WriteToFile;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 
 //import edu.radboud.ai.roboud.senses.AndroidCamera;
 
@@ -87,7 +88,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         if(fileDir == "") {
             fileDir = getFilesDir().toString();
-            FILENAME = getApplicationContext().getFilesDir().getPath().toString() + fileName; //fileDir + "/" + fileName;
+            FILENAME = getApplicationContext().getFilesDir().getPath().toString()+ "/" + fileName; //fileDir + "/" + fileName;
         }
 
         try {
@@ -187,53 +188,22 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     protected synchronized void writeToFile(String toWrite) throws IOException {
         Log.v(TAG,"write to file");
-        BufferedWriter bw = new BufferedWriter(new FileWriter(FILENAME));
-        Random r = new Random();
-        int intToAdd = r.nextInt();
-        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
-        bw.write(toWrite + " random int: " + intToAdd);
-        bw.close();
+        WriteToFile writer = new WriteToFile();
+        writer.writeToFile(toWrite, FILENAME);
     }
 
     protected synchronized String readFromFile() throws Exception {
         Log.v(TAG,"read from file");
-        File henk1;
-        henk1 = getBaseContext().getFileStreamPath(FILENAME);   // This line produces an error, did not find a solution.
-        if(henk1.exists())
-            Log.v(TAG,"file exists");
-        else{
-            Log.v(TAG,"file does not exist");
-               return "-1";
-        }
+        ReadFromFile reader = new ReadFromFile();
+        return reader.readFromFile(FILENAME);
 
-        FileReader henk;
-        try {
-            henk = new FileReader(FILENAME);
-        } catch (FileNotFoundException e) {
-            Log.v(TAG,"file not found");
-            return "-1";
-        }
-
-        BufferedReader br = new BufferedReader(henk);
-
-        int i;
-        String stringFromFile = "";
-        do {
-            i = br.read();
-            if(i != -1)
-                stringFromFile += (char) i;
-            Log.v(TAG,"Just read: " + (char) i);
-        } while (i != -1);
-        Log.v(TAG,"Just read this " + stringFromFile);
-        br.close();
-        return stringFromFile;
     }
 
     @Override
     protected void onPause() {
         Log.v(TAG, "onPause");
         try {
-            writeToFile("I am now paused, saving some text to file");
+            writeToFile("(default output:) I am now paused, saving some text to file");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -249,10 +219,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Classes
         showText("onStop()");
+
         model.deleteObservers();
         mind.stopRunning();
-
-
 
 
         // Another activity is taking focus (this activity is about to be "paused").
@@ -280,48 +249,12 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onStop() {
         Log.v(TAG,"onStop");
-
-//        String string = "hello world!";
-//        Random r = new Random();
-//        int intToAdd = r.nextInt();
-//        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
-//
-////        FileOutputStream fos = null;
-////        try {
-////            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-////        } catch (FileNotFoundException e) {
-////            e.printStackTrace();
-////        }
-//        File file = new File(fileLocation, "storeinfo.txt");
-//        BufferedWriter buf = null;
-//        try {
-//            buf = new BufferedWriter(new FileWriter(file));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (buf != null) {
-//            try {
-//                buf.write(intToAdd);
-//                buf.write(string);
-//                buf.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-
-//        Bundle bundle = new Bundle();
-//        bundle.putBoolean("boolean1", true);
-//        bundle.putString("StringName1", "InhoudString1.1");
-//        Random r = new Random();
-//        int intToAdd = r.nextInt();
-//        bundle.putInt("int1", intToAdd);
-//        Log.v(TAG,"Next random int to store in memory: " + intToAdd);
-
-//        StoreInformation storeInformation = new StoreInformation(bundle);
-//        storeInformation.finish();
-//        blocks.add(storeInformation);
+        try {
+            writeToFile("Store information now");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.v(TAG,"Done writing to file, stopping app now");
 
         // UI
         // Nothing to do
@@ -334,8 +267,14 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Classes
         showText("onStop()");
-        model.deleteObservers();
-        mind.stopRunning();
+        // TODO: This is an ugly try/catch
+        try{
+            model.deleteObservers();
+            mind.stopRunning();
+        } catch(Exception e)
+        {
+            Log.v(TAG,"Caught vague exception");
+        }
         super.onStop();
         // Variables
     }
