@@ -24,4 +24,9 @@ public class ChitChatBehavior extends AbstractBehavior {
     public void releaseActions() {
         //TODO
     }
+
+    @Override
+    protected Object processInformation(BehaviorBlock currentBlock) {
+        return null;
+    }
 }

@@ -36,4 +36,14 @@ public class OutloudAskQuestionTask extends AskQuestionTask {
         SpeakActionPool.getInstance(controller).release(speakAction);
         ListenActionPool.getInstance(controller).release(listenAction);
     }
+
+    @Override
+    protected Object processActionInformation() {
+        return null;
+    }
+
+    @Override
+    protected void processTaskInformation(Object information) {
+
+    }
 }

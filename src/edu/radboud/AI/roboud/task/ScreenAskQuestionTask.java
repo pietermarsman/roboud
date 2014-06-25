@@ -36,4 +36,14 @@ public class ScreenAskQuestionTask extends AskQuestionTask {
         ShowTextActionPool.getInstance(controller).release(showTextAction);
         ReadTextActionPool.getInstance(controller).release(readTextAction);
     }
+
+    @Override
+    protected Object processActionInformation() {
+        return null;
+    }
+
+    @Override
+    protected void processTaskInformation(Object information) {
+
+    }
 }

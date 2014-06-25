@@ -21,8 +21,13 @@ public class ListenAction extends AbstractAction implements Observer {
     }
 
     @Override
-    public void doActions() {
+    public void doActions(Object information) {
         controller.listenToSpeech(this);
+    }
+
+    @Override
+    public Object getInformation() {
+        return results;
     }
 
     @Override

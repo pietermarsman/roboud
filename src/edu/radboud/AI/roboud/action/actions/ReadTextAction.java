@@ -20,11 +20,16 @@ public class ReadTextAction extends AbstractAction implements Observer {
     }
 
     @Override
-    public void doActions() {
+    public void doActions(Object information) {
         Log.w(TAG, "using a not implemented function");
         results.add("This is not implemented yet");
         setChanged();
         notifyObservers(results);
+    }
+
+    @Override
+    public Object getInformation() {
+        return results;
     }
 
     @Override

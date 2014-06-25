@@ -35,6 +35,11 @@ public class TestBehavior extends AbstractBehavior {
 //        SpeakActionPool.getInstance(controller).release(speak);
 
     }
+
+    @Override
+    protected Object processInformation(BehaviorBlock currentBlock) {
+        return null;
+    }
 }
 // Tested and working:
 // LEDAction

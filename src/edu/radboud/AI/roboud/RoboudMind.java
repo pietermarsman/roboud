@@ -53,6 +53,7 @@ public class RoboudMind implements Observer, Runnable {
     public Behavior nextBehaviour() {
         // TODO
         return behaviorFactory.getTestBehavior(this);
+        //return behaviorFactory.getDutchGoalBehavior(this);
     }
 
     public void stopRunning() {
