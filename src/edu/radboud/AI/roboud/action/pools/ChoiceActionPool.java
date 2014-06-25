@@ -13,7 +13,7 @@ public class ChoiceActionPool extends ActionPool<ChoiceAction> {
 
     private static ChoiceActionPool instance = null;
 
-    private ChoiceActionPool(RoboudController controller){
+    private ChoiceActionPool(RoboudController controller) {
         super(controller);
     }
 
@@ -23,7 +23,7 @@ public class ChoiceActionPool extends ActionPool<ChoiceAction> {
         return instance;
     }
 
-    public ChoiceAction acquire(List<String> options){
+    public ChoiceAction acquire(List<String> options) {
         ChoiceAction choiceAction = acquire();
         choiceAction.setOptions(options);
         return choiceAction;

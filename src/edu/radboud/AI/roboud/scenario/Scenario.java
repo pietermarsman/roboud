@@ -13,5 +13,5 @@ public interface Scenario {
 
     public boolean isInteractingWithIndividual();
 
-    public boolean isHasInternet();
+    public boolean isCanGoOnline();
 }

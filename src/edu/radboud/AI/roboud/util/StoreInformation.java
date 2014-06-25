@@ -15,7 +15,7 @@ public class StoreInformation extends Activity {
     private int int1;
 
     public StoreInformation(Bundle state) {
-        Log.v(TAG,"In constructor");
+        Log.v(TAG, "In constructor");
     }
 
     @Override

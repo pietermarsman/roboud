@@ -1,12 +1,9 @@
 package edu.radboud.ai.roboud.action.pools;
 
-import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Set;
 
 /**
  * Created by mikel_000 on 20-6-2014.

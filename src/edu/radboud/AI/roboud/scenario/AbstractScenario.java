@@ -1,18 +1,35 @@
 package edu.radboud.ai.roboud.scenario;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 /**
  * Created by Pieter Marsman on 24-5-2014.
  */
 public abstract class AbstractScenario implements Scenario {
 
-    protected boolean canTalk, canDrive, interactingWithIndividual, canListen, hasInternet;
+    private static final String TAG = "AbstractScenario";
+    // Mobile phone
+    protected boolean canTalk, canDrive, canListen, canSee, canLocate, canGoOnline;
+    // Surrounding
+    protected boolean interactingWithIndividual;
+    protected Context context;
 
-    public AbstractScenario() {
+    public AbstractScenario(Context context) {
+        this.context = context;
         canTalk = true;
         canListen = true;
         canDrive = true;
         interactingWithIndividual = true;
-        hasInternet = true;
+        canGoOnline = isOnline();
+    }
+
+    public AbstractScenario(Context context, boolean canSee, boolean canLocate, boolean canListen) {
+        this(context);
+        this.canSee = canSee;
+        this.canLocate = canLocate;
+        this.canListen = canListen;
     }
 
     public boolean isCanTalk() {
@@ -31,8 +48,17 @@ public abstract class AbstractScenario implements Scenario {
         return canListen;
     }
 
-    public boolean isHasInternet() {
-        return hasInternet;
+    public boolean isCanGoOnline() {
+        return canGoOnline;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -54,7 +80,7 @@ public abstract class AbstractScenario implements Scenario {
         if (canTalk != that.canTalk) return false;
         if (interactingWithIndividual != that.interactingWithIndividual) return false;
         if (canListen != that.isCanListen()) return false;
-        if (hasInternet != that.isHasInternet()) return false;
+        if (canGoOnline != that.isCanGoOnline()) return false;
 
         return true;
     }
@@ -66,7 +92,7 @@ public abstract class AbstractScenario implements Scenario {
                 ", canDrive=" + canDrive +
                 ", interactingWithIndividual=" + interactingWithIndividual +
                 ", canListen=" + canListen +
-                ", hasInternet=" + hasInternet +
+                ", canGoOnline=" + canGoOnline +
                 '}';
     }
 }

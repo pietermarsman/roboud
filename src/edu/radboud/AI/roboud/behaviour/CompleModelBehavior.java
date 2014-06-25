@@ -11,8 +11,8 @@ import java.util.Observer;
  */
 public class CompleModelBehavior extends AbstractBehavior {
 
-    public CompleModelBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
-        super(controller, taskFactory, observer);
+    public CompleModelBehavior(RoboudController controller, TaskFactory taskFactory) {
+        super(controller, taskFactory);
     }
 
     @Override
@@ -23,5 +23,10 @@ public class CompleModelBehavior extends AbstractBehavior {
     @Override
     public void releaseActions() {
         //TODO
+    }
+
+    @Override
+    protected Object processInformation(BehaviorBlock currentBlock) {
+        return null;
     }
 }

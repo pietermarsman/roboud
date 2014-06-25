@@ -15,8 +15,8 @@ public class IntroduceBehavior extends AbstractBehavior {
 
     private SpeakAction start, introduce, knowEnough, end;
 
-    public IntroduceBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
-        super(controller, taskFactory, observer);
+    public IntroduceBehavior(RoboudController controller, TaskFactory taskFactory) {
+        super(controller, taskFactory);
 
         start = SpeakActionPool.getInstance(controller).acquire(SpeechRepertoire.textGreetingStart);
         introduce = SpeakActionPool.getInstance(controller).acquire(SpeechRepertoire.textIntroduceMyself);
@@ -37,5 +37,10 @@ public class IntroduceBehavior extends AbstractBehavior {
         SpeakActionPool.getInstance(controller).release(introduce);
         SpeakActionPool.getInstance(controller).release(knowEnough);
         SpeakActionPool.getInstance(controller).release(end);
+    }
+
+    @Override
+    protected Object processInformation(BehaviorBlock currentBlock) {
+        return null;
     }
 }

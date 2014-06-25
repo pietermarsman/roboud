@@ -14,7 +14,7 @@ import java.util.Observable;
  */
 public class SpeechEngine extends Observable implements TextToSpeech.OnInitListener, ActivityResultProcessor {
     private static final String TAG = "SpeechEngine";
-    private static final int MY_DATA_CHECK_CODE = 30;
+    private static final int MY_DATA_CHECK_CODE = 30, INSTALL_CODE = 31;
     private static final Locale LANGUAGE = Locale.US;
     private TextToSpeech myTTS;
     private RoboudController controller;
@@ -33,7 +33,10 @@ public class SpeechEngine extends Observable implements TextToSpeech.OnInitListe
     public void onInit(int initStatus) {
         // check for successful instantiation
         if (initStatus == TextToSpeech.SUCCESS) {
-            myTTS.setLanguage(LANGUAGE);
+            if (myTTS != null)
+                myTTS.setLanguage(LANGUAGE);
+            else
+                Log.w(TAG, "Trying to set language, but in the meantime the TextToSpeech variable was destroyed");
         } else if (initStatus == TextToSpeech.ERROR) {
             Log.w(TAG, "TTS: failed to initialize ");
         }
@@ -68,14 +71,13 @@ public class SpeechEngine extends Observable implements TextToSpeech.OnInitListe
         if (requestCode == MY_DATA_CHECK_CODE) {
             if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
                 // success, create the TTS instance
-                myTTS = new TextToSpeech(controller, this);
                 boolean languageFileOK = myTTS.isLanguageAvailable(LANGUAGE) == TextToSpeech.LANG_AVAILABLE;
                 available = languageFileOK;
             } else {
                 // missing data, install it
                 Intent installIntent = new Intent();
                 installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-                controller.startActivity(installIntent);
+                controller.startNewActivityForResult(installIntent, INSTALL_CODE, this);
                 available = false;
             }
         }
@@ -83,5 +85,16 @@ public class SpeechEngine extends Observable implements TextToSpeech.OnInitListe
 
     public boolean isAvailable() {
         return available;
+    }
+
+    public void destroy() {
+        controller = null;
+        if (myTTS != null) {
+            myTTS.stop();
+            myTTS.shutdown();
+            myTTS = null;
+        } else {
+            Log.w(TAG, "Tried to destroy TextToSpeak, but it is already null");
+        }
     }
 }

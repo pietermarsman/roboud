@@ -26,13 +26,25 @@ public class ShowTextAction extends AbstractAction {
     }
 
     @Override
-    public void doActions() {
-        if(text == null){
+    public void doActions(Object information) {
+        if (information != null) {
+            if (information instanceof String) {
+                text = (String) information;
+            } else if (information instanceof String[]) {
+                text = SpeechRepertoire.randomChoice((String[]) information);
+            }
+        }
+        if (text == null) {
             throw new NullPointerException("text cannot be null");
         }
         controller.showText(text);
         setChanged();
         notifyObservers();
+    }
+
+    @Override
+    public Object getInformation() {
+        return null;
     }
 
     public String getText() {
@@ -43,7 +55,7 @@ public class ShowTextAction extends AbstractAction {
         this.text = text;
     }
 
-    public void setText(String[] texts){
+    public void setText(String[] texts) {
         this.text = SpeechRepertoire.randomChoice(texts);
     }
 }

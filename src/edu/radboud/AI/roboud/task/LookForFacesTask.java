@@ -7,18 +7,24 @@ import edu.radboud.ai.roboud.RoboudController;
  */
 public class LookForFacesTask extends AbstractTask {
 
-    public LookForFacesTask(RoboudController controller, boolean enabled) {
+    public LookForFacesTask(RoboudController controller, boolean canDrive) {
         super(controller);
 
-        if (enabled) {
-            // TODO
-        }
-        setChanged();
-        notifyObservers();
+        controller.getModel().getFaces();
     }
 
     @Override
     public void releaseActions() {
+
+    }
+
+    @Override
+    protected Object processActionInformation() {
+        return null;
+    }
+
+    @Override
+    protected void processTaskInformation(Object information) {
 
     }
 }

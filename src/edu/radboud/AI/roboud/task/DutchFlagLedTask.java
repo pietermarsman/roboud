@@ -2,10 +2,10 @@ package edu.radboud.ai.roboud.task;
 
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.LedAction;
+import edu.radboud.ai.roboud.action.actions.SleepAction;
 import edu.radboud.ai.roboud.action.pools.LedActionPool;
 import edu.radboud.ai.roboud.action.pools.SleepActionPool;
 import edu.radboud.ai.roboud.action.util.LedColor;
-import edu.radboud.ai.roboud.action.actions.SleepAction;
 
 /**
  * Created by Mike Ligthart on 20-6-2014.
@@ -37,5 +37,21 @@ public class DutchFlagLedTask extends AbstractTask {
         LedActionPool.getInstance(controller).release(red);
         LedActionPool.getInstance(controller).release(white);
         LedActionPool.getInstance(controller).release(blue);
+    }
+
+    @Override
+    protected Object processActionInformation() {
+        return null;
+    }
+
+    @Override
+    protected void processTaskInformation(Object information) {
+        if (information instanceof Boolean) {
+            if (((Boolean) information).booleanValue()) {
+                red.setColor(LedColor.ORANGE);
+                white.setColor(LedColor.ORANGE);
+                blue.setColor(LedColor.ORANGE);
+            }
+        }
     }
 }

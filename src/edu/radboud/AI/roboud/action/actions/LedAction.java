@@ -25,11 +25,14 @@ public class LedAction extends AbstractAction {
     }
 
     @Override
-    public void doActions() {
+    public void doActions(Object information) {
+        if (information != null && information instanceof LedColor) {
+            color = (LedColor) information;
+        }
         Log.d(TAG, "doActions() is called");
         controller.sendCommand(kRobot_ResetMood);
         controller.sendCommand(kRobot_HeartBeatOff);
-        if(color != null) {
+        if (color != null) {
             switch (color) {
                 case BLUE:
                     controller.sendCommand(kRobot_RGBHeartBlue);
@@ -58,6 +61,11 @@ public class LedAction extends AbstractAction {
         }
         setChanged();
         notifyObservers();
+    }
+
+    @Override
+    public Object getInformation() {
+        return null;
     }
 
     public void setColor(LedColor color) {

@@ -4,9 +4,11 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import com.wowwee.robome.RoboMeCommands.IncomingRobotCommand;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
+import edu.radboud.ai.roboud.action.util.FaceExpression;
 import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
+import edu.radboud.ai.roboud.scenario.Scenario;
 
 import java.util.List;
 import java.util.Observable;
@@ -26,15 +28,17 @@ public class RoboudModel extends Observable {
     private float proximity, light;
     private Location loc;
     private long lastModification;
+    private Scenario scenario;
+    private FaceExpression faceExpression;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
                        String _libVersion) {
-
         this.robomeConnected = robomeConnected;
         this.robomeHeadsetPluggedIn = robomeHeadsetPluggedIn;
         this.listening = listening;
         this.volume = volume;
         this.libVersion = _libVersion;
+        this.scenario = null;
         image = null;
         faces = 0;
         rotation = new float[3];
@@ -241,7 +245,25 @@ public class RoboudModel extends Observable {
         changed();
     }
 
+    //      === START Roboud part ===
+
     public List<Event> getEvents(EventType eventType, int lastN) {
         return events.getLastEventsOfType(eventType, lastN);
+    }
+
+    public Scenario getScenario() {
+        return scenario;
+    }
+
+    public void setScenario(Scenario scenario) {
+        this.scenario = scenario;
+    }
+
+    public FaceExpression getFaceExpression() {
+        return faceExpression;
+    }
+
+    public void setFaceExpression(FaceExpression faceExpression) {
+        this.faceExpression = faceExpression;
     }
 }

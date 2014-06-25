@@ -13,7 +13,7 @@ public class MotorActionPool extends ActionPool<MotorAction> {
 
     private static MotorActionPool instance = null;
 
-    private MotorActionPool(RoboudController controller){
+    private MotorActionPool(RoboudController controller) {
         super(controller);
     }
 
@@ -23,7 +23,7 @@ public class MotorActionPool extends ActionPool<MotorAction> {
         return instance;
     }
 
-    public MotorAction acquire(RobotDirection dir, RobotSpeed speed){
+    public MotorAction acquire(RobotDirection dir, RobotSpeed speed) {
         MotorAction motorAction = acquire();
         motorAction.setDirAndSpeed(dir, speed);
         return motorAction;

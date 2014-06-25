@@ -18,22 +18,28 @@ public class RandomWanderBehavior extends AbstractBehavior {
     private RobotSpeed speed;
     private MotorAction motorAction;
 
-    public RandomWanderBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
-        super(controller, taskFactory, observer);
+    public RandomWanderBehavior(RoboudController controller, TaskFactory taskFactory) {
+        super(controller, taskFactory);
         wander();
     }
 
     public void wander() {
 //        for(int i=0;i<1;i++) {
-            direction = RobotDirection.random();
-            speed = RobotSpeed.random();
-            Log.v(TAG,"Direction: " + direction.toString() + " Speed: " + speed);
-            motorAction = MotorActionPool.getInstance(controller).acquire(direction, speed);
-            blocks.add(motorAction);
+        direction = RobotDirection.random();
+        speed = RobotSpeed.random();
+        Log.v(TAG, "Direction: " + direction.toString() + " Speed: " + speed);
+        motorAction = MotorActionPool.getInstance(controller).acquire(direction, speed);
+        blocks.add(motorAction);
 //        }
     }
+
     @Override
     public void releaseActions() {
         MotorActionPool.getInstance(controller).release(motorAction);
+    }
+
+    @Override
+    protected Object processInformation(BehaviorBlock currentBlock) {
+        return null;
     }
 }

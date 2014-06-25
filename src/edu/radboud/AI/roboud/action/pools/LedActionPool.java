@@ -11,7 +11,7 @@ public class LedActionPool extends ActionPool<LedAction> {
 
     private static LedActionPool instance = null;
 
-    private LedActionPool(RoboudController controller){
+    private LedActionPool(RoboudController controller) {
         super(controller);
     }
 
@@ -21,7 +21,7 @@ public class LedActionPool extends ActionPool<LedAction> {
         return instance;
     }
 
-    public LedAction acquire(LedColor color){
+    public LedAction acquire(LedColor color) {
         LedAction ledAction = acquire(); //retrieve LedAction
         ledAction.setColor(color); //set right color
         return ledAction; //return it

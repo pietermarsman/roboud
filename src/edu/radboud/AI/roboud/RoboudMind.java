@@ -1,9 +1,9 @@
 package edu.radboud.ai.roboud;
 
-import edu.radboud.ai.roboud.behaviour.Behavior;
+import android.util.Log;
+import edu.radboud.ai.roboud.behaviour.AbstractBehavior;
 import edu.radboud.ai.roboud.behaviour.BehaviorFactory;
 import edu.radboud.ai.roboud.scenario.Scenario;
-import edu.radboud.ai.roboud.scenario.TestScenario;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.Observable;
@@ -19,7 +19,7 @@ public class RoboudMind implements Observer, Runnable {
     private Thread mindThread;
 
     private Scenario currentScenario = null;
-    private Behavior currentBehavior;
+    private AbstractBehavior currentBehavior;
 
     private RoboudController controller;
     private boolean running;
@@ -32,50 +32,63 @@ public class RoboudMind implements Observer, Runnable {
         currentBehavior = null;
         currentScenario = whatIsCurrentScenario();
         behaviorFactory = BehaviorFactory.getInstance(currentScenario, controller);
-        running = true;
+        running = false;
         mindThread = null;
     }
 
     private Scenario whatIsCurrentScenario() {
         if (currentScenario == null)
-            return new TestScenario();
+            return controller.getModel().getScenario();
         else //check whether scenario has changed is not done at the moment
             return currentScenario;
     }
 
     @Override
     public void update(Observable observable, Object data) {
-        if (observable instanceof Behavior) {
+        Log.i(TAG, "==Mind is updated==");
+        if (observable instanceof AbstractBehavior) {
+            currentBehavior.deleteObservers();
             currentBehavior = null;
+            Log.i(TAG, "currentBehavior is reset");
         }
     }
 
-    public Behavior nextBehaviour() {
+    public synchronized AbstractBehavior nextBehaviour() {
         // TODO
-        return behaviorFactory.getTestBehavior(this);
+        AbstractBehavior behavior = behaviorFactory.getTestBehavior();
+        //AbstractBehavior behavior = behaviorFactory.getDutchGoalBehavior();
+        behavior.addObserver(this);
+        return behavior;
     }
 
     public void stopRunning() {
-        running = false;
         dispose();
+        running = false;
     }
 
     public void startRunning() {
-        running = true;
         if (mindThread == null) {
             mindThread = new Thread(this);
             mindThread.start();
+            running = true;
+        } else {
+            Log.w(TAG, "Already running, no need to start it again");
         }
     }
 
+    public boolean isRunning() {
+        return running;
+    }
+
     public void dispose() {
-        mindThread.interrupt();
-        mindThread = null;
+        if (mindThread != null) {
+            mindThread.interrupt();
+            mindThread = null;
+        }
     }
 
     @Override
     public void run() {
-
         if (currentBehavior != null)
             currentBehavior.executeBehaviour();
 

@@ -14,7 +14,7 @@ public class OutloudAskQuestionTask extends AskQuestionTask {
     private SpeakAction speakAction;
     private ListenAction listenAction;
 
-    public OutloudAskQuestionTask(RoboudController controller, String question){
+    public OutloudAskQuestionTask(RoboudController controller, String question) {
         super(controller, question);
         speakAction = SpeakActionPool.getInstance(controller).acquire(question);
         listenAction = ListenActionPool.getInstance(controller).acquire();
@@ -22,7 +22,7 @@ public class OutloudAskQuestionTask extends AskQuestionTask {
         actions.add(listenAction);
     }
 
-    public OutloudAskQuestionTask(RoboudController controller, String[] questions){
+    public OutloudAskQuestionTask(RoboudController controller, String[] questions) {
         super(controller);
         speakAction = SpeakActionPool.getInstance(controller).acquire(questions);
         question = speakAction.getText();
@@ -35,5 +35,15 @@ public class OutloudAskQuestionTask extends AskQuestionTask {
     public void releaseActions() {
         SpeakActionPool.getInstance(controller).release(speakAction);
         ListenActionPool.getInstance(controller).release(listenAction);
+    }
+
+    @Override
+    protected Object processActionInformation() {
+        return null;
+    }
+
+    @Override
+    protected void processTaskInformation(Object information) {
+
     }
 }

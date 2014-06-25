@@ -30,7 +30,11 @@ public class BehaviorFactory {
         return instance;
     }
 
-    public TestBehavior getTestBehavior(Observer observer) {
-        return new TestBehavior(controller, taskFactory, observer);
+    public TestBehavior getTestBehavior() {
+        return new TestBehavior(controller, taskFactory);
+    }
+
+    public DutchGoalBehavior getDutchGoalBehavior() {
+        return new DutchGoalBehavior(controller, taskFactory);
     }
 }

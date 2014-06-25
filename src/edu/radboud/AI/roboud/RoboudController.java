@@ -2,6 +2,7 @@ package edu.radboud.ai.roboud;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,10 +16,14 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
+import edu.radboud.ai.roboud.action.util.FaceExpression;
+import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.scenario.TestScenario;
+import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.senses.SpeechEngine;
@@ -39,19 +44,25 @@ import java.util.Observer;
 
 public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
     public static final String TAG = "RoboudController";
-    private AndroidMicrophone mic;
-    //private AndroidCamera cam;
-    private AndroidLocation loc;
+
+    // Classes
     private RoboudModel model;
     private RoboudMind mind;
+
+    // RoboMe
     private RoboMe robome;
-    private TextView logView;
-    private ScrollView logScrollView;
+
+    // UI
+    private TextView textView;
     private SurfaceView surfaceView;
     private Button button;
+    private ImageView imageView;
+
+    // Senses
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
     private SpeechEngine speechEngine;
+
     //private String fileName = "hello_file";
     //private String fileLocation = "D:/Human Robot Interaction/Project/roboud/assets"; //"assets//storeinfo.txt";
     private EditText firstField;
@@ -60,6 +71,11 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     String fileName = "hello_file.txt";
     String FILENAME = "";
 
+    private AndroidMicrophone mic;
+    private AndroidCamera cam;
+    private AndroidLocation loc;
+
+    // Roboud
     private HashMap<Integer, ActivityResultProcessor> returnActivityDataToMap;
 
     private Handler handler = new Handler() {
@@ -67,15 +83,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         public void handleMessage(Message msg) {
             // display the received event
             if (msg.what == 0x99)
-                logView.setText(logView.getText() + "\n" + (String) msg.obj);
-            logScrollView.smoothScrollTo(0, logView.getHeight());
+                textView.setText((String) msg.obj);
         }
     };
 
-
-    public RoboudModel getModel() {
-        return model;
-    }
     //  === START Android Activity part ===
 
     /**
@@ -90,6 +101,14 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
             fileDir = getFilesDir().toString();
             FILENAME = getApplicationContext().getFilesDir().getPath().toString()+ "/" + fileName; //fileDir + "/" + fileName;
         }
+        Log.i(TAG, "onCreate(" + savedInstanceState + ")");
+
+        // UI
+        setContentView(R.layout.face);
+        textView = (TextView) findViewById(R.id.textView);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+        button = (Button) findViewById(R.id.button);
+        imageView = (ImageView) findViewById(R.id.imageView);
 
         try {
             Log.v(TAG,readFromFile());
@@ -100,23 +119,21 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         showText("onCreate(" + savedInstanceState + ")");
         // RoboMe
-        robome = new RoboMe(this, this);
+        robome = new RoboMe(this.getApplicationContext(), this);
 
         // Variables
         returnActivityDataToMap = new HashMap<Integer, ActivityResultProcessor>();
-
-        // UI
-        setContentView(R.layout.main);
-        logView = (TextView) findViewById(R.id.output);
-        logScrollView = (ScrollView) findViewById(R.id.outputScrollView);
-        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
-        button = (Button) findViewById(R.id.button);
 
         // Senses
         //cam = new AndroidCamera(this, surfaceView, 1000);
         loc = new AndroidLocation(this);
         mic = new AndroidMicrophone(this);
         speechEngine = new SpeechEngine(this);
+
+        // Classes
+        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
+                robome.getVolume(), robome.getLibVersion());
+        mind = new RoboudMind(this);
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensors = new HashMap<Integer, Sensor>();
@@ -127,32 +144,12 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         sensors.put(Sensor.TYPE_MAGNETIC_FIELD, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
         sensors.put(Sensor.TYPE_PROXIMITY, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
         sensors.put(Sensor.TYPE_LIGHT, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
-
-        // Classes
-        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
-                robome.getVolume(), robome.getLibVersion());
-        mind = new RoboudMind(this);
-
     }
     @Override
     protected void onStart() {
-            super.onStart();
-            // The activity is about to become visible.
-            showText("onStart()");
-            checkRequirements();
-        }
-
-    private void checkRequirements() {
-        if (!mic.isAvailable())
-            Log.w(TAG, "Microphone not available");
-//        if (!cam.isAvailable())
-//            Log.w(TAG, "Camera not available");
-        if (!loc.isAvailable())
-            Log.w(TAG, "Location not available");
-        if (!speechEngine.isAvailable())
-            Log.w(TAG, "Speech engine nog available");
-        // TODO add internet
-        // TODO construct scenario with this information
+        super.onStart();
+        Log.i(TAG, "onStart()");
+        // The activity is about to become visible.
     }
 
     @Override
@@ -170,7 +167,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         button.setOnClickListener(this);
         // Senses
         loc.addObserver(this);
-//        cam.addObserver(this);
+        cam.addObserver(this);
         mic.addObserver(this);
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
@@ -180,7 +177,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Classes
         model.addObserver(this);
-        mind.startRunning();
+        Scenario scenario = new TestScenario(getApplicationContext(), cam.isAvailable(), loc.isAvailable(), mic.isAvailable()
+                && speechEngine.isAvailable());
+        model.setScenario(scenario);
 
         // Variables
         // Nothing to do
@@ -208,38 +207,31 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
             e.printStackTrace();
         }
 
-        // UI
-        // Nothing to do
-
-        // Senses
-        // Nothing to do
-
-        // RoboMe
-        // Nothing to do
-
-        // Classes
         showText("onStop()");
 
         model.deleteObservers();
         mind.stopRunning();
 
-
         // Another activity is taking focus (this activity is about to be "paused").
+        Log.i(TAG, "onPause()");
+
         // UI
         // Nothing to do
 
         // Senses
-        showText("onPause()");
         loc.deleteObservers();
-//        cam.deleteObservers();
+        cam.deleteObservers();
         mic.deleteObservers();
         mSensorManager.unregisterListener(this);
 
-        // RoboMe
-        stopListeningToRoboMe();
-
         // Classes
         // Nothing to do
+
+
+        // RoboMe
+        stopListeningToRoboMe();
+        model.deleteObservers();
+        mind.stopRunning();
 
         // Variables
         // Nothing to do
@@ -262,11 +254,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Senses
         // Nothing to do
 
-        // RoboMe
+        // Classes
         // Nothing to do
 
         // Classes
-        showText("onStop()");
         // TODO: This is an ugly try/catch
         try{
             model.deleteObservers();
@@ -276,14 +267,42 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
             Log.v(TAG,"Caught vague exception");
         }
         super.onStop();
+
+        // RoboMe
+        // Nothing to do
+
         // Variables
+        // Nothing to do
+
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Log.v(TAG,"Destroying the app now");
-        super.onDestroy();
         // The activity is about to be destroyed.
+        Log.i(TAG, "onDestroy()");
+
+        // RoboMe
+        robome = null;
+
+        // UI
+        // Nothing to do
+
+        // Senses
+        cam = null;
+        loc = null;
+        mic = null;
+
+        mSensorManager = null;
+        sensors = null;
+
+        // Classes
+        model = null;
+        mind = null;
+        speechEngine.destroy();
+        speechEngine = null;
+
+        super.onDestroy();
     }
 
     @Override
@@ -317,6 +336,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void stopListeningToRoboMe() {
+        Log.d(TAG, "Stop listening to RoboMe");
         if (robome != null) {
             robome.stopListening();
             model.setListening(false);
@@ -328,44 +348,47 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void commandReceived(RoboMeCommands.IncomingRobotCommand incomingRobotCommand) {
         model.receiveCommand(incomingRobotCommand);
-        showText(incomingRobotCommand.toString());
+        Log.d(TAG, incomingRobotCommand.toString());
     }
 
     public void sendCommand(RoboMeCommands.RobotCommand outgoingCommand) {
         Log.v(TAG, "before sending command");
         model.sendCommand(outgoingCommand);
         robome.sendCommand(outgoingCommand);
-        showText(outgoingCommand.toString());
+        Log.d(TAG, outgoingCommand.toString());
     }
 
     @Override
     public void roboMeConnected() {
+        Log.i(TAG, "RoboMe connected");
         model.setRobomeConnected(true);
-        showText("RoboMe connected");
+        mind.startRunning();
     }
 
     @Override
     public void roboMeDisconnected() {
+        Log.i(TAG, "RoboMe disconnected");
         model.setRobomeConnected(false);
-        showText("RoboMe disconnected");
+        mind.stopRunning();
     }
 
     @Override
     public void headsetPluggedIn() {
+        Log.i(TAG, "Headset plugged in");
+        startListeningToRoboMe();
         model.setRobomeHeadsetPluggedIn(true);
-        showText("Headset plugged in");
     }
 
     @Override
     public void headsetUnplugged() {
+        Log.i(TAG, "Headset unplugged");
         model.setRobomeHeadsetPluggedIn(false);
-        showText("Headset unplugged");
     }
 
     @Override
     public void volumeChanged(float v) {
         model.setVolume(v);
-        showText("Volume changed to " + v);
+        Log.d(TAG, "Volume changed to " + v);
     }
 
     public boolean isSendingCommand() {
@@ -399,7 +422,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
                 model.setLight(event.values[0]);
                 break;
             default:
-                showText("Sensor type not recognized");
+                Log.d(TAG, "Sensor type not recognized");
         }
     }
 
@@ -430,7 +453,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
         // Unknown update
         else
-            showText("Unknown class observed");
+            Log.d(TAG, "Unknown class observed");
     }
 
     @Override
@@ -452,5 +475,35 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void speakText(Observer observer, String text) {
         speechEngine.addObserver(observer);
         speechEngine.speak(text);
+    }
+
+    public void setFaceExpression(FaceExpression faceExpression) {
+        Drawable drawable;
+        switch (faceExpression) {
+            case SAD:
+                drawable = getResources().getDrawable(R.drawable.face_sad);
+                break;
+            case SMILE_BIG:
+                drawable = getResources().getDrawable(R.drawable.face_smile_big);
+                break;
+            case SMILE_NORMAL:
+                drawable = getResources().getDrawable(R.drawable.face_smile_normal);
+                break;
+            case SMILE_SMALL:
+                drawable = getResources().getDrawable(R.drawable.face_smile_small);
+                break;
+            case SURPRISED:
+                drawable = getResources().getDrawable(R.drawable.face_supprised);
+                break;
+            default:
+                drawable = getResources().getDrawable(R.drawable.face_smile_normal);
+        }
+        imageView.setImageDrawable(drawable);
+        showText(faceExpression.toString());
+        model.setFaceExpression(faceExpression);
+    }
+
+    public RoboudModel getModel() {
+        return model;
     }
 }
