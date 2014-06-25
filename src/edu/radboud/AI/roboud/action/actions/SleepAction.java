@@ -43,7 +43,7 @@ public class SleepAction extends AbstractAction {
 
     @Override
     public Object getInformation() {
-        return null;
+        return "awake";
     }
 
     public void setTime(long time) {

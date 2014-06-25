@@ -11,8 +11,8 @@ import java.util.Observer;
  */
 public class AssignmentBehavior extends AbstractBehavior {
 
-    public AssignmentBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
-        super(controller, taskFactory, observer);
+    public AssignmentBehavior(RoboudController controller, TaskFactory taskFactory) {
+        super(controller, taskFactory);
     }
 
     @Override

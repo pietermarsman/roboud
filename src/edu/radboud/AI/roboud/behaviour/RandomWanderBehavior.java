@@ -18,8 +18,8 @@ public class RandomWanderBehavior extends AbstractBehavior {
     private RobotSpeed speed;
     private MotorAction motorAction;
 
-    public RandomWanderBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
-        super(controller, taskFactory, observer);
+    public RandomWanderBehavior(RoboudController controller, TaskFactory taskFactory) {
+        super(controller, taskFactory);
         wander();
     }
 

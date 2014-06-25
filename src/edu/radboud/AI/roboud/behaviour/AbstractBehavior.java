@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
-public abstract class AbstractBehavior extends Observable implements Behavior, Observer {
+public abstract class AbstractBehavior extends Observable implements Observer {
 
     public static final String TAG = "AbstractBehavior";
     protected List<BehaviorBlock> blocks;
@@ -18,8 +18,7 @@ public abstract class AbstractBehavior extends Observable implements Behavior, O
     protected LinkedHashMap<BehaviorBlock, Object> results;
     private int executionIndex;
 
-    public AbstractBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
-        this.addObserver(observer);
+    public AbstractBehavior(RoboudController controller, TaskFactory taskFactory) {
         this.controller = controller;
         this.taskFactory = taskFactory;
         blocks = new LinkedList<BehaviorBlock>();
@@ -34,7 +33,7 @@ public abstract class AbstractBehavior extends Observable implements Behavior, O
     /**
      * Execute the BehaviorBlock one by one, starting a new block if the previous block has ended
      */
-    public void executeBehaviour() {
+    public synchronized void executeBehaviour() {
         executeStep(null);
     }
 
@@ -43,11 +42,12 @@ public abstract class AbstractBehavior extends Observable implements Behavior, O
         if (observable instanceof BehaviorBlock) {
             BehaviorBlock currentBlock = (BehaviorBlock) observable;
             results.put(currentBlock, currentBlock.getInformation());
+            currentBlock.deleteObserver(this);
             executeStep(processInformation(currentBlock));
         }
     }
 
-    private void executeStep(Object information) {
+    private synchronized void executeStep(Object information) {
         if (executionIndex + 1 < blocks.size()) {
             executionIndex++;
             Log.i(TAG, "Execute step " + executionIndex);

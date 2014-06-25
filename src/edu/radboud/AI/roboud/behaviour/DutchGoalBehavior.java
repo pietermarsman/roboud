@@ -1,9 +1,8 @@
 package edu.radboud.ai.roboud.behaviour;
 
-import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.actions.ListenAction;
-import edu.radboud.ai.roboud.action.pools.ListenActionPool;
+import edu.radboud.ai.roboud.action.actions.SleepAction;
+import edu.radboud.ai.roboud.action.pools.SleepActionPool;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.Observer;
@@ -14,30 +13,28 @@ import java.util.Observer;
 public class DutchGoalBehavior extends AbstractBehavior {
 
     public final static String TAG = "DutchGoalBehavior";
-    private ListenAction listenForGoal;
+    private SleepAction sleepAction;
 
-    public DutchGoalBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
-        super(controller, taskFactory, observer);
-        listenForGoal = ListenActionPool.getInstance(controller).acquire();
+    public DutchGoalBehavior(RoboudController controller, TaskFactory taskFactory) {
+        super(controller, taskFactory);
+        sleepAction = SleepActionPool.getInstance(controller).acquire(500);
         blocks.add(taskFactory.getDutchFlagLedTask());
-        blocks.add(listenForGoal);
+        blocks.add(sleepAction);
         blocks.add(taskFactory.getDutchFlagLedTask());
     }
 
     @Override
     public void releaseActions() {
-        ListenActionPool.getInstance(controller).release(listenForGoal);
+        SleepActionPool.getInstance(controller).release(sleepAction);
     }
 
     @Override
     protected Object processInformation(BehaviorBlock currentBlock) {
-        Log.i(TAG, "currentBlock simple name is " + currentBlock.getClass().getSimpleName());
-        if (currentBlock instanceof ListenAction) {
-            Object info = results.get(listenForGoal);
+        if (currentBlock instanceof SleepAction && results.containsKey(sleepAction)) {
+            Object info = results.get(sleepAction);
             if (info instanceof String) {
                 String resultString = (String) info;
-                Log.i(TAG, resultString);
-                if (resultString.toLowerCase().contains("goal")) {
+                if (resultString.toLowerCase().contains("awake")) {
                     return true;
                 }
             }

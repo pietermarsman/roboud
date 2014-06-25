@@ -1,7 +1,7 @@
 package edu.radboud.ai.roboud;
 
 import android.util.Log;
-import edu.radboud.ai.roboud.behaviour.Behavior;
+import edu.radboud.ai.roboud.behaviour.AbstractBehavior;
 import edu.radboud.ai.roboud.behaviour.BehaviorFactory;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.task.TaskFactory;
@@ -19,7 +19,7 @@ public class RoboudMind implements Observer, Runnable {
     private Thread mindThread;
 
     private Scenario currentScenario = null;
-    private Behavior currentBehavior;
+    private AbstractBehavior currentBehavior;
 
     private RoboudController controller;
     private boolean running;
@@ -45,15 +45,20 @@ public class RoboudMind implements Observer, Runnable {
 
     @Override
     public void update(Observable observable, Object data) {
-        if (observable instanceof Behavior) {
+        Log.i(TAG, "==Mind is updated==");
+        if (observable instanceof AbstractBehavior) {
+            currentBehavior.deleteObservers();
             currentBehavior = null;
+            Log.i(TAG, "currentBehavior is reset");
         }
     }
 
-    public Behavior nextBehaviour() {
+    public synchronized AbstractBehavior nextBehaviour() {
         // TODO
-        return behaviorFactory.getTestBehavior(this);
-        //return behaviorFactory.getDutchGoalBehavior(this);
+        AbstractBehavior behavior = behaviorFactory.getTestBehavior();
+        //AbstractBehavior behavior = behaviorFactory.getDutchGoalBehavior();
+        behavior.addObserver(this);
+        return behavior;
     }
 
     public void stopRunning() {

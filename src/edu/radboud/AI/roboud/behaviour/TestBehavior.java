@@ -18,8 +18,8 @@ public class TestBehavior extends AbstractBehavior {
 //    private SpeakAction speak;
     private ExpressEmotionAction expression;
 
-    public TestBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
-        super(controller, taskFactory, observer);
+    public TestBehavior(RoboudController controller, TaskFactory taskFactory) {
+        super(controller, taskFactory);
 //        blocks.add(taskFactory.getDutchFlagLedTask());
 //        forward = MotorActionPool.getInstance(controller).acquire(RobotDirection.FORWARD, RobotSpeed.NORMAL);
 //        backward = MotorActionPool.getInstance(controller).acquire(RobotDirection.BACKWARD, RobotSpeed.NORMAL);
