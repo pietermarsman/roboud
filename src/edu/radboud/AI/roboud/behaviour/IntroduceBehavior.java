@@ -40,7 +40,7 @@ public class IntroduceBehavior extends AbstractBehavior {
     }
 
     @Override
-    protected Object processInformation() {
+    protected Object processInformation(BehaviorBlock currentBlock) {
         return null;
     }
 }

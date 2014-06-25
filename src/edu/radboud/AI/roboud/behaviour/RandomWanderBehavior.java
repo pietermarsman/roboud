@@ -38,7 +38,7 @@ public class RandomWanderBehavior extends AbstractBehavior {
     }
 
     @Override
-    protected Object processInformation() {
+    protected Object processInformation(BehaviorBlock currentBlock) {
         return null;
     }
 }

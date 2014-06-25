@@ -31,6 +31,7 @@ public abstract class AbstractTask extends BehaviorBlock implements Observer {
     @Override
     public void doActions(Object information) {
         executionIndex = -1;
+        processTaskInformation(information);
         executeStep(null);
     }
 
@@ -54,7 +55,7 @@ public abstract class AbstractTask extends BehaviorBlock implements Observer {
         if (observable instanceof BehaviorBlock) {
             BehaviorBlock currentBlock = (BehaviorBlock) observable;
             results.put(currentBlock, currentBlock.getInformation());
-            executeStep(processInformation());
+            executeStep(processActionInformation());
         }
     }
 
@@ -66,5 +67,7 @@ public abstract class AbstractTask extends BehaviorBlock implements Observer {
         return null;
     }
 
-    protected abstract Object processInformation();
+    protected abstract Object processActionInformation();
+
+    protected abstract void processTaskInformation(Object information);
 }

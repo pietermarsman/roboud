@@ -38,7 +38,12 @@ public class OutloudAskQuestionTask extends AskQuestionTask {
     }
 
     @Override
-    protected Object processInformation() {
+    protected Object processActionInformation() {
         return null;
+    }
+
+    @Override
+    protected void processTaskInformation(Object information) {
+
     }
 }

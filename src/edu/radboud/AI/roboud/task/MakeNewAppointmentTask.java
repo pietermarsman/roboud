@@ -19,7 +19,12 @@ public class MakeNewAppointmentTask extends AbstractTask {
     }
 
     @Override
-    protected Object processInformation() {
+    protected Object processActionInformation() {
         return null;
+    }
+
+    @Override
+    protected void processTaskInformation(Object information) {
+
     }
 }

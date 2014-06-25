@@ -43,7 +43,7 @@ public abstract class AbstractBehavior extends Observable implements Behavior, O
         if (observable instanceof BehaviorBlock) {
             BehaviorBlock currentBlock = (BehaviorBlock) observable;
             results.put(currentBlock, currentBlock.getInformation());
-            executeStep(processInformation());
+            executeStep(processInformation(currentBlock));
         }
     }
 
@@ -65,5 +65,5 @@ public abstract class AbstractBehavior extends Observable implements Behavior, O
 
     public abstract void releaseActions();
 
-    protected abstract Object processInformation();
+    protected abstract Object processInformation(BehaviorBlock currentBlock);
 }

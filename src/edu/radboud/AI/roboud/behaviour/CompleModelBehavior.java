@@ -26,7 +26,7 @@ public class CompleModelBehavior extends AbstractBehavior {
     }
 
     @Override
-    protected Object processInformation() {
+    protected Object processInformation(BehaviorBlock currentBlock) {
         return null;
     }
 }
