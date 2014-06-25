@@ -1,11 +1,13 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.action.actions.ChoiceAction;
 import edu.radboud.ai.roboud.action.actions.ExpressEmotionAction;
-import edu.radboud.ai.roboud.action.pools.ExpressEmotionActionPool;
-import edu.radboud.ai.roboud.action.util.FaceExpression;
+import edu.radboud.ai.roboud.action.pools.ChoiceActionPool;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observer;
 
 /**
@@ -16,6 +18,7 @@ public class TestBehavior extends AbstractBehavior {
     public final static String TAG = "TestBehavior";
     //    private MotorAction forward, backward;
 //    private SpeakAction speak;
+    private ChoiceAction choiceAction;
     private ExpressEmotionAction expression;
 
     public TestBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
@@ -27,8 +30,13 @@ public class TestBehavior extends AbstractBehavior {
 //        blocks.add(forward);
 //        blocks.add(speak);
 //        blocks.add(backward);
-        expression = ExpressEmotionActionPool.getInstance(controller).acquire(FaceExpression.SAD);
-        blocks.add(expression);
+//        expression = ExpressEmotionActionPool.getInstance(controller).acquire(FaceExpression.SAD);
+//        blocks.add(expression);
+        List<String> options = new LinkedList<String>();
+        options.add("Optie 1");
+        options.add("Optie 2");
+        choiceAction = ChoiceActionPool.getInstance(controller).acquire(options);
+        blocks.add(choiceAction);
     }
 
     @Override
@@ -36,8 +44,8 @@ public class TestBehavior extends AbstractBehavior {
 //        MotorActionPool.getInstance(controller).release(forward);
 //        MotorActionPool.getInstance(controller).release(backward);
 //        SpeakActionPool.getInstance(controller).release(speak);
-        ExpressEmotionActionPool.getInstance(controller).release(expression);
-
+//        ExpressEmotionActionPool.getInstance(controller).release(expression);
+        ChoiceActionPool.getInstance(controller).release(choiceAction);
     }
 
     @Override

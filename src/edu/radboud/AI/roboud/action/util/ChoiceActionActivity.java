@@ -1,19 +1,23 @@
 package edu.radboud.ai.roboud.action.util;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import edu.radboud.ai.roboud.R;
 import edu.radboud.ai.roboud.action.actions.ChoiceAction;
 
 /**
  * Created by Pieter Marsman on 4-6-2014.
  */
-public class ChoiceActionActivity extends ListActivity implements AdapterView.OnItemClickListener {
+public class ChoiceActionActivity extends Activity implements AdapterView.OnItemClickListener {
 
     public static final String RETURN_NAME = "Selected Item";
+    private static final String TAG = "ChoiceActionActivity";
 
     private ListView list;
     private String[] options;
@@ -21,14 +25,21 @@ public class ChoiceActionActivity extends ListActivity implements AdapterView.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        this.setContentView(R.layout.choice);
+        this.setContentView(R.layout.face_choice);
 
-        list = getListView();
+        list = (ListView) findViewById(R.id.listView);
 
         Intent sender = getIntent();
-        options = sender.getExtras().getStringArray(ChoiceAction.DATA_NAME);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            options = extras.getStringArray(ChoiceAction.DATA_NAME);
+        } else {
+            Log.e(TAG, "Activity was created without needed extra information. This should never happen.");
+        }
 
-//        list.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, options));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, options);
+        list.setAdapter(adapter);
         list.setOnItemClickListener(this);
     }
 

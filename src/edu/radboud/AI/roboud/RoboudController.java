@@ -12,7 +12,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
@@ -38,6 +37,8 @@ import java.util.Observer;
  */
 public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
 
+    // Speech, Listen, ShowText, ReadText, Confirmation
+
     public static final String TAG = "RoboudController";
     // Classes
     private RoboudModel model;
@@ -49,7 +50,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     // UI
     private TextView textView;
     private SurfaceView surfaceView;
-    private Button button;
     private ImageView imageView;
 
     // Senses
@@ -93,10 +93,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         Log.i(TAG, "onCreate(" + savedInstanceState + ")");
 
         // UI
-        setContentView(R.layout.face);
+        setContentView(R.layout.face_nothing);
         textView = (TextView) findViewById(R.id.textView);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
-        button = (Button) findViewById(R.id.button);
         imageView = (ImageView) findViewById(R.id.imageView);
 
         // RoboMe
@@ -141,7 +140,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // The activity has become visible (it is now "resumed").
         // UI
         Log.i(TAG, "onResume()");
-        button.setOnClickListener(this);
 
         // Senses
         loc.addObserver(this);
@@ -274,7 +272,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         } else {
             Log.w(TAG, "Trying to start listening to RoboMe but `robome' variable is not initialized yet");
         }
-        Log.i(TAG, model.toString());
         if (robome.isHeadsetPluggedIn())
             // Force this call
             roboMeConnected();
