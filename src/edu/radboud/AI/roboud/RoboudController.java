@@ -127,7 +127,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         returnActivityDataToMap = new HashMap<Integer, ActivityResultProcessor>();
 
         // Senses
-        //cam = new AndroidCamera(this, surfaceView, 1000);
+        cam = new AndroidCamera(this, surfaceView, 1000);
         loc = new AndroidLocation(this);
         mic = new AndroidMicrophone(this);
         speechEngine = new SpeechEngine(this);
@@ -136,7 +136,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         model = new RoboudModel(false, robome.isHeadsetPluggedIn(), robome.isListening(),
                 robome.getVolume(), robome.getLibVersion());
         Log.i(TAG, model.toString());
-        mind = new RoboudMind(this);
+        mind = RoboudMind.getInstance(this);
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensors = new HashMap<Integer, Sensor>();
@@ -200,20 +200,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     protected void onPause() {
+        // Another activity is taking focus (this activity is about to be "paused").
         Log.v(TAG, "onPause");
         try {
             writeToFile("(default output:) I am now paused, saving some text to file");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        showText("onStop()");
-
-        model.deleteObservers();
-        mind.stopRunning();
-
-        // Another activity is taking focus (this activity is about to be "paused").
-        Log.i(TAG, "onPause()");
 
         // UI
         // Nothing to do
@@ -364,14 +357,12 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void roboMeConnected() {
         Log.i(TAG, "RoboMe connected");
         model.setRobomeConnected(true);
-        mind.startRunning();
     }
 
     @Override
     public void roboMeDisconnected() {
         Log.i(TAG, "RoboMe disconnected");
         model.setRobomeConnected(false);
-        mind.stopRunning();
     }
 
     @Override
@@ -454,7 +445,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
         // Model update
         else if (observable instanceof RoboudModel) {
-//            showText(model.toString());
+            Log.v(TAG, model.toString());
         }
         // Unknown update
         else

@@ -16,6 +16,7 @@ public class RoboudMind implements Observer, Runnable {
 
     public static final String TAG = "RoboudMind";
 
+    private static RoboudMind instance = null;
     private Thread mindThread;
 
     private Scenario currentScenario = null;
@@ -26,14 +27,22 @@ public class RoboudMind implements Observer, Runnable {
 
     private TaskFactory taskFactory;
     private BehaviorFactory behaviorFactory;
+    private boolean runningForTheFirstTime;
 
-    public RoboudMind(RoboudController controller) {
+    private RoboudMind(RoboudController controller) {
         this.controller = controller;
         currentBehavior = null;
         currentScenario = whatIsCurrentScenario();
         behaviorFactory = BehaviorFactory.getInstance(currentScenario, controller);
         running = false;
         mindThread = null;
+        runningForTheFirstTime = true;
+    }
+
+    public static synchronized RoboudMind getInstance(RoboudController controller) {
+        if (instance == null)
+            instance = new RoboudMind(controller);
+        return instance;
     }
 
     private Scenario whatIsCurrentScenario() {
@@ -62,16 +71,16 @@ public class RoboudMind implements Observer, Runnable {
     }
 
     public void stopRunning() {
-        dispose();
         running = false;
+        dispose();
     }
 
     public void startRunning() {
         Log.d(TAG, "Start running roboud mind");
         if (mindThread == null) {
             mindThread = new Thread(this);
-            mindThread.start();
             running = true;
+            mindThread.start();
         } else {
             Log.w(TAG, "Already running, no need to start it again");
         }
@@ -90,8 +99,10 @@ public class RoboudMind implements Observer, Runnable {
 
     @Override
     public void run() {
-        if (currentBehavior != null)
+        if (currentBehavior != null && runningForTheFirstTime) {
             currentBehavior.executeBehaviour();
+            runningForTheFirstTime = false;
+        }
 
         while (running) {
             try {

@@ -1,13 +1,11 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.actions.ChoiceAction;
-import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
-import edu.radboud.ai.roboud.action.actions.ExpressEmotionAction;
-import edu.radboud.ai.roboud.action.actions.ShowTextAction;
+import edu.radboud.ai.roboud.action.actions.*;
 import edu.radboud.ai.roboud.action.pools.ChoiceActionPool;
 import edu.radboud.ai.roboud.action.pools.ConfirmationActionPool;
 import edu.radboud.ai.roboud.action.pools.ShowTextActionPool;
+import edu.radboud.ai.roboud.action.pools.SleepActionPool;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.LinkedList;
@@ -26,6 +24,7 @@ public class TestBehavior extends AbstractBehavior {
     private ConfirmationAction confirmationAction;
     private ExpressEmotionAction expression;
     private ShowTextAction showTextAction;
+    private SleepAction sleepAction;
 
     public TestBehavior(RoboudController controller, TaskFactory taskFactory) {
         super(controller, taskFactory);
@@ -44,9 +43,11 @@ public class TestBehavior extends AbstractBehavior {
         choiceAction = ChoiceActionPool.getInstance(controller).acquire(options);
         confirmationAction = ConfirmationActionPool.getInstance(controller).acquire("Are you really really sure?");
         showTextAction = ShowTextActionPool.getInstance(controller).acquire();
+        sleepAction = SleepActionPool.getInstance(controller).acquire(5000);
         blocks.add(choiceAction);
         blocks.add(confirmationAction);
         blocks.add(showTextAction);
+        blocks.add(sleepAction);
     }
 
     @Override
@@ -57,13 +58,15 @@ public class TestBehavior extends AbstractBehavior {
 //        ExpressEmotionActionPool.getInstance(controller).release(expression);
         ChoiceActionPool.getInstance(controller).release(choiceAction);
         ConfirmationActionPool.getInstance(controller).release(confirmationAction);
+        ShowTextActionPool.getInstance(controller).release(showTextAction);
+        SleepActionPool.getInstance(controller).release(sleepAction);
     }
 
     @Override
     protected Object processInformation(BehaviorBlock currentBlock) {
         if (currentBlock.getClass().equals(ConfirmationAction.class)) {
             ConfirmationAction confirmationAction1 = (ConfirmationAction) currentBlock;
-            return confirmationAction1.getResult();
+            return String.valueOf(confirmationAction1.getResult());
         }
         return null;
     }
