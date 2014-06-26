@@ -2,11 +2,9 @@ package edu.radboud.ai.roboud;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import android.hardware.*;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -119,7 +117,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
         Log.v(TAG, "Done reading file");
 
-        showText("onCreate(" + savedInstanceState + ")");
+        Log.i(TAG, "onCreate(" + savedInstanceState + ")");
         // RoboMe
         robome = new RoboMe(this.getApplicationContext(), this);
 
@@ -183,19 +181,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // RoboMe
         startListeningToRoboMe();
-    }
-
-    protected synchronized void writeToFile(String toWrite) throws IOException {
-        Log.v(TAG, "write to file");
-        WriteToFile writer = new WriteToFile();
-        writer.writeToFile(toWrite, FILENAME);
-    }
-
-    protected synchronized String readFromFile() throws Exception {
-        Log.v(TAG, "read from file");
-        ReadFromFile reader = new ReadFromFile();
-        return reader.readFromFile(FILENAME);
-
+        startMindThread();
     }
 
     @Override
@@ -224,7 +210,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // RoboMe
         stopListeningToRoboMe();
         model.deleteObservers();
-        mind.stopRunning();
+        stopMindThread();
 
         // Variables
         // Nothing to do
@@ -254,7 +240,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // TODO: This is an ugly try/catch
         try {
             model.deleteObservers();
-            mind.stopRunning();
         } catch (Exception e) {
             Log.v(TAG, "Caught vague exception");
         }
@@ -371,14 +356,14 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         startListeningToRoboMe();
         model.setRobomeHeadsetPluggedIn(true);
         // This is a quick fix. Actually roboMeConnected() should be used for this but it is unreliable.
-        mind.startRunning();
+        startMindThread();
     }
 
     @Override
     public void headsetUnplugged() {
         Log.i(TAG, "Headset unplugged");
         model.setRobomeHeadsetPluggedIn(false);
-        mind.stopRunning();
+        stopMindThread();
     }
 
     @Override
@@ -426,20 +411,31 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
+    protected synchronized void writeToFile(String toWrite) throws IOException {
+        Log.v(TAG, "write to file");
+        WriteToFile writer = new WriteToFile();
+        writer.writeToFile(toWrite, FILENAME);
+    }
+
+    protected synchronized String readFromFile() throws Exception {
+        Log.v(TAG, "read from file");
+        ReadFromFile reader = new ReadFromFile();
+        return reader.readFromFile(FILENAME);
+    }
+
     // === START Controller methods ===
 
     @Override
     public void update(Observable observable, Object data) {
         // Camera update
-//        if (observable instanceof AndroidCamera) {
-//            if (data instanceof Bitmap)
-//                model.setImage((Bitmap) data);
-//            if (data instanceof Camera.Face[])
-//                model.setFaces(((Camera.Face[]) data).length);
-//        }
+        if (observable instanceof AndroidCamera) {
+            if (data instanceof Bitmap)
+                model.setImage((Bitmap) data);
+            if (data instanceof Camera.Face[])
+                model.setFaces(((Camera.Face[]) data).length);
+        }
         // Location update
-        //else
-        if (observable instanceof AndroidLocation) {
+        else if (observable instanceof AndroidLocation) {
             if (data instanceof Location)
                 model.setLocation((Location) data);
         }
@@ -449,7 +445,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
         // Unknown update
         else
-            Log.d(TAG, "Unknown class observed");
+            Log.d(TAG, "Unknown class observed: " + observable.getClass());
     }
 
     @Override
@@ -463,6 +459,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         startActivityForResult(i, requestCode);
     }
 
+    public void listenToSpeech(Observer observer) {
+        mic.startListening();
+        mic.addObserver(observer);
+    }
     public void listenToSpeech(Observer observer) {
         mic.startListening();
         mic.addObserver(observer);
@@ -509,5 +509,15 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     public RoboudModel getModel() {
         return model;
+    }
+
+    private void startMindThread() {
+        if (model.isRobomeHeadsetPluggedIn()) {
+            mind.startRunning();
+        }
+    }
+
+    private void stopMindThread() {
+//        mind.stopRunning();
     }
 }

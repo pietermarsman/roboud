@@ -36,8 +36,8 @@ public class SleepAction extends AbstractAction {
         } catch (InterruptedException e) {
             Log.e(TAG, "sleep failed", e);
         }
-        setChanged();
         Log.d(TAG, "Waking up and notifying");
+        setChanged();
         notifyObservers();
     }
 
