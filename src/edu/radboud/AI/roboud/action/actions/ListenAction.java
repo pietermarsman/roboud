@@ -37,12 +37,7 @@ public class ListenAction extends AbstractAction implements Observer {
             results = (ArrayList<String>) data;
             Log.d(TAG, "Result of ListenAction is: " + results);
             setChanged();
-            notifyObservers(results);
+            notifyObservers();
         }
-    }
-
-
-    public ArrayList<String> getResult() {
-        return results;
     }
 }

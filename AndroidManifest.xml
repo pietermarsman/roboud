@@ -4,7 +4,7 @@
           android:versionCode="0"
           android:versionName="0.1">
 
-    <uses-sdk android:minSdkVersion="14"/>
+    <uses-sdk android:minSdkVersion="15"/>
 
     <uses-permission
             android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -34,6 +34,7 @@
         </activity>
         <activity android:name=".action.util.ChoiceActionActivity"/>
         <activity android:name=".action.util.ConfirmationActionActivity"/>
+        <activity android:name=".action.util.ReadTextActionActivity"/>
     </application>
 
 </manifest>

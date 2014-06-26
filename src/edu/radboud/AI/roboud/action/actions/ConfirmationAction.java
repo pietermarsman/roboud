@@ -24,6 +24,7 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
         this.question = question;
     }
 
+    @Deprecated
     public ConfirmationAction(RoboudController controller) {
         super(controller);
     }
@@ -54,10 +55,6 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
 
     @Override
     public Object getInformation() {
-        return result;
-    }
-
-    public boolean getResult() {
         return result;
     }
 

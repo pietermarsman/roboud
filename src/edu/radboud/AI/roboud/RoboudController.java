@@ -40,7 +40,6 @@ import java.util.Observer;
  */
 
 public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
-    // Speech, Listen, ShowText, ReadText, Confirmation
 
     public static final String TAG = "RoboudController";
     String fileDir = "";
@@ -53,6 +52,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     private RoboMe robome;
     // UI
     private TextView textView;
+    private String text;
     private SurfaceView surfaceView;
     private ImageView imageView;
     // Senses
@@ -127,7 +127,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Senses
         cam = new AndroidCamera(this, surfaceView, 1000);
         loc = new AndroidLocation(this);
-        mic = new AndroidMicrophone(this);
+        mic = AndroidMicrophone.getInstance(this);
         speechEngine = new SpeechEngine(this);
 
         // Classes
@@ -165,11 +165,12 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (text != null)
+            showText(text);
 
         // Senses
         loc.addObserver(this);
         cam.addObserver(this);
-        mic.addObserver(this);
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
 
@@ -200,7 +201,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Senses
         loc.deleteObservers();
         cam.deleteObservers();
-        mic.deleteObservers();
+        // Not delete observer from mic because it can be used for an activity
         mSensorManager.unregisterListener(this);
 
         // Classes
@@ -294,6 +295,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
      * Sends message to our textViewHandler to display the text in the output
      */
     public void showText(String text) {
+        this.text = text;
         Message msg = new Message();
         msg.what = 0x99;
         msg.obj = text;
@@ -310,9 +312,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         } else {
             Log.w(TAG, "Trying to start listening to RoboMe but `robome' variable is not initialized yet");
         }
-        if (robome.isHeadsetPluggedIn())
-            // Force this call
-            roboMeConnected();
     }
 
     public void stopListeningToRoboMe() {
@@ -460,8 +459,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void listenToSpeech(Observer observer) {
-        mic.startListening();
         mic.addObserver(observer);
+        mic.startListening();
     }
 
     public void speakText(Observer observer, String text) {

@@ -112,9 +112,9 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
         boolean canTakePicture = ready && available;
         if (canTakePicture) {
 
-            mCamera.startPreview();
-            mCamera.startFaceDetection();
             try {
+                mCamera.startPreview();
+                mCamera.startFaceDetection();
                 mCamera.takePicture(null, null, mCall);
             } catch (Exception e) {
                 Log.e(TAG, "Not succeeded in taking a picture", e);

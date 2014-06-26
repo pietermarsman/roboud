@@ -2,10 +2,12 @@ package edu.radboud.ai.roboud.senses;
 
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Observable;
 
@@ -13,7 +15,24 @@ import java.util.Observable;
  * Created by Pieter Marsman on 20-6-2014.
  */
 public class SpeechEngine extends Observable implements TextToSpeech.OnInitListener, ActivityResultProcessor {
+    public static final String SPEECH_ID = "speechID";
     private static final String TAG = "SpeechEngine";
+    private UtteranceProgressListener progressListener = new UtteranceProgressListener() {
+        @Override
+        public void onDone(String utteranceId) {
+            doneSpeaking();
+        }
+
+        @Override
+        public void onError(String utteranceId) {
+            Log.e(TAG, "Error during speaking: " + utteranceId);
+            doneSpeaking();
+        }
+
+        @Override
+        public void onStart(String utteranceId) {
+        }
+    };
     private static final int MY_DATA_CHECK_CODE = 30, INSTALL_CODE = 31;
     private static final Locale LANGUAGE = Locale.US;
     private TextToSpeech myTTS;
@@ -33,37 +52,20 @@ public class SpeechEngine extends Observable implements TextToSpeech.OnInitListe
     public void onInit(int initStatus) {
         // check for successful instantiation
         if (initStatus == TextToSpeech.SUCCESS) {
-            if (myTTS != null)
+            if (myTTS != null) {
                 myTTS.setLanguage(LANGUAGE);
-            else
+                myTTS.setOnUtteranceProgressListener(progressListener);
+            } else
                 Log.w(TAG, "Trying to set language, but in the meantime the TextToSpeech variable was destroyed");
         } else if (initStatus == TextToSpeech.ERROR) {
             Log.w(TAG, "TTS: failed to initialize ");
         }
     }
 
-    private void notifyWhenReadyWithSpeaking() {
-        //Not the best way to do this probably
-        Runnable checker = new Runnable() {
-            public void run() {
-                while (myTTS.isSpeaking()) {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        Log.e(TAG, "Something went wrong in the speak checker", e);
-                    }
-                }
-                setChanged();
-                notifyObservers();
-            }
-        };
-
-        new Thread(checker).start();
-    }
-
     public void speak(String text) {
-        myTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-        notifyWhenReadyWithSpeaking();
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, text);
+        myTTS.speak(text, TextToSpeech.QUEUE_FLUSH, map);
     }
 
     @Override
@@ -96,5 +98,10 @@ public class SpeechEngine extends Observable implements TextToSpeech.OnInitListe
         } else {
             Log.w(TAG, "Tried to destroy TextToSpeak, but it is already null");
         }
+    }
+
+    private void doneSpeaking() {
+        setChanged();
+        notifyObservers();
     }
 }

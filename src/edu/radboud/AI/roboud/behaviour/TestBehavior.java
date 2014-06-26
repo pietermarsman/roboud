@@ -1,13 +1,16 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.actions.*;
-import edu.radboud.ai.roboud.action.pools.ChoiceActionPool;
-import edu.radboud.ai.roboud.action.pools.ConfirmationActionPool;
+import edu.radboud.ai.roboud.action.actions.ListenAction;
+import edu.radboud.ai.roboud.action.actions.ReadTextAction;
+import edu.radboud.ai.roboud.action.actions.ShowTextAction;
+import edu.radboud.ai.roboud.action.actions.SpeakAction;
+import edu.radboud.ai.roboud.action.pools.ListenActionPool;
+import edu.radboud.ai.roboud.action.pools.ReadTextActionPool;
 import edu.radboud.ai.roboud.action.pools.ShowTextActionPool;
+import edu.radboud.ai.roboud.action.pools.SpeakActionPool;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,56 +20,41 @@ public class TestBehavior extends AbstractBehavior {
 
     public final static String TAG = "TestBehavior";
 
-    //    private MotorAction forward, backward;
-//    private SpeakAction speak;
-    private ChoiceAction choiceAction;
-    private ConfirmationAction confirmationAction;
-    private ExpressEmotionAction expression;
-    private ShowTextAction showTextAction;
-    private SleepAction sleepAction;
+    SpeakAction speakAction1, speakAction2, speakAction3;
+    ReadTextAction readTextAction;
+    ListenAction listenAction1;
+    ShowTextAction showTextAction;
 
     public TestBehavior(RoboudController controller, TaskFactory taskFactory) {
         super(controller, taskFactory);
-//        blocks.add(taskFactory.getDutchFlagLedTask());
-//        forward = MotorActionPool.getInstance(controller).acquire(RobotDirection.FORWARD, RobotSpeed.NORMAL);
-//        backward = MotorActionPool.getInstance(controller).acquire(RobotDirection.BACKWARD, RobotSpeed.NORMAL);
-//        speak = SpeakActionPool.getInstance(controller).acquire(SpeechRepertoire.textIntroduceMyself);
-//        blocks.add(forward);
-//        blocks.add(speak);
-//        blocks.add(backward);
-//        expression = ExpressEmotionActionPool.getInstance(controller).acquire(FaceExpression.SAD);
-//        blocks.add(expression);
-        List<String> options = new LinkedList<String>();
-        options.add("Optie 1");
-        options.add("Optie 2");
-        choiceAction = ChoiceActionPool.getInstance(controller).acquire(options);
-        confirmationAction = ConfirmationActionPool.getInstance(controller).acquire("Are you really really sure?");
+        speakAction1 = SpeakActionPool.getInstance(controller).acquire("Talk to me goose");
+        listenAction1 = ListenActionPool.getInstance(controller).acquire();
+        speakAction2 = SpeakActionPool.getInstance(controller).acquire("Ouch. Not so loud. I am right next to you");
         showTextAction = ShowTextActionPool.getInstance(controller).acquire();
-//        sleepAction = SleepActionPool.getInstance(controller).acquire(5000);
-        blocks.add(choiceAction);
-        blocks.add(confirmationAction);
+        readTextAction = ReadTextActionPool.getInstance(controller).acquire();
+        speakAction3 = SpeakActionPool.getInstance(controller).acquire();
+        blocks.add(speakAction1);
+        blocks.add(listenAction1);
+        blocks.add(speakAction2);
         blocks.add(showTextAction);
-//        blocks.add(sleepAction);
+        blocks.add(readTextAction);
+        blocks.add(speakAction3);
     }
 
     @Override
     public void releaseActions() {
-//        MotorActionPool.getInstance(controller).release(forward);
-//        MotorActionPool.getInstance(controller).release(backward);
-//        SpeakActionPool.getInstance(controller).release(speak);
-//        ExpressEmotionActionPool.getInstance(controller).release(expression);
-        ChoiceActionPool.getInstance(controller).release(choiceAction);
-        ConfirmationActionPool.getInstance(controller).release(confirmationAction);
-        ShowTextActionPool.getInstance(controller).release(showTextAction);
-//        SleepActionPool.getInstance(controller).release(sleepAction);
+        SpeakActionPool.getInstance(controller).release(speakAction1);
+        SpeakActionPool.getInstance(controller).release(speakAction2);
+        SpeakActionPool.getInstance(controller).release(speakAction3);
+        ReadTextActionPool.getInstance(controller).release(readTextAction);
     }
 
     @Override
     protected Object processInformation(BehaviorBlock currentBlock) {
-        if (currentBlock.getClass().equals(ConfirmationAction.class)) {
-            ConfirmationAction confirmationAction1 = (ConfirmationAction) currentBlock;
-            return String.valueOf(confirmationAction1.getResult());
-        }
+        if (currentBlock == speakAction2)
+            return ((List<String>) results.get(listenAction1)).get(0);
+        if (currentBlock == readTextAction)
+            return readTextAction.getInformation();
         return null;
     }
 }
@@ -74,3 +62,8 @@ public class TestBehavior extends AbstractBehavior {
 // LEDAction
 // RandomWander
 // ShowTextAction
+// SpeakAction
+// ChoiceAction
+// ConfirmationAction
+// ExpressEmotionAction
+// ListenAction
