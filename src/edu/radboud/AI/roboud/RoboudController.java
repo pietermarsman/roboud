@@ -463,10 +463,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         mic.startListening();
         mic.addObserver(observer);
     }
-    public void listenToSpeech(Observer observer) {
-        mic.startListening();
-        mic.addObserver(observer);
-    }
 
     public void speakText(Observer observer, String text) {
         speechEngine.addObserver(observer);

@@ -5,7 +5,6 @@ import edu.radboud.ai.roboud.action.actions.*;
 import edu.radboud.ai.roboud.action.pools.ChoiceActionPool;
 import edu.radboud.ai.roboud.action.pools.ConfirmationActionPool;
 import edu.radboud.ai.roboud.action.pools.ShowTextActionPool;
-import edu.radboud.ai.roboud.action.pools.SleepActionPool;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.LinkedList;
@@ -43,11 +42,11 @@ public class TestBehavior extends AbstractBehavior {
         choiceAction = ChoiceActionPool.getInstance(controller).acquire(options);
         confirmationAction = ConfirmationActionPool.getInstance(controller).acquire("Are you really really sure?");
         showTextAction = ShowTextActionPool.getInstance(controller).acquire();
-        sleepAction = SleepActionPool.getInstance(controller).acquire(5000);
+//        sleepAction = SleepActionPool.getInstance(controller).acquire(5000);
         blocks.add(choiceAction);
         blocks.add(confirmationAction);
         blocks.add(showTextAction);
-        blocks.add(sleepAction);
+//        blocks.add(sleepAction);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class TestBehavior extends AbstractBehavior {
         ChoiceActionPool.getInstance(controller).release(choiceAction);
         ConfirmationActionPool.getInstance(controller).release(confirmationAction);
         ShowTextActionPool.getInstance(controller).release(showTextAction);
-        SleepActionPool.getInstance(controller).release(sleepAction);
+//        SleepActionPool.getInstance(controller).release(sleepAction);
     }
 
     @Override
