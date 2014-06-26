@@ -6,8 +6,6 @@ import edu.radboud.ai.roboud.action.pools.SpeakActionPool;
 import edu.radboud.ai.roboud.task.SpeechRepertoire;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
-import java.util.Observer;
-
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */

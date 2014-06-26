@@ -19,12 +19,10 @@ public class StoreInformation extends Activity {
     }
 
     @Override
-    protected void onCreate(Bundle state)
-    {
+    protected void onCreate(Bundle state) {
         Log.v(TAG, "Oncreate storeinformation");
 //        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0); // (0 = MODE_PRIVATE)
-        for(int i = 0; i < state.size(); i++)
-        {
+        for (int i = 0; i < state.size(); i++) {
 //            boolean1 = state.getBoolean("boolean1");
 //            StringName1 = state.getString("StringName1");
 //            int1 = state.getInt("int1");
@@ -33,8 +31,7 @@ public class StoreInformation extends Activity {
 
     @Override
     protected void onStop() {
-        Log.v(TAG,"onStop StoreInformation");
-
+        Log.v(TAG, "onStop StoreInformation");
 
 
         super.onStop();

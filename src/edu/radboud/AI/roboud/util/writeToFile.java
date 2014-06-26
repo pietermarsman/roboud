@@ -13,7 +13,8 @@ import java.util.Random;
 public class WriteToFile {
     public static final String TAG = "WriteToFile";
 
-    public WriteToFile()   {   }
+    public WriteToFile() {
+    }
 
     public void writeToFile(String toWrite, String FILENAME) throws IOException {
 

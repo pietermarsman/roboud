@@ -5,8 +5,6 @@ import edu.radboud.ai.roboud.action.actions.SleepAction;
 import edu.radboud.ai.roboud.action.pools.SleepActionPool;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
-import java.util.Observer;
-
 /**
  * Created by mikel_000 on 25-6-2014.
  */

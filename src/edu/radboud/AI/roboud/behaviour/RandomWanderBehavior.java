@@ -8,8 +8,6 @@ import edu.radboud.ai.roboud.action.util.RobotDirection;
 import edu.radboud.ai.roboud.action.util.RobotSpeed;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
-import java.util.Observer;
-
 /**
  * Created by Guido Faassen on 20-06-14.
  */

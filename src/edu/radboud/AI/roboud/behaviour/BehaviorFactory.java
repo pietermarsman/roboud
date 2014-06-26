@@ -4,8 +4,6 @@ import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.scenario.Scenario;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
-import java.util.Observer;
-
 /**
  * Created by Pieter Marsman on 19-6-2014.
  */

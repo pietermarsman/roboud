@@ -56,12 +56,12 @@ public class SpeakAction extends AbstractAction implements Observer {
         return text;
     }
 
-    public void setText(String[] texts) {
-        this.text = SpeechRepertoire.randomChoice(texts);
-    }
-
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setText(String[] texts) {
+        this.text = SpeechRepertoire.randomChoice(texts);
     }
 
     @Override

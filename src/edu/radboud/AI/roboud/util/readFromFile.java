@@ -12,8 +12,8 @@ import java.io.IOException;
  */
 public class ReadFromFile {
     public static final String TAG = "ReadFromFile";
-    public ReadFromFile()
-    {
+
+    public ReadFromFile() {
 
     }
 
@@ -32,10 +32,10 @@ public class ReadFromFile {
         String stringFromFile = "";
         do {
             i = br.read();
-            if(i != -1)
+            if (i != -1)
                 stringFromFile += (char) i;
         } while (i != -1);
-        Log.v(TAG,"Just read this: " + stringFromFile);
+        Log.v(TAG, "Just read this: " + stringFromFile);
         br.close();
         henk.close();
         return stringFromFile;

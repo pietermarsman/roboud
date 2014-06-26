@@ -45,32 +45,26 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     // Speech, Listen, ShowText, ReadText, Confirmation
 
     public static final String TAG = "RoboudController";
-
+    String fileDir = "";
+    String fileName = "hello_file.txt";
+    String FILENAME = "";
     // Classes
     private RoboudModel model;
     private RoboudMind mind;
-
     // RoboMe
     private RoboMe robome;
-
     // UI
     private TextView textView;
     private SurfaceView surfaceView;
     private ImageView imageView;
-
     // Senses
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
     private SpeechEngine speechEngine;
-
     //private String fileName = "hello_file";
     //private String fileLocation = "D:/Human Robot Interaction/Project/roboud/assets"; //"assets//storeinfo.txt";
     private EditText firstField;
     private EditText secondField;
-    String fileDir = "";
-    String fileName = "hello_file.txt";
-    String FILENAME = "";
-
     private AndroidMicrophone mic;
     private AndroidCamera cam;
     private AndroidLocation loc;
@@ -106,9 +100,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate");
 
-        if(fileDir == "") {
+        if (fileDir == "") {
             fileDir = getFilesDir().toString();
-            FILENAME = getApplicationContext().getFilesDir().getPath().toString()+ "/" + fileName; //fileDir + "/" + fileName;
+            FILENAME = getApplicationContext().getFilesDir().getPath().toString() + "/" + fileName; //fileDir + "/" + fileName;
         }
         Log.i(TAG, "onCreate(" + savedInstanceState + ")");
 
@@ -119,11 +113,11 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         imageView = (ImageView) findViewById(R.id.imageView);
 
         try {
-            Log.v(TAG,readFromFile());
+            Log.v(TAG, readFromFile());
         } catch (Exception e) {
-            Log.v(TAG,"no saved information on phone");
+            Log.v(TAG, "no saved information on phone");
         }
-        Log.v(TAG,"Done reading file");
+        Log.v(TAG, "Done reading file");
 
         showText("onCreate(" + savedInstanceState + ")");
         // RoboMe
@@ -154,6 +148,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         sensors.put(Sensor.TYPE_PROXIMITY, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
         sensors.put(Sensor.TYPE_LIGHT, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -166,7 +161,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         super.onResume();
         // The activity has become visible (it is now "resumed").
         // UI
-        Log.v(TAG,"onResume");
+        Log.v(TAG, "onResume");
         try {
             readFromFile();
         } catch (Exception e) {
@@ -191,13 +186,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     protected synchronized void writeToFile(String toWrite) throws IOException {
-        Log.v(TAG,"write to file");
+        Log.v(TAG, "write to file");
         WriteToFile writer = new WriteToFile();
         writer.writeToFile(toWrite, FILENAME);
     }
 
     protected synchronized String readFromFile() throws Exception {
-        Log.v(TAG,"read from file");
+        Log.v(TAG, "read from file");
         ReadFromFile reader = new ReadFromFile();
         return reader.readFromFile(FILENAME);
 
@@ -245,13 +240,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void onStop() {
-        Log.v(TAG,"onStop");
+        Log.v(TAG, "onStop");
         try {
             writeToFile("Store information now");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.v(TAG,"Done writing to file, stopping app now");
+        Log.v(TAG, "Done writing to file, stopping app now");
 
         // UI
         // Nothing to do
@@ -264,12 +259,11 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Classes
         // TODO: This is an ugly try/catch
-        try{
+        try {
             model.deleteObservers();
             mind.stopRunning();
-        } catch(Exception e)
-        {
-            Log.v(TAG,"Caught vague exception");
+        } catch (Exception e) {
+            Log.v(TAG, "Caught vague exception");
         }
         super.onStop();
 
@@ -454,7 +448,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 //        }
         // Location update
         //else
-       if (observable instanceof AndroidLocation) {
+        if (observable instanceof AndroidLocation) {
             if (data instanceof Location)
                 model.setLocation((Location) data);
         }
