@@ -2,8 +2,10 @@ package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.ChoiceAction;
+import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
 import edu.radboud.ai.roboud.action.actions.ExpressEmotionAction;
 import edu.radboud.ai.roboud.action.pools.ChoiceActionPool;
+import edu.radboud.ai.roboud.action.pools.ConfirmationActionPool;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.LinkedList;
@@ -19,6 +21,7 @@ public class TestBehavior extends AbstractBehavior {
     //    private MotorAction forward, backward;
 //    private SpeakAction speak;
     private ChoiceAction choiceAction;
+    private ConfirmationAction confirmationAction;
     private ExpressEmotionAction expression;
 
     public TestBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
@@ -36,7 +39,10 @@ public class TestBehavior extends AbstractBehavior {
         options.add("Optie 1");
         options.add("Optie 2");
         choiceAction = ChoiceActionPool.getInstance(controller).acquire(options);
+        confirmationAction = ConfirmationActionPool.getInstance(controller).acquire("Are you really really sure?");
         blocks.add(choiceAction);
+        blocks.add(confirmationAction);
+
     }
 
     @Override
@@ -46,6 +52,7 @@ public class TestBehavior extends AbstractBehavior {
 //        SpeakActionPool.getInstance(controller).release(speak);
 //        ExpressEmotionActionPool.getInstance(controller).release(expression);
         ChoiceActionPool.getInstance(controller).release(choiceAction);
+        ConfirmationActionPool.getInstance(controller).release(confirmationAction);
     }
 
     @Override

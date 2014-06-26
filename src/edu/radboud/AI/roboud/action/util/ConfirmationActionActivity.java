@@ -14,7 +14,7 @@ import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
  */
 public class ConfirmationActionActivity extends Activity implements View.OnClickListener {
 
-    private static final String RETURN_NAME = "result";
+    public static final String RETURN_NAME = "result";
     private TextView textView;
     private Button yesButton, noButton;
 

@@ -3,7 +3,6 @@ package edu.radboud.ai.roboud.action.actions;
 import android.app.Activity;
 import android.content.Intent;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.action.util.ChoiceActionActivity;
 import edu.radboud.ai.roboud.action.util.ConfirmationActionActivity;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
@@ -32,7 +31,7 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
     @Override
     public void processData(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            result = data.getBooleanExtra(ChoiceActionActivity.RETURN_NAME, false);
+            result = data.getBooleanExtra(ConfirmationActionActivity.RETURN_NAME, false);
             setChanged();
             notifyObservers();
         } else {
