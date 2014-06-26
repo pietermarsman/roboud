@@ -14,7 +14,7 @@ import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
  */
 public class ConfirmationActionActivity extends Activity implements View.OnClickListener {
 
-    private static final String RETURN_NAME = "result";
+    public static final String RETURN_NAME = "result";
     private TextView textView;
     private Button yesButton, noButton;
 
@@ -23,9 +23,9 @@ public class ConfirmationActionActivity extends Activity implements View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.confirmation);
+        setContentView(R.layout.face_confirmation);
 
-        textView = (TextView) findViewById(R.id.confirmation_question);
+        textView = (TextView) findViewById(R.id.textView);
         yesButton = (Button) findViewById(R.id.confirmation_button_yes);
         noButton = (Button) findViewById(R.id.confirmation_button_no);
 

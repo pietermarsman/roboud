@@ -17,7 +17,7 @@ public class ExpressEmotionAction extends AbstractAction {
 
     @Override
     public void doActions(Object information) {
-        controller.setFaceExpression(expression);
+        controller.displayFaceExpression(expression);
         setChanged();
         notifyObservers();
     }

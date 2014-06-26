@@ -14,7 +14,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +42,8 @@ import java.util.Observer;
  */
 
 public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
+    // Speech, Listen, ShowText, ReadText, Confirmation
+
     public static final String TAG = "RoboudController";
 
     // Classes
@@ -55,7 +56,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     // UI
     private TextView textView;
     private SurfaceView surfaceView;
-    private Button button;
     private ImageView imageView;
 
     // Senses
@@ -78,12 +78,21 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     // Roboud
     private HashMap<Integer, ActivityResultProcessor> returnActivityDataToMap;
 
-    private Handler handler = new Handler() {
+    private Handler textViewHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             // display the received event
             if (msg.what == 0x99)
                 textView.setText((String) msg.obj);
+        }
+    };
+
+    private Handler faceExpressionHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // show the face
+            if (msg.what == 0x98)
+                setFaceExpression((FaceExpression) msg.obj);
         }
     };
 
@@ -104,10 +113,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         Log.i(TAG, "onCreate(" + savedInstanceState + ")");
 
         // UI
-        setContentView(R.layout.face);
+        setContentView(R.layout.face_nothing);
         textView = (TextView) findViewById(R.id.textView);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
-        button = (Button) findViewById(R.id.button);
         imageView = (ImageView) findViewById(R.id.imageView);
 
         try {
@@ -131,8 +139,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         speechEngine = new SpeechEngine(this);
 
         // Classes
-        model = new RoboudModel(robome.isRoboMeConnected(), robome.isHeadsetPluggedIn(), robome.isListening(),
+        model = new RoboudModel(false, robome.isHeadsetPluggedIn(), robome.isListening(),
                 robome.getVolume(), robome.getLibVersion());
+        Log.i(TAG, model.toString());
         mind = new RoboudMind(this);
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -157,14 +166,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         super.onResume();
         // The activity has become visible (it is now "resumed").
         // UI
-        showText("onResume()");
         Log.v(TAG,"onResume");
         try {
             readFromFile();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        button.setOnClickListener(this);
+
         // Senses
         loc.addObserver(this);
         cam.addObserver(this);
@@ -172,17 +180,14 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         for (Sensor s : sensors.values())
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
 
-        // RoboMe
-        startListeningToRoboMe();
-
         // Classes
         model.addObserver(this);
         Scenario scenario = new TestScenario(getApplicationContext(), cam.isAvailable(), loc.isAvailable(), mic.isAvailable()
                 && speechEngine.isAvailable());
         model.setScenario(scenario);
 
-        // Variables
-        // Nothing to do
+        // RoboMe
+        startListeningToRoboMe();
     }
 
     protected synchronized void writeToFile(String toWrite) throws IOException {
@@ -314,13 +319,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     /**
-     * Sends message to our handler to display the text in the output
+     * Sends message to our textViewHandler to display the text in the output
      */
     public void showText(String text) {
         Message msg = new Message();
         msg.what = 0x99;
         msg.obj = text;
-        handler.sendMessage(msg);
+        textViewHandler.sendMessage(msg);
     }
 
     //  === START RoboMe part ===
@@ -333,6 +338,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         } else {
             Log.w(TAG, "Trying to start listening to RoboMe but `robome' variable is not initialized yet");
         }
+        if (robome.isHeadsetPluggedIn())
+            // Force this call
+            roboMeConnected();
     }
 
     public void stopListeningToRoboMe() {
@@ -347,8 +355,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void commandReceived(RoboMeCommands.IncomingRobotCommand incomingRobotCommand) {
-        model.receiveCommand(incomingRobotCommand);
         Log.d(TAG, incomingRobotCommand.toString());
+        model.receiveCommand(incomingRobotCommand);
     }
 
     public void sendCommand(RoboMeCommands.RobotCommand outgoingCommand) {
@@ -377,12 +385,15 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         Log.i(TAG, "Headset plugged in");
         startListeningToRoboMe();
         model.setRobomeHeadsetPluggedIn(true);
+        // This is a quick fix. Actually roboMeConnected() should be used for this but it is unreliable.
+        mind.startRunning();
     }
 
     @Override
     public void headsetUnplugged() {
         Log.i(TAG, "Headset unplugged");
         model.setRobomeHeadsetPluggedIn(false);
+        mind.stopRunning();
     }
 
     @Override
@@ -477,7 +488,15 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         speechEngine.speak(text);
     }
 
-    public void setFaceExpression(FaceExpression faceExpression) {
+    public void displayFaceExpression(FaceExpression faceExpression) {
+        Message m = new Message();
+        m.what = 0x98;
+        m.obj = faceExpression;
+        faceExpressionHandler.sendMessage(m);
+    }
+
+    private void setFaceExpression(FaceExpression faceExpression) {
+        Log.i(TAG, "setFaceExpression: " + faceExpression);
         Drawable drawable;
         switch (faceExpression) {
             case SAD:

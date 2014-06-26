@@ -67,6 +67,7 @@ public class RoboudMind implements Observer, Runnable {
     }
 
     public void startRunning() {
+        Log.d(TAG, "Start running roboud mind");
         if (mindThread == null) {
             mindThread = new Thread(this);
             mindThread.start();
