@@ -4,8 +4,10 @@ import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.ChoiceAction;
 import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
 import edu.radboud.ai.roboud.action.actions.ExpressEmotionAction;
+import edu.radboud.ai.roboud.action.actions.ShowTextAction;
 import edu.radboud.ai.roboud.action.pools.ChoiceActionPool;
 import edu.radboud.ai.roboud.action.pools.ConfirmationActionPool;
+import edu.radboud.ai.roboud.action.pools.ShowTextActionPool;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 import java.util.LinkedList;
@@ -23,6 +25,7 @@ public class TestBehavior extends AbstractBehavior {
     private ChoiceAction choiceAction;
     private ConfirmationAction confirmationAction;
     private ExpressEmotionAction expression;
+    private ShowTextAction showTextAction;
 
     public TestBehavior(RoboudController controller, TaskFactory taskFactory, Observer observer) {
         super(controller, taskFactory, observer);
@@ -40,9 +43,10 @@ public class TestBehavior extends AbstractBehavior {
         options.add("Optie 2");
         choiceAction = ChoiceActionPool.getInstance(controller).acquire(options);
         confirmationAction = ConfirmationActionPool.getInstance(controller).acquire("Are you really really sure?");
+        showTextAction = ShowTextActionPool.getInstance(controller).acquire();
         blocks.add(choiceAction);
         blocks.add(confirmationAction);
-
+        blocks.add(showTextAction);
     }
 
     @Override
@@ -57,6 +61,10 @@ public class TestBehavior extends AbstractBehavior {
 
     @Override
     protected Object processInformation(BehaviorBlock currentBlock) {
+        if (currentBlock.getClass().equals(ConfirmationAction.class)) {
+            ConfirmationAction confirmationAction1 = (ConfirmationAction) currentBlock;
+            return confirmationAction1.getResult();
+        }
         return null;
     }
 }
