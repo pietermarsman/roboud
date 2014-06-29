@@ -8,7 +8,7 @@ import edu.radboud.ai.roboud.action.util.FaceExpression;
 import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
-import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.List;
 import java.util.Observable;
@@ -257,6 +257,7 @@ public class RoboudModel extends Observable {
 
     public void setScenario(Scenario scenario) {
         this.scenario = scenario;
+        changed();
     }
 
     public FaceExpression getFaceExpression() {

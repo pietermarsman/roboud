@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">roboud</string>
     <string name="voice_recognition_message">I am listening...</string>
+    <string name="connectMe">Please connect the app to the robot body...</string>
 </resources>

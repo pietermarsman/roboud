@@ -1,0 +1,88 @@
+package edu.radboud.ai.roboud.module.behaviorModules;
+
+import android.util.Log;
+import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.behaviour.behaviors.*;
+import edu.radboud.ai.roboud.module.util.IntroductionBehaviorPhase;
+import edu.radboud.ai.roboud.util.Scenario;
+
+import java.util.Observable;
+
+/**
+ * Created by mikel_000 on 28-6-2014.
+ */
+public class IntroductionBehaviorModule extends AbstractBehaviorModule {
+
+    public static final String TAG = "IntroductionBehaviorModule";
+    private static IntroductionBehaviorModule ourInstance = null;
+
+    private IntroductionBehaviorPhase phase;
+
+    public synchronized static IntroductionBehaviorModule getInstance(RoboudController controller, Scenario scenario) {
+        if (ourInstance == null)
+            ourInstance = new IntroductionBehaviorModule(controller, scenario);
+        return ourInstance;
+    }
+
+    private IntroductionBehaviorModule(RoboudController controller, Scenario scenario) {
+        super(controller, scenario);
+    }
+
+    @Override
+    protected AbstractBehavior firstBehavior() {
+        phase = IntroductionBehaviorPhase.KNOWNUSER;
+        AreWeFamiliarBehavior firstBehavior = behaviorFactory.getAreWeFamiliarBehavior();
+        firstBehavior.addObserver(this);
+        return firstBehavior;
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        Log.i(TAG, "==Introduction Module is updated==");
+        if (phase == IntroductionBehaviorPhase.KNOWNUSER){
+            Log.i(TAG, "Phase is at KNOWNUSER");
+            if (observable instanceof AreWeFamiliarBehavior) {
+                AreWeFamiliarBehavior previousBehavior = (AreWeFamiliarBehavior) observable;
+                previousBehavior.deleteObserver(this);
+                if (previousBehavior.isFamiliar()){
+                    phase = IntroductionBehaviorPhase.SELECTEXISTINGUSER;
+                    Log.i(TAG, "Phase is set to SELECTEXISTINGUSER");
+                    currentBehavior = behaviorFactory.getExistingUserBehavior();
+                    behaviorReady = true;
+                }
+                else{
+                    phase = IntroductionBehaviorPhase.NEWUSER;
+                    Log.i(TAG, "Phase is set to NEWUSER");
+                    currentBehavior = behaviorFactory.getIntroduceBehavior();
+                    behaviorReady = true;
+                }
+            }
+        }
+        if (phase == IntroductionBehaviorPhase.SELECTEXISTINGUSER || phase == IntroductionBehaviorPhase.NEWUSER){
+            Log.i(TAG, "Phase is at SELECTEXISTINGUSER or NEWUSER");
+            if (observable instanceof SelectExistingUserBehavior || observable instanceof IntroduceBehavior){
+                AbstractBehavior previousBehavior = (AbstractBehavior) observable;
+                previousBehavior.deleteObserver(this);
+                phase = IntroductionBehaviorPhase.GETSETTINGS;
+                Log.i(TAG, "Phase is set to GETSETTINGS");
+                currentBehavior = behaviorFactory.getSettingsBehavior();
+                behaviorReady = true;
+            }
+        }
+        if (phase == IntroductionBehaviorPhase.GETSETTINGS){
+            Log.i(TAG, "Phase is at GETSETTINGS");
+            if (observable instanceof SettingsBehavior){
+                SettingsBehavior previousBehavior = (SettingsBehavior) observable;
+                previousBehavior.deleteObserver(this);
+                Log.i(TAG, "and we're finished");
+                finished();
+            }
+
+
+        }
+    }
+
+    public IntroductionBehaviorPhase getPhase(){
+        return phase;
+    }
+}

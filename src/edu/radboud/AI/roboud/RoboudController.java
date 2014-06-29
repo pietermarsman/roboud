@@ -18,8 +18,7 @@ import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
 import edu.radboud.ai.roboud.action.util.FaceExpression;
-import edu.radboud.ai.roboud.scenario.Scenario;
-import edu.radboud.ai.roboud.scenario.TestScenario;
+import edu.radboud.ai.roboud.util.Scenario;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
@@ -45,6 +44,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     String fileDir = "";
     String fileName = "hello_file.txt";
     String FILENAME = "";
+
     // Classes
     private RoboudModel model;
     private RoboudMind mind;
@@ -59,8 +59,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
     private SpeechEngine speechEngine;
-    //private String fileName = "hello_file";
-    //private String fileLocation = "D:/Human Robot Interaction/Project/roboud/assets"; //"assets//storeinfo.txt";
+
     private EditText firstField;
     private EditText secondField;
     private AndroidMicrophone mic;
@@ -102,7 +101,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
             fileDir = getFilesDir().toString();
             FILENAME = getApplicationContext().getFilesDir().getPath().toString() + "/" + fileName; //fileDir + "/" + fileName;
         }
-        Log.i(TAG, "onCreate(" + savedInstanceState + ")");
 
         // UI
         setContentView(R.layout.face_nothing);
@@ -134,7 +132,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         model = new RoboudModel(false, robome.isHeadsetPluggedIn(), robome.isListening(),
                 robome.getVolume(), robome.getLibVersion());
         Log.i(TAG, model.toString());
-        mind = RoboudMind.getInstance(this);
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensors = new HashMap<Integer, Sensor>();
@@ -157,13 +154,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(TAG, "onResume");
         // The activity has become visible (it is now "resumed").
-        // UI
-        Log.v(TAG, "onResume");
+        // UI;
         try {
             readFromFile();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "read from file failed", e);
         }
         if (text != null)
             showText(text);
@@ -175,10 +172,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
 
         // Classes
-        model.addObserver(this);
-        Scenario scenario = new TestScenario(getApplicationContext(), cam.isAvailable(), loc.isAvailable(), mic.isAvailable()
-                && speechEngine.isAvailable());
+        Scenario scenario = new Scenario(getApplicationContext(), false, speechEngine.isAvailable(),  mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
         model.setScenario(scenario);
+        model.addObserver(this);
+        mind = RoboudMind.getInstance(this, scenario);
 
         // RoboMe
         startListeningToRoboMe();
@@ -188,11 +185,11 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     protected void onPause() {
         // Another activity is taking focus (this activity is about to be "paused").
-        Log.v(TAG, "onPause");
+        Log.i(TAG, "onPause");
         try {
             writeToFile("(default output:) I am now paused, saving some text to file");
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Write to file in onPause() failed", e);
         }
 
         // UI
@@ -210,7 +207,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // RoboMe
         stopListeningToRoboMe();
-        model.deleteObservers();
+        model.deleteObserver(this);
         stopMindThread();
 
         // Variables
@@ -220,11 +217,11 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void onStop() {
-        Log.v(TAG, "onStop");
+        Log.i(TAG, "onStop");
         try {
             writeToFile("Store information now");
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Write to file in onStop() failed", e);
         }
         Log.v(TAG, "Done writing to file, stopping app now");
 
@@ -239,11 +236,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Classes
         // TODO: This is an ugly try/catch
-        try {
-            model.deleteObservers();
-        } catch (Exception e) {
-            Log.v(TAG, "Caught vague exception");
-        }
+        model.deleteObserver(this);
         super.onStop();
 
         // RoboMe
@@ -251,8 +244,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Variables
         // Nothing to do
-
-        super.onStop();
     }
 
     @Override
@@ -354,15 +345,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         Log.i(TAG, "Headset plugged in");
         startListeningToRoboMe();
         model.setRobomeHeadsetPluggedIn(true);
-        // This is a quick fix. Actually roboMeConnected() should be used for this but it is unreliable.
-        startMindThread();
     }
 
     @Override
     public void headsetUnplugged() {
         Log.i(TAG, "Headset unplugged");
         model.setRobomeHeadsetPluggedIn(false);
-        stopMindThread();
+        stopListeningToRoboMe();
     }
 
     @Override
@@ -444,7 +433,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         }
         // Unknown update
         else
-            Log.d(TAG, "Unknown class observed: " + observable.getClass());
+            Log.w(TAG, "Unknown class observed: " + observable.getClass());
     }
 
     @Override
@@ -507,12 +496,24 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     private void startMindThread() {
-        if (model.isRobomeHeadsetPluggedIn()) {
+        if (!mind.isRunning()) {
             mind.startRunning();
         }
     }
 
     private void stopMindThread() {
-//        mind.stopRunning();
+        //mind.stopRunning();
     }
+
+    public void appInDisconnectedMode(){
+        imageView.setImageDrawable(getResources().getDrawable(R.drawable.face_supprised));
+        textView.setText("Please connect the app to the robot body...");
+    }
+
+    public void appInConnectedMode(){
+        //TODO this should resume at the previous settings before it was disconnected
+        imageView.setImageDrawable(getResources().getDrawable(R.drawable.face_smile_normal));
+        textView.setText("Status");
+    }
+
 }

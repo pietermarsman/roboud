@@ -1,7 +1,7 @@
 package edu.radboud.ai.roboud.action.actions;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.task.SpeechRepertoire;
+import edu.radboud.ai.roboud.task.util.SpeechRepertoire;
 
 /**
  * Created by Pieter Marsman on 27-5-2014.

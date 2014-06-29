@@ -1,7 +1,9 @@
 package edu.radboud.ai.roboud.behaviour;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.action.ActionFactory;
+import edu.radboud.ai.roboud.behaviour.behaviors.*;
+import edu.radboud.ai.roboud.util.Scenario;
 import edu.radboud.ai.roboud.task.TaskFactory;
 
 /**
@@ -12,13 +14,11 @@ public class BehaviorFactory {
 
     private final static String TAG = "BehaviorFactory";
     private static BehaviorFactory instance = null;
-    private Scenario scenario;
-    private RoboudController controller;
+    private ActionFactory actionFactory;
     private TaskFactory taskFactory;
 
     private BehaviorFactory(Scenario scenario, RoboudController controller) {
-        this.scenario = scenario;
-        this.controller = controller;
+        actionFactory = ActionFactory.getInstance(controller);
         taskFactory = TaskFactory.getInstance(scenario, controller);
     }
 
@@ -29,10 +29,18 @@ public class BehaviorFactory {
     }
 
     public TestBehavior getTestBehavior() {
-        return new TestBehavior(controller, taskFactory);
+        return new TestBehavior(actionFactory, taskFactory);
     }
 
-    public DutchGoalBehavior getDutchGoalBehavior() {
-        return new DutchGoalBehavior(controller, taskFactory);
-    }
+    public IntroduceBehavior getIntroduceBehavior(){ return new IntroduceBehavior(actionFactory, taskFactory);}
+
+    public AreWeFamiliarBehavior getAreWeFamiliarBehavior(){return  new AreWeFamiliarBehavior(actionFactory, taskFactory);}
+    
+    public SelectExistingUserBehavior getExistingUserBehavior(){return  new SelectExistingUserBehavior(actionFactory, taskFactory);}
+
+    public SettingsBehavior getSettingsBehavior() {return new SettingsBehavior(actionFactory, taskFactory);}
+
+    public TurnMeOffBehavior getTurnMeOffBehavior() {return new TurnMeOffBehavior(actionFactory, taskFactory);}
+
+    public RandomWanderBehavior getRandomWanderBehavior() {return new RandomWanderBehavior(actionFactory, taskFactory);}
 }

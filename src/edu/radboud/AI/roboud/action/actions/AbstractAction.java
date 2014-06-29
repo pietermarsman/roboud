@@ -1,7 +1,7 @@
 package edu.radboud.ai.roboud.action.actions;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.behaviour.BehaviorBlock;
+import edu.radboud.ai.roboud.behaviour.util.BehaviorBlock;
 
 /**
  * Created by Pieter Marsman on 2-6-2014.

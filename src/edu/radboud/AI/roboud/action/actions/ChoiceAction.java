@@ -71,4 +71,5 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
     public void setOptions(List<String> options) {
         this.options = options;
     }
+
 }

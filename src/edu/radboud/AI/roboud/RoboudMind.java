@@ -1,87 +1,107 @@
 package edu.radboud.ai.roboud;
 
 import android.util.Log;
-import edu.radboud.ai.roboud.behaviour.AbstractBehavior;
-import edu.radboud.ai.roboud.behaviour.BehaviorFactory;
-import edu.radboud.ai.roboud.scenario.Scenario;
-import edu.radboud.ai.roboud.task.TaskFactory;
+import edu.radboud.ai.roboud.module.Module;
+import edu.radboud.ai.roboud.module.behaviorModules.AbstractBehaviorModule;
+import edu.radboud.ai.roboud.module.behaviorModules.IntroductionBehaviorModule;
+import edu.radboud.ai.roboud.module.behaviorModules.TurnMeOffBehaviorModule;
+import edu.radboud.ai.roboud.module.functionModules.AbstractFunctionModule;
+import edu.radboud.ai.roboud.module.functionModules.ConnectedFunctionModule;
+import edu.radboud.ai.roboud.util.Scenario;
 
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * Created by Pieter Marsman on 24-5-2014.
  */
-public class RoboudMind implements Observer, Runnable {
+public class RoboudMind implements Observer {
 
     public static final String TAG = "RoboudMind";
 
     private static RoboudMind instance = null;
-    private Thread mindThread;
 
-    private Scenario currentScenario = null;
-    private AbstractBehavior currentBehavior;
-
+    private RoboudModel model;
     private RoboudController controller;
+    private Scenario scenario;
+
+    private List<AbstractFunctionModule> functionModules;
+    private AbstractBehaviorModule behaviorModule;
+
     private boolean running;
 
-    private TaskFactory taskFactory;
-    private BehaviorFactory behaviorFactory;
-    private boolean runningForTheFirstTime;
-
-    private RoboudMind(RoboudController controller) {
+    private RoboudMind(RoboudController controller, Scenario scenario) {
         this.controller = controller;
-        currentBehavior = null;
-        currentScenario = whatIsCurrentScenario();
-        behaviorFactory = BehaviorFactory.getInstance(currentScenario, controller);
+        model = controller.getModel();
+        this.scenario = scenario;
         running = false;
-        mindThread = null;
-        runningForTheFirstTime = true;
+
+        //The first module
+        behaviorModule = IntroductionBehaviorModule.getInstance(controller, scenario);
+        behaviorModule.addObserver(this);
+
+        //Add all necessary function modules
+        functionModules = new LinkedList<AbstractFunctionModule>();
+        //functionModules.add(ConnectedFunctionModule.getInstance(controller));
     }
 
-    public static synchronized RoboudMind getInstance(RoboudController controller) {
+    public static synchronized RoboudMind getInstance(RoboudController controller, Scenario scenario) {
         if (instance == null)
-            instance = new RoboudMind(controller);
+            instance = new RoboudMind(controller, scenario);
         return instance;
-    }
-
-    private Scenario whatIsCurrentScenario() {
-        if (currentScenario == null)
-            return controller.getModel().getScenario();
-        else //check whether scenario has changed is not done at the moment
-            return currentScenario;
     }
 
     @Override
     public void update(Observable observable, Object data) {
-        Log.i(TAG, "==Mind is updated==");
-        if (observable instanceof AbstractBehavior) {
-            currentBehavior.deleteObservers();
-            currentBehavior = null;
-            Log.i(TAG, "currentBehavior is reset");
-        }
-    }
+        Log.i(TAG, "==Mind is updated== by " + observable.getClass().getSimpleName());
+        if (observable instanceof IntroductionBehaviorModule) {
+            IntroductionBehaviorModule oldModule = (IntroductionBehaviorModule) observable;
+            Log.i(TAG, "Updated by IntroductionBehaviorModule that is in phase: " + oldModule.getPhase());
+            oldModule.deleteObserver(this);
+            oldModule.stopRunning();
 
-    public synchronized AbstractBehavior nextBehaviour() {
-        // TODO
-        AbstractBehavior behavior = behaviorFactory.getTestBehavior();
-        //AbstractBehavior behavior = behaviorFactory.getDutchGoalBehavior();
-        behavior.addObserver(this);
-        return behavior;
+            behaviorModule = TurnMeOffBehaviorModule.getInstance(controller, scenario);
+            behaviorModule.addObserver(this);
+            behaviorModule.startRunning();
+        }
+        else if (observable instanceof ConnectedFunctionModule){
+            ConnectedFunctionModule connectedFunctionModule = (ConnectedFunctionModule) observable;
+            if (connectedFunctionModule.getConnected()){
+                behaviorModule.deleteObserver(this);
+                behaviorModule.stopRunning();
+            }
+            else{
+                if (!behaviorModule.isRunning()){
+                    behaviorModule.addObserver(this);
+                    behaviorModule.startRunning();
+                }
+            }
+        }
     }
 
     public void stopRunning() {
         running = false;
-        dispose();
+        for(Iterator<AbstractFunctionModule> it = functionModules.iterator(); it.hasNext();){
+            AbstractFunctionModule functionModule = it.next();
+            functionModule.deleteObserver(this);
+            functionModule.stopRunning();
+        }
+        behaviorModule.deleteObserver(this);
+        behaviorModule.stopRunning();
     }
 
     public void startRunning() {
         Log.d(TAG, "Start running roboud mind");
-        if (mindThread == null) {
-            mindThread = new Thread(this);
+        if (!running){
             running = true;
-            mindThread.start();
-        } else {
+            for(Iterator<AbstractFunctionModule> it = functionModules.iterator(); it.hasNext();){
+                AbstractFunctionModule functionModule = it.next();
+                functionModule.addObserver(this);
+                functionModule.startRunning();
+            }
+            behaviorModule.addObserver(this);
+            behaviorModule.startRunning();
+        }
+        else {
             Log.w(TAG, "Already running, no need to start it again");
         }
     }
@@ -90,30 +110,4 @@ public class RoboudMind implements Observer, Runnable {
         return running;
     }
 
-    public void dispose() {
-        if (mindThread != null) {
-            mindThread.interrupt();
-            mindThread = null;
-        }
-    }
-
-    @Override
-    public void run() {
-        if (currentBehavior != null && runningForTheFirstTime) {
-            currentBehavior.executeBehaviour();
-            runningForTheFirstTime = false;
-        }
-
-        while (running) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (currentBehavior == null) {
-                currentBehavior = nextBehaviour();
-                currentBehavior.executeBehaviour();
-            }
-        }
-    }
 }

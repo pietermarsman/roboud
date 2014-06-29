@@ -2,7 +2,9 @@ package edu.radboud.ai.roboud.task;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.scenario.Scenario;
+import edu.radboud.ai.roboud.action.ActionFactory;
+import edu.radboud.ai.roboud.task.tasks.*;
+import edu.radboud.ai.roboud.util.Scenario;
 import twitter4j.TwitterException;
 
 import java.io.IOException;
@@ -45,7 +47,7 @@ public class TaskFactory {
     }
 
     public LookForFacesTask getLookForFacesTask() {
-        return new LookForFacesTask(controller, scenario.isCanDrive());
+        return new LookForFacesTask(controller, scenario.isCanWander());
 
     }
 

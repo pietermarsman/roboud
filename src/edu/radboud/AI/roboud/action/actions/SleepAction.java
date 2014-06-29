@@ -24,8 +24,8 @@ public class SleepAction extends AbstractAction {
 
     @Override
     public void doActions(Object information) {
-        if (information != null && information instanceof Integer) {
-            time = (Integer) information;
+        if (information != null && information instanceof Long) {
+            time = (Long) information;
         }
         if (time == 0) {
             throw new NullPointerException("Time cannot be 0");
@@ -43,7 +43,7 @@ public class SleepAction extends AbstractAction {
 
     @Override
     public Object getInformation() {
-        return "awake";
+        return null;
     }
 
     public void setTime(long time) {
