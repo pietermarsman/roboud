@@ -18,13 +18,6 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
     private String question;
     private boolean result;
 
-    @Deprecated
-    public ConfirmationAction(RoboudController controller, String question) {
-        super(controller);
-        this.question = question;
-    }
-
-    @Deprecated
     public ConfirmationAction(RoboudController controller) {
         super(controller);
     }

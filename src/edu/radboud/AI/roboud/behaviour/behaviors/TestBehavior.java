@@ -1,10 +1,9 @@
 package edu.radboud.ai.roboud.behaviour.behaviors;
 
-import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.ActionFactory;
-import edu.radboud.ai.roboud.behaviour.util.BehaviorBlock;
+import edu.radboud.ai.roboud.action.actions.AbstractAction;
+import edu.radboud.ai.roboud.util.Scenario;
 
-import edu.radboud.ai.roboud.task.TaskFactory;
 
 /**
  * Created by Pieter Marsman on 4-6-2014.
@@ -14,13 +13,13 @@ public class TestBehavior extends AbstractBehavior {
     public final static String TAG = "TestBehavior";
 
 
-    public TestBehavior(ActionFactory actionFactory, TaskFactory taskFactory) {
-        super(actionFactory, taskFactory);
+    public TestBehavior(ActionFactory actionFactory, Scenario scenario) {
+        super(actionFactory, scenario);
     }
 
 
     @Override
-    protected Object processInformation(BehaviorBlock currentBlock) {
+    protected Object processInformation(AbstractAction currentAction) {
         return null;
     }
 

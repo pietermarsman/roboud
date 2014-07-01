@@ -1,7 +1,7 @@
 package edu.radboud.ai.roboud.action.actions;
 
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.task.util.SpeechRepertoire;
+import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
 
 /**
  * Created by Pieter Marsman on 27-5-2014.
@@ -9,17 +9,6 @@ import edu.radboud.ai.roboud.task.util.SpeechRepertoire;
 public class ShowTextAction extends AbstractAction {
 
     private String text;
-
-    @Deprecated
-    public ShowTextAction(RoboudController controller, String text) {
-        super(controller);
-        this.text = text;
-    }
-
-    @Deprecated
-    public ShowTextAction(RoboudController controller, String[] texts) {
-        this(controller, SpeechRepertoire.randomChoice(texts));
-    }
 
     public ShowTextAction(RoboudController controller) {
         super(controller);

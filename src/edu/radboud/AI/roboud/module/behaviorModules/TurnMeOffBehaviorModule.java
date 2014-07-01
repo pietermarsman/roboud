@@ -35,6 +35,11 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
     }
 
     @Override
+    protected void stopBehavior() {
+        currentBehavior.deleteObserver(this);
+    }
+
+    @Override
     public void update(Observable observable, Object o) {
         if (observable instanceof AbstractBehavior){
             AbstractBehavior behavior = (AbstractBehavior) observable;

@@ -17,12 +17,6 @@ public class MotorAction extends AbstractAction {
     private RobotDirection dir;
     private RobotSpeed speed;
 
-    @Deprecated
-    public MotorAction(RoboudController controller, RobotDirection dir, RobotSpeed speed) {
-        super(controller);
-        this.dir = dir;
-        this.speed = speed;
-    }
 
     public MotorAction(RoboudController controller) {
         super(controller);

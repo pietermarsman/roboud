@@ -1,28 +1,20 @@
 package edu.radboud.ai.roboud.behaviour.behaviors;
 
-import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.ActionFactory;
-import edu.radboud.ai.roboud.behaviour.util.BehaviorBlock;
-import edu.radboud.ai.roboud.task.TaskFactory;
-
-import java.util.List;
+import edu.radboud.ai.roboud.action.actions.AbstractAction;
+import edu.radboud.ai.roboud.util.Scenario;
 
 /**
  * Created by Pieter Marsman on 24-5-2014.
  */
 public class ChitChatBehavior extends AbstractBehavior {
 
-    public ChitChatBehavior(ActionFactory actionFactory, TaskFactory taskFactory) {
-        super(actionFactory, taskFactory);
+    public ChitChatBehavior(ActionFactory actionFactory, Scenario scenario) {
+        super(actionFactory, scenario);
     }
 
     @Override
-    public List<BehaviorBlock> getBlocks() {
-        return null;
-    }
-
-    @Override
-    protected Object processInformation(BehaviorBlock currentBlock) {
+    protected Object processInformation(AbstractAction currentAction) {
         return null;
     }
 

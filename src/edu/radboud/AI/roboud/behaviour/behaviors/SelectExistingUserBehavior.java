@@ -2,10 +2,9 @@ package edu.radboud.ai.roboud.behaviour.behaviors;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.action.ActionFactory;
+import edu.radboud.ai.roboud.action.actions.AbstractAction;
 import edu.radboud.ai.roboud.action.actions.ChoiceAction;
-import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
-import edu.radboud.ai.roboud.behaviour.util.BehaviorBlock;
-import edu.radboud.ai.roboud.task.TaskFactory;
+import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,21 +18,21 @@ public class SelectExistingUserBehavior extends AbstractBehavior {
 
     private String result;
 
-    public SelectExistingUserBehavior(ActionFactory actionFactory, TaskFactory taskFactory) {
-        super(actionFactory, taskFactory);
+    public SelectExistingUserBehavior(ActionFactory actionFactory, Scenario scenario) {
+        super(actionFactory, scenario);
         //TODO retrieve list of existing users
         List<String> users = new LinkedList<String>();
         users.add("Mike");
         users.add("Guido");
         users.add("Pieter");
-        blocks.add(actionFactory.getChoiceAction(users));
+        actions.add(actionFactory.getChoiceAction(users));
     }
 
 
     @Override
-    protected Object processInformation(BehaviorBlock currentBlock) {
-        if (currentBlock instanceof ChoiceAction){
-            ChoiceAction choice = (ChoiceAction) currentBlock;
+    protected Object processInformation(AbstractAction currentAction) {
+        if (currentAction instanceof ChoiceAction){
+            ChoiceAction choice = (ChoiceAction) currentAction;
             result = choice.getResultString();
             Log.i(TAG, "result is " + choice.getResultString());
         }

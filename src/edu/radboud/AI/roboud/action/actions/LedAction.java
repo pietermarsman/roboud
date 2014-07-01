@@ -14,12 +14,6 @@ public class LedAction extends AbstractAction {
     private final static String TAG = "LedAction";
     private LedColor color;
 
-    @Deprecated
-    public LedAction(RoboudController controller, LedColor color) {
-        super(controller);
-        this.color = color;
-    }
-
     public LedAction(RoboudController controller) {
         super(controller);
     }

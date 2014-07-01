@@ -13,15 +13,6 @@ public class CombineAction extends AbstractAction implements Observer {
     AbstractAction a, b;
     boolean aReady, bReady;
 
-    @Deprecated
-    public CombineAction(RoboudController controller, AbstractAction a, AbstractAction b) {
-        super(controller);
-        this.a = a;
-        this.b = b;
-        aReady = false;
-        bReady = false;
-    }
-
     public CombineAction(RoboudController controller) {
         super(controller);
     }

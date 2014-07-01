@@ -1,45 +1,33 @@
-package edu.radboud.ai.roboud.task.tasks;
+package edu.radboud.ai.roboud.behaviour.util;
 
-import android.os.StrictMode;
-import android.util.Log;
-import edu.radboud.ai.roboud.RoboudController;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
-import twitter4j.conf.ConfigurationBuilder;
+        import android.os.StrictMode;
+        import android.util.Log;
+        import twitter4j.Status;
+        import twitter4j.Twitter;
+        import twitter4j.TwitterException;
+        import twitter4j.TwitterFactory;
+        import twitter4j.auth.AccessToken;
+        import twitter4j.auth.RequestToken;
+        import twitter4j.conf.ConfigurationBuilder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+        import java.io.BufferedReader;
+        import java.io.IOException;
+        import java.io.InputStreamReader;
+        import java.util.Observable;
 
 
 /**
  * Created by Pieter Marsman on 24-5-2014.
  */
-public class PostTweetTask extends AbstractTask {
+public class PostTweet extends Observable{
     String text;
     public static final String TAG = "PostTweetTask";
     Twitter twitter;
 
-    public PostTweetTask(RoboudController controller, String text) throws TwitterException, IOException {
-        super(controller);
-        if (text == null)
-            this.text = "This is a default text to post on Twitter";
-        else
-            this.text = text;
-
+    public PostTweet() throws TwitterException, IOException {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
         initialize();
-        postTweet();
-        Log.i(TAG,"Done posting tweet, now setchanges and notifyobservers");
-        //Mike: This looks strange here:
-        setChanged();
-        notifyObservers();
     }
 
     public void initialize()
@@ -57,8 +45,13 @@ public class PostTweetTask extends AbstractTask {
         twitter = tf.getInstance();
     }
 
-    public void postTweet() {
+    public void postTweet(String input) {
         Log.i(TAG,"in postTweet()");
+        if (input == null)
+            text = "This is a default text to post on Twitter";
+        else
+            text = input;
+
         try {
 //            twitter = new TwitterFactory().getInstance();
             try {
@@ -113,20 +106,8 @@ public class PostTweetTask extends AbstractTask {
             Log.i(TAG, "Failed to read the system input.");
             System.exit(-1);
         }
-    }
-
-    @Override
-    public void releaseActions() {
-
-    }
-
-    @Override
-    protected Object processActionInformation() {
-        return null;
-    }
-
-    @Override
-    protected void processTaskInformation(Object information) {
-
+        Log.i(TAG,"Done posting tweet, now setchanges and notifyobservers");
+        setChanged();
+        notifyObservers();
     }
 }

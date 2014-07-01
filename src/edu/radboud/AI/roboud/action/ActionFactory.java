@@ -93,11 +93,18 @@ public class ActionFactory {
         return motorActionPool.acquire(dir, speed);
     }
 
-    public ReadTextAction getReadTextAction() {
+    public ReadTextAction getReadTextAction(String question) {
         if (readTextActionPool == null) {
             readTextActionPool =  ReadTextActionPool.getInstance(controller);
         }
-        return readTextActionPool.acquire();
+        return readTextActionPool.acquire(question);
+    }
+
+    public ReadTextAction getReadTextAction(String[] questions) {
+        if (readTextActionPool == null) {
+            readTextActionPool =  ReadTextActionPool.getInstance(controller);
+        }
+        return readTextActionPool.acquire(questions);
     }
 
     public ShowTextAction getShowTextAction(String text) {

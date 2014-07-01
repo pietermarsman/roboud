@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.util.ReadTextActionActivity;
+import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 
 /**
@@ -13,7 +14,7 @@ public class ReadTextAction extends AbstractAction implements ActivityResultProc
 
     public static final int REQUEST_CODE = 1294;
     private static final String TAG = "ReadTextAction";
-    private String result;
+    private String result, question;
 
     public ReadTextAction(RoboudController controller) {
         super(controller);
@@ -21,6 +22,7 @@ public class ReadTextAction extends AbstractAction implements ActivityResultProc
 
     @Override
     public void doActions(Object information) {
+        controller.showText(question);
         Intent i = new Intent(controller, ReadTextActionActivity.class);
         controller.startNewActivityForResult(i, REQUEST_CODE, this);
     }
@@ -39,5 +41,17 @@ public class ReadTextAction extends AbstractAction implements ActivityResultProc
         } else {
             // TODO what todo if the activity stopped without letting the user choose
         }
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setText(String[] texts) {
+        this.question = SpeechRepertoire.randomChoice(texts);
+    }
+
+    public void setText(String text) {
+        this.question = text;
     }
 }

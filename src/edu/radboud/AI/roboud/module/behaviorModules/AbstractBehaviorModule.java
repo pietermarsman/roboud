@@ -29,6 +29,7 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
 
     public AbstractBehaviorModule(RoboudController controller, Scenario scenario){
         running = false;
+        moduleThread = new Thread(this);
         behaviorFactory = BehaviorFactory.getInstance(scenario, controller);
     }
 
@@ -39,8 +40,12 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
             running = true;
             currentBehavior = firstBehavior();
             behaviorReady = true;
-            moduleThread = new Thread(this);
-            moduleThread.start();
+            if (moduleThread.getState() == Thread.State.NEW) {
+                moduleThread.start();
+            } else{
+                moduleThread = new Thread(this);
+                moduleThread.start();
+            }
         }
         else{
             Log.w(TAG, "Module is already running");
@@ -49,12 +54,12 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
     }
 
     public void stopRunning(){
-        currentBehavior.deleteObserver(this);
+        stopBehavior();
         running = false;
-        moduleThread.interrupt();
-        moduleThread = null;
         //TODO save information??.
     }
+
+    protected abstract void stopBehavior();
 
     public boolean isRunning() {
         return running;

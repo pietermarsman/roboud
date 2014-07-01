@@ -172,7 +172,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
             mSensorManager.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
 
         // Classes
-        Scenario scenario = new Scenario(getApplicationContext(), false, speechEngine.isAvailable(),  mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
+        Log.d(TAG, "speechEngine is Available: " + speechEngine.isAvailable());
+        //Apparently the speechEngine is not available although it works...
+        //Scenario scenario = new Scenario(getApplicationContext(), false, speechEngine.isAvailable(),  mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
+        Scenario scenario = new Scenario(getApplicationContext(), false, true,  mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
         model.setScenario(scenario);
         model.addObserver(this);
         mind = RoboudMind.getInstance(this, scenario);
@@ -506,7 +509,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void appInDisconnectedMode(){
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.face_supprised));
+        imageView.setImageDrawable(getResources().getDrawable(R.drawable.face_nothing));
         textView.setText("Please connect the app to the robot body...");
     }
 

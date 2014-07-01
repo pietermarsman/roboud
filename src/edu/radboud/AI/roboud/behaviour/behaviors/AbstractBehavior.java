@@ -1,13 +1,9 @@
 package edu.radboud.ai.roboud.behaviour.behaviors;
 
 import android.util.Log;
-import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.ActionFactory;
 import edu.radboud.ai.roboud.action.actions.AbstractAction;
-import edu.radboud.ai.roboud.action.pools.ActionPool;
-import edu.radboud.ai.roboud.behaviour.util.BehaviorBlock;
-import edu.radboud.ai.roboud.task.TaskFactory;
-import edu.radboud.ai.roboud.task.tasks.AbstractTask;
+import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.*;
 
@@ -17,26 +13,28 @@ import java.util.*;
 public abstract class AbstractBehavior extends Observable implements Observer {
 
     public static final String TAG = "AbstractBehavior";
-    protected List<BehaviorBlock> blocks;
-    protected TaskFactory taskFactory;
+
+    protected List<AbstractAction> actions;
     protected ActionFactory actionFactory;
-    protected LinkedHashMap<BehaviorBlock, Object> results;
+    protected LinkedHashMap<AbstractAction, Object> results;
+    protected Scenario scenario;
+
     private int executionIndex;
 
-    public AbstractBehavior(ActionFactory actionFactory, TaskFactory taskFactory) {
+    public AbstractBehavior(ActionFactory actionFactory, Scenario scenario) {
         this.actionFactory = actionFactory;
-        this.taskFactory = taskFactory;
-        blocks = new LinkedList<BehaviorBlock>();
-        results = new LinkedHashMap<BehaviorBlock, Object>();
+        this.scenario = scenario;
+        actions = new LinkedList<AbstractAction>();
+        results = new LinkedHashMap<AbstractAction, Object>();
         executionIndex = -1;
     }
 
-    public List<BehaviorBlock> getBlocks() {
-        return blocks;
+    public List<AbstractAction> getActions() {
+        return actions;
     }
 
     /**
-     * Execute the BehaviorBlock one by one, starting a new block if the previous block has ended
+     * Execute the AbstractAction one by one, starting a new block if the previous block has ended
      */
     public synchronized void executeBehaviour() {
         executeStep(null);
@@ -44,21 +42,21 @@ public abstract class AbstractBehavior extends Observable implements Observer {
 
     @Override
     public void update(Observable observable, Object data) {
-        if (observable instanceof BehaviorBlock) {
-            BehaviorBlock currentBlock = (BehaviorBlock) observable;
-            results.put(currentBlock, currentBlock.getInformation());
-            currentBlock.deleteObserver(this);
-            executeStep(processInformation(currentBlock));
+        if (observable instanceof AbstractAction) {
+            AbstractAction currentAction = (AbstractAction) observable;
+            results.put(currentAction, currentAction.getInformation());
+            currentAction.deleteObserver(this);
+            executeStep(processInformation(currentAction));
         }
     }
 
     private synchronized void executeStep(Object information) {
-        if (executionIndex + 1 < blocks.size()) {
+        if (executionIndex + 1 < actions.size()) {
             executionIndex++;
             Log.i(TAG, "Execute step " + executionIndex);
-            BehaviorBlock currentBlock = blocks.get(executionIndex);
-            currentBlock.addObserver(this);
-            currentBlock.doActions(information);
+            AbstractAction currentAction = actions.get(executionIndex);
+            currentAction.addObserver(this);
+            currentAction.doActions(information);
 
         } else {
             Log.i(TAG, "No further steps to execute");
@@ -68,21 +66,13 @@ public abstract class AbstractBehavior extends Observable implements Observer {
         }
     }
 
-    protected abstract Object processInformation(BehaviorBlock currentBlock);
+    protected abstract Object processInformation(AbstractAction currentAction);
 
     public abstract Object getInformation();
 
     private void releaseActions(){
-        for (Iterator<BehaviorBlock> it = blocks.iterator(); it.hasNext();){
-            BehaviorBlock block = it.next();
-            if (block instanceof AbstractTask){
-                AbstractTask task = (AbstractTask) block;
-                task.releaseActions();
+        for (Iterator<AbstractAction> it = actions.iterator(); it.hasNext();){
+                actionFactory.releaseAction(it.next());
             }
-            else if (block instanceof AbstractAction){
-                AbstractAction action = (AbstractAction) block;
-                actionFactory.releaseAction(action);
-            }
-        }
     }
 }

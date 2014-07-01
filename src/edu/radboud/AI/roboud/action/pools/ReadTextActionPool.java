@@ -20,6 +20,18 @@ public class ReadTextActionPool extends ActionPool<ReadTextAction> {
         return instance;
     }
 
+    public ReadTextAction acquire(String text) {
+        ReadTextAction readTextAction = acquire();
+        readTextAction.setText(text);
+        return readTextAction;
+    }
+
+    public ReadTextAction acquire(String[] texts) {
+        ReadTextAction readTextAction = acquire();
+        readTextAction.setText(texts);
+        return readTextAction;
+    }
+
     @Override
     protected ReadTextAction create() {
         return new ReadTextAction(controller);

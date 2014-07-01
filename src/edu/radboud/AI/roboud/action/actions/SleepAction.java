@@ -12,12 +12,6 @@ public class SleepAction extends AbstractAction {
 
     private long time;
 
-    @Deprecated
-    public SleepAction(RoboudController controller, long time) {
-        super(controller);
-        this.time = time;
-    }
-
     public SleepAction(RoboudController controller) {
         super(controller);
     }

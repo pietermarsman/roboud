@@ -1,28 +1,82 @@
 package edu.radboud.ai.roboud.behaviour.behaviors;
 
+import android.util.Log;
 import edu.radboud.ai.roboud.action.ActionFactory;
-import edu.radboud.ai.roboud.behaviour.util.BehaviorBlock;
-import edu.radboud.ai.roboud.task.util.SpeechRepertoire;
-import edu.radboud.ai.roboud.task.TaskFactory;
+import edu.radboud.ai.roboud.action.actions.AbstractAction;
+import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
+import edu.radboud.ai.roboud.util.Scenario;
+
+import java.security.SecurityPermission;
+import java.util.SortedMap;
 
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
 public class IntroduceBehavior extends AbstractBehavior {
 
-    public IntroduceBehavior(ActionFactory actionFactory, TaskFactory taskFactory) {
-        super(actionFactory, taskFactory);
-        blocks.add(actionFactory.getSpeakAction(SpeechRepertoire.textGreetingStart));
-        blocks.add(taskFactory.getAskQuestionTask(SpeechRepertoire.textIntroduceMyself));
-        blocks.add(actionFactory.getSpeakAction(SpeechRepertoire.textIntroduceMyself));
-        blocks.add(taskFactory.getAskQuestionTask(SpeechRepertoire.questionAge));
-        blocks.add(taskFactory.getAskQuestionTask(SpeechRepertoire.questionSex));
-        blocks.add(actionFactory.getSpeakAction("Oké, now I know enough about you"));
-        blocks.add(actionFactory.getSpeakAction(SpeechRepertoire.textGreetingEnd));
+    public static final String TAG = "AbstractBehavior";
+
+    public IntroduceBehavior(ActionFactory actionFactory, Scenario scenario) {
+        super(actionFactory,scenario);
+
+        //These need to be consistent in both text and speech
+        String greetings = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingStart);
+        String introduceMySelf = SpeechRepertoire.randomChoice(SpeechRepertoire.textIntroduceMyself);
+        String yourName = SpeechRepertoire.randomChoice(SpeechRepertoire.questionName);
+        String yourAge = SpeechRepertoire.randomChoice(SpeechRepertoire.questionAge);
+        String yourSex = SpeechRepertoire.randomChoice(SpeechRepertoire.questionSex);
+        String enough = "Oké, now I know enough about you";
+        String ending = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingEnd);
+
+        //Greetings and introducing myself
+        if (scenario.isCanTalk()){
+            actions.add(actionFactory.getShowTextAction(greetings));
+            actions.add(actionFactory.getSpeakAction(greetings));
+            actions.add(actionFactory.getShowTextAction(introduceMySelf));
+            actions.add(actionFactory.getSpeakAction(introduceMySelf));
+        }
+        else{
+            actions.add(actionFactory.getShowTextAction(greetings));
+            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+            actions.add(actionFactory.getShowTextAction(introduceMySelf));
+            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+        }
+
+        //Ask name
+        if(scenario.isCanTalk()){
+            actions.add(actionFactory.getSpeakAction(yourName));
+        }
+        actions.add(actionFactory.getReadTextAction(yourName));
+
+        //Ask age
+        if (scenario.isCanTalk()){
+            actions.add(actionFactory.getSpeakAction(yourAge));
+        }
+        actions.add(actionFactory.getReadTextAction(yourAge));
+
+        //Ask sex
+        if (scenario.isCanTalk()){
+            actions.add(actionFactory.getSpeakAction(yourSex));
+        }
+        actions.add(actionFactory.getReadTextAction(yourSex));
+
+        //End introduce
+        if (scenario.isCanTalk()) {
+            actions.add(actionFactory.getShowTextAction(enough));
+            actions.add(actionFactory.getSpeakAction(enough));
+            actions.add(actionFactory.getShowTextAction(ending));
+            actions.add(actionFactory.getSpeakAction(ending));
+        }
+        else{
+            actions.add(actionFactory.getShowTextAction(enough));
+            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+            actions.add(actionFactory.getShowTextAction(ending));
+            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+        }
     }
 
     @Override
-    protected Object processInformation(BehaviorBlock currentBlock) {
+    protected Object processInformation(AbstractAction currentAction) {
         return null;
     }
 

@@ -21,16 +21,9 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
 
     private String resultString;
 
-    @Deprecated
-    public ChoiceAction(RoboudController controller, List<String> options) {
-        super(controller);
-        this.options = options;
-    }
-
     public ChoiceAction(RoboudController controller) {
         super(controller);
     }
-
 
     @Override
     public void doActions(Object information) {

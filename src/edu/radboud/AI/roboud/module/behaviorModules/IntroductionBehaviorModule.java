@@ -37,6 +37,13 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
     }
 
     @Override
+    protected void stopBehavior() {
+        if (currentBehavior != null){
+            currentBehavior.deleteObserver(this);
+        }
+    }
+
+    @Override
     public void update(Observable observable, Object o) {
         Log.i(TAG, "==Introduction Module is updated==");
         if (phase == IntroductionBehaviorPhase.KNOWNUSER){

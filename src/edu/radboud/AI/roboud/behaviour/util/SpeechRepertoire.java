@@ -1,4 +1,4 @@
-package edu.radboud.ai.roboud.task.util;
+package edu.radboud.ai.roboud.behaviour.util;
 
 import java.util.Random;
 

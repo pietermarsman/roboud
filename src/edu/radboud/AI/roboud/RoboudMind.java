@@ -41,7 +41,7 @@ public class RoboudMind implements Observer {
 
         //Add all necessary function modules
         functionModules = new LinkedList<AbstractFunctionModule>();
-        //functionModules.add(ConnectedFunctionModule.getInstance(controller));
+        functionModules.add(ConnectedFunctionModule.getInstance(controller));
     }
 
     public static synchronized RoboudMind getInstance(RoboudController controller, Scenario scenario) {
@@ -53,6 +53,7 @@ public class RoboudMind implements Observer {
     @Override
     public void update(Observable observable, Object data) {
         Log.i(TAG, "==Mind is updated== by " + observable.getClass().getSimpleName());
+        Log.i(TAG, "model headPhoneConnected = " + model.isRobomeHeadsetPluggedIn());
         if (observable instanceof IntroductionBehaviorModule) {
             IntroductionBehaviorModule oldModule = (IntroductionBehaviorModule) observable;
             Log.i(TAG, "Updated by IntroductionBehaviorModule that is in phase: " + oldModule.getPhase());
@@ -65,12 +66,14 @@ public class RoboudMind implements Observer {
         }
         else if (observable instanceof ConnectedFunctionModule){
             ConnectedFunctionModule connectedFunctionModule = (ConnectedFunctionModule) observable;
-            if (connectedFunctionModule.getConnected()){
-                behaviorModule.deleteObserver(this);
+            Log.i(TAG, "Module connected = " + connectedFunctionModule.getConnected() + " and model headPhoneConnected = " + model.isRobomeHeadsetPluggedIn());
+            if (!connectedFunctionModule.getConnected()){
                 behaviorModule.stopRunning();
+                behaviorModule.deleteObserver(this);
             }
             else{
                 if (!behaviorModule.isRunning()){
+                    Log.i(TAG, "behavior module running = " + behaviorModule.isRunning());
                     behaviorModule.addObserver(this);
                     behaviorModule.startRunning();
                 }
@@ -98,8 +101,10 @@ public class RoboudMind implements Observer {
                 functionModule.addObserver(this);
                 functionModule.startRunning();
             }
-            behaviorModule.addObserver(this);
-            behaviorModule.startRunning();
+            if (model.isRobomeHeadsetPluggedIn()) {
+                behaviorModule.addObserver(this);
+                behaviorModule.startRunning();
+            }
         }
         else {
             Log.w(TAG, "Already running, no need to start it again");

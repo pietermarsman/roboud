@@ -2,7 +2,7 @@ package edu.radboud.ai.roboud.action.actions;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.task.util.SpeechRepertoire;
+import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -15,17 +15,6 @@ public class SpeakAction extends AbstractAction implements Observer {
 
     private final static String TAG = "SpeakAction";
     private String text;
-
-    @Deprecated
-    public SpeakAction(RoboudController controller, String text) {
-        super(controller);
-        this.text = text;
-    }
-
-    @Deprecated
-    public SpeakAction(RoboudController controller, String[] texts) {
-        this(controller, SpeechRepertoire.randomChoice(texts));
-    }
 
     public SpeakAction(RoboudController controller) {
         super(controller);
