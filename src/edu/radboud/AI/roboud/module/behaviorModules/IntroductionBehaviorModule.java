@@ -73,8 +73,7 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
                 phase = IntroductionBehaviorPhase.GETSETTINGS;
                 Log.i(TAG, "Phase is set to GETSETTINGS");
                 currentBehavior = behaviorFactory.getSettingsBehavior();
-                currentBehavior.addObserver(this
-                );
+                currentBehavior.addObserver(this);
                 behaviorReady = true;
             }
         }
