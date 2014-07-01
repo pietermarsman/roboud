@@ -63,6 +63,7 @@ public class RoboudModel extends Observable {
         light = -1;
         loc = null;
         events = new EventHistory();
+        robomeSensorStatus = -1;
 
         // lastModification is set by:
         changed();
@@ -282,7 +283,7 @@ public class RoboudModel extends Observable {
             this.robomeSensorStatus = 100;
         else {
             Log.w(TAG, "RobomeSensorStatus received but there was nothing there");
-            this.robomeSensorStatus = null;
+            this.robomeSensorStatus = -1;
         }
     }
 

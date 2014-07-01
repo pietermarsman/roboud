@@ -1,5 +1,6 @@
 package edu.radboud.ai.roboud.module.behaviorModules;
 
+import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.RoboudModel;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
@@ -45,6 +46,7 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
 
     @Override
     public void update(Observable observable, Object o) {
+        Log.i(TAG,"Updated by " + observable.getClass().getSimpleName());
         if (observable instanceof AbstractBehavior) {
             AbstractBehavior behavior = (AbstractBehavior) observable;
             behavior.deleteObserver(this);
@@ -61,9 +63,10 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
             behaviorReady = true;
         }
         if (observable instanceof RoboudModel){
-            int tempDistance = controller.getModel().getSensorStatus();
-            RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
-            if (tempDistance != distanceToRobome){
+            Integer tempDistance = controller.getModel().getRobomeSensorStatus();
+            Log.i(TAG,"TempDistance: " + tempDistance);
+            if (tempDistance != -1 && tempDistance != distanceToRobome){
+                RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
                 distanceToRobome = tempDistance;
                 if (distanceToRobome < threshold){
                     wander.turnToRandomDirection();
@@ -71,10 +74,10 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
                 else{
                     wander.forward();
                 }
+                currentBehavior = wander;
+                currentBehavior.addObserver(this);
+                behaviorReady = true;
             }
-            currentBehavior = wander;
-            currentBehavior.addObserver(this);
-            behaviorReady = true;
         }
     }
 }
