@@ -8,7 +8,7 @@ import edu.radboud.ai.roboud.behaviour.behaviors.TurnMeOffBehavior;
 import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.Observable;
-import java.util.Random;
+
 
 /**
  * Created by mikel_000 on 29-6-2014.
@@ -20,14 +20,14 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
     private int distanceToRobome = 4;
     private final int threshold = 51;
 
+    private TurnMeOffBehaviorModule(RoboudController controller, Scenario scenario) {
+        super(controller, scenario);
+    }
+
     public synchronized static TurnMeOffBehaviorModule getInstance(RoboudController controller, Scenario scenario) {
         if (ourInstance == null)
             ourInstance = new TurnMeOffBehaviorModule(controller, scenario);
         return ourInstance;
-    }
-
-    private TurnMeOffBehaviorModule(RoboudController controller, Scenario scenario) {
-        super(controller, scenario);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
 
     @Override
     public void update(Observable observable, Object o) {
-        if (observable instanceof AbstractBehavior){
+        if (observable instanceof AbstractBehavior) {
             AbstractBehavior behavior = (AbstractBehavior) observable;
             behavior.deleteObserver(this);
             RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();

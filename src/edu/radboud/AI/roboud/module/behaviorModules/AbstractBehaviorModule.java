@@ -16,15 +16,13 @@ import java.util.Observer;
 public abstract class AbstractBehaviorModule extends Observable implements Observer, Module, Runnable {
 
     public static final String TAG = "AbstractBehaviorModule";
-
-    private boolean running;
-    private Thread moduleThread;
-
+    public static int UPDATE_INTERVAL = 100;
     protected BehaviorFactory behaviorFactory;
     protected AbstractBehavior currentBehavior;
     protected boolean behaviorReady;
     protected RoboudController controller;
-
+    private boolean running;
+    private Thread moduleThread;
     public AbstractBehaviorModule(RoboudController controller, Scenario scenario){
         this.controller = controller;
         running = false;
@@ -34,25 +32,24 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
 
     protected abstract AbstractBehavior firstBehavior();
 
-    public void startRunning(){
-        if (!running){
+    public void startRunning() {
+        if (!running) {
             running = true;
             currentBehavior = firstBehavior();
             behaviorReady = true;
             if (moduleThread.getState() == Thread.State.NEW) {
                 moduleThread.start();
-            } else{
+            } else {
                 moduleThread = new Thread(this);
                 moduleThread.start();
             }
-        }
-        else{
+        } else {
             Log.w(TAG, "Module is already running");
         }
 
     }
 
-    public void stopRunning(){
+    public void stopRunning() {
         stopBehavior();
         running = false;
         //TODO save information??.
@@ -64,25 +61,23 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
         return running;
     }
 
-    protected void finished(){
+    protected void finished() {
         running = false;
         setChanged();
         notifyObservers();
     }
 
     @Override
-    public void run(){
+    public void run() {
         Log.i(TAG, "thread is started");
-        while (running){
-            if (behaviorReady && moduleThread != null ){
+        while (running) {
+            if (behaviorReady && moduleThread != null) {
                 behaviorReady = false;
                 Log.i(TAG, "executing behavior " + currentBehavior.getClass().getSimpleName());
                 currentBehavior.executeBehaviour();
-            }
-            else{
-
+            } else {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(UPDATE_INTERVAL);
                 } catch (InterruptedException e) {
                     Log.e(TAG, "InterruptedException in module is thrown", e);
                 }

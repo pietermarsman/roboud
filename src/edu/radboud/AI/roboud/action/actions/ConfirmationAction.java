@@ -55,7 +55,7 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
         this.question = question;
     }
 
-    public boolean getResult(){
+    public boolean getResult() {
         return result;
     }
 }

@@ -2,7 +2,8 @@ package edu.radboud.ai.roboud;
 
 import android.graphics.Bitmap;
 import android.location.Location;
-import com.wowwee.robome.RoboMeCommands.IncomingRobotCommand;
+import android.util.Log;
+import com.wowwee.robome.*;
 import com.wowwee.robome.RoboMeCommands.RobotCommand;
 import edu.radboud.ai.roboud.action.util.FaceExpression;
 import edu.radboud.ai.roboud.event.Event;
@@ -18,6 +19,8 @@ import java.util.Observable;
  */
 public class RoboudModel extends Observable {
 
+    public static String TAG = "RoboudModel";
+
     EventHistory events;
     private boolean robomeConnected, robomeHeadsetPluggedIn, listening;
     private float volume;
@@ -30,6 +33,16 @@ public class RoboudModel extends Observable {
     private long lastModification;
     private Scenario scenario;
     private FaceExpression faceExpression;
+    private Integer robomeBatteryPercentage;
+    private int robomeDetectionVoltage;
+    private RoboMeCommands.IncomingRobotCommand robomeDirectionGameLevel;
+    private GeneralStatus robomeGeneralStatus;
+    private int robomeHandshakeStatus;
+    private IRStatus robomeIRStatus;
+    private LEDStatus robomeLEDStatus;
+    private RoboMeCommands.IncomingRobotCommand robomeMoodStatus;
+    private RoboMeCommands.IncomingRobotCommand robomeRemoteButton;
+    private Integer robomeSensorStatus;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
                        String _libVersion) {
@@ -84,6 +97,16 @@ public class RoboudModel extends Observable {
         else
             sb.append("Location: ").append("null").append("\n");
         sb.append("\n");
+        sb.append("Robome battery percentage: ").append(robomeBatteryPercentage).append("\n");
+        sb.append("Robome detection voltage: ").append(robomeDetectionVoltage).append("\n");
+        sb.append("Robome direction game level: ").append(robomeDirectionGameLevel).append("\n");
+        sb.append("Robome general status: ").append(robomeGeneralStatus).append("\n");
+        sb.append("Robome handshake status: ").append(robomeHandshakeStatus).append("\n");
+        sb.append("Robome IR status: ").append(robomeHandshakeStatus).append("\n");
+        sb.append("Robome LED status: ").append(robomeLEDStatus).append("\n");
+        sb.append("Robome mood status: ").append(robomeMoodStatus).append("\n");
+        sb.append("Robome remote button: ").append(robomeRemoteButton).append("\n");
+        sb.append("Robome sensor status: ").append(robomeSensorStatus).append("\n");
         return sb.toString();
     }
 
@@ -143,14 +166,124 @@ public class RoboudModel extends Observable {
         changed();
     }
 
-    public void receiveCommand(IncomingRobotCommand incomingRobotCommand) {
-        events.newEvent(new Event(EventType.INCOMMING_COMMAND, incomingRobotCommand));
-        changed();
-    }
-
     public void sendCommand(RobotCommand outgoingCommand) {
         events.newEvent(new Event(EventType.OUTGOING_COMMAND, outgoingCommand));
         changed();
+    }
+
+    public int getRobomeBatteryPercentage() {
+        return robomeBatteryPercentage;
+    }
+
+    public void setRobomeBatteryPercentage(RoboMeCommands.IncomingRobotCommand robomeBatteryCommand) {
+        switch (robomeBatteryCommand) {
+            case kRobotIncoming_Battery10:
+                robomeBatteryPercentage = 10;
+                break;
+            case kRobotIncoming_Battery20:
+                robomeBatteryPercentage = 20;
+                break;
+            case kRobotIncoming_Battery40:
+                robomeBatteryPercentage = 40;
+                break;
+            case kRobotIncoming_Battery60:
+                robomeBatteryPercentage = 60;
+                break;
+            case kRobotIncoming_Battery80:
+                robomeBatteryPercentage = 80;
+                break;
+            case kRobotIncoming_Battery100:
+                robomeBatteryPercentage = 100;
+                break;
+            default:
+                robomeBatteryPercentage = null;
+        }
+    }
+
+    public int getRobomeDetectionVoltage() {
+        return robomeDetectionVoltage;
+    }
+
+    public void setRobomeDetectionVoltage(int robomeDetectionVoltage) {
+        this.robomeDetectionVoltage = robomeDetectionVoltage;
+    }
+
+    public RoboMeCommands.IncomingRobotCommand getRobomeDirectionGameLevel() {
+        return robomeDirectionGameLevel;
+    }
+
+    public void setRobomeDirectionGameLevel(RoboMeCommands.IncomingRobotCommand robomeDirectionGameLevel) {
+        this.robomeDirectionGameLevel = robomeDirectionGameLevel;
+    }
+
+    public GeneralStatus getRobomeGeneralStatus() {
+        return robomeGeneralStatus;
+    }
+
+    public void setRobomeGeneralStatus(GeneralStatus robomeGeneralStatus) {
+        // TODO use an enum
+        this.robomeGeneralStatus = robomeGeneralStatus;
+    }
+
+    public int getRobomeHandshakeStatus() {
+        return robomeHandshakeStatus;
+    }
+
+    public void setRobomeHandshakeStatus(int robomeHandshakeStatus) {
+        this.robomeHandshakeStatus = robomeHandshakeStatus;
+    }
+
+    public IRStatus getRobomeIRStatus() {
+        return robomeIRStatus;
+    }
+
+    public void setRobomeIRStatus(IRStatus robomeIRStatus) {
+        this.robomeIRStatus = robomeIRStatus;
+    }
+
+    public LEDStatus getRobomeLEDStatus() {
+        return robomeLEDStatus;
+    }
+
+    public void setRobomeLEDStatus(LEDStatus robomeLEDStatus) {
+        this.robomeLEDStatus = robomeLEDStatus;
+    }
+
+    public RoboMeCommands.IncomingRobotCommand getRobomeMoodStatus() {
+        return robomeMoodStatus;
+    }
+
+    public void setRobomeMoodStatus(RoboMeCommands.IncomingRobotCommand robomeMoodStatus) {
+        // TODO read actual mood status
+        this.robomeMoodStatus = robomeMoodStatus;
+    }
+
+    public RoboMeCommands.IncomingRobotCommand getRobomeRemoteButton() {
+        return robomeRemoteButton;
+    }
+
+    public void setRobomeRemoteButton(RoboMeCommands.IncomingRobotCommand robomeRemoteButton) {
+        // TODO what is this remoteButton actual value
+        this.robomeRemoteButton = robomeRemoteButton;
+    }
+
+    public int getRobomeSensorStatus() {
+        return robomeSensorStatus;
+    }
+
+    public void setRobomeSensorStatus(SensorStatus robomeSensorStatus) {
+        if (robomeSensorStatus.edge)
+            this.robomeSensorStatus = 0;
+        else if (robomeSensorStatus.chest_20cm)
+            this.robomeSensorStatus = 20;
+        else if (robomeSensorStatus.chest_50cm)
+            this.robomeSensorStatus = 50;
+        else if (robomeSensorStatus.chest_100cm)
+            this.robomeSensorStatus = 100;
+        else {
+            Log.w(TAG, "RobomeSensorStatus received but there was nothing there");
+            this.robomeSensorStatus = null;
+        }
     }
 
     //      === START Android phone part ===

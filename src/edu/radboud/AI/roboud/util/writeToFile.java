@@ -13,11 +13,7 @@ import java.util.Random;
 public class WriteToFile {
     public static final String TAG = "WriteToFile";
 
-    public WriteToFile() {
-    }
-
-    public void writeToFile(String toWrite, String FILENAME) throws IOException {
-
+    public static void writeToFile(String toWrite, String FILENAME) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(FILENAME));
         Random r = new Random();
         int intToAdd = r.nextInt();

@@ -6,6 +6,8 @@ package edu.radboud.ai.roboud.module;
 public interface Module {
 
     public void startRunning();
+
     public void stopRunning();
+
     public boolean isRunning();
 }

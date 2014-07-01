@@ -46,132 +46,131 @@ public class ActionFactory {
 
     public ChoiceAction getChoiceAction(List<String> options) {
         if (choiceActionPool == null) {
-            choiceActionPool =  ChoiceActionPool.getInstance(controller);
+            choiceActionPool = ChoiceActionPool.getInstance(controller);
         }
         return choiceActionPool.acquire(options);
     }
 
-    public CombineAction getCombineAction (AbstractAction a, AbstractAction b) {
+    public CombineAction getCombineAction(AbstractAction a, AbstractAction b) {
         if (combineActionPool == null) {
-            combineActionPool =  CombineActionPool.getInstance(controller);
+            combineActionPool = CombineActionPool.getInstance(controller);
         }
         return combineActionPool.acquire(a, b);
     }
 
     public ConfirmationAction getConfirmationAction(String question) {
         if (confirmationActionPool == null) {
-            confirmationActionPool =  ConfirmationActionPool.getInstance(controller);
+            confirmationActionPool = ConfirmationActionPool.getInstance(controller);
         }
         return confirmationActionPool.acquire(question);
     }
 
     public ExpressEmotionAction getExpressEmotionAction(FaceExpression expression) {
         if (expressEmotionActionPool == null) {
-            expressEmotionActionPool =  ExpressEmotionActionPool.getInstance(controller);
+            expressEmotionActionPool = ExpressEmotionActionPool.getInstance(controller);
         }
         return expressEmotionActionPool.acquire(expression);
     }
 
     public LedAction getLedAction(LedColor color) {
         if (ledActionPool == null) {
-            ledActionPool =  LedActionPool.getInstance(controller);
+            ledActionPool = LedActionPool.getInstance(controller);
         }
         return ledActionPool.acquire(color);
     }
 
     public ListenAction getListenAction() {
         if (listenActionPool == null) {
-            listenActionPool =  ListenActionPool.getInstance(controller);
+            listenActionPool = ListenActionPool.getInstance(controller);
         }
         return listenActionPool.acquire();
     }
 
     public MotorAction getMotorAction(RobotDirection dir, RobotSpeed speed) {
         if (motorActionPool == null) {
-            motorActionPool =  MotorActionPool.getInstance(controller);
+            motorActionPool = MotorActionPool.getInstance(controller);
         }
         return motorActionPool.acquire(dir, speed);
     }
 
     public ReadTextAction getReadTextAction(String question) {
         if (readTextActionPool == null) {
-            readTextActionPool =  ReadTextActionPool.getInstance(controller);
+            readTextActionPool = ReadTextActionPool.getInstance(controller);
         }
         return readTextActionPool.acquire(question);
     }
 
     public ReadTextAction getReadTextAction(String[] questions) {
         if (readTextActionPool == null) {
-            readTextActionPool =  ReadTextActionPool.getInstance(controller);
+            readTextActionPool = ReadTextActionPool.getInstance(controller);
         }
         return readTextActionPool.acquire(questions);
     }
 
     public ShowTextAction getShowTextAction(String text) {
         if (showTextActionPool == null) {
-            showTextActionPool =  ShowTextActionPool.getInstance(controller);
+            showTextActionPool = ShowTextActionPool.getInstance(controller);
         }
         return showTextActionPool.acquire(text);
     }
 
     public ShowTextAction getShowTextAction(String[] texts) {
         if (showTextActionPool == null) {
-            showTextActionPool =  ShowTextActionPool.getInstance(controller);
+            showTextActionPool = ShowTextActionPool.getInstance(controller);
         }
         return showTextActionPool.acquire(texts);
     }
 
     public SleepAction getSleepAction(long time) {
         if (sleepActionPool == null) {
-            sleepActionPool =  SleepActionPool.getInstance(controller);
+            sleepActionPool = SleepActionPool.getInstance(controller);
         }
         return sleepActionPool.acquire(time);
     }
 
     public SpeakAction getSpeakAction(String text) {
         if (speakActionPool == null) {
-            speakActionPool =  SpeakActionPool.getInstance(controller);
+            speakActionPool = SpeakActionPool.getInstance(controller);
         }
         return speakActionPool.acquire(text);
     }
 
     public SpeakAction getSpeakAction(String[] texts) {
         if (speakActionPool == null) {
-            speakActionPool =  SpeakActionPool.getInstance(controller);
+            speakActionPool = SpeakActionPool.getInstance(controller);
         }
         return speakActionPool.acquire(texts);
     }
 
-    public void releaseAction (AbstractAction action){
+    public void releaseAction(AbstractAction action) {
         try {
             if (action instanceof ChoiceAction) {
                 choiceActionPool.release((ChoiceAction) action);
             } else if (action instanceof CombineAction) {
                 combineActionPool.release((CombineAction) action);
-            } else if (action instanceof ConfirmationAction){
+            } else if (action instanceof ConfirmationAction) {
                 confirmationActionPool.release((ConfirmationAction) action);
-            } else if (action instanceof ExpressEmotionAction){
+            } else if (action instanceof ExpressEmotionAction) {
                 expressEmotionActionPool.release((ExpressEmotionAction) action);
-            } else if (action instanceof LedAction){
+            } else if (action instanceof LedAction) {
                 ledActionPool.release((LedAction) action);
-            } else if (action instanceof MotorAction){
+            } else if (action instanceof MotorAction) {
                 motorActionPool.release((MotorAction) action);
-            } else if (action instanceof ReadTextAction){
+            } else if (action instanceof ReadTextAction) {
                 readTextActionPool.release((ReadTextAction) action);
-            } else if (action instanceof ShowTextAction){
+            } else if (action instanceof ShowTextAction) {
                 showTextActionPool.release((ShowTextAction) action);
-            } else if (action instanceof SleepAction){
+            } else if (action instanceof SleepAction) {
                 sleepActionPool.release((SleepAction) action);
-            } else if (action instanceof SpeakAction){
+            } else if (action instanceof SpeakAction) {
                 speakActionPool.release((SpeakAction) action);
             } else {
-                if (action == null){
+                if (action == null) {
                     Log.w(TAG, "cannot release a null action");
                 }
                 Log.e(TAG, "trying to release unknown action " + action.toString());
             }
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Log.e(TAG, "An ActionPool cannot be null");
         }
     }

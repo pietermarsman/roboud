@@ -14,7 +14,9 @@ public abstract class AbstractAction extends Observable {
     public AbstractAction(RoboudController controller) {
         this.controller = controller;
     }
+
     public abstract void doActions(Object information);
+
     public abstract Object getInformation();
 
 }

@@ -13,11 +13,7 @@ import java.io.IOException;
 public class ReadFromFile {
     public static final String TAG = "ReadFromFile";
 
-    public ReadFromFile() {
-
-    }
-
-    public String readFromFile(String FILENAME) throws IOException {
+    public static String readFromFile(String FILENAME) throws IOException {
 
         FileReader henk;
         try {

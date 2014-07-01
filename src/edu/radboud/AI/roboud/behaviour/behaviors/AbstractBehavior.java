@@ -70,9 +70,9 @@ public abstract class AbstractBehavior extends Observable implements Observer {
 
     public abstract Object getInformation();
 
-    private void releaseActions(){
-        for (Iterator<AbstractAction> it = actions.iterator(); it.hasNext();){
-                actionFactory.releaseAction(it.next());
-            }
+    private void releaseActions() {
+        for (Iterator<AbstractAction> it = actions.iterator(); it.hasNext(); ) {
+            actionFactory.releaseAction(it.next());
+        }
     }
 }

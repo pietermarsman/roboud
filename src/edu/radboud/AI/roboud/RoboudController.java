@@ -18,13 +18,13 @@ import android.widget.TextView;
 import com.wowwee.robome.RoboMe;
 import com.wowwee.robome.RoboMeCommands;
 import edu.radboud.ai.roboud.action.util.FaceExpression;
-import edu.radboud.ai.roboud.util.Scenario;
 import edu.radboud.ai.roboud.senses.AndroidCamera;
 import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.senses.SpeechEngine;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 import edu.radboud.ai.roboud.util.ReadFromFile;
+import edu.radboud.ai.roboud.util.Scenario;
 import edu.radboud.ai.roboud.util.WriteToFile;
 
 import java.io.IOException;
@@ -102,6 +102,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
             FILENAME = getApplicationContext().getFilesDir().getPath().toString() + "/" + fileName; //fileDir + "/" + fileName;
         }
 
+        // Read previous data
+        String res = readFromFile();
+
         // UI
         setContentView(R.layout.face_nothing);
         textView = (TextView) findViewById(R.id.textView);
@@ -157,11 +160,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         Log.i(TAG, "onResume");
         // The activity has become visible (it is now "resumed").
         // UI;
-        try {
-            readFromFile();
-        } catch (Exception e) {
-            Log.e(TAG, "read from file failed", e);
-        }
+
         if (text != null)
             showText(text);
 
@@ -175,7 +174,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         Log.d(TAG, "speechEngine is Available: " + speechEngine.isAvailable());
         //Apparently the speechEngine is not available although it works...
         //Scenario scenario = new Scenario(getApplicationContext(), false, speechEngine.isAvailable(),  mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
-        Scenario scenario = new Scenario(getApplicationContext(), false, true,  mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
+        Scenario scenario = new Scenario(getApplicationContext(), false, true, mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
         model.setScenario(scenario);
         model.addObserver(this);
         mind = RoboudMind.getInstance(this, scenario);
@@ -189,11 +188,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     protected void onPause() {
         // Another activity is taking focus (this activity is about to be "paused").
         Log.i(TAG, "onPause");
-        try {
-            writeToFile("(default output:) I am now paused, saving some text to file");
-        } catch (IOException e) {
-            Log.e(TAG, "Write to file in onPause() failed", e);
-        }
 
         // UI
         // Nothing to do
@@ -221,12 +215,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onStop() {
         Log.i(TAG, "onStop");
-        try {
-            writeToFile("Store information now");
-        } catch (IOException e) {
-            Log.e(TAG, "Write to file in onStop() failed", e);
-        }
-        Log.v(TAG, "Done writing to file, stopping app now");
 
         // UI
         // Nothing to do
@@ -253,6 +241,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     protected void onDestroy() {
         // The activity is about to be destroyed.
         Log.i(TAG, "onDestroy()");
+        writeToFile("Store information now");
 
         // RoboMe
         robome = null;
@@ -321,7 +310,28 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void commandReceived(RoboMeCommands.IncomingRobotCommand incomingRobotCommand) {
         Log.d(TAG, incomingRobotCommand.toString());
-        model.receiveCommand(incomingRobotCommand);
+        if (incomingRobotCommand.isBatteryStatus())
+            model.setRobomeBatteryPercentage(incomingRobotCommand);
+        else if (incomingRobotCommand.isDetectionVoltage())
+            model.setRobomeDetectionVoltage(incomingRobotCommand.readDetectionVoltage());
+        else if (incomingRobotCommand.isDirectionGameLevel())
+            model.setRobomeDirectionGameLevel(incomingRobotCommand);
+        else if (incomingRobotCommand.isGeneralStatus())
+            model.setRobomeGeneralStatus(incomingRobotCommand.readGeneralStatus());
+        else if (incomingRobotCommand.isHandshakeStatus())
+            model.setRobomeHandshakeStatus(incomingRobotCommand.readHandshakeStatus());
+        else if (incomingRobotCommand.isIRStatus())
+            model.setRobomeIRStatus(incomingRobotCommand.readIRStatus());
+        else if (incomingRobotCommand.isLEDStatus())
+            model.setRobomeLEDStatus(incomingRobotCommand.readLEDStatus());
+        else if (incomingRobotCommand.isMoodValue())
+            model.setRobomeMoodStatus(incomingRobotCommand);
+        else if (incomingRobotCommand.isRemoteButton())
+            model.setRobomeRemoteButton(incomingRobotCommand);
+        else if (incomingRobotCommand.isSensorStatus())
+            model.setRobomeSensorStatus(incomingRobotCommand.readSensorStatus());
+        else
+            Log.w(TAG, "IncomingRobotCommand received but it was of unkown type");
     }
 
     public void sendCommand(RoboMeCommands.RobotCommand outgoingCommand) {
@@ -402,16 +412,23 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
-    protected synchronized void writeToFile(String toWrite) throws IOException {
+    protected synchronized void writeToFile(String toWrite) {
         Log.v(TAG, "write to file");
-        WriteToFile writer = new WriteToFile();
-        writer.writeToFile(toWrite, FILENAME);
+        try {
+            WriteToFile.writeToFile(toWrite, FILENAME);
+        } catch (IOException e) {
+            Log.e(TAG, "Could not write to file", e);
+        }
     }
 
-    protected synchronized String readFromFile() throws Exception {
+    protected synchronized String readFromFile() {
         Log.v(TAG, "read from file");
-        ReadFromFile reader = new ReadFromFile();
-        return reader.readFromFile(FILENAME);
+        try {
+            return ReadFromFile.readFromFile(FILENAME);
+        } catch (IOException e) {
+            Log.e(TAG, "Could not read from file", e);
+        }
+        return null;
     }
 
     // === START Controller methods ===
@@ -508,12 +525,12 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         //mind.stopRunning();
     }
 
-    public void appInDisconnectedMode(){
+    public void appInDisconnectedMode() {
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.face_nothing));
         textView.setText("Please connect the app to the robot body...");
     }
 
-    public void appInConnectedMode(){
+    public void appInConnectedMode() {
         //TODO this should resume at the previous settings before it was disconnected
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.face_smile_normal));
         textView.setText("Status");

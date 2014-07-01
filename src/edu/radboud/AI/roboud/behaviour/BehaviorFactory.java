@@ -31,15 +31,27 @@ public class BehaviorFactory {
         return new TestBehavior(actionFactory, scenario);
     }
 
-    public IntroduceBehavior getIntroduceBehavior(){ return new IntroduceBehavior(actionFactory, scenario);}
+    public IntroduceBehavior getIntroduceBehavior() {
+        return new IntroduceBehavior(actionFactory, scenario);
+    }
 
-    public AreWeFamiliarBehavior getAreWeFamiliarBehavior(){return  new AreWeFamiliarBehavior(actionFactory, scenario);}
-    
-    public SelectExistingUserBehavior getExistingUserBehavior(){return  new SelectExistingUserBehavior(actionFactory, scenario);}
+    public AreWeFamiliarBehavior getAreWeFamiliarBehavior() {
+        return new AreWeFamiliarBehavior(actionFactory, scenario);
+    }
 
-    public SettingsBehavior getSettingsBehavior() {return new SettingsBehavior(actionFactory, scenario);}
+    public SelectExistingUserBehavior getExistingUserBehavior() {
+        return new SelectExistingUserBehavior(actionFactory, scenario);
+    }
 
-    public TurnMeOffBehavior getTurnMeOffBehavior() {return new TurnMeOffBehavior(actionFactory, scenario);}
+    public SettingsBehavior getSettingsBehavior() {
+        return new SettingsBehavior(actionFactory, scenario);
+    }
 
-    public RandomWanderBehavior getRandomWanderBehavior() {return new RandomWanderBehavior(actionFactory, scenario);}
+    public TurnMeOffBehavior getTurnMeOffBehavior() {
+        return new TurnMeOffBehavior(actionFactory, scenario);
+    }
+
+    public RandomWanderBehavior getRandomWanderBehavior() {
+        return new RandomWanderBehavior(actionFactory, scenario);
+    }
 }

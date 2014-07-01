@@ -21,12 +21,11 @@ public class AreWeFamiliarBehavior extends AbstractBehavior {
 
     @Override
     protected Object processInformation(AbstractAction currentAction) {
-        if (currentAction instanceof ConfirmationAction){
+        if (currentAction instanceof ConfirmationAction) {
             ConfirmationAction confirm = (ConfirmationAction) currentAction;
             familiar = confirm.getResult();
             Log.i(TAG, "familiar is " + familiar);
-        }
-        else{
+        } else {
             Log.w(TAG, "Unexpected update");
         }
         return null;
@@ -37,7 +36,7 @@ public class AreWeFamiliarBehavior extends AbstractBehavior {
         return familiar;
     }
 
-    public boolean isFamiliar(){
+    public boolean isFamiliar() {
         return familiar;
     }
 }

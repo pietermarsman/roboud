@@ -62,16 +62,14 @@ public class RoboudMind implements Observer {
             behaviorModule = TurnMeOffBehaviorModule.getInstance(controller, scenario);
             behaviorModule.addObserver(this);
             behaviorModule.startRunning();
-        }
-        else if (observable instanceof ConnectedFunctionModule){
+        } else if (observable instanceof ConnectedFunctionModule) {
             ConnectedFunctionModule connectedFunctionModule = (ConnectedFunctionModule) observable;
             Log.i(TAG, "Module connected = " + connectedFunctionModule.getConnected() + " and model headPhoneConnected = " + model.isRobomeHeadsetPluggedIn());
-            if (!connectedFunctionModule.getConnected()){
+            if (!connectedFunctionModule.getConnected()) {
                 behaviorModule.stopRunning();
                 behaviorModule.deleteObserver(this);
-            }
-            else{
-                if (!behaviorModule.isRunning()){
+            } else {
+                if (!behaviorModule.isRunning()) {
                     Log.i(TAG, "behavior module running = " + behaviorModule.isRunning());
                     behaviorModule.addObserver(this);
                     behaviorModule.startRunning();
@@ -82,7 +80,7 @@ public class RoboudMind implements Observer {
 
     public void stopRunning() {
         running = false;
-        for(Iterator<AbstractFunctionModule> it = functionModules.iterator(); it.hasNext();){
+        for (Iterator<AbstractFunctionModule> it = functionModules.iterator(); it.hasNext(); ) {
             AbstractFunctionModule functionModule = it.next();
             functionModule.deleteObserver(this);
             functionModule.stopRunning();
@@ -93,9 +91,9 @@ public class RoboudMind implements Observer {
 
     public void startRunning() {
         Log.d(TAG, "Start running roboud mind");
-        if (!running){
+        if (!running) {
             running = true;
-            for(Iterator<AbstractFunctionModule> it = functionModules.iterator(); it.hasNext();){
+            for (Iterator<AbstractFunctionModule> it = functionModules.iterator(); it.hasNext(); ) {
                 AbstractFunctionModule functionModule = it.next();
                 functionModule.addObserver(this);
                 functionModule.startRunning();
@@ -104,8 +102,7 @@ public class RoboudMind implements Observer {
                 behaviorModule.addObserver(this);
                 behaviorModule.startRunning();
             }
-        }
-        else {
+        } else {
             Log.w(TAG, "Already running, no need to start it again");
         }
     }
