@@ -28,7 +28,7 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
     @Override
     public void doActions(Object information) {
         if (information != null && information instanceof List) {
-            options = (List<String>) information;
+            options = (List) information;
         }
 
         if (options == null) {
