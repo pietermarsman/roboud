@@ -158,6 +158,7 @@ public class Scenario extends Observable {
         setChanged();
         notifyObservers();
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

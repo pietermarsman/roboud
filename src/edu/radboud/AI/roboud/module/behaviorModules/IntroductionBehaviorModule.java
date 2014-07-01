@@ -18,14 +18,14 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
 
     private IntroductionBehaviorPhase phase;
 
+    private IntroductionBehaviorModule(RoboudController controller, Scenario scenario) {
+        super(controller, scenario);
+    }
+
     public synchronized static IntroductionBehaviorModule getInstance(RoboudController controller, Scenario scenario) {
         if (ourInstance == null)
             ourInstance = new IntroductionBehaviorModule(controller, scenario);
         return ourInstance;
-    }
-
-    private IntroductionBehaviorModule(RoboudController controller, Scenario scenario) {
-        super(controller, scenario);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
 
     @Override
     protected void stopBehavior() {
-        if (currentBehavior != null){
+        if (currentBehavior != null) {
             currentBehavior.deleteObserver(this);
         }
     }
@@ -46,18 +46,17 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
     @Override
     public void update(Observable observable, Object o) {
         Log.i(TAG, "==Introduction Module is updated== by " + observable.getClass().getSimpleName() + " and the phase is at " + phase);
-        if (phase == IntroductionBehaviorPhase.KNOWNUSER){
+        if (phase == IntroductionBehaviorPhase.KNOWNUSER) {
             if (observable instanceof AreWeFamiliarBehavior) {
                 AreWeFamiliarBehavior previousBehavior = (AreWeFamiliarBehavior) observable;
                 previousBehavior.deleteObserver(this);
-                if (previousBehavior.isFamiliar()){
+                if (previousBehavior.isFamiliar()) {
                     phase = IntroductionBehaviorPhase.SELECTEXISTINGUSER;
                     Log.i(TAG, "Phase is set to SELECTEXISTINGUSER");
                     currentBehavior = behaviorFactory.getExistingUserBehavior();
                     currentBehavior.addObserver(this);
                     behaviorReady = true;
-                }
-                else{
+                } else {
                     phase = IntroductionBehaviorPhase.NEWUSER;
                     Log.i(TAG, "Phase is set to NEWUSER");
                     currentBehavior = behaviorFactory.getIntroduceBehavior();
@@ -66,8 +65,8 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
                 }
             }
         }
-        if (phase == IntroductionBehaviorPhase.SELECTEXISTINGUSER || phase == IntroductionBehaviorPhase.NEWUSER){
-            if (observable instanceof SelectExistingUserBehavior || observable instanceof IntroduceBehavior){
+        if (phase == IntroductionBehaviorPhase.SELECTEXISTINGUSER || phase == IntroductionBehaviorPhase.NEWUSER) {
+            if (observable instanceof SelectExistingUserBehavior || observable instanceof IntroduceBehavior) {
                 AbstractBehavior previousBehavior = (AbstractBehavior) observable;
                 previousBehavior.deleteObserver(this);
                 phase = IntroductionBehaviorPhase.GETSETTINGS;
@@ -77,8 +76,8 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
                 behaviorReady = true;
             }
         }
-        if (phase == IntroductionBehaviorPhase.GETSETTINGS){
-            if (observable instanceof SettingsBehavior){
+        if (phase == IntroductionBehaviorPhase.GETSETTINGS) {
+            if (observable instanceof SettingsBehavior) {
                 SettingsBehavior previousBehavior = (SettingsBehavior) observable;
                 previousBehavior.deleteObserver(this);
                 Log.i(TAG, "and we're finished");
@@ -89,7 +88,7 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
         }
     }
 
-    public IntroductionBehaviorPhase getPhase(){
+    public IntroductionBehaviorPhase getPhase() {
         return phase;
     }
 }

@@ -2,10 +2,6 @@ package edu.radboud.ai.roboud.module.functionModules;
 
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.RoboudModel;
-import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
-import edu.radboud.ai.roboud.module.Module;
-import edu.radboud.ai.roboud.module.behaviorModules.AbstractBehaviorModule;
-import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -20,30 +16,29 @@ public class ConnectedFunctionModule extends AbstractFunctionModule implements O
     private RoboudController controller;
     private boolean connected, running;
 
-    public synchronized static ConnectedFunctionModule getInstance(RoboudController controller) {
-        if (ourInstance == null)
-            ourInstance = new ConnectedFunctionModule(controller);
-        return ourInstance;
-    }
-
     private ConnectedFunctionModule(RoboudController controller) {
         this.controller = controller;
         model = controller.getModel();
         running = false;
     }
 
+    public synchronized static ConnectedFunctionModule getInstance(RoboudController controller) {
+        if (ourInstance == null)
+            ourInstance = new ConnectedFunctionModule(controller);
+        return ourInstance;
+    }
+
     @Override
     public void update(Observable observable, Object o) {
-        if (observable instanceof RoboudModel){
+        if (observable instanceof RoboudModel) {
             boolean newConnectInfo = model.isRobomeHeadsetPluggedIn();
-            if (connected != newConnectInfo){
+            if (connected != newConnectInfo) {
                 connected = newConnectInfo;
-                if (connected){
+                if (connected) {
                     controller.appInConnectedMode();
                     setChanged();
                     notifyObservers();
-                }
-                else{
+                } else {
                     controller.appInDisconnectedMode();
                     setChanged();
                     notifyObservers();
@@ -57,10 +52,9 @@ public class ConnectedFunctionModule extends AbstractFunctionModule implements O
         running = true;
         model.addObserver(this);
         connected = model.isRobomeHeadsetPluggedIn();
-        if (connected){
+        if (connected) {
             controller.appInConnectedMode();
-        }
-        else{
+        } else {
             controller.appInDisconnectedMode();
         }
     }
@@ -76,7 +70,7 @@ public class ConnectedFunctionModule extends AbstractFunctionModule implements O
         return running;
     }
 
-    public boolean getConnected(){
+    public boolean getConnected() {
         return connected;
     }
 }

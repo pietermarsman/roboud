@@ -2,16 +2,13 @@ package edu.radboud.ai.roboud.module.behaviorModules;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
 import edu.radboud.ai.roboud.behaviour.BehaviorFactory;
+import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
 import edu.radboud.ai.roboud.module.Module;
 import edu.radboud.ai.roboud.util.Scenario;
 
-import java.util.LinkedHashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Mike Ligthart on 28-6-2014.
@@ -19,15 +16,14 @@ import java.util.concurrent.ThreadPoolExecutor;
 public abstract class AbstractBehaviorModule extends Observable implements Observer, Module, Runnable {
 
     public static final String TAG = "AbstractBehaviorModule";
-
-    private boolean running;
-    private Thread moduleThread;
-
+    public static int UPDATE_INTERVAL = 100;
     protected BehaviorFactory behaviorFactory;
     protected AbstractBehavior currentBehavior;
     protected boolean behaviorReady;
+    private boolean running;
+    private Thread moduleThread;
 
-    public AbstractBehaviorModule(RoboudController controller, Scenario scenario){
+    public AbstractBehaviorModule(RoboudController controller, Scenario scenario) {
         running = false;
         moduleThread = new Thread(this);
         behaviorFactory = BehaviorFactory.getInstance(scenario, controller);
@@ -35,25 +31,24 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
 
     protected abstract AbstractBehavior firstBehavior();
 
-    public void startRunning(){
-        if (!running){
+    public void startRunning() {
+        if (!running) {
             running = true;
             currentBehavior = firstBehavior();
             behaviorReady = true;
             if (moduleThread.getState() == Thread.State.NEW) {
                 moduleThread.start();
-            } else{
+            } else {
                 moduleThread = new Thread(this);
                 moduleThread.start();
             }
-        }
-        else{
+        } else {
             Log.w(TAG, "Module is already running");
         }
 
     }
 
-    public void stopRunning(){
+    public void stopRunning() {
         stopBehavior();
         running = false;
         //TODO save information??.
@@ -65,25 +60,23 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
         return running;
     }
 
-    protected void finished(){
+    protected void finished() {
         running = false;
         setChanged();
         notifyObservers();
     }
 
     @Override
-    public void run(){
+    public void run() {
         Log.i(TAG, "thread is started");
-        while (running){
-            if (behaviorReady && moduleThread != null ){
+        while (running) {
+            if (behaviorReady && moduleThread != null) {
                 behaviorReady = false;
                 Log.i(TAG, "executing behavior " + currentBehavior.getClass().getSimpleName());
                 currentBehavior.executeBehaviour();
-            }
-            else{
-
+            } else {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(UPDATE_INTERVAL);
                 } catch (InterruptedException e) {
                     Log.e(TAG, "InterruptedException in module is thrown", e);
                 }

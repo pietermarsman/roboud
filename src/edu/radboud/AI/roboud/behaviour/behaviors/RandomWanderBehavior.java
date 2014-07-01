@@ -25,6 +25,7 @@ public class RandomWanderBehavior extends AbstractBehavior {
         Log.v(TAG, "Direction: " + direction.toString() + " Speed: " + speed);
         actions.add(actionFactory.getMotorAction(direction, speed));
     }
+
     @Override
     protected Object processInformation(AbstractAction currentAction) {
         return null;

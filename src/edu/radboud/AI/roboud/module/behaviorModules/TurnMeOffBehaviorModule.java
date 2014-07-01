@@ -2,7 +2,6 @@ package edu.radboud.ai.roboud.module.behaviorModules;
 
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
-import edu.radboud.ai.roboud.behaviour.behaviors.AreWeFamiliarBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.TurnMeOffBehavior;
 import edu.radboud.ai.roboud.util.Scenario;
 
@@ -17,14 +16,14 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
     private static TurnMeOffBehaviorModule ourInstance = null;
 
 
+    private TurnMeOffBehaviorModule(RoboudController controller, Scenario scenario) {
+        super(controller, scenario);
+    }
+
     public synchronized static TurnMeOffBehaviorModule getInstance(RoboudController controller, Scenario scenario) {
         if (ourInstance == null)
             ourInstance = new TurnMeOffBehaviorModule(controller, scenario);
         return ourInstance;
-    }
-
-    private TurnMeOffBehaviorModule(RoboudController controller, Scenario scenario) {
-        super(controller, scenario);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
 
     @Override
     public void update(Observable observable, Object o) {
-        if (observable instanceof AbstractBehavior){
+        if (observable instanceof AbstractBehavior) {
             AbstractBehavior behavior = (AbstractBehavior) observable;
             behavior.deleteObserver(this);
             currentBehavior = behaviorFactory.getRandomWanderBehavior();

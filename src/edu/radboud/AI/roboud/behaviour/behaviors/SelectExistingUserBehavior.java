@@ -31,12 +31,11 @@ public class SelectExistingUserBehavior extends AbstractBehavior {
 
     @Override
     protected Object processInformation(AbstractAction currentAction) {
-        if (currentAction instanceof ChoiceAction){
+        if (currentAction instanceof ChoiceAction) {
             ChoiceAction choice = (ChoiceAction) currentAction;
             result = choice.getResultString();
             Log.i(TAG, "result is " + choice.getResultString());
-        }
-        else{
+        } else {
             Log.w(TAG, "Unexpected update");
         }
         return null;
@@ -47,7 +46,7 @@ public class SelectExistingUserBehavior extends AbstractBehavior {
         return null;
     }
 
-    public String getResult(){
+    public String getResult() {
         return result;
     }
 }

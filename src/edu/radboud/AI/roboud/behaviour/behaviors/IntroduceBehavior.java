@@ -1,13 +1,9 @@
 package edu.radboud.ai.roboud.behaviour.behaviors;
 
-import android.util.Log;
 import edu.radboud.ai.roboud.action.ActionFactory;
 import edu.radboud.ai.roboud.action.actions.AbstractAction;
 import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
 import edu.radboud.ai.roboud.util.Scenario;
-
-import java.security.SecurityPermission;
-import java.util.SortedMap;
 
 /**
  * Created by Pieter Marsman on 2-6-2014.
@@ -17,7 +13,7 @@ public class IntroduceBehavior extends AbstractBehavior {
     public static final String TAG = "AbstractBehavior";
 
     public IntroduceBehavior(ActionFactory actionFactory, Scenario scenario) {
-        super(actionFactory,scenario);
+        super(actionFactory, scenario);
 
         //These need to be consistent in both text and speech
         String greetings = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingStart);
@@ -29,13 +25,12 @@ public class IntroduceBehavior extends AbstractBehavior {
         String ending = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingEnd);
 
         //Greetings and introducing myself
-        if (scenario.isCanTalk()){
+        if (scenario.isCanTalk()) {
             actions.add(actionFactory.getShowTextAction(greetings));
             actions.add(actionFactory.getSpeakAction(greetings));
             actions.add(actionFactory.getShowTextAction(introduceMySelf));
             actions.add(actionFactory.getSpeakAction(introduceMySelf));
-        }
-        else{
+        } else {
             actions.add(actionFactory.getShowTextAction(greetings));
             actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
             actions.add(actionFactory.getShowTextAction(introduceMySelf));
@@ -43,19 +38,19 @@ public class IntroduceBehavior extends AbstractBehavior {
         }
 
         //Ask name
-        if(scenario.isCanTalk()){
+        if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(yourName));
         }
         actions.add(actionFactory.getReadTextAction(yourName));
 
         //Ask age
-        if (scenario.isCanTalk()){
+        if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(yourAge));
         }
         actions.add(actionFactory.getReadTextAction(yourAge));
 
         //Ask sex
-        if (scenario.isCanTalk()){
+        if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(yourSex));
         }
         actions.add(actionFactory.getReadTextAction(yourSex));
@@ -66,8 +61,7 @@ public class IntroduceBehavior extends AbstractBehavior {
             actions.add(actionFactory.getSpeakAction(enough));
             actions.add(actionFactory.getShowTextAction(ending));
             actions.add(actionFactory.getSpeakAction(ending));
-        }
-        else{
+        } else {
             actions.add(actionFactory.getShowTextAction(enough));
             actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
             actions.add(actionFactory.getShowTextAction(ending));
