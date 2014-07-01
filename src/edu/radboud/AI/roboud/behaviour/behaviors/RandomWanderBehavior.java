@@ -16,15 +16,46 @@ public class RandomWanderBehavior extends AbstractBehavior {
 
     public RandomWanderBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
-        wander();
+        speed = RobotSpeed.FASTEST;
     }
 
-    public void wander() {
+//    public void wander() {
+////        Log.v(TAG, "Direction: " + direction.toString() + " Speed: " + speed);
+//
+//        // Get some randomness in random behaviour!
+//        Random r1 = new Random(10);
+//        while(true){
+//            forward();
+//            if(r1.nextInt() < 5)
+//                lookLeftAndRight();
+//            headUpAndDown();
+//            turnToRandomDirection();
+//
+//            // tilt head.
+//        }
+//    }
+
+    public void forward(){
+        Log.v(TAG, "Moving forward:");
+        actions.add(actionFactory.getMotorAction(RobotDirection.FORWARD, speed));
+    }
+
+    private void lookLeftAndRight(){
+        direction = RobotDirection.LEFT;
+        actions.add(actionFactory.getMotorAction(direction, RobotSpeed.SLOW));
+        direction = RobotDirection.RIGHT;
+        actions.add(actionFactory.getMotorAction(direction, RobotSpeed.SLOW));
+    }
+
+    public void turnToRandomDirection(){
         direction = RobotDirection.random();
-        speed = RobotSpeed.random();
-        Log.v(TAG, "Direction: " + direction.toString() + " Speed: " + speed);
         actions.add(actionFactory.getMotorAction(direction, speed));
     }
+
+    public void headUpAndDown(){
+
+    }
+
     @Override
     protected Object processInformation(AbstractAction currentAction) {
         return null;

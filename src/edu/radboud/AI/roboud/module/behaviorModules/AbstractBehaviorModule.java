@@ -2,16 +2,13 @@ package edu.radboud.ai.roboud.module.behaviorModules;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
 import edu.radboud.ai.roboud.behaviour.BehaviorFactory;
+import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
 import edu.radboud.ai.roboud.module.Module;
 import edu.radboud.ai.roboud.util.Scenario;
 
-import java.util.LinkedHashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Mike Ligthart on 28-6-2014.
@@ -26,8 +23,10 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
     protected BehaviorFactory behaviorFactory;
     protected AbstractBehavior currentBehavior;
     protected boolean behaviorReady;
+    protected RoboudController controller;
 
     public AbstractBehaviorModule(RoboudController controller, Scenario scenario){
+        this.controller = controller;
         running = false;
         moduleThread = new Thread(this);
         behaviorFactory = BehaviorFactory.getInstance(scenario, controller);

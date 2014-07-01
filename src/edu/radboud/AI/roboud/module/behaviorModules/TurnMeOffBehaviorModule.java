@@ -1,12 +1,14 @@
 package edu.radboud.ai.roboud.module.behaviorModules;
 
 import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.RoboudModel;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
-import edu.radboud.ai.roboud.behaviour.behaviors.AreWeFamiliarBehavior;
+import edu.radboud.ai.roboud.behaviour.behaviors.RandomWanderBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.TurnMeOffBehavior;
 import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.Observable;
+import java.util.Random;
 
 /**
  * Created by mikel_000 on 29-6-2014.
@@ -15,7 +17,8 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
 
 
     private static TurnMeOffBehaviorModule ourInstance = null;
-
+    private int distanceToRobome = 4;
+    private final int threshold = 51;
 
     public synchronized static TurnMeOffBehaviorModule getInstance(RoboudController controller, Scenario scenario) {
         if (ourInstance == null)
@@ -31,6 +34,7 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
     protected AbstractBehavior firstBehavior() {
         TurnMeOffBehavior firstBehavior = behaviorFactory.getTurnMeOffBehavior();
         firstBehavior.addObserver(this);
+        controller.getModel().addObserver(this);
         return firstBehavior;
     }
 
@@ -44,7 +48,31 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
         if (observable instanceof AbstractBehavior){
             AbstractBehavior behavior = (AbstractBehavior) observable;
             behavior.deleteObserver(this);
-            currentBehavior = behaviorFactory.getRandomWanderBehavior();
+            RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
+            if (distanceToRobome < threshold){
+                wander.turnToRandomDirection();
+            }
+            else {
+                wander.forward();
+            }
+
+            currentBehavior = wander;
+            currentBehavior.addObserver(this);
+            behaviorReady = true;
+        }
+        if (observable instanceof RoboudModel){
+            int tempDistance = controller.getModel().getSensorStatus();
+            RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
+            if (tempDistance != distanceToRobome){
+                distanceToRobome = tempDistance;
+                if (distanceToRobome < threshold){
+                    wander.turnToRandomDirection();
+                }
+                else{
+                    wander.forward();
+                }
+            }
+            currentBehavior = wander;
             currentBehavior.addObserver(this);
             behaviorReady = true;
         }
