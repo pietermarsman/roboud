@@ -23,11 +23,10 @@ import edu.radboud.ai.roboud.senses.AndroidLocation;
 import edu.radboud.ai.roboud.senses.AndroidMicrophone;
 import edu.radboud.ai.roboud.senses.SpeechEngine;
 import edu.radboud.ai.roboud.util.ActivityResultProcessor;
-import edu.radboud.ai.roboud.util.ReadFromFile;
 import edu.radboud.ai.roboud.util.Scenario;
-import edu.radboud.ai.roboud.util.WriteToFile;
+import edu.radboud.ai.roboud.util.io.DataWriter;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -41,10 +40,10 @@ import java.util.Observer;
 public class RoboudController extends Activity implements Observer, RoboMe.RoboMeListener, SensorEventListener, View.OnClickListener {
 
     public static final String TAG = "RoboudController";
-    String fileDir = "";
-    String fileName = "hello_file.txt";
-    String FILENAME = "";
-
+    public static final String FILENAME = "hello_world.xml";
+    // Varialbes
+    File file;
+    DataWriter dataWriter;
     // Classes
     private RoboudModel model;
     private RoboudMind mind;
@@ -59,16 +58,13 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     private SensorManager mSensorManager;
     private HashMap<Integer, Sensor> sensors;
     private SpeechEngine speechEngine;
-
     private EditText firstField;
     private EditText secondField;
     private AndroidMicrophone mic;
     private AndroidCamera cam;
     private AndroidLocation loc;
-
     // Roboud
     private HashMap<Integer, ActivityResultProcessor> returnActivityDataToMap;
-
     private Handler textViewHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -95,15 +91,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(TAG, "onCreate");
-
-        if (fileDir == "") {
-            fileDir = getFilesDir().toString();
-            FILENAME = getApplicationContext().getFilesDir().getPath().toString() + "/" + fileName; //fileDir + "/" + fileName;
-        }
-
-        // Read previous data
-        String res = readFromFile();
+        Log.i(TAG, "onCreate(" + savedInstanceState + ")");
 
         // UI
         setContentView(R.layout.face_nothing);
@@ -111,14 +99,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        try {
-            Log.v(TAG, readFromFile());
-        } catch (Exception e) {
-            Log.v(TAG, "no saved information on phone");
-        }
-        Log.v(TAG, "Done reading file");
-
-        Log.i(TAG, "onCreate(" + savedInstanceState + ")");
         // RoboMe
         robome = new RoboMe(this.getApplicationContext(), this);
         robome.setDebugEnabled(true);
@@ -146,6 +126,10 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         sensors.put(Sensor.TYPE_MAGNETIC_FIELD, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD));
         sensors.put(Sensor.TYPE_PROXIMITY, mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY));
         sensors.put(Sensor.TYPE_LIGHT, mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
+
+        // Read data from previous sesion. Can only be done after model is initialized.
+        dataWriter = new DataWriter();
+        readFromFile();
     }
 
     @Override
@@ -159,9 +143,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume");
-        // The activity has become visible (it is now "resumed").
-        // UI;
 
+        // UI;
         if (text != null)
             showText(text);
 
@@ -173,8 +156,8 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
         // Classes
         Log.d(TAG, "speechEngine is Available: " + speechEngine.isAvailable());
-        //Apparently the speechEngine is not available although it works...
-        //Scenario scenario = new Scenario(getApplicationContext(), false, speechEngine.isAvailable(),  mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
+
+        // TODO Apparently the speechEngine is not available although it works...
         Scenario scenario = new Scenario(getApplicationContext(), false, true, mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
         model.setScenario(scenario);
         model.addObserver(this);
@@ -202,7 +185,6 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Classes
         // Nothing to do
 
-
         // RoboMe
         stopListeningToRoboMe();
         model.deleteObserver(this);
@@ -217,6 +199,9 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void onStop() {
         Log.i(TAG, "onStop");
 
+        // Write the essential parts of the model to a file. This should be done before the model is destroyed.
+        writeToFile();
+
         // UI
         // Nothing to do
 
@@ -229,20 +214,19 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         // Classes
         // TODO: This is an ugly try/catch
         model.deleteObserver(this);
-        super.onStop();
 
         // RoboMe
         // Nothing to do
 
         // Variables
         // Nothing to do
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
         // The activity is about to be destroyed.
         Log.i(TAG, "onDestroy()");
-        writeToFile("Store information now");
 
         // RoboMe
         robome = null;
@@ -414,23 +398,18 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
-    protected synchronized void writeToFile(String toWrite) {
+    protected synchronized void writeToFile() {
         Log.v(TAG, "write to file");
-        try {
-            WriteToFile.writeToFile(toWrite, FILENAME);
-        } catch (IOException e) {
-            Log.e(TAG, "Could not write to file", e);
-        }
+        file = new File(getFilesDir(), FILENAME);
+        Log.d(TAG, "Filename: " + file.toString());
+        dataWriter.writeToFile(file, model);
     }
 
-    protected synchronized String readFromFile() {
+    protected synchronized void readFromFile() {
         Log.v(TAG, "read from file");
-        try {
-            return ReadFromFile.readFromFile(FILENAME);
-        } catch (IOException e) {
-            Log.e(TAG, "Could not read from file", e);
-        }
-        return null;
+        file = new File(getFilesDir(), FILENAME);
+        Log.d(TAG, "Filename: " + file.toString());
+        dataWriter.readFromFile(file, model);
     }
 
     // === START Controller methods ===

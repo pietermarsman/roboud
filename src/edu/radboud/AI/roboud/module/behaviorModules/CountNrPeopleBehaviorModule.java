@@ -32,23 +32,21 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
     @Override
     protected AbstractBehavior firstBehavior() {
         // temporary solution?
-        if(phase == null)
+        if (phase == null)
             phase = CountNrPeopleBehaviorPhase.GIVEASSIGNMENT;
 
-        if(phase == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT){
+        if (phase == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT) {
             CountNrPeopleBehavior firstBehavior = behaviorFactory.getCountNrPeopleBehavior();
             // Is this the correct way to do it?
             firstBehavior.GiveAssignment();
             firstBehavior.addObserver(this);
             return firstBehavior;
-        }
-        else if(phase == CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT){
+        } else if (phase == CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT) {
             CountNrPeopleBehavior firstBehavior = behaviorFactory.getCountNrPeopleBehavior();
             firstBehavior.EvaluateAssignment();
             firstBehavior.addObserver(this);
             return firstBehavior;
-        }
-        else
+        } else
             throw new NullPointerException("CountNrPeopleBehaviorPhase not instantiated (1)");
 
     }
@@ -64,7 +62,7 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
     public void update(Observable observable, Object o) {
         Log.i(TAG, "==CountNrPeople Module is updated== by " + observable.getClass().getSimpleName() + " and the phase is at " + phase);
 
-        if(phase == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior){
+        if (phase == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior) {
             CountNrPeopleBehavior previousBehavior = (CountNrPeopleBehavior) observable;
             previousBehavior.deleteObserver(this);
             Log.i(TAG, "Phase is set to GIVEASSIGNMENT");
@@ -72,11 +70,9 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
 //            currentBehavior.GiveAssignment();
             currentBehavior.addObserver(this);
             behaviorReady = true;
-        }
-        else if(phase == CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT){
+        } else if (phase == CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT) {
 
-        }
-        else
+        } else
             throw new NullPointerException("CountNrPeopleBehaviorPhase not instantiated (2)");
     }
 }

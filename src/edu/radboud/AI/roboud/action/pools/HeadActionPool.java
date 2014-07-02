@@ -7,7 +7,7 @@ import edu.radboud.ai.roboud.action.util.HeadDirection;
 /**
  * Created by Guido on 02-07-14.
  */
-public class HeadActionPool extends ActionPool<HeadAction>{
+public class HeadActionPool extends ActionPool<HeadAction> {
 
     private static HeadActionPool instance = null;
 

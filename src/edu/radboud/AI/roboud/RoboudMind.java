@@ -1,7 +1,6 @@
 package edu.radboud.ai.roboud;
 
 import android.util.Log;
-import edu.radboud.ai.roboud.behaviour.behaviors.TurnMeOffBehavior;
 import edu.radboud.ai.roboud.module.behaviorModules.AbstractBehaviorModule;
 import edu.radboud.ai.roboud.module.behaviorModules.IntroductionBehaviorModule;
 import edu.radboud.ai.roboud.module.behaviorModules.TurnMeOffBehaviorModule;

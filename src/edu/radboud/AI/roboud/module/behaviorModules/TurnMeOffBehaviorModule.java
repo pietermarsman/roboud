@@ -16,8 +16,8 @@ import java.util.Random;
  */
 public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
 
-    Random r;
     private static TurnMeOffBehaviorModule ourInstance = null;
+    Random r;
 
     private TurnMeOffBehaviorModule(RoboudController controller, Scenario scenario) {
         super(controller, scenario);
@@ -49,21 +49,20 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
             AbstractBehavior behavior = (AbstractBehavior) observable;
             behavior.deleteObserver(this);
             RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
-            if (controller.getModel().isDistance_50() || controller.getModel().isDistance_20()){
+            if (controller.getModel().isDistance_50() || controller.getModel().isDistance_20()) {
                 Log.i(TAG, "Turn");
 
                 // sometimes look up and down
-                if(r.nextInt(10)<6)
+                if (r.nextInt(10) < 6)
                     wander.headUpAndDown();
 
                 // always turn
                 wander.turnToRandomDirection();
 
                 // sometimes take a look around
-                if(r.nextInt(10)<4)
+                if (r.nextInt(10) < 4)
                     wander.lookLeftAndRight();
-            }
-            else {
+            } else {
                 Log.i(TAG, "Before starting forward");
                 wander.forward();
             }

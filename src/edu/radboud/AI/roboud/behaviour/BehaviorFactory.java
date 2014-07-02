@@ -39,7 +39,7 @@ public class BehaviorFactory {
         return new AreWeFamiliarBehavior(actionFactory, scenario);
     }
 
-    public CountNrPeopleBehavior getCountNrPeopleBehavior(){
+    public CountNrPeopleBehavior getCountNrPeopleBehavior() {
         return new CountNrPeopleBehavior(actionFactory, scenario);
     }
 

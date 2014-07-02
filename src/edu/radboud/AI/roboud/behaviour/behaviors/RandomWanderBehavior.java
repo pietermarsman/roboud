@@ -18,41 +18,42 @@ public class RandomWanderBehavior extends AbstractBehavior {
     private RobotSpeed speed;
     private HeadDirection headDirection;
     private Random r;
+
     public RandomWanderBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
         speed = RobotSpeed.NORMAL;
         r = new Random();
     }
 
-    public void forward(){
+    public void forward() {
         Log.v(TAG, "forward");
         actions.add(actionFactory.getMotorAction(RobotDirection.FORWARD, speed));
     }
 
-    public void lookLeftAndRight(){
-        Log.v(TAG,"lookLeftAndRight");
+    public void lookLeftAndRight() {
+        Log.v(TAG, "lookLeftAndRight");
         direction = RobotDirection.LEFT;
         actions.add(actionFactory.getMotorAction(direction, RobotSpeed.SLOW));
         direction = RobotDirection.RIGHT;
         actions.add(actionFactory.getMotorAction(direction, RobotSpeed.SLOW));
     }
 
-    public void turnToRandomDirection(){
-        Log.v(TAG,"turnToRandomDirection");
-        if(r.nextInt(2) == 0)
+    public void turnToRandomDirection() {
+        Log.v(TAG, "turnToRandomDirection");
+        if (r.nextInt(2) == 0)
             direction = RobotDirection.RIGHT;
         else
             direction = RobotDirection.LEFT;
         actions.add(actionFactory.getMotorAction(direction, speed));
     }
 
-    public void headUpAndDown(){
-        Log.v(TAG,"headUpAndDown");
+    public void headUpAndDown() {
+        Log.v(TAG, "headUpAndDown");
         headDirection = HeadDirection.ALLUP;
         actions.add(actionFactory.getHeadAction(headDirection));
 
         // lichte aarzeling
-        if(r.nextInt(10)<5){
+        if (r.nextInt(10) < 5) {
             headDirection = HeadDirection.DOWN200;
             actions.add(actionFactory.getHeadAction(headDirection));
             headDirection = HeadDirection.UP200;

@@ -84,7 +84,7 @@ public class ActionFactory {
         return listenActionPool.acquire();
     }
 
-    public HeadAction getHeadAction(HeadDirection headDirection){
+    public HeadAction getHeadAction(HeadDirection headDirection) {
         if (headActionPool == null) {
             headActionPool = HeadActionPool.getInstance(controller);
         }

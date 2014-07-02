@@ -8,7 +8,7 @@ import edu.radboud.ai.roboud.action.util.HeadDirection;
 /**
  * Created by Guido on 01-07-14.
  */
-public class HeadAction extends AbstractAction{
+public class HeadAction extends AbstractAction {
     private final static String TAG = "HeadAction";
     private HeadDirection headDirection;
 
@@ -21,12 +21,11 @@ public class HeadAction extends AbstractAction{
         if (information != null) {
             if (information instanceof HeadDirection) {
                 this.headDirection = (HeadDirection) information;
-            }
-            else
+            } else
                 throw new NullPointerException("HeadDirection cannot be null");
         }
 
-        switch(headDirection) {
+        switch (headDirection) {
             case CENTER:
                 controller.sendCommand(RoboMeCommands.RobotCommand.kRobot_HeadReset);
                 break;

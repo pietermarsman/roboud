@@ -25,7 +25,7 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
     private boolean running;
     private Thread moduleThread;
 
-    public AbstractBehaviorModule(RoboudController controller, Scenario scenario){
+    public AbstractBehaviorModule(RoboudController controller, Scenario scenario) {
         this.controller = controller;
         running = false;
         moduleThread = new Thread(this);
@@ -84,6 +84,6 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
                     Log.e(TAG, "InterruptedException in module is thrown", e);
                 }
             }
-         }
+        }
     }
 }

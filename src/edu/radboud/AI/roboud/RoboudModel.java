@@ -22,7 +22,7 @@ public class RoboudModel extends Observable {
 
     public static String TAG = "RoboudModel";
 
-    EventHistory events;
+    private EventHistory events;
     private boolean robomeConnected, robomeHeadsetPluggedIn, listening;
     private float volume;
     private String libVersion;
@@ -44,7 +44,8 @@ public class RoboudModel extends Observable {
     private RoboMeCommands.IncomingRobotCommand robomeMoodStatus;
     private RoboMeCommands.IncomingRobotCommand robomeRemoteButton;
     private boolean distance_edge, distance_20, distance_50, distance_100, distance_far;
-    private CountNrPeopleBehaviorPhase phase;
+    private CountNrPeopleBehaviorPhase countNrPeopleBehaviorPhase;
+    private int numberOfTimesStarted;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
                        String _libVersion) {
@@ -70,7 +71,8 @@ public class RoboudModel extends Observable {
         distance_50 = false;
         distance_100 = false;
         distance_far = false;
-        phase = CountNrPeopleBehaviorPhase.GIVEASSIGNMENT;
+        countNrPeopleBehaviorPhase = CountNrPeopleBehaviorPhase.GIVEASSIGNMENT;
+        numberOfTimesStarted = 1;
         // lastModification is set by:
         changed();
     }
@@ -115,6 +117,8 @@ public class RoboudModel extends Observable {
         sb.append("Robome remote button: ").append(robomeRemoteButton).append("\n");
         sb.append("Robome sensor status: ").append("edge: ").append(distance_edge).append(", 20: ").append(distance_20);
         sb.append(", 50: ").append(distance_50).append(", 100: ").append(distance_100).append(", far: ").append(distance_far).append("\n");
+        sb.append("CountNrOfPeoplePhase: ").append(countNrPeopleBehaviorPhase.toString()).append("\n");
+        sb.append("Number of times started: ").append(numberOfTimesStarted).append("\n");
         return sb.toString();
     }
 
@@ -275,65 +279,62 @@ public class RoboudModel extends Observable {
         this.robomeRemoteButton = robomeRemoteButton;
     }
 
-    public boolean isDistance_edge(){
+    public boolean isDistance_edge() {
         return distance_edge;
     }
 
-    public boolean isDistance_20(){
+    public boolean isDistance_20() {
         return distance_20;
     }
 
-    public boolean isDistance_50(){
+    public boolean isDistance_50() {
         return distance_50;
     }
 
-    public boolean isDistance_100(){
+    public boolean isDistance_100() {
         return distance_100;
     }
 
-    public boolean isDistance_far(){
+    public boolean isDistance_far() {
         return distance_far;
     }
 
-    public CountNrPeopleBehaviorPhase getCountNrPeopleBehaviorPhase(){
-        return phase;
+    public CountNrPeopleBehaviorPhase getCountNrPeopleBehaviorPhase() {
+        return countNrPeopleBehaviorPhase;
     }
 
-    public void setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase countNrPeopleBehaviorPhase){
-        phase = countNrPeopleBehaviorPhase;
+    public void setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase countNrPeopleBehaviorPhase) {
+        this.countNrPeopleBehaviorPhase = countNrPeopleBehaviorPhase;
     }
 
     public void setRobomeSensorStatus(SensorStatus robomeSensorStatus) {
         if (robomeSensorStatus.edge)
             distance_edge = true;
-        else{
+        else {
             distance_edge = false;
         }
 
         if (robomeSensorStatus.chest_20cm) {
             distance_20 = true;
-        }
-        else{
+        } else {
             distance_20 = false;
         }
 
         if (robomeSensorStatus.chest_50cm) {
             distance_50 = true;
-        }
-        else{
+        } else {
             distance_50 = false;
         }
 
         if (robomeSensorStatus.chest_100cm)
             distance_100 = true;
-        else{
+        else {
             distance_100 = false;
         }
 
         if (!distance_edge && !distance_20 && !distance_50 && !distance_100) {
             distance_far = true;
-        }
-        else{
+        } else {
             distance_far = false;
         }
         Log.i(TAG, "edge, 20, 50, 100, far = " + distance_edge + ", " + distance_20 + ", " + distance_50 + ", " + distance_100 + ", " + distance_far);
@@ -453,5 +454,13 @@ public class RoboudModel extends Observable {
 
     public void setFaceExpression(FaceExpression faceExpression) {
         this.faceExpression = faceExpression;
+    }
+
+    public int getNumberOfTimesStarted() {
+        return numberOfTimesStarted;
+    }
+
+    public void setNumberOfTimesStarted(int numberOfTimesStarted) {
+        this.numberOfTimesStarted = numberOfTimesStarted;
     }
 }

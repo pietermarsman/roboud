@@ -16,20 +16,20 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
     private String askToCount;
     private String understand;
     private String ending;
+
     public CountNrPeopleBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
         // SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingStart);
-        Log.v(TAG,"Initializing CountNrPeopleBehavior");
+        Log.v(TAG, "Initializing CountNrPeopleBehavior");
         tellUser = SpeechRepertoire.randomChoice(SpeechRepertoire.questionAskUserReady);
         askToCount = SpeechRepertoire.randomChoice(SpeechRepertoire.textAskToCount);
         understand = SpeechRepertoire.randomChoice(SpeechRepertoire.questionUnderstand);
         ending = SpeechRepertoire.randomChoice(SpeechRepertoire.textEnding);
 
 
-
     }
 
-    public void GiveAssignment(){
+    public void GiveAssignment() {
         // ask if user is ready
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(tellUser));
@@ -59,7 +59,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         actions.add(actionFactory.getReadTextAction(ending));
     }
 
-    public void EvaluateAssignment(){
+    public void EvaluateAssignment() {
 
     }
 
