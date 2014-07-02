@@ -10,7 +10,7 @@ import edu.radboud.ai.roboud.util.Scenario;
  */
 public class IntroduceBehavior extends AbstractBehavior {
 
-    public static final String TAG = "AbstractBehavior";
+    public static final String TAG = "IntroduceBehavior";
 
     public IntroduceBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);

@@ -39,6 +39,10 @@ public class BehaviorFactory {
         return new AreWeFamiliarBehavior(actionFactory, scenario);
     }
 
+    public CountNrPeopleBehavior getCountNrPeopleBehavior(){
+        return new CountNrPeopleBehavior(actionFactory, scenario);
+    }
+
     public SelectExistingUserBehavior getExistingUserBehavior() {
         return new SelectExistingUserBehavior(actionFactory, scenario);
     }

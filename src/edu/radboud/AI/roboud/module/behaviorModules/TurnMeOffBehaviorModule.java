@@ -72,24 +72,5 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
             currentBehavior.addObserver(this);
             behaviorReady = true;
         }
-        /*
-        if (observable instanceof RoboudModel){
-            Integer tempDistance = controller.getModel().getRobomeSensorStatus();
-            Log.i(TAG,"TempDistance: " + tempDistance);
-            if (tempDistance != -1 && tempDistance != distanceToRobome){
-                RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
-                distanceToRobome = tempDistance;
-                if (distanceToRobome <= threshold){
-                    wander.turnToRandomDirection();
-                }
-                else{
-                    wander.forward();
-                }
-                currentBehavior = wander;
-                currentBehavior.addObserver(this);
-                behaviorReady = true;
-            }
-        }
-        */
     }
 }
