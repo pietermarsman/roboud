@@ -2,13 +2,13 @@ package edu.radboud.ai.roboud.module.behaviorModules;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
-import edu.radboud.ai.roboud.RoboudModel;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.RandomWanderBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.TurnMeOffBehavior;
 import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.Observable;
+import java.util.Random;
 
 
 /**
@@ -16,11 +16,12 @@ import java.util.Observable;
  */
 public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
 
-
+    Random r;
     private static TurnMeOffBehaviorModule ourInstance = null;
 
     private TurnMeOffBehaviorModule(RoboudController controller, Scenario scenario) {
         super(controller, scenario);
+        r = new Random();
     }
 
     public synchronized static TurnMeOffBehaviorModule getInstance(RoboudController controller, Scenario scenario) {
@@ -50,10 +51,20 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
             RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
             if (controller.getModel().isDistance_50() || controller.getModel().isDistance_20()){
                 Log.i(TAG, "Turn");
+
+                // sometimes look up and down
+                if(r.nextInt(10)<6)
+                    wander.headUpAndDown();
+
+                // always turn
                 wander.turnToRandomDirection();
+
+                // sometimes take a look around
+                if(r.nextInt(10)<4)
+                    wander.lookLeftAndRight();
             }
             else {
-                Log.i(TAG, "Forward");
+                Log.i(TAG, "Before starting forward");
                 wander.forward();
             }
 

@@ -4,10 +4,7 @@ import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.*;
 import edu.radboud.ai.roboud.action.pools.*;
-import edu.radboud.ai.roboud.action.util.FaceExpression;
-import edu.radboud.ai.roboud.action.util.LedColor;
-import edu.radboud.ai.roboud.action.util.RobotDirection;
-import edu.radboud.ai.roboud.action.util.RobotSpeed;
+import edu.radboud.ai.roboud.action.util.*;
 
 import java.util.List;
 
@@ -27,6 +24,7 @@ public class ActionFactory {
     private ExpressEmotionActionPool expressEmotionActionPool;
     private LedActionPool ledActionPool;
     private ListenActionPool listenActionPool;
+    private HeadActionPool headActionPool;
     private MotorActionPool motorActionPool;
     private ReadTextActionPool readTextActionPool;
     private ShowTextActionPool showTextActionPool;
@@ -84,6 +82,13 @@ public class ActionFactory {
             listenActionPool = ListenActionPool.getInstance(controller);
         }
         return listenActionPool.acquire();
+    }
+
+    public HeadAction getHeadAction(HeadDirection headDirection){
+        if (headActionPool == null) {
+            headActionPool = HeadActionPool.getInstance(controller);
+        }
+        return headActionPool.acquire(headDirection);
     }
 
     public MotorAction getMotorAction(RobotDirection dir, RobotSpeed speed) {
@@ -154,6 +159,8 @@ public class ActionFactory {
                 expressEmotionActionPool.release((ExpressEmotionAction) action);
             } else if (action instanceof LedAction) {
                 ledActionPool.release((LedAction) action);
+            } else if (action instanceof HeadAction) {
+                headActionPool.release((HeadAction) action);
             } else if (action instanceof MotorAction) {
                 motorActionPool.release((MotorAction) action);
             } else if (action instanceof ReadTextAction) {
