@@ -18,8 +18,6 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
 
 
     private static TurnMeOffBehaviorModule ourInstance = null;
-    private int distanceToRobome = 4;
-    private final int threshold = 51;
 
     private TurnMeOffBehaviorModule(RoboudController controller, Scenario scenario) {
         super(controller, scenario);
@@ -35,7 +33,7 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
     protected AbstractBehavior firstBehavior() {
         TurnMeOffBehavior firstBehavior = behaviorFactory.getTurnMeOffBehavior();
         firstBehavior.addObserver(this);
-        controller.getModel().addObserver(this);
+        //controller.getModel().addObserver(this);
         return firstBehavior;
     }
 
@@ -46,15 +44,16 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
 
     @Override
     public void update(Observable observable, Object o) {
-        Log.i(TAG,"Updated by " + observable.getClass().getSimpleName());
         if (observable instanceof AbstractBehavior) {
             AbstractBehavior behavior = (AbstractBehavior) observable;
             behavior.deleteObserver(this);
             RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
-            if (distanceToRobome < threshold){
+            if (controller.getModel().isDistance_50() || controller.getModel().isDistance_20()){
+                Log.i(TAG, "Turn");
                 wander.turnToRandomDirection();
             }
             else {
+                Log.i(TAG, "Forward");
                 wander.forward();
             }
 
@@ -62,13 +61,14 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
             currentBehavior.addObserver(this);
             behaviorReady = true;
         }
+        /*
         if (observable instanceof RoboudModel){
             Integer tempDistance = controller.getModel().getRobomeSensorStatus();
             Log.i(TAG,"TempDistance: " + tempDistance);
             if (tempDistance != -1 && tempDistance != distanceToRobome){
                 RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
                 distanceToRobome = tempDistance;
-                if (distanceToRobome < threshold){
+                if (distanceToRobome <= threshold){
                     wander.turnToRandomDirection();
                 }
                 else{
@@ -79,5 +79,6 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
                 behaviorReady = true;
             }
         }
+        */
     }
 }

@@ -42,7 +42,7 @@ public class RoboudModel extends Observable {
     private LEDStatus robomeLEDStatus;
     private RoboMeCommands.IncomingRobotCommand robomeMoodStatus;
     private RoboMeCommands.IncomingRobotCommand robomeRemoteButton;
-    private Integer robomeSensorStatus;
+    private boolean distance_edge, distance_20, distance_50, distance_100, distance_far;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
                        String _libVersion) {
@@ -63,8 +63,11 @@ public class RoboudModel extends Observable {
         light = -1;
         loc = null;
         events = new EventHistory();
-        robomeSensorStatus = -1;
-
+        distance_edge = false;
+        distance_20 = false;
+        distance_50 = false;
+        distance_100 = false;
+        distance_far = false;
         // lastModification is set by:
         changed();
     }
@@ -107,7 +110,8 @@ public class RoboudModel extends Observable {
         sb.append("Robome LED status: ").append(robomeLEDStatus).append("\n");
         sb.append("Robome mood status: ").append(robomeMoodStatus).append("\n");
         sb.append("Robome remote button: ").append(robomeRemoteButton).append("\n");
-        sb.append("Robome sensor status: ").append(robomeSensorStatus).append("\n");
+        sb.append("Robome sensor status: ").append("edge: ").append(distance_edge).append(", 20: ").append(distance_20);
+        sb.append(", 50: ").append(distance_50).append(", 100: ").append(distance_100).append(", far: ").append(distance_far).append("\n");
         return sb.toString();
     }
 
@@ -268,23 +272,61 @@ public class RoboudModel extends Observable {
         this.robomeRemoteButton = robomeRemoteButton;
     }
 
-    public int getRobomeSensorStatus() {
-        return robomeSensorStatus;
+    public boolean isDistance_edge(){
+        return distance_edge;
+    }
+
+    public boolean isDistance_20(){
+        return distance_20;
+    }
+
+    public boolean isDistance_50(){
+        return distance_50;
+    }
+
+    public boolean isDistance_100(){
+        return distance_100;
+    }
+
+    public boolean isDistance_far(){
+        return distance_far;
     }
 
     public void setRobomeSensorStatus(SensorStatus robomeSensorStatus) {
         if (robomeSensorStatus.edge)
-            this.robomeSensorStatus = 0;
-        else if (robomeSensorStatus.chest_20cm)
-            this.robomeSensorStatus = 20;
-        else if (robomeSensorStatus.chest_50cm)
-            this.robomeSensorStatus = 50;
-        else if (robomeSensorStatus.chest_100cm)
-            this.robomeSensorStatus = 100;
-        else {
-            Log.w(TAG, "RobomeSensorStatus received but there was nothing there");
-            this.robomeSensorStatus = -1;
+            distance_edge = true;
+        else{
+            distance_edge = false;
         }
+
+        if (robomeSensorStatus.chest_20cm) {
+            distance_20 = true;
+        }
+        else{
+            distance_20 = false;
+        }
+
+        if (robomeSensorStatus.chest_50cm) {
+            distance_50 = true;
+        }
+        else{
+            distance_50 = false;
+        }
+
+        if (robomeSensorStatus.chest_100cm)
+            distance_100 = true;
+        else{
+            distance_100 = false;
+        }
+
+        if (!distance_edge && !distance_20 && !distance_50 && !distance_100) {
+            distance_far = true;
+        }
+        else{
+            distance_far = false;
+        }
+        Log.i(TAG, "edge, 20, 50, 100, far = " + distance_edge + ", " + distance_20 + ", " + distance_50 + ", " + distance_100 + ", " + distance_far);
+        changed();
     }
 
     //      === START Android phone part ===

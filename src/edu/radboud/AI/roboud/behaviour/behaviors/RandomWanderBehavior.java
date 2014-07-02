@@ -16,7 +16,7 @@ public class RandomWanderBehavior extends AbstractBehavior {
 
     public RandomWanderBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
-        speed = RobotSpeed.FASTEST;
+        speed = RobotSpeed.NORMAL;
     }
 
 //    public void wander() {
@@ -48,7 +48,7 @@ public class RandomWanderBehavior extends AbstractBehavior {
     }
 
     public void turnToRandomDirection(){
-        direction = RobotDirection.random();
+        direction = RobotDirection.RIGHT;
         actions.add(actionFactory.getMotorAction(direction, speed));
     }
 

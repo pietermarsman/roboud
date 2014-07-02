@@ -16,13 +16,15 @@ import java.util.Observer;
 public abstract class AbstractBehaviorModule extends Observable implements Observer, Module, Runnable {
 
     public static final String TAG = "AbstractBehaviorModule";
-    public static int UPDATE_INTERVAL = 100;
+    public static int UPDATE_INTERVAL = 500;
+
     protected BehaviorFactory behaviorFactory;
     protected AbstractBehavior currentBehavior;
     protected boolean behaviorReady;
     protected RoboudController controller;
     private boolean running;
     private Thread moduleThread;
+
     public AbstractBehaviorModule(RoboudController controller, Scenario scenario){
         this.controller = controller;
         running = false;
@@ -36,6 +38,7 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
         if (!running) {
             running = true;
             currentBehavior = firstBehavior();
+
             behaviorReady = true;
             if (moduleThread.getState() == Thread.State.NEW) {
                 moduleThread.start();
@@ -69,11 +72,10 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
 
     @Override
     public void run() {
-        Log.i(TAG, "thread is started");
         while (running) {
             if (behaviorReady && moduleThread != null) {
                 behaviorReady = false;
-                Log.i(TAG, "executing behavior " + currentBehavior.getClass().getSimpleName());
+                Log.d(TAG, "executing behavior " + currentBehavior.getClass().getSimpleName());
                 currentBehavior.executeBehaviour();
             } else {
                 try {
@@ -82,6 +84,6 @@ public abstract class AbstractBehaviorModule extends Observable implements Obser
                     Log.e(TAG, "InterruptedException in module is thrown", e);
                 }
             }
-        }
+         }
     }
 }

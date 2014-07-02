@@ -121,6 +121,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         Log.i(TAG, "onCreate(" + savedInstanceState + ")");
         // RoboMe
         robome = new RoboMe(this.getApplicationContext(), this);
+        robome.setDebugEnabled(true);
 
         // Variables
         returnActivityDataToMap = new HashMap<Integer, ActivityResultProcessor>();
@@ -309,7 +310,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     @Override
     public void commandReceived(RoboMeCommands.IncomingRobotCommand incomingRobotCommand) {
-        Log.d(TAG, incomingRobotCommand.toString());
+        Log.i(TAG, "Command received " + incomingRobotCommand.toString());
         if (incomingRobotCommand.isBatteryStatus())
             model.setRobomeBatteryPercentage(incomingRobotCommand);
         else if (incomingRobotCommand.isDetectionVoltage())
@@ -333,6 +334,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         else
             Log.w(TAG, "IncomingRobotCommand received but it was of unkown type");
     }
+
 
     public void sendCommand(RoboMeCommands.RobotCommand outgoingCommand) {
         Log.v(TAG, "before sending command");
