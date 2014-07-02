@@ -1,5 +1,6 @@
 package edu.radboud.ai.roboud.behaviour.behaviors;
 
+import android.util.Log;
 import edu.radboud.ai.roboud.action.ActionFactory;
 import edu.radboud.ai.roboud.action.actions.AbstractAction;
 import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
@@ -11,15 +12,24 @@ import edu.radboud.ai.roboud.util.Scenario;
 public class CountNrPeopleBehavior extends AbstractBehavior {
 
     public static final String TAG = "CountNrPeopleBehavior";
-
+    private String tellUser;
+    private String askToCount;
+    private String understand;
+    private String ending;
     public CountNrPeopleBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
         // SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingStart);
-        String tellUser = SpeechRepertoire.randomChoice(SpeechRepertoire.questionAskUserReady);
-        String askToCount = SpeechRepertoire.randomChoice(SpeechRepertoire.textAskToCount);
-        String understand = SpeechRepertoire.randomChoice(SpeechRepertoire.questionUnderstand);
-        String ending = SpeechRepertoire.randomChoice(SpeechRepertoire.textEnding);
+        Log.v(TAG,"Initializing CountNrPeopleBehavior");
+        tellUser = SpeechRepertoire.randomChoice(SpeechRepertoire.questionAskUserReady);
+        askToCount = SpeechRepertoire.randomChoice(SpeechRepertoire.textAskToCount);
+        understand = SpeechRepertoire.randomChoice(SpeechRepertoire.questionUnderstand);
+        ending = SpeechRepertoire.randomChoice(SpeechRepertoire.textEnding);
 
+
+
+    }
+
+    public void GiveAssignment(){
         // ask if user is ready
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(tellUser));
@@ -47,11 +57,11 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
             actions.add(actionFactory.getSpeakAction(ending));
         }
         actions.add(actionFactory.getReadTextAction(ending));
-
-
     }
 
+    public void EvaluateAssignment(){
 
+    }
 
     @Override
     protected Object processInformation(AbstractAction currentAction) {

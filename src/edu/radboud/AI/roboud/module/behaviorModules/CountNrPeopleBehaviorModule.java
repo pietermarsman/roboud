@@ -37,11 +37,14 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
 
         if(phase == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT){
             CountNrPeopleBehavior firstBehavior = behaviorFactory.getCountNrPeopleBehavior();
+            // Is this the correct way to do it?
+            firstBehavior.GiveAssignment();
             firstBehavior.addObserver(this);
             return firstBehavior;
         }
         else if(phase == CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT){
             CountNrPeopleBehavior firstBehavior = behaviorFactory.getCountNrPeopleBehavior();
+            firstBehavior.EvaluateAssignment();
             firstBehavior.addObserver(this);
             return firstBehavior;
         }
@@ -61,26 +64,14 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
     public void update(Observable observable, Object o) {
         Log.i(TAG, "==CountNrPeople Module is updated== by " + observable.getClass().getSimpleName() + " and the phase is at " + phase);
 
-        if(phase == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT){
-//
-//            if (observable instanceof CountNrPeopleBehavior) {
-//                CountNrPeopleBehavior previousBehavior = (CountNrPeopleBehavior) observable;
-//                previousBehavior.deleteObserver(this);
-//                if (previousBehavior.isFamiliar()) {
-//                    phase = IntroductionBehaviorPhase.SELECTEXISTINGUSER;
-//                    Log.i(TAG, "Phase is set to SELECTEXISTINGUSER");
-//                    currentBehavior = behaviorFactory.getExistingUserBehavior();
-//                    currentBehavior.addObserver(this);
-//                    behaviorReady = true;
-//                } else {
-//                    phase = IntroductionBehaviorPhase.NEWUSER;
-//                    Log.i(TAG, "Phase is set to NEWUSER");
-//                    currentBehavior = behaviorFactory.getIntroduceBehavior();
-//                    currentBehavior.addObserver(this);
-//                    behaviorReady = true;
-//                }
-//            }
-
+        if(phase == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior){
+            CountNrPeopleBehavior previousBehavior = (CountNrPeopleBehavior) observable;
+            previousBehavior.deleteObserver(this);
+            Log.i(TAG, "Phase is set to GIVEASSIGNMENT");
+            currentBehavior = behaviorFactory.getExistingUserBehavior();
+//            currentBehavior.GiveAssignment();
+            currentBehavior.addObserver(this);
+            behaviorReady = true;
         }
         else if(phase == CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT){
 

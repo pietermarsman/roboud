@@ -9,6 +9,7 @@ import edu.radboud.ai.roboud.action.util.FaceExpression;
 import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
+import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
 import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class RoboudModel extends Observable {
     private RoboMeCommands.IncomingRobotCommand robomeMoodStatus;
     private RoboMeCommands.IncomingRobotCommand robomeRemoteButton;
     private boolean distance_edge, distance_20, distance_50, distance_100, distance_far;
+    private CountNrPeopleBehaviorPhase phase;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
                        String _libVersion) {
@@ -68,6 +70,7 @@ public class RoboudModel extends Observable {
         distance_50 = false;
         distance_100 = false;
         distance_far = false;
+        phase = CountNrPeopleBehaviorPhase.GIVEASSIGNMENT;
         // lastModification is set by:
         changed();
     }
@@ -290,6 +293,14 @@ public class RoboudModel extends Observable {
 
     public boolean isDistance_far(){
         return distance_far;
+    }
+
+    public CountNrPeopleBehaviorPhase getCountNrPeopleBehaviorPhase(){
+        return phase;
+    }
+
+    public void setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase countNrPeopleBehaviorPhase){
+        phase = countNrPeopleBehaviorPhase;
     }
 
     public void setRobomeSensorStatus(SensorStatus robomeSensorStatus) {
