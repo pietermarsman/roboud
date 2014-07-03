@@ -26,6 +26,8 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
     private String ConfirmNrOfPeople;
     private String ConfirmPostTweet;
     private String myTweet;
+    private ReadTextAction nrOfPeople;
+    private String textGreetingEnd;
 
     public CountNrPeopleBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
@@ -39,7 +41,8 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         AskUserSucceeded = SpeechRepertoire.randomChoice(SpeechRepertoire.AskUserSucceeded);
         AskNrOfPeople = SpeechRepertoire.randomChoice(SpeechRepertoire.AskNrOfPeople);
         ConfirmNrOfPeople = SpeechRepertoire.randomChoice(SpeechRepertoire.ConfirmNrOfPeople);
-        ConfirmPostTweet = SpeechRepertoire.randomChoice(SpeechRepertoire.ConfirmPostTweet) + "Default tweet";
+        ConfirmPostTweet = SpeechRepertoire.randomChoice(SpeechRepertoire.ConfirmPostTweet);
+        textGreetingEnd = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingEnd);
         // ending
     }
 
@@ -74,49 +77,46 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(AskUserSucceeded));
         }
+        // not used now
         ReadTextAction temp = actionFactory.getReadTextAction(AskUserSucceeded);
-        String succeeded = temp.getInformation().toString();
         actions.add(temp);
 
-        if (succeeded.equals("no") || succeeded.equals("No") || succeeded.equals("No ") || succeeded.equals("no ")) {
-            endConversation();
-        } else {
-            // ask nr of people
-            if (scenario.isCanTalk()) {
-                actions.add(actionFactory.getSpeakAction(AskNrOfPeople));
-            }
-            temp = actionFactory.getReadTextAction(AskNrOfPeople);
-            actions.add(temp);
-
-            // confirm nr of people
-            if (scenario.isCanTalk()) {
-//                ConfirmNrOfPeople += nrOfPeople;
-                Log.i(TAG, ConfirmNrOfPeople);
-                actions.add(actionFactory.getShowTextAction(ConfirmNrOfPeople));
-                actions.add(actionFactory.getSpeakAction(ConfirmNrOfPeople));
-            } else {
-                actions.add(actionFactory.getShowTextAction(ConfirmNrOfPeople));
-                actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
-            }
+        // ask nr of people
+        if (scenario.isCanTalk()) {
+            actions.add(actionFactory.getSpeakAction(AskNrOfPeople));
+        }
+        nrOfPeople = actionFactory.getReadTextAction(AskNrOfPeople);
+        actions.add(nrOfPeople);
 
 //            myTweet = "I was at a conference with " + nrOfPeople + " people. It was great!";
+        // confirm nr of people
+        if (scenario.isCanTalk()) {
+            Log.i(TAG, ConfirmNrOfPeople);
+            actions.add(actionFactory.getShowTextAction(ConfirmNrOfPeople));
+            actions.add(actionFactory.getSpeakAction(ConfirmNrOfPeople));
+        } else {
+            actions.add(actionFactory.getShowTextAction(ConfirmNrOfPeople));
+            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+        }
 
-            //confirm posting tweet
-            postATweet();
-            if (scenario.isCanTalk()) {
-                ConfirmPostTweet += myTweet;
-                actions.add(actionFactory.getShowTextAction(ConfirmPostTweet));
-                actions.add(actionFactory.getSpeakAction(ConfirmPostTweet));
-            } else {
-                actions.add(actionFactory.getShowTextAction(ConfirmPostTweet));
-                actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
-            }
+        if (scenario.isCanTalk()) {
+            ConfirmPostTweet += myTweet;
+            actions.add(actionFactory.getShowTextAction(ConfirmPostTweet));
+            actions.add(actionFactory.getSpeakAction(ConfirmPostTweet));
+        } else {
+            actions.add(actionFactory.getShowTextAction(ConfirmPostTweet));
+            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
         }
         endConversation();
     }
 
     @Override
     protected Object processInformation(AbstractAction currentAction) {
+        if(currentAction == nrOfPeople) {
+            nrOfPeople.getInformation().toString();
+            myTweet = "I was at a conference with " + nrOfPeople + " people. It was great!";
+            postATweet();
+        }
         return null;
     }
 
