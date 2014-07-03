@@ -11,6 +11,7 @@ public class SpeechRepertoire {
     public static final String[] questionAge = {"What is your age?"};
     public static final String[] questionSex = {"Are you male or female?"};
     public static final String[] textGreetingStart = {"Hi there!", "Hello you!", "Hi!", "Hello", "Good day"};
+    public static final String[] shakeHands = {"Let's shake hands", "Will you shake my hand?", "You can shake my hand?"};
     public static final String[] textGreetingEnd = {"Bye", "Bye now", "Goodbye", "It was a pleasure seeing you"
             , "See you later"};
     public static final String[] questionAskUserReady = {"Are you ready for your next assignment?", "Your next job is ready, are you ready?"};

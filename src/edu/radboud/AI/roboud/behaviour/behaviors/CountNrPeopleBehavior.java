@@ -43,7 +43,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         // ending
     }
 
-    public void GiveAssignment() {
+    public void giveAssignment() {
         // ask if user is ready
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(askUserReady));
@@ -82,7 +82,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         endConversation();
     }
 
-    public void EvaluateAssignment() {
+    public void evaluateAssignment() {
         // ask if user succeeded with the assignment
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(AskUserSucceeded));
@@ -91,10 +91,9 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         String succeeded = temp.getInformation().toString();
         actions.add(temp);
 
-        if(succeeded.equals("no") || succeeded.equals("No") || succeeded.equals("No ") || succeeded.equals("no ")){
+        if (succeeded.equals("no") || succeeded.equals("No") || succeeded.equals("No ") || succeeded.equals("no ")) {
             endConversation();
-        }
-        else {
+        } else {
             // ask nr of people
             if (scenario.isCanTalk()) {
                 actions.add(actionFactory.getSpeakAction(AskNrOfPeople));
@@ -106,7 +105,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
             // confirm nr of people
             if (scenario.isCanTalk()) {
                 ConfirmNrOfPeople += nrOfPeople;
-                Log.i(TAG,ConfirmNrOfPeople);
+                Log.i(TAG, ConfirmNrOfPeople);
                 actions.add(actionFactory.getShowTextAction(ConfirmNrOfPeople));
                 actions.add(actionFactory.getSpeakAction(ConfirmNrOfPeople));
             } else {
@@ -128,7 +127,6 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
             }
         }
         endConversation();
-
     }
 
     @Override

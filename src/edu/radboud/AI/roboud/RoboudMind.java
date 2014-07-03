@@ -66,7 +66,6 @@ public class RoboudMind implements Observer {
         }
         else if (observable instanceof IntroductionBehaviorModule) {
             IntroductionBehaviorModule oldModule = (IntroductionBehaviorModule) observable;
-            Log.i(TAG, "Updated by IntroductionBehaviorModule that is in phase: " + oldModule.getPhase());
             oldModule.deleteObserver(this);
             oldModule.stopRunning();
 
@@ -75,7 +74,7 @@ public class RoboudMind implements Observer {
             behaviorModule.startRunning();
         } else if (observable instanceof ConnectedFunctionModule) {
             ConnectedFunctionModule connectedFunctionModule = (ConnectedFunctionModule) observable;
-            Log.i(TAG, "Module connected = " + connectedFunctionModule.getConnected() + " and model headPhoneConnected = " + model.isRobomeHeadsetPluggedIn());
+
             if (!connectedFunctionModule.getConnected()) {
                 behaviorModule.stopRunning();
                 behaviorModule.deleteObserver(this);
