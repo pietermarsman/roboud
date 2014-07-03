@@ -21,6 +21,12 @@ public class SpeechRepertoire {
     public static final String[] textIntroduceMyself = {"I am " + name + " and I am your companion for the next few" +
             "days", "My name is " + name, "You can call me " + name};
 
+
+    public static final String[] AskUserSucceeded = {"Did you complete your assignment?", "Did you count the number of people?"};
+    public static final String[] AskNrOfPeople = {"How many people were present?", "What amount of people we at the conference?"};
+    public static final String[] ConfirmNrOfPeople = {"So the number of people is ", "The total number of people is "};
+    public static final String[] ConfirmPostTweet = {"I've posted the following: "};
+
     public static String randomChoice(String[] list) {
         double rand = new Random().nextDouble() * list.length;
         for (int i = 0; i < list.length; i++)
