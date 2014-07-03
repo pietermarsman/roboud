@@ -30,6 +30,7 @@ public class ActionFactory {
     private ShowTextActionPool showTextActionPool;
     private SleepActionPool sleepActionPool;
     private SpeakActionPool speakActionPool;
+    private ShakeHandsActionPool shakeHandsActionPool;
 
 
     private ActionFactory(RoboudController controller) {
@@ -147,6 +148,15 @@ public class ActionFactory {
         return speakActionPool.acquire(texts);
     }
 
+    public ShakeHandsAction getShakeHandsAction() {
+        if (shakeHandsActionPool == null) {
+            shakeHandsActionPool = ShakeHandsActionPool.getInstance(controller);
+        }
+        return shakeHandsActionPool.acquire();
+    }
+
+
+    //Release ==every== action here
     public void releaseAction(AbstractAction action) {
         try {
             if (action instanceof ChoiceAction) {
@@ -171,6 +181,8 @@ public class ActionFactory {
                 sleepActionPool.release((SleepAction) action);
             } else if (action instanceof SpeakAction) {
                 speakActionPool.release((SpeakAction) action);
+            } else if (action instanceof ShakeHandsAction) {
+                shakeHandsActionPool.release((ShakeHandsAction) action);
             } else {
                 if (action == null) {
                     Log.w(TAG, "cannot release a null action");

@@ -55,7 +55,6 @@ public class RoboudMind implements Observer {
         Log.i(TAG, "model headPhoneConnected = " + model.isRobomeHeadsetPluggedIn());
         if (observable instanceof IntroductionBehaviorModule) {
             IntroductionBehaviorModule oldModule = (IntroductionBehaviorModule) observable;
-            Log.i(TAG, "Updated by IntroductionBehaviorModule that is in phase: " + oldModule.getPhase());
             oldModule.deleteObserver(this);
             oldModule.stopRunning();
 
