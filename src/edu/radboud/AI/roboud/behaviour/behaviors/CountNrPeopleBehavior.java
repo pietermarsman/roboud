@@ -50,10 +50,6 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         }
         actions.add(actionFactory.getReadTextAction(askUserReady));
 
-        String understandConfirmation = "no";
-        ReadTextAction temp;
-        int counter = 0;
-        do {
             // tell user to count the number of people at conference, or where he is.
             if (scenario.isCanTalk()) {
                 actions.add(actionFactory.getShowTextAction(askToCount));
@@ -67,17 +63,8 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
             if (scenario.isCanTalk()) {
                 actions.add(actionFactory.getSpeakAction(understand));
             }
-            temp = actionFactory.getReadTextAction(understand);
-
-            Log.i(TAG,"My info: " + temp.toString());
-//            Log.i(TAG,"My info2: " + temp.getInformation());
-            understandConfirmation = "yes";//temp.getInformation().toString();
-            counter++;
-            if(counter > 1)
-                break;
-        }while(understandConfirmation.equals("no") || understandConfirmation.equals("No") || understandConfirmation.equals("No ") || understandConfirmation.equals("no "));
-
-        actions.add(temp);
+            ReadTextAction temp = actionFactory.getReadTextAction(understand);
+            actions.add(temp);
 
         endConversation();
     }
@@ -99,12 +86,11 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
                 actions.add(actionFactory.getSpeakAction(AskNrOfPeople));
             }
             temp = actionFactory.getReadTextAction(AskNrOfPeople);
-            String nrOfPeople = temp.getInformation().toString();
             actions.add(temp);
 
             // confirm nr of people
             if (scenario.isCanTalk()) {
-                ConfirmNrOfPeople += nrOfPeople;
+//                ConfirmNrOfPeople += nrOfPeople;
                 Log.i(TAG, ConfirmNrOfPeople);
                 actions.add(actionFactory.getShowTextAction(ConfirmNrOfPeople));
                 actions.add(actionFactory.getSpeakAction(ConfirmNrOfPeople));

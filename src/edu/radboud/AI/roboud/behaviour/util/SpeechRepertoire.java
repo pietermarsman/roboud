@@ -16,7 +16,7 @@ public class SpeechRepertoire {
             , "See you later"};
     public static final String[] questionAskUserReady = {"Are you ready for your next assignment?", "Your next job is ready, are you ready?"};
     public static final String[] textAskToCount = {"You are about to go to a conference. I am curious to know how many people are present at the conference, so I can post a tweet about it. So your assignment is, count the number of people at the conference."};
-    public static final String[] questionUnderstand = {"Did you understand the assignment?", "Was I Clear?"};
+    public static final String[] questionUnderstand = {"I hope I was clear", "I hope you understand the assignment"};
     public static final String[] textEnding = {"That was it", "That's all"};
     public static final String[] AskUserSucceeded = {"Did you complete your assignment?", "Did you count the number of people?"};
     public static final String[] AskNrOfPeople = {"How many people were present?", "What amount of people we at the conference?"};
