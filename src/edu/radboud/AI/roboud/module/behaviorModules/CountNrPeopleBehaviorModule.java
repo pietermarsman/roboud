@@ -6,6 +6,7 @@ import edu.radboud.ai.roboud.RoboudModel;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.CountNrPeopleBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.SettingsBehavior;
+import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
 import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.Observable;
@@ -74,19 +75,14 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
 
         RoboudModel model = controller.getModel();
         if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior) {
-            CountNrPeopleBehavior previousBehavior = (CountNrPeopleBehavior) observable;
+            SettingsBehavior previousBehavior = (SettingsBehavior) observable;
             previousBehavior.deleteObserver(this);
-//            currentBehavior = behaviorFactory.getExistingUserBehavior();
-//            currentBehavior.GiveAssignment();
-//            currentBehavior.addObserver(this);
-//            behaviorReady = true;
-            Log.i(TAG, "Phase is set to GIVEASSIGNMENT");
-            currentBehavior = behaviorFactory.getExistingUserBehavior(controller);
-//            currentBehavior.giveAssignment();
+            model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT);
+            Log.i(TAG, "Phase is (not?) set to GIVEASSIGNMENT");
+            currentBehavior = behaviorFactory.getSettingsBehavior();
             currentBehavior.addObserver(this);
             behaviorReady = true;
         } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT) {
-
             SettingsBehavior previousBehavior = (SettingsBehavior) observable;
             previousBehavior.deleteObserver(this);
             Log.i(TAG, "and we're finished with counting people");
