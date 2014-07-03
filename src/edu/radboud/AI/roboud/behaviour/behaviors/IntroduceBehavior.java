@@ -3,6 +3,7 @@ package edu.radboud.ai.roboud.behaviour.behaviors;
 import edu.radboud.ai.roboud.RoboudModel;
 import edu.radboud.ai.roboud.action.ActionFactory;
 import edu.radboud.ai.roboud.action.actions.AbstractAction;
+import edu.radboud.ai.roboud.action.util.LedColor;
 import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
 import edu.radboud.ai.roboud.module.util.RoboudUser;
 import edu.radboud.ai.roboud.util.Scenario;
@@ -37,8 +38,8 @@ public class IntroduceBehavior extends AbstractBehavior {
         sex.add("Robot");
         sex.add("Other");
         String enough = SpeechRepertoire.randomChoice(SpeechRepertoire.knowEnough);
-        String ending = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingEnd);
 
+        actions.add(actionFactory.getLedAction(LedColor.GREEN));
         //Greetings and introducing myself
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getShowTextAction(introduceMySelf));
@@ -78,12 +79,8 @@ public class IntroduceBehavior extends AbstractBehavior {
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getShowTextAction(enough));
             actions.add(actionFactory.getSpeakAction(enough));
-            actions.add(actionFactory.getShowTextAction(ending));
-            actions.add(actionFactory.getSpeakAction(ending));
         } else {
             actions.add(actionFactory.getShowTextAction(enough));
-            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
-            actions.add(actionFactory.getShowTextAction(ending));
             actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
         }
     }

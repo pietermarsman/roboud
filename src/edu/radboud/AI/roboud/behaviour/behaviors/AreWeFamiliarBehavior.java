@@ -4,6 +4,8 @@ import android.util.Log;
 import edu.radboud.ai.roboud.action.ActionFactory;
 import edu.radboud.ai.roboud.action.actions.AbstractAction;
 import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
+import edu.radboud.ai.roboud.action.util.HeadDirection;
+import edu.radboud.ai.roboud.action.util.LedColor;
 import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
 import edu.radboud.ai.roboud.util.Scenario;
 
@@ -34,10 +36,14 @@ public class AreWeFamiliarBehavior extends AbstractBehavior {
         }
         else{
         */
-            actions.add(actionFactory.getShowTextAction(greetings));
-            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
-            actions.add(actionFactory.getShowTextAction(shakeHands));
-            actions.add(actionFactory.getShakeHandsAction());
+        actions.add(actionFactory.getLedAction(LedColor.GREEN));
+        actions.add(actionFactory.getHeadAction(HeadDirection.ALLDOWN));
+        actions.add(actionFactory.getHeadAction(HeadDirection.ALLUP));
+        actions.add(actionFactory.getSleepAction(1000));
+        actions.add(actionFactory.getShowTextAction(greetings));
+        actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+        actions.add(actionFactory.getShowTextAction(shakeHands));
+        actions.add(actionFactory.getShakeHandsAction());
        // }
         actions.add(actionFactory.getConfirmationAction(knowYou));
     }
