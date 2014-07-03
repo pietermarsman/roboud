@@ -40,7 +40,7 @@ public class ShakeHandsAction extends AbstractAction implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         if (observable instanceof RoboudModel){
-            if (model.getRobomeHandshakeStatus() > 0){
+            if (model.getRobomeHandshakeStatus() >= 0){
                 succes = true;
                 setChanged();
                 notifyObservers();

@@ -19,9 +19,8 @@ public class IntroduceBehavior extends AbstractBehavior {
         super(actionFactory, scenario);
 
         //These need to be consistent in both text and speech
-        String greetings = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingStart);
-        String shakeHands = SpeechRepertoire.randomChoice(SpeechRepertoire.shakeHands);
         String introduceMySelf = SpeechRepertoire.randomChoice(SpeechRepertoire.textIntroduceMyself);
+        String explanation = "I'm going to ask you some questions in order to get to know you. I will not share this information without your explicit confirmation.";
         String yourName = SpeechRepertoire.randomChoice(SpeechRepertoire.questionName);
         String yourAge = SpeechRepertoire.randomChoice(SpeechRepertoire.questionAge);
         String yourSex = SpeechRepertoire.randomChoice(SpeechRepertoire.questionSex);
@@ -30,25 +29,21 @@ public class IntroduceBehavior extends AbstractBehavior {
         sex.add("Female");
         sex.add("Robot");
         sex.add("Other");
-        String enough = "Oké, now I know enough about you";
+        String enough = SpeechRepertoire.randomChoice(SpeechRepertoire.knowEnough);
         String ending = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingEnd);
 
         //Greetings and introducing myself
         if (scenario.isCanTalk()) {
-            actions.add(actionFactory.getShowTextAction(greetings));
-            actions.add(actionFactory.getSpeakAction(greetings));
-            actions.add(actionFactory.getShowTextAction(shakeHands));
-            actions.add(actionFactory.getSpeakAction(shakeHands));
-            actions.add(actionFactory.getShakeHandsAction());
             actions.add(actionFactory.getShowTextAction(introduceMySelf));
             actions.add(actionFactory.getSpeakAction(introduceMySelf));
+            actions.add(actionFactory.getShowTextAction(explanation));
+            actions.add(actionFactory.getSpeakAction(explanation));
+
         } else {
-            actions.add(actionFactory.getShowTextAction(greetings));
-            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
-            actions.add(actionFactory.getShowTextAction(shakeHands));
-            actions.add(actionFactory.getShakeHandsAction());
             actions.add(actionFactory.getShowTextAction(introduceMySelf));
             actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+            actions.add(actionFactory.getShowTextAction(explanation));
+            actions.add(actionFactory.getSleepAction(5000)); //this should be in ShowTextAction
         }
 
         //Ask name
