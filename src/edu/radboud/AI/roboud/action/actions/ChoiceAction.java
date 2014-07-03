@@ -17,6 +17,7 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
     public static final int REQUEST_CODE = 11;
 
     private List<String> options;
+    private String question;
 
     private String resultString;
 
@@ -37,6 +38,7 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
         String[] optionsArray = new String[options.size()];
         optionsArray = options.toArray(optionsArray);
         i.putExtra(ChoiceActionActivity.EXTRAS_OPTIONS, optionsArray);
+        i.putExtra(ChoiceActionActivity.EXTRAS_TEXT, question);
         controller.startNewActivityForResult(i, REQUEST_CODE, this);
     }
 
@@ -64,4 +66,7 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
         this.options = options;
     }
 
+    public void setQuestion(String question) {
+        this.question = question;
+    }
 }

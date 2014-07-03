@@ -10,16 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.radboud.ai.roboud.R;
-import edu.radboud.ai.roboud.RoboudController;
 
 /**
  * Created by Pieter Marsman on 4-6-2014.
  */
 public class ChoiceActionActivity extends Activity implements AdapterView.OnItemClickListener {
 
-    public static final String EXTRAS_OPTIONS = "options";
     public static final String RETURN_NAME = "Selected Item";
     private static final String TAG = "ChoiceActionActivity";
+    public static final String EXTRAS_TEXT = "ExtraText";
+    public static final String EXTRAS_OPTIONS = "options";
 
     private TextView textView;
     private ListView list;
@@ -36,7 +36,7 @@ public class ChoiceActionActivity extends Activity implements AdapterView.OnItem
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             options = extras.getStringArray(EXTRAS_OPTIONS);
-            textView.setText(extras.getString(RoboudController.EXTRAS_TEXT));
+            textView.setText(extras.getString(EXTRAS_TEXT));
         } else {
             Log.e(TAG, "Activity was created without needed extra information. This should never happen.");
         }

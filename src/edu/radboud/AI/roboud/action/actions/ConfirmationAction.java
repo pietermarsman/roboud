@@ -49,7 +49,7 @@ public class ConfirmationAction extends AbstractAction implements ActivityResult
         }
         if (doAction) {
             Intent i = new Intent(controller, ConfirmationActionActivity.class);
-            i.putExtra(DATA_NAME, question);
+            i.putExtra(ConfirmationActionActivity.EXTRAS_TEXT, question);
             controller.startNewActivityForResult(i, REQUEST_CODE, this);
         }
         else{
