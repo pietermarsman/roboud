@@ -12,29 +12,37 @@ import edu.radboud.ai.roboud.util.Scenario;
 public class CountNrPeopleBehavior extends AbstractBehavior {
 
     public static final String TAG = "CountNrPeopleBehavior";
-    private String tellUser;
+    private String askUserReady;
     private String askToCount;
     private String understand;
     private String ending;
+    private String AskUserSucceeded;
+    private String AskNrOfPeople;
+    private String ConfirmNrOfPeople;
+    private String ConfirmPostTweet;
 
     public CountNrPeopleBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
         // SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingStart);
         Log.v(TAG, "Initializing CountNrPeopleBehavior");
-        tellUser = SpeechRepertoire.randomChoice(SpeechRepertoire.questionAskUserReady);
+        askUserReady = SpeechRepertoire.randomChoice(SpeechRepertoire.questionAskUserReady);
         askToCount = SpeechRepertoire.randomChoice(SpeechRepertoire.textAskToCount);
         understand = SpeechRepertoire.randomChoice(SpeechRepertoire.questionUnderstand);
         ending = SpeechRepertoire.randomChoice(SpeechRepertoire.textEnding);
 
-
+        AskUserSucceeded = SpeechRepertoire.randomChoice(SpeechRepertoire.AskUserSucceeded);
+        AskNrOfPeople = SpeechRepertoire.randomChoice(SpeechRepertoire.AskNrOfPeople);
+        ConfirmNrOfPeople = SpeechRepertoire.randomChoice(SpeechRepertoire.ConfirmNrOfPeople) + "Nr of People";
+        ConfirmPostTweet = SpeechRepertoire.randomChoice(SpeechRepertoire.ConfirmPostTweet) + "Default tweet";
+        // ending
     }
 
     public void GiveAssignment() {
         // ask if user is ready
         if (scenario.isCanTalk()) {
-            actions.add(actionFactory.getSpeakAction(tellUser));
+            actions.add(actionFactory.getSpeakAction(askUserReady));
         }
-        actions.add(actionFactory.getReadTextAction(tellUser));
+        actions.add(actionFactory.getReadTextAction(askUserReady));
 
         // tell user to count the number of people at conference, or where he is.
         if (scenario.isCanTalk()) {

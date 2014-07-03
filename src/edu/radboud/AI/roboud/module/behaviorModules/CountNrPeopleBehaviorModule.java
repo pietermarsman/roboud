@@ -4,6 +4,7 @@ import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.CountNrPeopleBehavior;
+import edu.radboud.ai.roboud.behaviour.behaviors.SettingsBehavior;
 import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
 import edu.radboud.ai.roboud.util.Scenario;
 
@@ -60,6 +61,7 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
 
     @Override
     public void update(Observable observable, Object o) {
+        Log.i(TAG, "This update is not required, because shutdown is required?");
         Log.i(TAG, "==CountNrPeople Module is updated== by " + observable.getClass().getSimpleName() + " and the phase is at " + phase);
 
         if (phase == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior) {
@@ -71,7 +73,10 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
             currentBehavior.addObserver(this);
             behaviorReady = true;
         } else if (phase == CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT) {
-
+            SettingsBehavior previousBehavior = (SettingsBehavior) observable;
+            previousBehavior.deleteObserver(this);
+            Log.i(TAG, "and we're finished with counting people");
+            finished();
         } else
             throw new NullPointerException("CountNrPeopleBehaviorPhase not instantiated (2)");
     }
