@@ -96,14 +96,15 @@ public class IntroduceBehavior extends AbstractBehavior {
             model.addUser(user);
         } else if (currentAction == askAge) {
             RoboudUser user = model.getUser(name);
-            user.age = (Integer) currentAction.getInformation();
+            user.age = Integer.getInteger((String) currentAction.getInformation());
             model.addUser(user);
         } else if (currentAction == askSex) {
             RoboudUser user = model.getUser(name);
             String res = (String) currentAction.getInformation();
+            res = res.toLowerCase();
             if (res.contains("m"))
                 user.isMan = true;
-            else if (res.contains("v") || res.contains("f"))
+            else
                 user.isMan = false;
             model.addUser(user);
         }
