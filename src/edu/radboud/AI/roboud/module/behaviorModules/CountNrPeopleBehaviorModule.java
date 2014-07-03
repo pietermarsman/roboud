@@ -4,7 +4,8 @@ import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.RoboudModel;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
-import edu.radboud.ai.roboud.behaviour.behaviors.CountNrPeopleBehavior;
+import edu.radboud.ai.roboud.behaviour.behaviors.CountNrPeopleAssignBehavior;
+import edu.radboud.ai.roboud.behaviour.behaviors.CountNrPeopleEvaluateBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.SettingsBehavior;
 import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
 import edu.radboud.ai.roboud.util.Scenario;
@@ -37,27 +38,23 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
     protected AbstractBehavior firstBehavior() {
         // temporary solution?
         RoboudModel model = controller.getModel();
-        CountNrPeopleBehavior firstBehavior;
         if (model.getCountNrPeopleBehaviorPhase() == null)
             model.setCountNrPeopleBehaviorPhase(GIVEASSIGNMENT);
         switch (model.getCountNrPeopleBehaviorPhase()) {
             case GIVEASSIGNMENT:
-                firstBehavior = behaviorFactory.getCountNrPeopleBehavior();
-                // Is this the correct way to do it?
-                firstBehavior.giveAssignment();
-                firstBehavior.addObserver(this);
-                break;
+                CountNrPeopleAssignBehavior firstBehavior1 = behaviorFactory.getCountNrPeopleAssignBehavior();
+                firstBehavior1.addObserver(this);
+                return firstBehavior1;
             case EVALUATEASSIGNMENT:
-                firstBehavior = behaviorFactory.getCountNrPeopleBehavior();
-                firstBehavior.evaluateAssignment();
-                firstBehavior.addObserver(this);
-                break;
+                CountNrPeopleEvaluateBehavior firstBehavior2 = behaviorFactory.getCountNrPeopleEvaluateBehavior();
+                firstBehavior2.addObserver(this);
+                return firstBehavior2;
             default:
                 // This should never happen.
                 Log.e(TAG, "CountNrPeopleBehaviorPhase was not initialized but should be");
-                firstBehavior = null;
+                return null;
         }
-        return firstBehavior;
+
     }
 
     @Override
@@ -74,19 +71,15 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
         Log.i(TAG, "This update is not required, because shutdown is required?");
 
         RoboudModel model = controller.getModel();
-        if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior) {
+        if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT && observable instanceof CountNrPeopleEvaluateBehavior) {
             SettingsBehavior previousBehavior = (SettingsBehavior) observable;
-
             previousBehavior.deleteObserver(this);
             model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT);
-            Log.i(TAG, "Phase is (not?) set to GIVEASSIGNMENT");
-            currentBehavior = behaviorFactory.getSettingsBehavior();
-            currentBehavior.addObserver(this);
-            behaviorReady = true;
-        } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT) {
-//        } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT && observable instanceof  SettingsBehavior) {
+            finished();
+        } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT && observable instanceof CountNrPeopleEvaluateBehavior) {
             SettingsBehavior previousBehavior = (SettingsBehavior) observable;
             previousBehavior.deleteObserver(this);
+            model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.GIVEASSIGNMENT);
             Log.i(TAG, "and we're finished with counting people");
             finished();
         } else

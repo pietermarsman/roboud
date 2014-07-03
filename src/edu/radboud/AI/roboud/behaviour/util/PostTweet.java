@@ -90,20 +90,16 @@ public class PostTweet extends Observable {
                 // access token is already available, or consumer key/secret is not set.
                 if (!twitter.getAuthorization().isEnabled()) {
                     Log.i(TAG, "OAuth consumer key/secret is not set.");
-                    System.exit(-1);
                 }
             }
             Status status = twitter.updateStatus(text);
             Log.i(TAG, "Successfully updated the status to [" + status.getText() + "].");
-            System.exit(0);
         } catch (TwitterException te) {
             te.printStackTrace();
             Log.i(TAG, "Failed to get timeline: " + te.getMessage());
-            System.exit(-1);
         } catch (IOException ioe) {
             ioe.printStackTrace();
             Log.i(TAG, "Failed to read the system input.");
-            System.exit(-1);
         }
         Log.i(TAG, "Done posting tweet, now setchanges and notifyobservers");
         setChanged();

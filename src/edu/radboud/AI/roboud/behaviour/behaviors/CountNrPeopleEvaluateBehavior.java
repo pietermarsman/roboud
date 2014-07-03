@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Guido on 02-07-14.
  */
-public class CountNrPeopleBehavior extends AbstractBehavior {
+public class CountNrPeopleEvaluateBehavior extends AbstractBehavior {
 
     public static final String TAG = "CountNrPeopleBehavior";
     private String askUserReady;
@@ -31,7 +31,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
     private ReadTextAction nrOfPeople;
     private String textGreetingEnd;
 
-    public CountNrPeopleBehavior(ActionFactory actionFactory, Scenario scenario) {
+    public CountNrPeopleEvaluateBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
         // SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingStart);
         Log.v(TAG, "Initializing CountNrPeopleBehavior");
@@ -47,44 +47,13 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         textGreetingEnd = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingEnd);
         myTweet1 = SpeechRepertoire.randomChoice(SpeechRepertoire.myTweet1);
         myTweet2 = SpeechRepertoire.randomChoice(SpeechRepertoire.myTweet2);
-        // ending
-    }
 
-    public void giveAssignment() {
-        // ask if user is ready
-        if (scenario.isCanTalk()) {
-            actions.add(actionFactory.getSpeakAction(askUserReady));
-        }
-        actions.add(actionFactory.getReadTextAction(askUserReady));
-
-            // tell user to count the number of people at conference, or where he is.
-            if (scenario.isCanTalk()) {
-                actions.add(actionFactory.getShowTextAction(askToCount));
-                actions.add(actionFactory.getSpeakAction(askToCount));
-            } else {
-                actions.add(actionFactory.getShowTextAction(askToCount));
-                actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
-            }
-
-            // ask whether user understands
-            if (scenario.isCanTalk()) {
-                actions.add(actionFactory.getSpeakAction(understand));
-            }
-            ReadTextAction temp = actionFactory.getReadTextAction(understand);
-            actions.add(temp);
-        //TODO: temporary solution:
-        evaluateAssignment();
-//        endConversation();
-    }
-
-    public void evaluateAssignment() {
         // ask if user succeeded with the assignment
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(AskUserSucceeded));
         }
         // not used now
-        ReadTextAction temp = actionFactory.getReadTextAction(AskUserSucceeded);
-        actions.add(temp);
+        actions.add(actionFactory.getConfirmationAction(AskUserSucceeded));
 
         // ask nr of people
         if (scenario.isCanTalk()) {
@@ -111,7 +80,20 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
             actions.add(actionFactory.getShowTextAction(ConfirmPostTweet));
             actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
         }
-        endConversation();
+
+        if (scenario.isCanTalk()) {
+            actions.add(actionFactory.getShowTextAction(ending));
+            actions.add(actionFactory.getSpeakAction(ending));
+        } else {
+            actions.add(actionFactory.getShowTextAction(ending));
+            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+        }
+    }
+
+
+
+    public void evaluateAssignment() {
+
     }
 
     @Override
@@ -119,7 +101,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         if(currentAction == nrOfPeople) {
             String people = nrOfPeople.getInformation().toString();
             myTweet = myTweet1 + people + myTweet2;
-//            postATweet();
+            postATweet();
         }
         return null;
     }
@@ -138,15 +120,6 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         }
     }
 
-    private void endConversation() {
-        if (scenario.isCanTalk()) {
-            actions.add(actionFactory.getShowTextAction(ending));
-            actions.add(actionFactory.getSpeakAction(ending));
-        } else {
-            actions.add(actionFactory.getShowTextAction(ending));
-            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
-        }
-    }
 
     @Override
     public Object getInformation() {

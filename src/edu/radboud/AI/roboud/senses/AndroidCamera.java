@@ -68,6 +68,8 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
         }, refreshRate, refreshRate);
 
         available = checkIfCameraIsAvailable(context);
+        // TODO disable camera
+        available = false;
     }
 
     @Override
@@ -109,9 +111,10 @@ public class AndroidCamera extends Observable implements SurfaceHolder.Callback 
     }
 
     public boolean takePicture() {
+        Log.i(TAG, "Camera ready: " + ready);
+        Log.i(TAG, "Camera available: " + available);
         boolean canTakePicture = ready && available;
         if (canTakePicture) {
-
             try {
                 mCamera.startPreview();
                 mCamera.startFaceDetection();

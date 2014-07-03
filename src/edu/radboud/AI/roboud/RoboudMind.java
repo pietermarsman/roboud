@@ -8,7 +8,6 @@ import edu.radboud.ai.roboud.module.behaviorModules.IntroductionBehaviorModule;
 import edu.radboud.ai.roboud.module.behaviorModules.TurnMeOffBehaviorModule;
 import edu.radboud.ai.roboud.module.functionModules.AbstractFunctionModule;
 import edu.radboud.ai.roboud.module.functionModules.ConnectedFunctionModule;
-import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
 import edu.radboud.ai.roboud.util.Scenario;
 import twitter4j.TwitterException;
 
@@ -64,27 +63,14 @@ public class RoboudMind implements Observer {
             Log.i(TAG, "Updated by CountNrPeopleBehaviorModule that is in phase: " + model.getCountNrPeopleBehaviorPhase());
             oldModule.deleteObserver(this);
             oldModule.stopRunning();
-
-            // lets evaluate!
-            if(model.getCountNrPeopleBehaviorPhase() == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT) {
-                model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT);
-                behaviorModule = CountNrPeopleBehaviorModule.getInstance(controller, scenario);
-                behaviorModule.addObserver(this);
-                behaviorModule.startRunning();
-            }
-            else
-            {
-                // could post tweet here.
-                behaviorModule = TurnMeOffBehaviorModule.getInstance(controller, scenario);
-                behaviorModule.addObserver(this);
-                behaviorModule.startRunning();
-            }
+            behaviorModule = TurnMeOffBehaviorModule.getInstance(controller, scenario);
+            behaviorModule.addObserver(this);
+            behaviorModule.startRunning();
 
         } else if (observable instanceof IntroductionBehaviorModule) {
             IntroductionBehaviorModule oldModule = (IntroductionBehaviorModule) observable;
             oldModule.deleteObserver(this);
             oldModule.stopRunning();
-
             behaviorModule = CountNrPeopleBehaviorModule.getInstance(controller, scenario);
             behaviorModule.addObserver(this);
             behaviorModule.startRunning();

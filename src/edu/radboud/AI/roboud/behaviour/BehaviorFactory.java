@@ -41,8 +41,12 @@ public class BehaviorFactory {
         return new AreWeFamiliarBehavior(actionFactory, scenario);
     }
 
-    public CountNrPeopleBehavior getCountNrPeopleBehavior() {
-        return new CountNrPeopleBehavior(actionFactory, scenario);
+    public CountNrPeopleEvaluateBehavior getCountNrPeopleEvaluateBehavior() {
+        return new CountNrPeopleEvaluateBehavior(actionFactory, scenario);
+    }
+
+    public CountNrPeopleAssignBehavior getCountNrPeopleAssignBehavior() {
+        return new CountNrPeopleAssignBehavior(actionFactory, scenario);
     }
 
     public SelectExistingUserBehavior getExistingUserBehavior(RoboudController controller) {
