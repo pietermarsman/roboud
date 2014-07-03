@@ -5,11 +5,13 @@ import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.RoboudModel;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.CountNrPeopleBehavior;
+import edu.radboud.ai.roboud.behaviour.behaviors.SettingsBehavior;
 import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.Observable;
 
-import static edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase.*;
+import static edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT;
+import static edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase.GIVEASSIGNMENT;
 
 /**
  * Created by Guido on 02-07-14.
@@ -68,6 +70,7 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
     public void update(Observable observable, Object o) {
         Log.i(TAG, "==CountNrPeople Module is updated== by " + observable.getClass().getSimpleName()
                 + " and the phase is at " + controller.getModel().getCountNrPeopleBehaviorPhase());
+        Log.i(TAG, "This update is not required, because shutdown is required?");
 
         RoboudModel model = controller.getModel();
         if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior) {
@@ -79,7 +82,10 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
             currentBehavior.addObserver(this);
             behaviorReady = true;
         } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT) {
-
+            SettingsBehavior previousBehavior = (SettingsBehavior) observable;
+            previousBehavior.deleteObserver(this);
+            Log.i(TAG, "and we're finished with counting people");
+            finished();
         } else
             throw new NullPointerException("CountNrPeopleBehaviorPhase not instantiated (2)");
     }

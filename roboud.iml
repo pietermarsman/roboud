@@ -18,6 +18,7 @@
     <orderEntry type="library" name="RoboMeLib" level="project" />
     <orderEntry type="library" name="Twitter" level="project" />
     <orderEntry type="library" name="dom4j-2.0.0-ALPHA-2" level="project" />
+    <orderEntry type="library" name="dom4j-2.0.0-ALPHA-2" level="project" />
   </component>
 </module>
 
