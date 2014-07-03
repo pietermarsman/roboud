@@ -45,6 +45,8 @@ public class RoboudModel extends Observable {
     private RoboMeCommands.IncomingRobotCommand robomeMoodStatus;
     private RoboMeCommands.IncomingRobotCommand robomeRemoteButton;
     private boolean distance_edge, distance_20, distance_50, distance_100, distance_far;
+
+    // States of our BehaviorModules
     private CountNrPeopleBehaviorPhase countNrPeopleBehaviorPhase;
     private IntroductionBehaviorPhase introductionBehaviorPhase;
     private int numberOfTimesStarted;
