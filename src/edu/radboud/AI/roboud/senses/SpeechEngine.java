@@ -46,6 +46,8 @@ public class SpeechEngine extends Observable implements TextToSpeech.OnInitListe
         Intent checkIntent = new Intent();
         checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         controller.startNewActivityForResult(checkIntent, MY_DATA_CHECK_CODE, this);
+        //TODO: look at this quick fix. Without it it will never give true and speech will never work.
+        available = true;
     }
 
     @Override

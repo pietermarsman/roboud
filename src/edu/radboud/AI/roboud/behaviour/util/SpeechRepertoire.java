@@ -26,6 +26,8 @@ public class SpeechRepertoire {
     private static final String name = "Roboud";
     public static final String[] textIntroduceMyself = {"I am " + name + " and I am your companion for the next few" +
             "days", "My name is " + name, "You can call me " + name};
+    public static final String[] drive = {"Can I drive sometimes?", "May I drive sometimes?", "Is it allowed for me to drive sometimes"};
+    public static final String[] turn = {"Can I turn my body sometimes?", "May I turn my body sometimes?", "Is it allowed for me to turn my body sometimes?"};
 
     public static String randomChoice(String[] list) {
         double rand = new Random().nextDouble() * list.length;
