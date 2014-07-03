@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import edu.radboud.ai.roboud.R;
-import edu.radboud.ai.roboud.RoboudController;
 
 /**
  * Created by Pieter Marsman on 26-6-2014.
@@ -18,6 +17,7 @@ public class ReadTextActionActivity extends Activity implements View.OnClickList
 
     public static final String RETURN_NAME = "ReadText";
     private static final String TAG = "ReadTextActionActivity";
+    public static final String EXTRAS_TEXT = "ExtrasText";
 
     private TextView textView;
     private EditText editText;
@@ -34,7 +34,7 @@ public class ReadTextActionActivity extends Activity implements View.OnClickList
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            textView.setText(extras.getString(RoboudController.EXTRAS_TEXT));
+            textView.setText(extras.getString(EXTRAS_TEXT));
         } else {
             Log.e(TAG, "Activity was created without needed extra information. This should never happen.");
         }

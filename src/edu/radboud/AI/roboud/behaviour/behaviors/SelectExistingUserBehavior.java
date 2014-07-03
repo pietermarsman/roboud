@@ -39,7 +39,7 @@ public class SelectExistingUserBehavior extends AbstractBehavior {
             if (scenario.isCanTalk()){
                 actions.add(actionFactory.getSpeakAction("Please Select your name"));
             }
-            actions.add(actionFactory.getChoiceAction(model.getUserNames()));
+            actions.add(actionFactory.getChoiceAction(model.getUserNames(), "Please select your name"));
             success = true;
         }
     }

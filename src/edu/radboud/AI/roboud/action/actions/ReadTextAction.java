@@ -24,6 +24,7 @@ public class ReadTextAction extends AbstractAction implements ActivityResultProc
     public void doActions(Object information) {
         controller.showText(question);
         Intent i = new Intent(controller, ReadTextActionActivity.class);
+        i.putExtra(ReadTextActionActivity.EXTRAS_TEXT, question);
         controller.startNewActivityForResult(i, REQUEST_CODE, this);
     }
 

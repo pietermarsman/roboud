@@ -43,11 +43,11 @@ public class ActionFactory {
         return instance;
     }
 
-    public ChoiceAction getChoiceAction(List<String> options) {
+    public ChoiceAction getChoiceAction(List<String> options, String question) {
         if (choiceActionPool == null) {
             choiceActionPool = ChoiceActionPool.getInstance(controller);
         }
-        return choiceActionPool.acquire(options);
+        return choiceActionPool.acquire(options, question);
     }
 
     public CombineAction getCombineAction(AbstractAction a, AbstractAction b) {

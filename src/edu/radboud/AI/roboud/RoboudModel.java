@@ -80,11 +80,14 @@ public class RoboudModel extends Observable {
         distance_100 = false;
         distance_far = false;
         robomeHandshakeStatus = -1;
+
+        // Behavior states
         // TODO can this be null at the start?
         countNrPeopleBehaviorPhase = null;
         introductionBehaviorPhase = null;
         numberOfTimesStarted = 1;
         users = new HashMap<String, RoboudUser>();
+
         // lastModification is set by:
         changed();
     }

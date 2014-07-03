@@ -32,6 +32,7 @@ public class IntroduceBehavior extends AbstractBehavior {
         String yourName = SpeechRepertoire.randomChoice(SpeechRepertoire.questionName);
         String yourAge = SpeechRepertoire.randomChoice(SpeechRepertoire.questionAge);
         String yourSex = SpeechRepertoire.randomChoice(SpeechRepertoire.questionSex);
+
         List<String> sex = new ArrayList<String>();
         sex.add("Male");
         sex.add("Female");
@@ -72,7 +73,7 @@ public class IntroduceBehavior extends AbstractBehavior {
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(yourSex));
         }
-        askSex = actionFactory.getChoiceAction(sex);
+        askSex = actionFactory.getChoiceAction(sex, yourSex);
         actions.add(askSex);
 
         //End introduce

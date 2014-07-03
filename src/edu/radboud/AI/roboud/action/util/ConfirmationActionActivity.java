@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import edu.radboud.ai.roboud.R;
-import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
 
 /**
@@ -18,6 +17,7 @@ public class ConfirmationActionActivity extends Activity implements View.OnClick
 
     public static final String TAG = "ConfirmationActionActivity";
     public static final String RETURN_NAME = "result";
+    public static final String EXTRAS_TEXT = "ExtraText";
     private TextView textView;
     private Button yesButton, noButton;
 
@@ -34,7 +34,7 @@ public class ConfirmationActionActivity extends Activity implements View.OnClick
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            textView.setText(extras.getString(RoboudController.EXTRAS_TEXT));
+            textView.setText(extras.getString(EXTRAS_TEXT));
         } else {
             Log.e(TAG, "Activity was created without needed extra information. This should never happen.");
         }

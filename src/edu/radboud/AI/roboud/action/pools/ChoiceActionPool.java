@@ -23,9 +23,10 @@ public class ChoiceActionPool extends ActionPool<ChoiceAction> {
         return instance;
     }
 
-    public ChoiceAction acquire(List<String> options) {
+    public ChoiceAction acquire(List<String> options, String question) {
         ChoiceAction choiceAction = acquire();
         choiceAction.setOptions(options);
+        choiceAction.setQuestion(question);
         return choiceAction;
     }
 
