@@ -99,7 +99,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         }
 
         if (scenario.isCanTalk()) {
-            ConfirmPostTweet += myTweet;
+//            ConfirmPostTweet += myTweet; just for now, since it is not known
             actions.add(actionFactory.getShowTextAction(ConfirmPostTweet));
             actions.add(actionFactory.getSpeakAction(ConfirmPostTweet));
         } else {
