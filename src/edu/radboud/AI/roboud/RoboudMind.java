@@ -2,6 +2,7 @@ package edu.radboud.ai.roboud;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.module.behaviorModules.AbstractBehaviorModule;
+import edu.radboud.ai.roboud.module.behaviorModules.CountNrPeopleBehaviorModule;
 import edu.radboud.ai.roboud.module.behaviorModules.IntroductionBehaviorModule;
 import edu.radboud.ai.roboud.module.behaviorModules.TurnMeOffBehaviorModule;
 import edu.radboud.ai.roboud.module.functionModules.AbstractFunctionModule;
@@ -53,13 +54,21 @@ public class RoboudMind implements Observer {
     public void update(Observable observable, Object data) {
         Log.i(TAG, "==Mind is updated== by " + observable.getClass().getSimpleName());
         Log.i(TAG, "model headPhoneConnected = " + model.isRobomeHeadsetPluggedIn());
-        if (observable instanceof IntroductionBehaviorModule) {
-            IntroductionBehaviorModule oldModule = (IntroductionBehaviorModule) observable;
-            Log.i(TAG, "Updated by IntroductionBehaviorModule that is in phase: " + model.getIntroductionBehaviorPhase());
+        if (observable instanceof CountNrPeopleBehaviorModule){
+            CountNrPeopleBehaviorModule oldModule = (CountNrPeopleBehaviorModule) observable;
+            Log.i(TAG, "Updated by CountNrPeopleBehaviorModule that is in phase: " + model.getCountNrPeopleBehaviorPhase());
             oldModule.deleteObserver(this);
             oldModule.stopRunning();
 
             behaviorModule = TurnMeOffBehaviorModule.getInstance(controller, scenario);
+            behaviorModule.addObserver(this);
+            behaviorModule.startRunning();
+        } else if (observable instanceof IntroductionBehaviorModule) {
+            IntroductionBehaviorModule oldModule = (IntroductionBehaviorModule) observable;
+            oldModule.deleteObserver(this);
+            oldModule.stopRunning();
+
+            behaviorModule = CountNrPeopleBehaviorModule.getInstance(controller, scenario);
             behaviorModule.addObserver(this);
             behaviorModule.startRunning();
         } else if (observable instanceof ConnectedFunctionModule) {

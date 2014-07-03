@@ -7,6 +7,9 @@ import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
 import edu.radboud.ai.roboud.module.util.RoboudUser;
 import edu.radboud.ai.roboud.util.Scenario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Pieter Marsman on 2-6-2014.
  */
@@ -24,10 +27,16 @@ public class IntroduceBehavior extends AbstractBehavior {
 
         //These need to be consistent in both text and speech
         String greetings = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingStart);
+        String shakeHands = SpeechRepertoire.randomChoice(SpeechRepertoire.shakeHands);
         String introduceMySelf = SpeechRepertoire.randomChoice(SpeechRepertoire.textIntroduceMyself);
         String yourName = SpeechRepertoire.randomChoice(SpeechRepertoire.questionName);
         String yourAge = SpeechRepertoire.randomChoice(SpeechRepertoire.questionAge);
         String yourSex = SpeechRepertoire.randomChoice(SpeechRepertoire.questionSex);
+        List<String> sex = new ArrayList<String>();
+        sex.add("Male");
+        sex.add("Female");
+        sex.add("Robot");
+        sex.add("Other");
         String enough = "Oké, now I know enough about you";
         String ending = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingEnd);
 
@@ -35,11 +44,16 @@ public class IntroduceBehavior extends AbstractBehavior {
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getShowTextAction(greetings));
             actions.add(actionFactory.getSpeakAction(greetings));
+            actions.add(actionFactory.getShowTextAction(shakeHands));
+            actions.add(actionFactory.getSpeakAction(shakeHands));
+            actions.add(actionFactory.getShakeHandsAction());
             actions.add(actionFactory.getShowTextAction(introduceMySelf));
             actions.add(actionFactory.getSpeakAction(introduceMySelf));
         } else {
             actions.add(actionFactory.getShowTextAction(greetings));
             actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+            actions.add(actionFactory.getShowTextAction(shakeHands));
+            actions.add(actionFactory.getShakeHandsAction());
             actions.add(actionFactory.getShowTextAction(introduceMySelf));
             actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
         }
@@ -62,7 +76,7 @@ public class IntroduceBehavior extends AbstractBehavior {
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(yourSex));
         }
-        askSex = actionFactory.getReadTextAction(yourSex);
+        askSex = actionFactory.getChoiceAction(sex);
         actions.add(askSex);
 
         //End introduce
