@@ -55,26 +55,40 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
                 previousBehavior.deleteObserver(this);
                 if (previousBehavior.isFamiliar()) {
                     model.setIntroductionBehaviorPhase(IntroductionBehaviorPhase.SELECTEXISTINGUSER);
-                    Log.i(TAG, "Phase is set to SELECTEXISTINGUSER");
                     currentBehavior = behaviorFactory.getExistingUserBehavior(controller);
                     currentBehavior.addObserver(this);
                     behaviorReady = true;
                 } else {
                     model.setIntroductionBehaviorPhase(IntroductionBehaviorPhase.NEWUSER);
-                    Log.i(TAG, "Phase is set to NEWUSER");
                     currentBehavior = behaviorFactory.getIntroduceBehavior();
                     currentBehavior.addObserver(this);
                     behaviorReady = true;
                 }
             }
         }
-        if (model.getIntroductionBehaviorPhase() == IntroductionBehaviorPhase.SELECTEXISTINGUSER
-                || model.getIntroductionBehaviorPhase() == IntroductionBehaviorPhase.NEWUSER) {
-            if (observable instanceof SelectExistingUserBehavior || observable instanceof IntroduceBehavior) {
-                AbstractBehavior previousBehavior = (AbstractBehavior) observable;
+        if (model.getIntroductionBehaviorPhase() == IntroductionBehaviorPhase.SELECTEXISTINGUSER) {
+            if (observable instanceof SelectExistingUserBehavior) {
+                SelectExistingUserBehavior previousBehavior = (SelectExistingUserBehavior) observable;
+                previousBehavior.deleteObserver(this);
+                if (previousBehavior.isSuccess()) {
+                    model.setIntroductionBehaviorPhase(IntroductionBehaviorPhase.GETSETTINGS);
+                    Log.i(TAG, "Phase is set to GETSETTINGS");
+                    currentBehavior = behaviorFactory.getSettingsBehavior();
+                }
+                else{
+                    model.setIntroductionBehaviorPhase(IntroductionBehaviorPhase.NEWUSER);
+                    Log.i(TAG, "Phase is set to NEWUSER");
+                    currentBehavior = behaviorFactory.getIntroduceBehavior();
+                }
+                currentBehavior.addObserver(this);
+                behaviorReady = true;
+            }
+        }
+        if (model.getIntroductionBehaviorPhase() == IntroductionBehaviorPhase.NEWUSER){
+            if (observable instanceof IntroduceBehavior) {
+                IntroduceBehavior previousBehavior = (IntroduceBehavior) observable;
                 previousBehavior.deleteObserver(this);
                 model.setIntroductionBehaviorPhase(IntroductionBehaviorPhase.GETSETTINGS);
-                Log.i(TAG, "Phase is set to GETSETTINGS");
                 currentBehavior = behaviorFactory.getSettingsBehavior();
                 currentBehavior.addObserver(this);
                 behaviorReady = true;

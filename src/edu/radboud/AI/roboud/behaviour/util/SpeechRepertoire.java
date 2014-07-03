@@ -28,6 +28,8 @@ public class SpeechRepertoire {
             "days", "My name is " + name, "You can call me " + name};
     public static final String[] myTweet1 = {"The conference I attended was visited by ", "I've got some cool news. I visited a conference with ", "Today, I visited a conference with "};
     public static final String[] myTweet2 = {" people. It was a fascinating experience!", " people. It was breathtaking.", " people. It was rather stimulating and inspiring.", " people. It was a superb adventure."};
+    public static final String[] drive = {"Can I drive sometimes?", "May I drive sometimes?", "Is it allowed for me to drive sometimes"};
+    public static final String[] turn = {"Can I turn my body sometimes?", "May I turn my body sometimes?", "Is it allowed for me to turn my body sometimes?"};
 
     public static String randomChoice(String[] list) {
         double rand = new Random().nextDouble() * list.length;

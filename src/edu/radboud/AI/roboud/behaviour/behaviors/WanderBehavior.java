@@ -13,13 +13,13 @@ import java.util.Random;
 /**
  * Created by Guido Faassen on 20-06-14.
  */
-public class RandomWanderBehavior extends AbstractBehavior {
+public class WanderBehavior extends AbstractBehavior {
     private RobotDirection direction;
     private RobotSpeed speed;
     private HeadDirection headDirection;
     private Random r;
 
-    public RandomWanderBehavior(ActionFactory actionFactory, Scenario scenario) {
+    public WanderBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
         speed = RobotSpeed.NORMAL;
         r = new Random();

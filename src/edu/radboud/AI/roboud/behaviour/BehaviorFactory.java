@@ -5,9 +5,6 @@ import edu.radboud.ai.roboud.action.ActionFactory;
 import edu.radboud.ai.roboud.behaviour.behaviors.*;
 import edu.radboud.ai.roboud.util.Scenario;
 
-import java.util.Observable;
-import java.util.Observer;
-
 /**
  * Created by Pieter Marsman on 19-6-2014.
  */
@@ -61,7 +58,7 @@ public class BehaviorFactory {
         return new TurnMeOffBehavior(actionFactory, scenario);
     }
 
-    public RandomWanderBehavior getRandomWanderBehavior() {
-        return new RandomWanderBehavior(actionFactory, scenario);
+    public WanderBehavior getRandomWanderBehavior() {
+        return new WanderBehavior(actionFactory, scenario);
     }
 }

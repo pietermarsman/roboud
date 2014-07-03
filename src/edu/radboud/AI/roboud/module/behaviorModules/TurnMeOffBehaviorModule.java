@@ -3,7 +3,7 @@ package edu.radboud.ai.roboud.module.behaviorModules;
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
-import edu.radboud.ai.roboud.behaviour.behaviors.RandomWanderBehavior;
+import edu.radboud.ai.roboud.behaviour.behaviors.WanderBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.TurnMeOffBehavior;
 import edu.radboud.ai.roboud.util.Scenario;
 
@@ -48,7 +48,7 @@ public class TurnMeOffBehaviorModule extends AbstractBehaviorModule {
         if (observable instanceof AbstractBehavior) {
             AbstractBehavior behavior = (AbstractBehavior) observable;
             behavior.deleteObserver(this);
-            RandomWanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
+            WanderBehavior wander = behaviorFactory.getRandomWanderBehavior();
             if (controller.getModel().isDistance_50() || controller.getModel().isDistance_20()) {
                 Log.i(TAG, "Turn");
 
