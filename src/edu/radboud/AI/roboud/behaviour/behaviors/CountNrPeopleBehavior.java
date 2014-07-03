@@ -29,7 +29,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
 
     }
 
-    public void GiveAssignment() {
+    public void giveAssignment() {
         // ask if user is ready
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getSpeakAction(tellUser));
@@ -59,7 +59,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         actions.add(actionFactory.getReadTextAction(ending));
     }
 
-    public void EvaluateAssignment() {
+    public void evaluateAssignment() {
 
     }
 
