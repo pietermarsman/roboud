@@ -99,7 +99,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
                 actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
             }
 
-            myTweet = "I was at a conference with " + nrOfPeople + " people. It was great!";
+//            myTweet = "I was at a conference with " + nrOfPeople + " people. It was great!";
 
             //confirm posting tweet
             postATweet();
