@@ -64,7 +64,7 @@ public class RoboudMind implements Observer {
             behaviorModule.startRunning();
         } else if (observable instanceof ConnectedFunctionModule) {
             ConnectedFunctionModule connectedFunctionModule = (ConnectedFunctionModule) observable;
-            Log.i(TAG, "Module connected = " + connectedFunctionModule.getConnected() + " and model headPhoneConnected = " + model.isRobomeHeadsetPluggedIn());
+
             if (!connectedFunctionModule.getConnected()) {
                 behaviorModule.stopRunning();
                 behaviorModule.deleteObserver(this);

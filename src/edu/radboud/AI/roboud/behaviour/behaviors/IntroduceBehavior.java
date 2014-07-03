@@ -67,6 +67,7 @@ public class IntroduceBehavior extends AbstractBehavior {
             actions.add(actionFactory.getShowTextAction(ending));
             actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
         }
+        //TODO the final action is save action that stores relevant parts in the results hashtable by using the below processInformation method?
     }
 
     @Override
