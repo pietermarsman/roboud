@@ -4,6 +4,7 @@ import android.util.Log;
 import edu.radboud.ai.roboud.action.ActionFactory;
 import edu.radboud.ai.roboud.action.actions.AbstractAction;
 import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
+import edu.radboud.ai.roboud.behaviour.util.SpeechRepertoire;
 import edu.radboud.ai.roboud.util.Scenario;
 
 /**
@@ -16,7 +17,26 @@ public class AreWeFamiliarBehavior extends AbstractBehavior {
 
     public AreWeFamiliarBehavior(ActionFactory actionFactory, Scenario scenario) {
         super(actionFactory, scenario);
-        actions.add(actionFactory.getConfirmationAction("Do we know each other?"));
+
+        String greetings = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingStart);
+        String shakeHands = SpeechRepertoire.randomChoice(SpeechRepertoire.shakeHands);
+        String knowYou = SpeechRepertoire.randomChoice(SpeechRepertoire.knowYou);
+
+        if (scenario.isCanTalk()) {
+            actions.add(actionFactory.getShowTextAction(greetings));
+            actions.add(actionFactory.getSpeakAction(greetings));
+            actions.add(actionFactory.getShowTextAction(shakeHands));
+            actions.add(actionFactory.getSpeakAction(shakeHands));
+            actions.add(actionFactory.getShakeHandsAction());
+            actions.add(actionFactory.getSpeakAction(knowYou));
+        }
+        else{
+            actions.add(actionFactory.getShowTextAction(greetings));
+            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+            actions.add(actionFactory.getShowTextAction(shakeHands));
+            actions.add(actionFactory.getShakeHandsAction());
+        }
+        actions.add(actionFactory.getConfirmationAction(knowYou));
     }
 
     @Override
@@ -24,9 +44,6 @@ public class AreWeFamiliarBehavior extends AbstractBehavior {
         if (currentAction instanceof ConfirmationAction) {
             ConfirmationAction confirm = (ConfirmationAction) currentAction;
             familiar = confirm.getResult();
-            Log.i(TAG, "familiar is " + familiar);
-        } else {
-            Log.w(TAG, "Unexpected update");
         }
         return null;
     }

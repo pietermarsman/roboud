@@ -52,6 +52,7 @@ public class RoboudMind implements Observer {
 
     @Override
     public void update(Observable observable, Object data) {
+        controller.updateScenario();
         Log.i(TAG, "==Mind is updated== by " + observable.getClass().getSimpleName());
         Log.i(TAG, "model headPhoneConnected = " + model.isRobomeHeadsetPluggedIn());
         if (observable instanceof CountNrPeopleBehaviorModule) {

@@ -73,7 +73,7 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
         Log.i(TAG, "This update is not required, because shutdown is required?");
 
         RoboudModel model = controller.getModel();
-        if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior) {
+        if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT && observable instanceof CountNrPeopleBehavior) {
             CountNrPeopleBehavior previousBehavior = (CountNrPeopleBehavior) observable;
             previousBehavior.deleteObserver(this);
 //            currentBehavior = behaviorFactory.getExistingUserBehavior();
@@ -85,7 +85,7 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
 //            currentBehavior.giveAssignment();
             currentBehavior.addObserver(this);
             behaviorReady = true;
-        } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT) {
+        } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT && observable instanceof  SettingsBehavior) {
 
             SettingsBehavior previousBehavior = (SettingsBehavior) observable;
             previousBehavior.deleteObserver(this);

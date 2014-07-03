@@ -79,6 +79,7 @@ public class RoboudModel extends Observable {
         distance_50 = false;
         distance_100 = false;
         distance_far = false;
+        robomeHandshakeStatus = -1;
         // TODO can this be null at the start?
         countNrPeopleBehaviorPhase = null;
         introductionBehaviorPhase = null;
@@ -254,6 +255,8 @@ public class RoboudModel extends Observable {
 
     public void setRobomeHandshakeStatus(int robomeHandshakeStatus) {
         this.robomeHandshakeStatus = robomeHandshakeStatus;
+        Log.i(TAG, "HandShakeStatus is " + robomeHandshakeStatus);
+        setChanged();
     }
 
     public IRStatus getRobomeIRStatus() {

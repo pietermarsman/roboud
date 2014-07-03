@@ -5,6 +5,9 @@ import edu.radboud.ai.roboud.action.ActionFactory;
 import edu.radboud.ai.roboud.behaviour.behaviors.*;
 import edu.radboud.ai.roboud.util.Scenario;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Created by Pieter Marsman on 19-6-2014.
  */
