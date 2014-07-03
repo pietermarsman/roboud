@@ -2,7 +2,7 @@ package edu.radboud.ai.roboud.util.io;
 
 import android.util.Log;
 import edu.radboud.ai.roboud.RoboudModel;
-import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
+import edu.radboud.ai.roboud.module.util.IntroductionBehaviorPhase;
 import org.dom4j.Element;
 
 /**
@@ -29,7 +29,7 @@ public class DataSaverIntroductionBehaviorPhase implements DataSaver {
         if (element.getName().equals(INTRODUCTION_BEHAVIOR_PHASE)) {
             String value = element.getText();
             if (!value.equals("null"))
-                model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.valueOf(value));
+                model.setIntroductionBehaviorPhase(IntroductionBehaviorPhase.valueOf(value));
             else
                 model.setCountNrPeopleBehaviorPhase(null);
             Log.d(TAG, "This element is of type " + INTRODUCTION_BEHAVIOR_PHASE);
