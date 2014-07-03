@@ -126,7 +126,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
 
     public String getMyTweet(){ return myTweet;}
 
-    private void postATweet(){
+    private void postATweet() {
         PostTweet postMyTweet;
         try {
             postMyTweet = new PostTweet();
@@ -138,8 +138,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         }
     }
 
-    private void endConversation()
-    {
+    private void endConversation() {
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getShowTextAction(ending));
             actions.add(actionFactory.getSpeakAction(ending));

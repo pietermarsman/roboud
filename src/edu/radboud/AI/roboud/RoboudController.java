@@ -47,6 +47,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     // Classes
     private RoboudModel model;
     private RoboudMind mind;
+    private Scenario scenario;
     // RoboMe
     private RoboMe robome;
     // UI
@@ -158,7 +159,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         Log.d(TAG, "speechEngine is Available: " + speechEngine.isAvailable());
 
         // TODO Apparently the speechEngine is not available although it works...
-        Scenario scenario = new Scenario(getApplicationContext(), false, true, mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
+        scenario = new Scenario(getApplicationContext(), false, speechEngine.isAvailable(), mic.isAvailable(), cam.isAvailable(), loc.isAvailable());
         model.setScenario(scenario);
         model.addObserver(this);
         mind = RoboudMind.getInstance(this, scenario);
@@ -515,6 +516,14 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
         //TODO this should resume at the previous settings before it was disconnected
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.face_smile_normal));
         textView.setText("Status");
+    }
+
+    public void updateScenario(){
+        Log.i("TAG", "speechEnigne = " + speechEngine.isAvailable());
+        scenario.setCanTalk(speechEngine.isAvailable());
+        scenario.setCanListen(mic.isAvailable());
+        scenario.setCanSee(cam.isAvailable());
+        scenario.setCanLocate(loc.isAvailable());
     }
 
 }

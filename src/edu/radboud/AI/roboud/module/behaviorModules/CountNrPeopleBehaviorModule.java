@@ -76,6 +76,7 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
         RoboudModel model = controller.getModel();
         if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior) {
             SettingsBehavior previousBehavior = (SettingsBehavior) observable;
+
             previousBehavior.deleteObserver(this);
             model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT);
             Log.i(TAG, "Phase is (not?) set to GIVEASSIGNMENT");
@@ -83,6 +84,7 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
             currentBehavior.addObserver(this);
             behaviorReady = true;
         } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT) {
+//        } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT && observable instanceof  SettingsBehavior) {
             SettingsBehavior previousBehavior = (SettingsBehavior) observable;
             previousBehavior.deleteObserver(this);
             Log.i(TAG, "and we're finished with counting people");
