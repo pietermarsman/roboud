@@ -88,6 +88,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         nrOfPeople = actionFactory.getReadTextAction(AskNrOfPeople);
         actions.add(nrOfPeople);
 
+//            myTweet = "I was at a conference with " + nrOfPeople + " people. It was great!";
         // confirm nr of people
         if (scenario.isCanTalk()) {
             Log.i(TAG, ConfirmNrOfPeople);
@@ -99,7 +100,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         }
 
         if (scenario.isCanTalk()) {
-            ConfirmPostTweet += myTweet;
+//            ConfirmPostTweet += myTweet; just for now, since it is not known
             actions.add(actionFactory.getShowTextAction(ConfirmPostTweet));
             actions.add(actionFactory.getSpeakAction(ConfirmPostTweet));
         } else {
