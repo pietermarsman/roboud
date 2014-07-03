@@ -2,7 +2,6 @@ package edu.radboud.ai.roboud.action.actions;
 
 import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.RoboudModel;
-import edu.radboud.ai.roboud.action.util.RobotDirection;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -33,14 +32,14 @@ public class ShakeHandsAction extends AbstractAction implements Observer {
         return succes;
     }
 
-    public boolean getSucces(){
+    public boolean getSucces() {
         return succes;
     }
 
     @Override
     public void update(Observable observable, Object o) {
-        if (observable instanceof RoboudModel){
-            if (model.getRobomeHandshakeStatus() > 0){
+        if (observable instanceof RoboudModel) {
+            if (model.getRobomeHandshakeStatus() > 0) {
                 succes = true;
                 setChanged();
                 notifyObservers();

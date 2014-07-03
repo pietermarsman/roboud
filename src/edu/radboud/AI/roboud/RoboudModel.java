@@ -14,7 +14,10 @@ import edu.radboud.ai.roboud.module.util.IntroductionBehaviorPhase;
 import edu.radboud.ai.roboud.module.util.RoboudUser;
 import edu.radboud.ai.roboud.util.Scenario;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by Gebruiker on 13-5-14.
@@ -80,9 +83,7 @@ public class RoboudModel extends Observable {
         countNrPeopleBehaviorPhase = null;
         introductionBehaviorPhase = null;
         numberOfTimesStarted = 1;
-        users = new HashMap<String,  RoboudUser>();
-        this.addUser(new RoboudUser(String.valueOf(new Random().nextInt(10000))));
-        Log.i(TAG, "Users: " + users);
+        users = new HashMap<String, RoboudUser>();
         // lastModification is set by:
         changed();
     }

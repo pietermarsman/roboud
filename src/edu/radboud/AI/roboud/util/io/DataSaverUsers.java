@@ -15,10 +15,10 @@ import java.util.Iterator;
 public class DataSaverUsers implements DataSaver {
 
     public static final String USERS = "users",
-        USER_ELEMENT = "user",
-        USER_NAME = "username",
-        USER_AGE = "userage",
-        USER_SEX = "usersex";
+            USER_ELEMENT = "user",
+            USER_NAME = "username",
+            USER_AGE = "userage",
+            USER_SEX = "usersex";
     private static final String TAG = "DataSaverUsers";
 
     @Override
@@ -42,7 +42,8 @@ public class DataSaverUsers implements DataSaver {
         if (root.getName().equals(USERS)) {
             for (Iterator i = root.elementIterator(); i.hasNext(); ) {
                 Element element = (Element) i.next();
-                if (element.getName().equals(USER_NAME)) {
+                Log.d(TAG, "Child element is of type " + element.getName());
+                if (element.getName().equals(USER_ELEMENT)) {
                     Attribute name = element.attribute(USER_NAME);
                     Attribute age = element.attribute(USER_AGE);
                     Attribute sex = element.attribute(USER_SEX);
@@ -54,6 +55,7 @@ public class DataSaverUsers implements DataSaver {
                     if (!sexString.equals("null"))
                         user.isMan = Boolean.parseBoolean(sexString);
                     model.addUser(user);
+                    Log.d(TAG, "New user " + user);
                 }
             }
             Log.d(TAG, "This element is of type " + USERS);
