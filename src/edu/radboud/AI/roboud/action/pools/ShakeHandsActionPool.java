@@ -6,7 +6,7 @@ import edu.radboud.ai.roboud.action.actions.ShakeHandsAction;
 /**
  * Created by mikel_000 on 3-7-2014.
  */
-public class ShakeHandsActionPool extends ActionPool<ShakeHandsAction>{
+public class ShakeHandsActionPool extends ActionPool<ShakeHandsAction> {
 
     private static ShakeHandsActionPool instance = null;
 

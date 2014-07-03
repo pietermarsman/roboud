@@ -53,21 +53,21 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         }
         actions.add(actionFactory.getReadTextAction(askUserReady));
 
-            // tell user to count the number of people at conference, or where he is.
-            if (scenario.isCanTalk()) {
-                actions.add(actionFactory.getShowTextAction(askToCount));
-                actions.add(actionFactory.getSpeakAction(askToCount));
-            } else {
-                actions.add(actionFactory.getShowTextAction(askToCount));
-                actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
-            }
+        // tell user to count the number of people at conference, or where he is.
+        if (scenario.isCanTalk()) {
+            actions.add(actionFactory.getShowTextAction(askToCount));
+            actions.add(actionFactory.getSpeakAction(askToCount));
+        } else {
+            actions.add(actionFactory.getShowTextAction(askToCount));
+            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+        }
 
-            // ask whether user understands
-            if (scenario.isCanTalk()) {
-                actions.add(actionFactory.getSpeakAction(understand));
-            }
-            ReadTextAction temp = actionFactory.getReadTextAction(understand);
-            actions.add(temp);
+        // ask whether user understands
+        if (scenario.isCanTalk()) {
+            actions.add(actionFactory.getSpeakAction(understand));
+        }
+        ReadTextAction temp = actionFactory.getReadTextAction(understand);
+        actions.add(temp);
 
         endConversation();
     }
@@ -112,7 +112,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
 
     @Override
     protected Object processInformation(AbstractAction currentAction) {
-        if(currentAction == nrOfPeople) {
+        if (currentAction == nrOfPeople) {
             nrOfPeople.getInformation().toString();
             myTweet = "I was at a conference with " + nrOfPeople + " people. It was great!";
             postATweet();
@@ -120,7 +120,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         return null;
     }
 
-    private void postATweet(){
+    private void postATweet() {
         PostTweet postMyTweet;
         try {
             postMyTweet = new PostTweet();
@@ -132,8 +132,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         }
     }
 
-    private void endConversation()
-    {
+    private void endConversation() {
         if (scenario.isCanTalk()) {
             actions.add(actionFactory.getShowTextAction(ending));
             actions.add(actionFactory.getSpeakAction(ending));

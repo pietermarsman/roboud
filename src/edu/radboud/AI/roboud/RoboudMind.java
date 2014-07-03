@@ -55,7 +55,7 @@ public class RoboudMind implements Observer {
         controller.updateScenario();
         Log.i(TAG, "==Mind is updated== by " + observable.getClass().getSimpleName());
         Log.i(TAG, "model headPhoneConnected = " + model.isRobomeHeadsetPluggedIn());
-        if (observable instanceof CountNrPeopleBehaviorModule){
+        if (observable instanceof CountNrPeopleBehaviorModule) {
             CountNrPeopleBehaviorModule oldModule = (CountNrPeopleBehaviorModule) observable;
             Log.i(TAG, "Updated by CountNrPeopleBehaviorModule that is in phase: " + model.getCountNrPeopleBehaviorPhase());
             oldModule.deleteObserver(this);
