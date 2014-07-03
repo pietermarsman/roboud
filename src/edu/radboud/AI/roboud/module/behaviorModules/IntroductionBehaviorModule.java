@@ -56,7 +56,7 @@ public class IntroductionBehaviorModule extends AbstractBehaviorModule {
                 if (previousBehavior.isFamiliar()) {
                     model.setIntroductionBehaviorPhase(IntroductionBehaviorPhase.SELECTEXISTINGUSER);
                     Log.i(TAG, "Phase is set to SELECTEXISTINGUSER");
-                    currentBehavior = behaviorFactory.getExistingUserBehavior();
+                    currentBehavior = behaviorFactory.getExistingUserBehavior(controller);
                     currentBehavior.addObserver(this);
                     behaviorReady = true;
                 } else {

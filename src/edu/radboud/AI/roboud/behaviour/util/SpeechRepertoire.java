@@ -17,15 +17,13 @@ public class SpeechRepertoire {
     public static final String[] textAskToCount = {"Count the number of people at the conference", "Please count the number of people that are present at the conference"};
     public static final String[] questionUnderstand = {"Did you understand?", "Was I Clear?"};
     public static final String[] textEnding = {"That was it", "That's all"};
-    private static final String name = "Roboud";
-    public static final String[] textIntroduceMyself = {"I am " + name + " and I am your companion for the next few" +
-            "days", "My name is " + name, "You can call me " + name};
-
-
     public static final String[] AskUserSucceeded = {"Did you complete your assignment?", "Did you count the number of people?"};
     public static final String[] AskNrOfPeople = {"How many people were present?", "What amount of people we at the conference?"};
     public static final String[] ConfirmNrOfPeople = {"So the number of people is ", "The total number of people is "};
     public static final String[] ConfirmPostTweet = {"I've posted the following: "};
+    private static final String name = "Roboud";
+    public static final String[] textIntroduceMyself = {"I am " + name + " and I am your companion for the next few" +
+            "days", "My name is " + name, "You can call me " + name};
 
     public static String randomChoice(String[] list) {
         double rand = new Random().nextDouble() * list.length;

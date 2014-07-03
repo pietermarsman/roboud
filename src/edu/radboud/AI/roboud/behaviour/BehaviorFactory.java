@@ -15,9 +15,11 @@ public class BehaviorFactory {
     private static BehaviorFactory instance = null;
     private ActionFactory actionFactory;
     private Scenario scenario;
+    private RoboudController controller;
 
     private BehaviorFactory(Scenario scenario, RoboudController controller) {
         this.scenario = scenario;
+        this.controller = controller;
         actionFactory = ActionFactory.getInstance(controller);
     }
 
@@ -32,7 +34,7 @@ public class BehaviorFactory {
     }
 
     public IntroduceBehavior getIntroduceBehavior() {
-        return new IntroduceBehavior(actionFactory, scenario);
+        return new IntroduceBehavior(actionFactory, scenario, controller.getModel());
     }
 
     public AreWeFamiliarBehavior getAreWeFamiliarBehavior() {
@@ -43,8 +45,9 @@ public class BehaviorFactory {
         return new CountNrPeopleBehavior(actionFactory, scenario);
     }
 
-    public SelectExistingUserBehavior getExistingUserBehavior() {
-        return new SelectExistingUserBehavior(actionFactory, scenario);
+    public SelectExistingUserBehavior getExistingUserBehavior(RoboudController controller) {
+        // TODO is it "good" to use the controller like this?
+        return new SelectExistingUserBehavior(actionFactory, scenario, controller);
     }
 
     public SettingsBehavior getSettingsBehavior() {

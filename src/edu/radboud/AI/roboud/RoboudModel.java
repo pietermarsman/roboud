@@ -11,8 +11,11 @@ import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
 import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
 import edu.radboud.ai.roboud.module.util.IntroductionBehaviorPhase;
+import edu.radboud.ai.roboud.module.util.RoboudUser;
 import edu.radboud.ai.roboud.util.Scenario;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
@@ -50,6 +53,7 @@ public class RoboudModel extends Observable {
     private CountNrPeopleBehaviorPhase countNrPeopleBehaviorPhase;
     private IntroductionBehaviorPhase introductionBehaviorPhase;
     private int numberOfTimesStarted;
+    private HashMap<String, RoboudUser> users;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
                        String _libVersion) {
@@ -79,6 +83,7 @@ public class RoboudModel extends Observable {
         countNrPeopleBehaviorPhase = null;
         introductionBehaviorPhase = null;
         numberOfTimesStarted = 1;
+        users = new HashMap<String,  RoboudUser>();
         // lastModification is set by:
         changed();
     }
@@ -476,5 +481,19 @@ public class RoboudModel extends Observable {
 
     public void setIntroductionBehaviorPhase(IntroductionBehaviorPhase introductionBehaviorPhase) {
         this.introductionBehaviorPhase = introductionBehaviorPhase;
+    }
+
+    public List<String> getUserNames() {
+        List<String> names = new LinkedList<String>();
+        names.addAll(users.keySet());
+        return names;
+    }
+
+    public RoboudUser getUser(String name) {
+        return users.get(name);
+    }
+
+    public void addUser(RoboudUser user) {
+        users.put(user.getName(), user);
     }
 }

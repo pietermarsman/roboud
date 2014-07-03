@@ -77,7 +77,7 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
             CountNrPeopleBehavior previousBehavior = (CountNrPeopleBehavior) observable;
             previousBehavior.deleteObserver(this);
             Log.i(TAG, "Phase is set to GIVEASSIGNMENT");
-            currentBehavior = behaviorFactory.getExistingUserBehavior();
+            currentBehavior = behaviorFactory.getExistingUserBehavior(controller);
 //            currentBehavior.giveAssignment();
             currentBehavior.addObserver(this);
             behaviorReady = true;
