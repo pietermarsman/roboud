@@ -6,7 +6,6 @@ import edu.radboud.ai.roboud.RoboudModel;
 import edu.radboud.ai.roboud.behaviour.behaviors.AbstractBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.CountNrPeopleAssignBehavior;
 import edu.radboud.ai.roboud.behaviour.behaviors.CountNrPeopleEvaluateBehavior;
-import edu.radboud.ai.roboud.behaviour.behaviors.SettingsBehavior;
 import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
 import edu.radboud.ai.roboud.util.Scenario;
 
@@ -68,16 +67,15 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
     public void update(Observable observable, Object o) {
         Log.i(TAG, "==CountNrPeople Module is updated== by " + observable.getClass().getSimpleName()
                 + " and the phase is at " + controller.getModel().getCountNrPeopleBehaviorPhase());
-        Log.i(TAG, "This update is not required, because shutdown is required?");
 
         RoboudModel model = controller.getModel();
-        if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT && observable instanceof CountNrPeopleEvaluateBehavior) {
-            SettingsBehavior previousBehavior = (SettingsBehavior) observable;
+        if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT && observable instanceof CountNrPeopleAssignBehavior) {
+            CountNrPeopleAssignBehavior previousBehavior = (CountNrPeopleAssignBehavior) observable;
             previousBehavior.deleteObserver(this);
             model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT);
             finished();
         } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT && observable instanceof CountNrPeopleEvaluateBehavior) {
-            SettingsBehavior previousBehavior = (SettingsBehavior) observable;
+            CountNrPeopleEvaluateBehavior previousBehavior = (CountNrPeopleEvaluateBehavior) observable;
             previousBehavior.deleteObserver(this);
             model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.GIVEASSIGNMENT);
             Log.i(TAG, "and we're finished with counting people");
