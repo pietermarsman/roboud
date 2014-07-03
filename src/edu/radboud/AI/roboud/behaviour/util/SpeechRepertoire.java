@@ -15,8 +15,8 @@ public class SpeechRepertoire {
     public static final String[] knowYou = {"Do we know each other?", "Do I know you from something?"};
     public static final String[] textGreetingEnd = {"Bye", "Bye now", "Goodbye", "It was a pleasure seeing you", "See you later"};
     public static final String[] questionAskUserReady = {"Are you ready for your next assignment?", "Your next job is ready, are you ready?"};
-    public static final String[] textAskToCount = {"Count the number of people at the conference", "Please count the number of people that are present at the conference"};
-    public static final String[] questionUnderstand = {"Did you understand?", "Was I Clear?"};
+    public static final String[] textAskToCount = {"You are about to go to a conference. I am curious to know how many people are present at the conference, so I can post a tweet about it. So your assignment is, count the number of people at the conference."};
+    public static final String[] questionUnderstand = {"I hope I was clear", "I hope you understand the assignment"};
     public static final String[] textEnding = {"That was it", "That's all"};
     public static final String[] knowEnough = {"Oké, now I know enough about you", "That was it for now", "Thank you for this information"};
     public static final String[] AskUserSucceeded = {"Did you complete your assignment?", "Did you count the number of people?"};

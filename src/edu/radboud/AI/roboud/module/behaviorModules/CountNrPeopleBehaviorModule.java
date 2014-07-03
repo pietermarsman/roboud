@@ -76,12 +76,17 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
         if (model.getCountNrPeopleBehaviorPhase() == GIVEASSIGNMENT || observable instanceof CountNrPeopleBehavior) {
             CountNrPeopleBehavior previousBehavior = (CountNrPeopleBehavior) observable;
             previousBehavior.deleteObserver(this);
+//            currentBehavior = behaviorFactory.getExistingUserBehavior();
+//            currentBehavior.GiveAssignment();
+//            currentBehavior.addObserver(this);
+//            behaviorReady = true;
             Log.i(TAG, "Phase is set to GIVEASSIGNMENT");
-            currentBehavior = behaviorFactory.getExistingUserBehavior();
+            currentBehavior = behaviorFactory.getExistingUserBehavior(controller);
 //            currentBehavior.giveAssignment();
             currentBehavior.addObserver(this);
             behaviorReady = true;
         } else if (model.getCountNrPeopleBehaviorPhase() == EVALUATEASSIGNMENT) {
+
             SettingsBehavior previousBehavior = (SettingsBehavior) observable;
             previousBehavior.deleteObserver(this);
             Log.i(TAG, "and we're finished with counting people");
@@ -89,4 +94,8 @@ public class CountNrPeopleBehaviorModule extends AbstractBehaviorModule {
         } else
             throw new NullPointerException("CountNrPeopleBehaviorPhase not instantiated (2)");
     }
+
+//    public CountNrPeopleBehaviorPhase getPhase() {
+//        return phase;
+//    }
 }
