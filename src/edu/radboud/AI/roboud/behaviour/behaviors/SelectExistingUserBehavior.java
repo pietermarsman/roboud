@@ -1,13 +1,12 @@
 package edu.radboud.ai.roboud.behaviour.behaviors;
 
 import android.util.Log;
+import edu.radboud.ai.roboud.RoboudController;
+import edu.radboud.ai.roboud.RoboudModel;
 import edu.radboud.ai.roboud.action.ActionFactory;
 import edu.radboud.ai.roboud.action.actions.AbstractAction;
 import edu.radboud.ai.roboud.action.actions.ChoiceAction;
 import edu.radboud.ai.roboud.util.Scenario;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by mikel_000 on 29-6-2014.
@@ -18,14 +17,11 @@ public class SelectExistingUserBehavior extends AbstractBehavior {
 
     private String result;
 
-    public SelectExistingUserBehavior(ActionFactory actionFactory, Scenario scenario) {
+    public SelectExistingUserBehavior(ActionFactory actionFactory, Scenario scenario, RoboudController controller) {
         super(actionFactory, scenario);
-        //TODO retrieve list of existing users
-        List<String> users = new LinkedList<String>();
-        users.add("Mike");
-        users.add("Guido");
-        users.add("Pieter");
-        actions.add(actionFactory.getChoiceAction(users));
+
+        RoboudModel model = controller.getModel();
+        actions.add(actionFactory.getChoiceAction(model.getUserNames()));
     }
 
 
