@@ -27,6 +27,8 @@ public class DataWriter {
         dataSavers = new LinkedList<DataSaver>();
         dataSavers.add(new DataSaverCountNrOfPeoplePhase());
         dataSavers.add(new DataSaverIncrement());
+        dataSavers.add(new DataSaverIntroductionBehaviorPhase());
+        dataSavers.add(new DataSaverUsers());
     }
 
     /**

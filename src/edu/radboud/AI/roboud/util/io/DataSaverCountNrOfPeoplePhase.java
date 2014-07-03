@@ -28,7 +28,7 @@ public class DataSaverCountNrOfPeoplePhase implements DataSaver {
     public void readElement(Element element, RoboudModel model) {
         if (element.getName().equals(COUNT_NR_OF_PEOPLE)) {
             String value = element.getText();
-            if (value.equals("null"))
+            if (!value.equals("null"))
                 model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.valueOf(value));
             else
                 model.setCountNrPeopleBehaviorPhase(null);
