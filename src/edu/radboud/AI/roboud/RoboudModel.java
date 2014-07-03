@@ -10,6 +10,7 @@ import edu.radboud.ai.roboud.event.Event;
 import edu.radboud.ai.roboud.event.EventHistory;
 import edu.radboud.ai.roboud.event.EventType;
 import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
+import edu.radboud.ai.roboud.module.util.IntroductionBehaviorPhase;
 import edu.radboud.ai.roboud.util.Scenario;
 
 import java.util.List;
@@ -45,6 +46,7 @@ public class RoboudModel extends Observable {
     private RoboMeCommands.IncomingRobotCommand robomeRemoteButton;
     private boolean distance_edge, distance_20, distance_50, distance_100, distance_far;
     private CountNrPeopleBehaviorPhase countNrPeopleBehaviorPhase;
+    private IntroductionBehaviorPhase introductionBehaviorPhase;
     private int numberOfTimesStarted;
 
     public RoboudModel(boolean robomeConnected, boolean robomeHeadsetPluggedIn, boolean listening, float volume,
@@ -71,7 +73,9 @@ public class RoboudModel extends Observable {
         distance_50 = false;
         distance_100 = false;
         distance_far = false;
-        countNrPeopleBehaviorPhase = CountNrPeopleBehaviorPhase.GIVEASSIGNMENT;
+        // TODO can this be null at the start?
+        countNrPeopleBehaviorPhase = null;
+        introductionBehaviorPhase = null;
         numberOfTimesStarted = 1;
         // lastModification is set by:
         changed();
@@ -462,5 +466,13 @@ public class RoboudModel extends Observable {
 
     public void setNumberOfTimesStarted(int numberOfTimesStarted) {
         this.numberOfTimesStarted = numberOfTimesStarted;
+    }
+
+    public IntroductionBehaviorPhase getIntroductionBehaviorPhase() {
+        return introductionBehaviorPhase;
+    }
+
+    public void setIntroductionBehaviorPhase(IntroductionBehaviorPhase introductionBehaviorPhase) {
+        this.introductionBehaviorPhase = introductionBehaviorPhase;
     }
 }
