@@ -26,6 +26,8 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
     private String ConfirmNrOfPeople;
     private String ConfirmPostTweet;
     private String myTweet;
+    private String myTweet1;
+    private String myTweet2;
     private ReadTextAction nrOfPeople;
     private String textGreetingEnd;
 
@@ -43,6 +45,8 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         ConfirmNrOfPeople = SpeechRepertoire.randomChoice(SpeechRepertoire.ConfirmNrOfPeople);
         ConfirmPostTweet = SpeechRepertoire.randomChoice(SpeechRepertoire.ConfirmPostTweet);
         textGreetingEnd = SpeechRepertoire.randomChoice(SpeechRepertoire.textGreetingEnd);
+        myTweet1 = SpeechRepertoire.randomChoice(SpeechRepertoire.myTweet1);
+        myTweet2 = SpeechRepertoire.randomChoice(SpeechRepertoire.myTweet2);
         // ending
     }
 
@@ -53,23 +57,24 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         }
         actions.add(actionFactory.getReadTextAction(askUserReady));
 
-        // tell user to count the number of people at conference, or where he is.
-        if (scenario.isCanTalk()) {
-            actions.add(actionFactory.getShowTextAction(askToCount));
-            actions.add(actionFactory.getSpeakAction(askToCount));
-        } else {
-            actions.add(actionFactory.getShowTextAction(askToCount));
-            actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
-        }
+            // tell user to count the number of people at conference, or where he is.
+            if (scenario.isCanTalk()) {
+                actions.add(actionFactory.getShowTextAction(askToCount));
+                actions.add(actionFactory.getSpeakAction(askToCount));
+            } else {
+                actions.add(actionFactory.getShowTextAction(askToCount));
+                actions.add(actionFactory.getSleepAction(2500)); //this should be in ShowTextAction
+            }
 
-        // ask whether user understands
-        if (scenario.isCanTalk()) {
-            actions.add(actionFactory.getSpeakAction(understand));
-        }
-        ReadTextAction temp = actionFactory.getReadTextAction(understand);
-        actions.add(temp);
-
-        endConversation();
+            // ask whether user understands
+            if (scenario.isCanTalk()) {
+                actions.add(actionFactory.getSpeakAction(understand));
+            }
+            ReadTextAction temp = actionFactory.getReadTextAction(understand);
+            actions.add(temp);
+        //TODO: temporary solution:
+        evaluateAssignment();
+//        endConversation();
     }
 
     public void evaluateAssignment() {
@@ -88,7 +93,6 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         nrOfPeople = actionFactory.getReadTextAction(AskNrOfPeople);
         actions.add(nrOfPeople);
 
-//            myTweet = "I was at a conference with " + nrOfPeople + " people. It was great!";
         // confirm nr of people
         if (scenario.isCanTalk()) {
             Log.i(TAG, ConfirmNrOfPeople);
@@ -100,7 +104,7 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
         }
 
         if (scenario.isCanTalk()) {
-//            ConfirmPostTweet += myTweet; just for now, since it is not known
+//            ConfirmPostTweet += myTweet; //just for now, since it is not known
             actions.add(actionFactory.getShowTextAction(ConfirmPostTweet));
             actions.add(actionFactory.getSpeakAction(ConfirmPostTweet));
         } else {
@@ -112,13 +116,15 @@ public class CountNrPeopleBehavior extends AbstractBehavior {
 
     @Override
     protected Object processInformation(AbstractAction currentAction) {
-        if (currentAction == nrOfPeople) {
-            nrOfPeople.getInformation().toString();
-            myTweet = "I was at a conference with " + nrOfPeople + " people. It was great!";
-            postATweet();
+        if(currentAction == nrOfPeople) {
+            String people = nrOfPeople.getInformation().toString();
+            myTweet = myTweet1 + people + myTweet2;
+//            postATweet();
         }
         return null;
     }
+
+    public String getMyTweet(){ return myTweet;}
 
     private void postATweet() {
         PostTweet postMyTweet;

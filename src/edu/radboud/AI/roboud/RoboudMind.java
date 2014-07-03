@@ -1,14 +1,18 @@
 package edu.radboud.ai.roboud;
 
 import android.util.Log;
+import edu.radboud.ai.roboud.behaviour.util.PostTweet;
 import edu.radboud.ai.roboud.module.behaviorModules.AbstractBehaviorModule;
 import edu.radboud.ai.roboud.module.behaviorModules.CountNrPeopleBehaviorModule;
 import edu.radboud.ai.roboud.module.behaviorModules.IntroductionBehaviorModule;
 import edu.radboud.ai.roboud.module.behaviorModules.TurnMeOffBehaviorModule;
 import edu.radboud.ai.roboud.module.functionModules.AbstractFunctionModule;
 import edu.radboud.ai.roboud.module.functionModules.ConnectedFunctionModule;
+import edu.radboud.ai.roboud.module.util.CountNrPeopleBehaviorPhase;
 import edu.radboud.ai.roboud.util.Scenario;
+import twitter4j.TwitterException;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -61,9 +65,21 @@ public class RoboudMind implements Observer {
             oldModule.deleteObserver(this);
             oldModule.stopRunning();
 
-            behaviorModule = TurnMeOffBehaviorModule.getInstance(controller, scenario);
-            behaviorModule.addObserver(this);
-            behaviorModule.startRunning();
+            // lets evaluate!
+            if(model.getCountNrPeopleBehaviorPhase() == CountNrPeopleBehaviorPhase.GIVEASSIGNMENT) {
+                model.setCountNrPeopleBehaviorPhase(CountNrPeopleBehaviorPhase.EVALUATEASSIGNMENT);
+                behaviorModule = CountNrPeopleBehaviorModule.getInstance(controller, scenario);
+                behaviorModule.addObserver(this);
+                behaviorModule.startRunning();
+            }
+            else
+            {
+                // could post tweet here.
+                behaviorModule = TurnMeOffBehaviorModule.getInstance(controller, scenario);
+                behaviorModule.addObserver(this);
+                behaviorModule.startRunning();
+            }
+
         } else if (observable instanceof IntroductionBehaviorModule) {
             IntroductionBehaviorModule oldModule = (IntroductionBehaviorModule) observable;
             oldModule.deleteObserver(this);
@@ -88,6 +104,18 @@ public class RoboudMind implements Observer {
         }
     }
 
+    private void tempPostTweet(String myTweet) {
+        PostTweet postMyTweet;
+        try {
+            postMyTweet = new PostTweet();
+            postMyTweet.postTweet(myTweet);
+        } catch (
+                TwitterException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void stopRunning() {
         running = false;
         for (Iterator<AbstractFunctionModule> it = functionModules.iterator(); it.hasNext(); ) {

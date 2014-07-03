@@ -21,11 +21,13 @@ public class SpeechRepertoire {
     public static final String[] knowEnough = {"Oké, now I know enough about you", "That was it for now", "Thank you for this information"};
     public static final String[] AskUserSucceeded = {"Did you complete your assignment?", "Did you count the number of people?"};
     public static final String[] AskNrOfPeople = {"How many people were present?", "What amount of people we at the conference?"};
-    public static final String[] ConfirmNrOfPeople = {"So the number of people is ", "The total number of people is "};
-    public static final String[] ConfirmPostTweet = {"I've posted the following: "};
+    public static final String[] ConfirmNrOfPeople = {"Thank you for completing your assignment.", "Good job!"};
+    public static final String[] ConfirmPostTweet = {"I've posted a tweet on my Twitter account."};
     private static final String name = "Roboud";
     public static final String[] textIntroduceMyself = {"I am " + name + " and I am your companion for the next few" +
             "days", "My name is " + name, "You can call me " + name};
+    public static final String[] myTweet1 = {"The conference I attended was visited by ", "I've got some cool news. I visited a conference with ", "Today, I visited a conference with "};
+    public static final String[] myTweet2 = {" people. It was a fascinating experience!", " people. It was breathtaking.", " people. It was rather stimulating and inspiring.", " people. It was a superb adventure."};
     public static final String[] drive = {"Can I drive sometimes?", "May I drive sometimes?", "Is it allowed for me to drive sometimes"};
     public static final String[] turn = {"Can I turn my body sometimes?", "May I turn my body sometimes?", "Is it allowed for me to turn my body sometimes?"};
 
