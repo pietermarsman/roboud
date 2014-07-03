@@ -519,6 +519,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void updateScenario(){
+        Log.i("TAG", "speechEnigne = " + speechEngine.isAvailable());
         scenario.setCanTalk(speechEngine.isAvailable());
         scenario.setCanListen(mic.isAvailable());
         scenario.setCanSee(cam.isAvailable());
