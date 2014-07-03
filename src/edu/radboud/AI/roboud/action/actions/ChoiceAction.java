@@ -15,7 +15,6 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
 
     public static final String TAG = "ChoiceAction";
     public static final int REQUEST_CODE = 11;
-    public static final String DATA_NAME = "Options";
 
     private List<String> options;
 
@@ -37,7 +36,7 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
         Intent i = new Intent(controller, ChoiceActionActivity.class);
         String[] optionsArray = new String[options.size()];
         optionsArray = options.toArray(optionsArray);
-        i.putExtra(DATA_NAME, optionsArray);
+        i.putExtra(ChoiceActionActivity.EXTRAS_OPTIONS, optionsArray);
         controller.startNewActivityForResult(i, REQUEST_CODE, this);
     }
 

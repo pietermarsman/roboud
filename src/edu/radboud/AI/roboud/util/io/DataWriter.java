@@ -77,6 +77,7 @@ public class DataWriter {
                     ds.readElement(element, model);
                 }
             }
+            Log.i(TAG, "Model was changed by reading an xml file: " + model);
         } catch (DocumentException e) {
             e.printStackTrace();
         }

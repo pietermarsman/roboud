@@ -41,6 +41,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
 
     public static final String TAG = "RoboudController";
     public static final String FILENAME = "hello_world.xml";
+    public static final java.lang.String EXTRAS_TEXT = "TextViewText";
     // Varialbes
     File file;
     DataWriter dataWriter;
@@ -444,6 +445,7 @@ public class RoboudController extends Activity implements Observer, RoboMe.RoboM
     }
 
     public void startNewActivityForResult(Intent i, int requestCode, ActivityResultProcessor returnActivityDataTo) {
+        i.putExtra(EXTRAS_TEXT, textView.getText());
         Log.d(TAG, "startNewActivityForResult, return data to " + returnActivityDataTo.getClass().toString());
         this.returnActivityDataToMap.put(requestCode, returnActivityDataTo);
         startActivityForResult(i, requestCode);

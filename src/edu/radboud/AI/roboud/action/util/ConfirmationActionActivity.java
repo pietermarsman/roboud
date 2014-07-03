@@ -3,10 +3,12 @@ package edu.radboud.ai.roboud.action.util;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import edu.radboud.ai.roboud.R;
+import edu.radboud.ai.roboud.RoboudController;
 import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
 
 /**
@@ -14,6 +16,7 @@ import edu.radboud.ai.roboud.action.actions.ConfirmationAction;
  */
 public class ConfirmationActionActivity extends Activity implements View.OnClickListener {
 
+    public static final String TAG = "ConfirmationActionActivity";
     public static final String RETURN_NAME = "result";
     private TextView textView;
     private Button yesButton, noButton;
@@ -28,6 +31,13 @@ public class ConfirmationActionActivity extends Activity implements View.OnClick
         textView = (TextView) findViewById(R.id.textView);
         yesButton = (Button) findViewById(R.id.confirmation_button_yes);
         noButton = (Button) findViewById(R.id.confirmation_button_no);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            textView.setText(extras.getString(RoboudController.EXTRAS_TEXT));
+        } else {
+            Log.e(TAG, "Activity was created without needed extra information. This should never happen.");
+        }
 
         Intent sender = getIntent();
         question = sender.getExtras().getString(ConfirmationAction.DATA_NAME);

@@ -8,17 +8,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import edu.radboud.ai.roboud.R;
-import edu.radboud.ai.roboud.action.actions.ChoiceAction;
+import edu.radboud.ai.roboud.RoboudController;
 
 /**
  * Created by Pieter Marsman on 4-6-2014.
  */
 public class ChoiceActionActivity extends Activity implements AdapterView.OnItemClickListener {
 
+    public static final String EXTRAS_OPTIONS = "options";
     public static final String RETURN_NAME = "Selected Item";
     private static final String TAG = "ChoiceActionActivity";
 
+    private TextView textView;
     private ListView list;
     private String[] options;
 
@@ -28,11 +31,12 @@ public class ChoiceActionActivity extends Activity implements AdapterView.OnItem
         this.setContentView(R.layout.face_choice);
 
         list = (ListView) findViewById(R.id.listView);
+        textView = (TextView) findViewById(R.id.textView);
 
-        Intent sender = getIntent();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            options = extras.getStringArray(ChoiceAction.DATA_NAME);
+            options = extras.getStringArray(EXTRAS_OPTIONS);
+            textView.setText(extras.getString(RoboudController.EXTRAS_TEXT));
         } else {
             Log.e(TAG, "Activity was created without needed extra information. This should never happen.");
         }

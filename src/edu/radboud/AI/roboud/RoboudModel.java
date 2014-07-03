@@ -129,8 +129,9 @@ public class RoboudModel extends Observable {
         sb.append("Robome remote button: ").append(robomeRemoteButton).append("\n");
         sb.append("Robome sensor status: ").append("edge: ").append(distance_edge).append(", 20: ").append(distance_20);
         sb.append(", 50: ").append(distance_50).append(", 100: ").append(distance_100).append(", far: ").append(distance_far).append("\n");
-        //sb.append("CountNrOfPeoplePhase: ").append(countNrPeopleBehaviorPhase.toString()).append("\n");
-        //sb.append("Number of times started: ").append(numberOfTimesStarted).append("\n");
+        sb.append("CountNrOfPeoplePhase: ").append(countNrPeopleBehaviorPhase).append("\n");
+        sb.append("Number of times started: ").append(numberOfTimesStarted).append("\n");
+        sb.append("Users: ").append(users.toString());
         return sb.toString();
     }
 
