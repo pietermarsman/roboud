@@ -15,6 +15,7 @@ public class LedActionPool extends ActionPool<LedAction> {
         super(controller);
     }
 
+    //A singleton pattern is applied here
     public static synchronized LedActionPool getInstance(RoboudController controller) {
         if (instance == null)
             instance = new LedActionPool(controller);

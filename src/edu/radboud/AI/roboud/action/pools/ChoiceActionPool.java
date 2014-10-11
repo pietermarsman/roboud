@@ -23,11 +23,12 @@ public class ChoiceActionPool extends ActionPool<ChoiceAction> {
         return instance;
     }
 
+    //A singleton pattern is applied here
     public ChoiceAction acquire(List<String> options, String question) {
-        ChoiceAction choiceAction = acquire();
-        choiceAction.setOptions(options);
-        choiceAction.setQuestion(question);
-        return choiceAction;
+        ChoiceAction choiceAction = acquire(); //Acquire empty choice action
+        choiceAction.setOptions(options); //Set the options
+        choiceAction.setQuestion(question);//Set the question
+        return choiceAction;//Return the build action
     }
 
     @Override

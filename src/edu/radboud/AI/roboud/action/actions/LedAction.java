@@ -8,6 +8,7 @@ import static com.wowwee.robome.RoboMeCommands.RobotCommand.*;
 
 /**
  * @author Mike Ligthart
+ * Action class that sends a RoboMe command to the robot to change its current led color into the specific LedColor.
  */
 public class LedAction extends AbstractAction {
 
@@ -18,6 +19,10 @@ public class LedAction extends AbstractAction {
         super(controller);
     }
 
+    /**
+     * This implementation of doActions resets the current led color and changes it to the specified color.
+     * @param information (last minute information can change the current color into a new LedColor.)
+     */
     @Override
     public void doActions(Object information) {
         if (information != null && information instanceof LedColor) {
@@ -53,6 +58,7 @@ public class LedAction extends AbstractAction {
                     break;
             }
         }
+        //Notifies the observers it has changed the led color.
         setChanged();
         notifyObservers();
     }

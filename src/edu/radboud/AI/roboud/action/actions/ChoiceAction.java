@@ -9,6 +9,8 @@ import edu.radboud.ai.roboud.util.ActivityResultProcessor;
 import java.util.List;
 
 /**
+ * Presents a choice option list to the user through an activity on the screen of the connected Android phone.
+ * The result selected option is returned here.
  * Created by Pieter Marsman on 4-6-2014.
  */
 public class ChoiceAction extends AbstractAction implements ActivityResultProcessor {
@@ -25,6 +27,11 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
         super(controller);
     }
 
+    /**
+     * This implementation of doActions instantiates an activity in order to prompt the user on the Android phone with
+     * a option choice list.
+     * @param information (last minute information can change the current list of options.)
+     */
     @Override
     public void doActions(Object information) {
         if (information != null && information instanceof List) {
@@ -34,6 +41,8 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
         if (options == null) {
             throw new NullPointerException("Options not properly initialized");
         }
+
+        //Initializing the activity.
         Intent i = new Intent(controller, ChoiceActionActivity.class);
         String[] optionsArray = new String[options.size()];
         optionsArray = options.toArray(optionsArray);
@@ -50,7 +59,9 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
     @Override
     public void processData(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
+            //Retrieve the result.
             resultString = data.getStringExtra(ChoiceActionActivity.RETURN_NAME);
+            //Notify the observers an option has been selected.
             setChanged();
             notifyObservers();
         } else {
@@ -58,7 +69,7 @@ public class ChoiceAction extends AbstractAction implements ActivityResultProces
         }
     }
 
-    public String getResultString() {
+    public String getResult() {
         return resultString;
     }
 

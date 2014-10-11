@@ -9,7 +9,7 @@ import edu.radboud.ai.roboud.action.util.*;
 import java.util.List;
 
 /**
- * Created by mikel_000 on 29-6-2014.
+ * Created by Mike Ligthart on 29-6-2014.
  */
 public class ActionFactory {
     private final static String TAG = "ActionFactory";

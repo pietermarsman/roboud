@@ -49,8 +49,8 @@ public class SelectExistingUserBehavior extends AbstractBehavior {
     protected Object processInformation(AbstractAction currentAction) {
         if (currentAction instanceof ChoiceAction) {
             ChoiceAction choice = (ChoiceAction) currentAction;
-            result = choice.getResultString();
-            Log.i(TAG, "result is " + choice.getResultString());
+            result = choice.getResult();
+            Log.i(TAG, "result is " + choice.getResult());
         } else {
             Log.w(TAG, "Unexpected update");
         }

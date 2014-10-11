@@ -6,7 +6,10 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- * Created by mikel_000 on 20-6-2014.
+ * An action pool prevents the wild grow of actions by keeping a list of the active (are locked) and inactive (are unlocked) ones.
+ * Actions that exist for longer than 30 seconds and that are not in use are removed. When a client requests an action first an already
+ * existing unlocked action is returned. When all actions are locked only than a new action is created upon request by a client.
+ * Created by Mike Ligthart on 20-6-2014.
  */
 public abstract class ActionPool<T> {
 
